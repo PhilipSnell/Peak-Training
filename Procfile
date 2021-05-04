@@ -1,0 +1,1 @@
+web: gunicorn Xcell.wsgi --log-file -
