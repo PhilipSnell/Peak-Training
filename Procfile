@@ -1,1 +1,1 @@
-web: gunicorn Xcell.wsgi --log-file -
+web: gunicorn xcell.wsgi --log-file -
