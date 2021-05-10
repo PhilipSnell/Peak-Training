@@ -38,17 +38,22 @@ class UserRecordView(APIView):
         )
 
 
-@api_view(['POST', ])
-def registration_view(request):
-    if request.method == 'POST':
-        serializer = UserSerializer(data=request.data)
-        data = {}
-        if serializer.is_valid():
-            user = serializer.save()
-            data['response'] = "successfully registered a new user"
-            data['email'] = user.email
-            data['username'] = user.username
-        else:
-            data = serializer.errors
-        return Response(data)
+
+class Registration(APIView):
+    authentication_classes = [] #disables authentication
+    permission_classes = [] #disables permission
+
+    # @api_view(['POST', ])
+    def post(self, request):
+        if request.method == 'POST':
+            serializer = UserSerializer(data=request.data)
+            data = {}
+            if serializer.is_valid():
+                user = serializer.save()
+                data['response'] = "successfully registered a new user"
+                data['email'] = user.email
+                data['username'] = user.username
+            else:
+                data = serializer.errors
+            return Response(data)
 
