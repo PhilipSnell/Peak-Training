@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
+from rest_framework.permissions import AllowAny
 
 
 class UserRecordView(APIView):
@@ -34,3 +35,9 @@ class UserRecordView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
+class UserCreate(APIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny, )
+
