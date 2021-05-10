@@ -36,7 +36,9 @@ class UserRecordView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
 
+
 class UserCreate(APIView):
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny, )
