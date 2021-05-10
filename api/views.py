@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from django.contrib.auth.models import User
 from rest_framework.permissions import AllowAny
+from rest_framework.decorators import api_view
 
 
 class UserRecordView(APIView):
@@ -37,9 +38,17 @@ class UserRecordView(APIView):
         )
 
 
-class UserCreate(APIView):
-
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (AllowAny, )
+@api_view(['POST', ])
+def registration_view(request):
+    if request.method == 'POST':
+        serializer = UserSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            user = serializer.save()
+            data['response'] = "successfully registered a new user"
+            data['email'] = user.email
+            data['username'] = user.username
+        else:
+            data = serializer.errors
+        return Response(data)
 

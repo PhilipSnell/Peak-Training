@@ -24,3 +24,12 @@ class UserSerializer(serializers.ModelSerializer):
                 fields=['username', 'email']
             )
         ]
+    def save(self):
+        user = User(
+            username = self.validated_data['username'],
+            email= self.validated_data['email'],
+            first_name= self.validated_data['first_name'],
+            last_name = self.validated_data['last_name'],
+        )
+        user.save()
+        return user
