@@ -19,6 +19,9 @@ class UserSerializer(serializers.ModelSerializer):
             'email',
             'password',
         )
+        extra_kwags= {
+            'password' : {'write_only':True}
+        }
         validators = [
             UniqueTogetherValidator(
                 queryset=User.objects.all(),
@@ -32,5 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
             first_name= self.validated_data['first_name'],
             last_name = self.validated_data['last_name'],
         )
+        password = self.validated_data['password']
+        user.set_password(password)
         user.save()
         return user
