@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db import models
+
 
 class MyAccountManager(BaseUserManager):
     def create_user(self,email,username, first_name, last_name,password=None):
@@ -60,6 +62,37 @@ class Account(AbstractBaseUser):
         return self.is_admin
     def has_module_perms(self, app_label):
         return True
+
+
+class ExerciseType(models.Model):
+    name = models.CharField(max_length=50)
+    description = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='images/')
+    video = models.URLField()
+
+    def __str__(self):
+        return self.name
+
+
+class TrainingEntry(models.Model):
+    unitOptions = (
+        ("Kg","Kilograms"),
+        ("P", "plates"),
+        ("Kg", "Kilograms"),
+        ("BW", "Body Weight"),
+        ("HD", "Holes Down"),
+        ("ES", "Each Side"),
+        ("EL", "Each Leg"),
+    )
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
+    phase = models.IntegerField()
+    week = models.IntegerField()
+    reps = models.IntegerField()
+    weight = models.IntegerField()
+    unit = models.CharField(max_length=10, choices=unitOptions)
+    sets = models.IntegerField()
+    comment = models.CharField(max_length=300)
+    exercise = models.ForeignKey(ExerciseType, on_delete=models.CASCADE, related_name='Exercise')
 
 
 # Create your models here.

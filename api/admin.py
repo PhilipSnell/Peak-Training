@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from api.models import Account
+from api.models import Account, ExerciseType, TrainingEntry
+
 
 
 
@@ -14,4 +15,6 @@ class AccountAdmin(UserAdmin):
     fieldsets = ()
 
 admin.site.register(Account, AccountAdmin)
+admin.site.register(ExerciseType)
+admin.site.register(TrainingEntry)
 # Register your models here.
