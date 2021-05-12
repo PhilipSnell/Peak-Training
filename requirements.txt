@@ -3,3 +3,4 @@ django_heroku==0.3.1
 djangorestframework==3.12.4
 gunicorn
 Pillow
+whitenoise
