@@ -1,13 +1,18 @@
-from .serializers import UserSerializer
+from .serializers import UserSerializer, TrainingSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-
+from .models import TrainingEntry, ExerciseType
+from django.views.generic import DetailView
+from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
+
 User = get_user_model()
+
+
 class UserRecordView(APIView):
     """
     API View to create or get a list of all the registered
@@ -38,10 +43,9 @@ class UserRecordView(APIView):
         )
 
 
-
 class Registration(APIView):
-    authentication_classes = [] #disables authentication
-    permission_classes = [] #disables permission
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
 
     # @api_view(['POST', ])
     def post(self, request):
@@ -57,3 +61,23 @@ class Registration(APIView):
                 data = serializer.errors
             return Response(data)
 
+
+class TrainingData(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    def post(self, request):
+        # print(request.data["username"]+ "- blah blah")
+        email_lookup = "psnell63@gmail.com"
+        user = User.objects.filter(email=email_lookup)
+        trainingData = TrainingEntry.objects.filter(user=user[0].id)
+
+        serializer = TrainingSerializer(trainingData, many=True)
+
+        return Response(serializer.data)
+
+
+def imageDisplay(request,id):
+    emp = get_object_or_404(ExerciseType, pk=id)
+
+    return render(request, 'image_display.html', {'emp': emp})

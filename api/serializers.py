@@ -2,8 +2,40 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from django.contrib.auth import get_user_model
+from .models import TrainingEntry, ExerciseType
 
 User = get_user_model()
+class ExerciseSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField('id_field')
+
+    def id_field(self, exercise):
+        return exercise.id
+    class Meta:
+        model = ExerciseType
+
+        fields = ('name',
+                  'description',
+                  'id',
+                  'video'
+                  )
+
+class TrainingSerializer(serializers.ModelSerializer):
+    exercise = ExerciseSerializer()
+
+    class Meta:
+        model = TrainingEntry
+
+        fields = ('user',
+                  'phase',
+                  'week',
+                  'reps',
+                  'weight',
+                  'unit',
+                  'sets',
+                  'comment',
+                  'exercise'
+                  )
+
 class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
