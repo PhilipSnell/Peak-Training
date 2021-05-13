@@ -21,11 +21,15 @@ class ExerciseSerializer(serializers.ModelSerializer):
 
 class TrainingSerializer(serializers.ModelSerializer):
     exercise = ExerciseSerializer()
+    id = serializers.SerializerMethodField('id_field')
 
+    def id_field(self, training):
+        return training.id
     class Meta:
         model = TrainingEntry
 
-        fields = ('user',
+        fields = ("id",
+                  'user',
                   'phase',
                   'week',
                   'reps',
