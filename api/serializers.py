@@ -32,6 +32,7 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'user',
                   'phase',
                   'week',
+                  'day',
                   'reps',
                   'weight',
                   'unit',

@@ -87,6 +87,7 @@ class TrainingEntry(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
     phase = models.IntegerField()
     week = models.IntegerField()
+    day = models.IntegerField()
     reps = models.IntegerField()
     weight = models.IntegerField()
     unit = models.CharField(max_length=10, choices=unitOptions)
