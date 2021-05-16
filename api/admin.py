@@ -14,7 +14,11 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
+class ExerciseAdmin(admin.ModelAdmin):
+    list_display = ("name", "description","image","video")
+    search_fields = ("name","description")
+
 admin.site.register(Account, AccountAdmin)
-admin.site.register(ExerciseType)
+admin.site.register(ExerciseType, ExerciseAdmin)
 admin.site.register(TrainingEntry)
 # Register your models here.

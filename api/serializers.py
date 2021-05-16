@@ -16,7 +16,8 @@ class ExerciseSerializer(serializers.ModelSerializer):
         fields = ('name',
                   'description',
                   'id',
-                  'video'
+                  'video',
+                  'image'
                   )
 
 class TrainingSerializer(serializers.ModelSerializer):
