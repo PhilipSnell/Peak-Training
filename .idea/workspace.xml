@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bee013e9-2b64-42f9-989d-a55128fb29bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/autocomplete.781713f30664.css" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/autocomplete.781713f30664.css.gz" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/staticfiles/admin/css/autocomplete.css" beforeDir="false" />
@@ -627,8 +626,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/xcell/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
+            <state relative-caret-position="377">
+              <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
               <folding>
                 <element signature="e#307#316#0" expanded="true" />
               </folding>
@@ -783,11 +782,6 @@
             <path>
               <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
               <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
-              <item name="staticfiles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
-              <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
               <item name="xcell" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -862,7 +856,7 @@
       <updated>1620152906191</updated>
       <workItem from="1620152908016" duration="6414000" />
       <workItem from="1620161940283" duration="26180000" />
-      <workItem from="1620738785761" duration="38306000" />
+      <workItem from="1620738785761" duration="38548000" />
     </task>
     <task id="LOCAL-00001" summary="allowed hosts to all">
       <created>1620164311763</created>
@@ -1001,12 +995,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="70901000" />
+    <option name="totallyTimeSpent" value="71143000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1913767" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1913767" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -1020,7 +1015,7 @@
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19312602" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" visible="true" weight="0.19312602" />
       <window_info anchor="bottom" id="Python Console" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -1233,10 +1228,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/staticfiles/staticfiles.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/xcell/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="144" column="32" selection-start-line="144" selection-start-column="32" selection-end-line="144" selection-end-column="32" />
+        <state relative-caret-position="377">
+          <caret line="146" lean-forward="true" selection-start-line="146" selection-end-line="146" />
           <folding>
             <element signature="e#307#316#0" expanded="true" />
           </folding>
