@@ -1,4 +1,4 @@
-from .serializers import UserSerializer, TrainingSerializer
+from .serializers import UserSerializer, TrainingSerializer, ExerciseSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -68,7 +68,7 @@ class TrainingData(APIView):
 
     def post(self, request):
         # print(request.data["username"]+ "- blah blah")
-        email_lookup = "psnell63@gmail.com"
+        email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
         trainingData = TrainingEntry.objects.filter(user=user[0].id)
 
@@ -76,6 +76,19 @@ class TrainingData(APIView):
 
         return Response(serializer.data)
 
+class ExerciseData(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    def post(self, request):
+        print(request.data['username']+ "- blah blah")
+        email_lookup = "psnell63@gmail.com"
+        user = User.objects.filter(email=email_lookup)
+        exerciseData = ExerciseType.objects.all()
+
+        serializer = ExerciseSerializer(exerciseData, many=True)
+
+        return Response(serializer.data)
 
 def imageDisplay(request,id):
     emp = get_object_or_404(ExerciseType, pk=id)

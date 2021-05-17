@@ -20,6 +20,7 @@ class ExerciseSerializer(serializers.ModelSerializer):
                   'image'
                   )
 
+
 class TrainingSerializer(serializers.ModelSerializer):
     exercise = ExerciseSerializer()
     id = serializers.SerializerMethodField('id_field')
@@ -28,7 +29,6 @@ class TrainingSerializer(serializers.ModelSerializer):
         return training.id
     class Meta:
         model = TrainingEntry
-
         fields = ("id",
                   'user',
                   'phase',
