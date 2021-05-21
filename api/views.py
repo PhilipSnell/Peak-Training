@@ -1,11 +1,11 @@
-from .serializers import UserSerializer, TrainingSerializer, ExerciseSerializer
+from .serializers import UserSerializer, TrainingSerializer, ExerciseSerializer, SetSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from .models import TrainingEntry, ExerciseType
+from .models import TrainingEntry, ExerciseType, Set_Entry
 from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
@@ -61,6 +61,27 @@ class Registration(APIView):
                 data = serializer.errors
             return Response(data)
 
+class SetEntry(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    # @api_view(['POST', ])
+    def post(self, request):
+        if request.method == 'POST':
+            serializer = SetSerializer(data=request.data)
+            data = {}
+            set_entry = Set_Entry.objects.filter(e_id=request.data.get("e_id"))
+            if set_entry:
+                set_entry.update(sets=request.data.get("sets"),reps=request.data.get("reps"),weights=request.data.get("weights"))
+                data['response'] = "entry already exists"
+                return Response(data)
+            else:
+                if serializer.is_valid():
+                    serializer.save()
+                    data['response'] = "successfully entered set information"
+                else:
+                    data = serializer.errors
+                return Response(data)
 
 class TrainingData(APIView):
     authentication_classes = []  # disables authentication

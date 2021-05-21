@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
-from api.views import Registration, TrainingData, ExerciseData
+from api.views import Registration, TrainingData, ExerciseData,SetEntry
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -28,6 +28,7 @@ urlpatterns = [
     path('register/', Registration.as_view(), name="register"),
     path('data/', TrainingData.as_view(), name='training data'),
     path('exercise/', ExerciseData.as_view(), name='exercise data'),
+    path('sets/', SetEntry.as_view(), name='set data'),
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

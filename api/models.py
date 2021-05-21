@@ -63,6 +63,18 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
+class Set_Entry(models.Model):
+    e_id = models.IntegerField(unique=True)
+    sets = models.IntegerField()
+    reps = models.CharField(max_length=300)
+    weights = models.CharField(max_length=300)
+
+
+    def __str__(self):
+        exercise = ExerciseType.objects.get(id=self.e_id)
+        return exercise.name
+
+
 
 class ExerciseType(models.Model):
     name = models.CharField(max_length=50)

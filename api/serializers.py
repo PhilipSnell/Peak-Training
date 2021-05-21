@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from django.contrib.auth import get_user_model
-from .models import TrainingEntry, ExerciseType
+from .models import TrainingEntry, ExerciseType, Set_Entry
 
 User = get_user_model()
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -41,6 +41,19 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'comment',
                   'exercise'
                   )
+
+class SetSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Set_Entry
+        fields = (
+            'e_id',
+            'sets',
+            'reps',
+            'weights',
+        )
+
+
 
 class UserSerializer(serializers.ModelSerializer):
 
