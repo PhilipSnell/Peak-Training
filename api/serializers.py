@@ -47,10 +47,11 @@ class SetSerializer(serializers.ModelSerializer):
     class Meta:
         model = Set_Entry
         fields = (
-            'e_id',
+            't_id',
             'sets',
             'reps',
             'weights',
+            'e_id'
         )
 
 

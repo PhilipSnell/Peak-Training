@@ -64,11 +64,11 @@ class Account(AbstractBaseUser):
         return True
 
 class Set_Entry(models.Model):
-    e_id = models.IntegerField(unique=True)
+    t_id = models.IntegerField(unique=True)
     sets = models.IntegerField()
     reps = models.CharField(max_length=300)
     weights = models.CharField(max_length=300)
-
+    e_id = models.IntegerField()
 
     def __str__(self):
         exercise = ExerciseType.objects.get(id=self.e_id)

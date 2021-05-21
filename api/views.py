@@ -74,7 +74,7 @@ class SetEntry(APIView):
             for item in request.data:
                 serializer = SetSerializer(data=item)
 
-                set_entry = Set_Entry.objects.filter(e_id=item.get("e_id"))
+                set_entry = Set_Entry.objects.filter(t_id=item.get("t_id"))
                 if set_entry:
                     set_entry.update(sets=item.get("sets"),reps=item.get("reps"),weights=item.get("weights"))
                     data['response'] = data['response'] + "entry "+str(index)+ " already exists, "
