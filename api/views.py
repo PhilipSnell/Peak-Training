@@ -68,20 +68,25 @@ class SetEntry(APIView):
     # @api_view(['POST', ])
     def post(self, request):
         if request.method == 'POST':
-            serializer = SetSerializer(data=request.data)
             data = {}
-            set_entry = Set_Entry.objects.filter(e_id=request.data.get("e_id"))
-            if set_entry:
-                set_entry.update(sets=request.data.get("sets"),reps=request.data.get("reps"),weights=request.data.get("weights"))
-                data['response'] = "entry already exists"
-                return Response(data)
-            else:
-                if serializer.is_valid():
-                    serializer.save()
-                    data['response'] = "successfully entered set information"
+            data['response'] = ""
+            index = 1;
+            for item in request.data:
+                serializer = SetSerializer(data=item)
+
+                set_entry = Set_Entry.objects.filter(e_id=item.get("e_id"))
+                if set_entry:
+                    set_entry.update(sets=item.get("sets"),reps=item.get("reps"),weights=item.get("weights"))
+                    data['response'] = data['response'] + "entry "+str(index)+ " already exists, "
+
                 else:
-                    data = serializer.errors
-                return Response(data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        data['response'] = data['response'] + "entry "+str(index)+ " entered, "
+                    else:
+                        data = serializer.errors
+                index += 1
+            return Response(data)
 
 class TrainingData(APIView):
     authentication_classes = []  # disables authentication
