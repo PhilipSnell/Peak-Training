@@ -36,9 +36,7 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'day',
                   'reps',
                   'weight',
-                  'unit',
                   'sets',
-                  'comment',
                   'exercise'
                   )
 

@@ -87,24 +87,13 @@ class ExerciseType(models.Model):
 
 
 class TrainingEntry(models.Model):
-    unitOptions = (
-        ("Kg","Kilograms"),
-        ("P", "plates"),
-        ("Kg", "Kilograms"),
-        ("BW", "Body Weight"),
-        ("HD", "Holes Down"),
-        ("ES", "Each Side"),
-        ("EL", "Each Leg"),
-    )
     user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
     phase = models.IntegerField()
     week = models.IntegerField()
     day = models.IntegerField()
-    reps = models.IntegerField()
-    weight = models.IntegerField()
-    unit = models.CharField(max_length=10, choices=unitOptions)
+    reps = models.CharField(max_length=300)
+    weight = models.CharField(max_length=300)
     sets = models.IntegerField()
-    comment = models.CharField(max_length=300)
     exercise = models.ForeignKey(ExerciseType, on_delete=models.CASCADE, related_name='Exercise')
 
 
