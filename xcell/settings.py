@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'chat',
     'api',
     'rest_framework',
     'rest_framework.authtoken',

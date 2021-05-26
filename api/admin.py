@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from api.models import Account, ExerciseType, TrainingEntry, Set_Entry
+from api.models import Account, ExerciseType, TrainingEntry, Set_Entry, Message
 
 
 
@@ -22,4 +22,5 @@ admin.site.register(Set_Entry)
 admin.site.register(Account, AccountAdmin)
 admin.site.register(ExerciseType, ExerciseAdmin)
 admin.site.register(TrainingEntry)
+admin.site.register(Message)
 # Register your models here.

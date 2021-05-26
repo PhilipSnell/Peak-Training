@@ -29,6 +29,7 @@ urlpatterns = [
     path('data/', TrainingData.as_view(), name='training data'),
     path('exercise/', ExerciseData.as_view(), name='exercise data'),
     path('sets/', SetEntry.as_view(), name='set data'),
+    path('chat/', include('chat.urls')),
 ]
 if settings.DEBUG:
      urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
