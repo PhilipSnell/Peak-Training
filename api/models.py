@@ -108,5 +108,5 @@ class Message(models.Model):
         return self.message
 
     class Meta:
-        ordering = ('timestamp',)
+        ordering = ('-timestamp',)
 # Create your models here.
