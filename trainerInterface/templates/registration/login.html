@@ -1,0 +1,49 @@
+<!-- templates/trainerInterface/login.html -->
+{#<h2>Log In</h2>#}
+{#<form method="post">#}
+{#  {% csrf_token %}#}
+{#  {{ form.as_p }}#}
+{#  <button type="submit">Log In</button>#}
+{#</form>#}
+{##}
+{#<html>#}
+
+{% block title %}{% endblock %}
+{% load static %}
+{% block content %}
+    <head>
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    </head>
+    <div id="content-container" class="container p-none">
+        <div class="lgn-container">
+
+            <center><form id="login-form" method="post">
+            <i id="userIcon" class="far fa-user"></i>
+            <h1>Trainer Login</h1>
+                {% csrf_token %}
+                <table class="table">
+                    <tr>
+                        <td><input id="id_username" name="username" placeholder="Email"
+                                   type="text" class="form-control"></td>
+                    </tr>
+                    <tr>
+                        <td><input id="id_password" name="password" placeholder="Password"
+                                   type="password" class="form-control"></td>
+                    </tr>
+                </table>
+                {% if form.errors %}
+                    <p class=" label label-danger">
+                        Your username and password didn't match.
+                        Please try again.
+                    </p>
+                {% endif %}
+
+                <center><input type="submit" value="Login" class="btn btn-primary pull-right" /></center>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form></center>
+        </div>
+    </div>
+{% endblock content %}
+
+

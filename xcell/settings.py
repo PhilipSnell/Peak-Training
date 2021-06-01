@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import django_heroku
+from os.path import join
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -32,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'trainerInterface',
     'chat',
     'api',
     'rest_framework',
@@ -74,7 +76,9 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'xcell.wsgi.application'
-
+# config/settings.py
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/dashboard'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases

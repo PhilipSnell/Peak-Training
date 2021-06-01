@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
-
+from django.contrib.postgres.fields import ArrayField
 
 class MyAccountManager(BaseUserManager):
     def create_user(self,email,username, first_name, last_name,password=None):
@@ -34,8 +34,24 @@ class MyAccountManager(BaseUserManager):
             password=password,
             )
         user.is_admin = True
+        user.is_trainer = True
         user.is_staff = True
         user.is_superuser = True
+        user.save(using=self._db)
+        return user
+    def create_traineruser(self,email,username, first_name, last_name,password=None, **extra_fields):
+
+        user = self.create_user(
+            email=self.normalize_email(email),
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            password=password,
+            )
+        user.is_admin = False
+        user.is_trainer = True
+        user.is_staff = False
+        user.is_superuser = False
         user.save(using=self._db)
         return user
 
@@ -46,6 +62,7 @@ class Account(AbstractBaseUser):
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
     is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_trainer = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     first_name = models.CharField(max_length=15)
@@ -62,6 +79,9 @@ class Account(AbstractBaseUser):
         return self.is_admin
     def has_module_perms(self, app_label):
         return True
+class Trainer(models.Model):
+    trainer = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='Trainer')
+    clients = models.ManyToManyField(Account, related_name='Clients')
 
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
@@ -79,7 +99,7 @@ class Set_Entry(models.Model):
 class ExerciseType(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
-    image = models.ImageField(upload_to='images/')
+    image = models.ImageField(upload_to='images/', blank=True)
     video = models.URLField()
 
     def __str__(self):
