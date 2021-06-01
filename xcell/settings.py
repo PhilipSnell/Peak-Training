@@ -144,7 +144,9 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media/')
 MEDIA_URL = '/media/'
-
+FILE_UPLOAD_HANDLERS = (
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 django_heroku.settings(locals())

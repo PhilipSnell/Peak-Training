@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db import models
+
 from django.contrib.postgres.fields import ArrayField
 
 class MyAccountManager(BaseUserManager):
@@ -97,7 +98,7 @@ class Set_Entry(models.Model):
 
 
 class ExerciseType(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=300)
     image = models.ImageField(upload_to='images/', blank=True)
     video = models.URLField()

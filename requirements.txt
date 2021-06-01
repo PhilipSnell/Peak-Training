@@ -4,3 +4,4 @@ djangorestframework==3.12.4
 gunicorn
 Pillow
 whitenoise
+openpyxl
