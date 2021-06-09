@@ -166,7 +166,7 @@
             // The list of choices can be overridden in JavaScript like this:
             // DateTimeShortcuts.clockHours.name = [['3 a.m.', 3]];
             // where name is the name attribute of the <input>.
-            var name = typeof DateTimeShortcuts.clockHours[inp.name] === 'undefined' ? 'default_' : inp.name;
+            var name = typeof DateTimeShortcuts.clockHours[inp.nav] === 'undefined' ? 'default_' : inp.nav;
             DateTimeShortcuts.clockHours[name].forEach(function(element) {
                 var time_link = quickElement('a', quickElement('li', time_list), gettext(element[0]), 'href', '#');
                 time_link.addEventListener('click', function(e) {

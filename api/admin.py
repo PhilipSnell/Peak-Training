@@ -4,8 +4,6 @@ from django.contrib.auth.admin import UserAdmin
 from api.models import *
 
 
-
-
 class AccountAdmin(UserAdmin):
     list_display = ('email', 'username', 'date_joined', 'last_login', 'is_admin', 'is_trainer')
     search_fields = ('email', 'username')
@@ -14,9 +12,11 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
+
 class ExerciseAdmin(admin.ModelAdmin):
     list_display = ("name", "description","image","video")
     search_fields = ("name","description")
+
 
 admin.site.register(Trainer)
 admin.site.register(Set_Entry)

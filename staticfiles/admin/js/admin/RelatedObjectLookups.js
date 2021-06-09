@@ -42,7 +42,7 @@
     }
 
     function dismissRelatedLookupPopup(win, chosenId) {
-        var name = windowname_to_id(win.name);
+        var name = windowname_to_id(win.nav);
         var elem = document.getElementById(name);
         if (elem.className.indexOf('vManyToManyRawIdAdminField') !== -1 && elem.value) {
             elem.value += ',' + chosenId;
@@ -74,7 +74,7 @@
     }
 
     function dismissAddRelatedObjectPopup(win, newId, newRepr) {
-        var name = windowname_to_id(win.name);
+        var name = windowname_to_id(win.nav);
         var elem = document.getElementById(name);
         if (elem) {
             var elemName = elem.nodeName.toUpperCase();
@@ -99,7 +99,7 @@
     }
 
     function dismissChangeRelatedObjectPopup(win, objId, newRepr, newId) {
-        var id = windowname_to_id(win.name).replace(/^edit_/, '');
+        var id = windowname_to_id(win.nav).replace(/^edit_/, '');
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
         selects.find('option').each(function() {
@@ -118,7 +118,7 @@
     }
 
     function dismissDeleteRelatedObjectPopup(win, objId) {
-        var id = windowname_to_id(win.name).replace(/^delete_/, '');
+        var id = windowname_to_id(win.nav).replace(/^delete_/, '');
         var selectsSelector = interpolate('#%s, #%s_from, #%s_to', [id, id, id]);
         var selects = $(selectsSelector);
         selects.find('option').each(function() {

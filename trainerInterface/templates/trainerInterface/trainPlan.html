@@ -1,0 +1,57 @@
+{% extends "trainerInterface/nav.html" %}
+{% block content %}
+    <div class="table-responsive">
+    {% for phase, phaseData in phases %}
+        <div class="card" onclick="hideItem('phase {{ phase }}')">Phase {{ phase }}</div>
+
+            {% for week in phaseData %}
+                <div id = "phase {{ phase }}" class="card" onclick="hideTable('phase {{ phase }} week {{ week }}')">Week {{ week }}</div>
+                    <table id = "phase {{ phase }} week {{ week }}" class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Exercise</th>
+                                <th>Reps</th>
+                                <th>Weight</th>
+                                <th>Sets</th>
+                                <th>Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                            </tr>
+                        </tbody>
+                    </table>
+            {% endfor %}
+    {% endfor %}
+    <div id="Training_Container"></div>
+{#    <script>#}
+{#        for (phase1 in {{ phases }}){#}
+{#            console.log(phase1)#}
+            {#var new_phase = document.createElement('div');#}
+            {#new_phase.className = "card";#}
+            {#new_phase.innerHTML = "phase";#}
+            {#document.getElementById("Training_Container").append(phase);#}
+{#        }#}
+{##}
+{#    </script>#}
+    </div>
+    <script>
+        function hideItem(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+        function hideTable(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none") {
+            x.style.display = "table";
+          } else {
+            x.style.display = "none";
+          }
+        }
+    </script>
+{% endblock content%}

@@ -5,3 +5,4 @@ gunicorn
 Pillow
 whitenoise
 openpyxl
+django-bootstrap4

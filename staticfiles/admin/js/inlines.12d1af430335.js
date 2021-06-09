@@ -166,11 +166,11 @@
             // instantiate a new SelectFilter instance for it.
             if (typeof SelectFilter !== 'undefined') {
                 $('.selectfilter').each(function(index, value) {
-                    var namearr = value.name.split('-');
+                    var namearr = value.nav.split('-');
                     SelectFilter.init(value.id, namearr[namearr.length - 1], false);
                 });
                 $('.selectfilterstacked').each(function(index, value) {
-                    var namearr = value.name.split('-');
+                    var namearr = value.nav.split('-');
                     SelectFilter.init(value.id, namearr[namearr.length - 1], true);
                 });
             }
@@ -233,11 +233,11 @@
             // If any SelectFilter widgets were added, instantiate a new instance.
             if (typeof SelectFilter !== "undefined") {
                 $(".selectfilter").each(function(index, value) {
-                    var namearr = value.name.split('-');
+                    var namearr = value.nav.split('-');
                     SelectFilter.init(value.id, namearr[namearr.length - 1], false);
                 });
                 $(".selectfilterstacked").each(function(index, value) {
-                    var namearr = value.name.split('-');
+                    var namearr = value.nav.split('-');
                     SelectFilter.init(value.id, namearr[namearr.length - 1], true);
                 });
             }
@@ -285,11 +285,11 @@
                 selector;
             switch(data.inlineType) {
             case "stacked":
-                selector = inlineOptions.name + "-group .inline-related";
+                selector = inlineOptions.nav + "-group .inline-related";
                 $(selector).stackedFormset(selector, inlineOptions.options);
                 break;
             case "tabular":
-                selector = inlineOptions.name + "-group .tabular.inline-related tbody:first > tr";
+                selector = inlineOptions.nav + "-group .tabular.inline-related tbody:first > tr";
                 $(selector).tabularFormset(selector, inlineOptions.options);
                 break;
             }

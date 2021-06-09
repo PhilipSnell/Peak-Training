@@ -84,6 +84,10 @@ class Trainer(models.Model):
     trainer = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='Trainer')
     clients = models.ManyToManyField(Account, related_name='Clients')
 
+    def __str__(self):
+
+        return self.trainer.email
+
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
     sets = models.IntegerField()
