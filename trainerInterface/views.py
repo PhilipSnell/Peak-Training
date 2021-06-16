@@ -48,11 +48,11 @@ def trainplan(request):
     if "selected_client" in request.session:
         form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
         form.fields["selected_client"].empty_label = None
+        phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     else:
         form = UserForm()
+        phases = None
 
-    trainingEntries = TrainingEntry.objects.all()
-    phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     addform = AddTrainingEntry()
     return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform})
 
@@ -158,7 +158,6 @@ def addEntry(request):
             response = {
                 'msg': 'Your form has not been saved'  # response message
             }
-
     return redirect('trainplan')
 
 

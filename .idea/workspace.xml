@@ -2,50 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bee013e9-2b64-42f9-989d-a55128fb29bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/assets/js/jquery.bootstrap.modal.forms.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/jquery.bootstrap.modal.forms.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/templatetags/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/templatetags/trainPlan_extras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0002_exercisetype_trainingentry.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0003_trainingentry_day.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0004_remove_trainingentry_exercise.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0005_trainingentry_exercise.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0006_set_entry.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0007_auto_20210521_1817.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0008_auto_20210521_2040.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0009_message.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0010_auto_20210529_2116.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0011_trainer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0012_account_is_staff.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0013_auto_20210601_2029.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0014_auto_20210601_2140.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0015_trainer_selected_client.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0016_auto_20210604_1557.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0017_auto_20210604_1558.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0018_auto_20210604_1559.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0019_auto_20210604_1602.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0020_auto_20210604_1604.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0021_auto_20210604_1606.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/migrations/0022_auto_20210604_1607.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/migrations/0002_delete_message.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/nav.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/css/nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/css/nav.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/form.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainerInterface/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/xcell/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/xcell/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,11 +31,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret line="160" selection-start-line="160" selection-end-line="160" />
+            <state relative-caret-position="867">
+              <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -87,7 +46,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/trainerInterface/form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
+            <state relative-caret-position="559">
               <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
@@ -108,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="125" selection-start-line="125" selection-end-line="125" />
+            <state relative-caret-position="219">
+              <caret line="74" column="32" lean-forward="true" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -176,12 +135,12 @@
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" />
         <option value="$PROJECT_DIR$/trainerInterface/templatetags/trainPlan_extras.py" />
         <option value="$PROJECT_DIR$/api/admin.py" />
-        <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/xcell/settings.py" />
         <option value="$PROJECT_DIR$/trainerInterface/urls.py" />
         <option value="$PROJECT_DIR$/trainerInterface/form.py" />
         <option value="$PROJECT_DIR$/trainerInterface/views.py" />
+        <option value="$PROJECT_DIR$/api/models.py" />
       </list>
     </option>
   </component>
@@ -352,7 +311,7 @@
       <workItem from="1622800350832" duration="2833000" />
       <workItem from="1622805632898" duration="7912000" />
       <workItem from="1622816396889" duration="56196000" />
-      <workItem from="1623354096270" duration="44305000" />
+      <workItem from="1623354096270" duration="47352000" />
     </task>
     <task id="LOCAL-00001" summary="allowed hosts to all">
       <created>1620164311763</created>
@@ -501,11 +460,18 @@
       <option name="project" value="LOCAL" />
       <updated>1621593626481</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="trainer interface for adding training plan">
+      <created>1623833440363</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1623833440364</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273893000" />
+    <option name="totallyTimeSpent" value="276940000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -556,7 +522,8 @@
     <MESSAGE value="changed image html" />
     <MESSAGE value="added image to exercise api" />
     <MESSAGE value="added api interface for recording set entrys" />
-    <option name="LAST_COMMIT_MESSAGE" value="added api interface for recording set entrys" />
+    <MESSAGE value="trainer interface for adding training plan" />
+    <option name="LAST_COMMIT_MESSAGE" value="trainer interface for adding training plan" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/trainerInterface/templates/registration/login/css/style.css" />
@@ -801,16 +768,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="125" selection-start-line="125" selection-end-line="125" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -821,9 +778,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/form.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
+        <state relative-caret-position="559">
           <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
@@ -831,12 +798,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
+    <entry file="file://$PROJECT_DIR$/api/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret line="160" selection-start-line="160" selection-end-line="160" />
+        <state relative-caret-position="219">
+          <caret line="74" column="32" lean-forward="true" selection-start-line="74" selection-start-column="32" selection-end-line="74" selection-end-column="32" />
           <folding>
-            <element signature="e#0#45#0" expanded="true" />
+            <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>

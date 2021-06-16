@@ -120,8 +120,12 @@
         <div class="modal-content"></div>
       </div>
     </div>
-
-    <div class="buttonwrap" style="text-align: center;"><a class="addPhase" href="{% url 'add_phase' %}">add phase</a></div>
+    {% if request.session.selected_client is None %}
+        <div>Select a client</div>
+        
+    {% else %}
+        <div class="buttonwrap" style="text-align: center;"><a class="addPhase" href="{% url 'add_phase' %}">add phase</a></div>
+    {% endif %}
     <div class="table-responsive" id = "phase_container" >
     {% for phase in phases reversed %}
         <div class="card phase" onclick="hideItem('phase {{ phase.phase }}')">Phase {{ phase.phase }}</div>
