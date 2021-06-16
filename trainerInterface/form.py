@@ -33,7 +33,7 @@ class AddExercise(forms.Form):
 
 
 class AddTrainingEntry(BSModalModelForm):
-    exercise = forms.ModelChoiceField(queryset=ExerciseType.objects.all(), widget=forms.Select(attrs={'id': 'exercisefield'}))
+    exercise = forms.ModelChoiceField(queryset=ExerciseType.objects.order_by('name'), widget=forms.Select(attrs={'id': 'exercisefield'}))
     reps = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'repfield'}))
     weight = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'weightfield'}))
     sets = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'setfield'}))
