@@ -5,3 +5,5 @@ gunicorn
 Pillow
 whitenoise
 openpyxl
+django-bootstrap4
+django-bootstrap-modal-forms

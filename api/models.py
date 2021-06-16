@@ -83,6 +83,9 @@ class Account(AbstractBaseUser):
 class Trainer(models.Model):
     trainer = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='Trainer')
     clients = models.ManyToManyField(Account, related_name='Clients')
+    def __str__(self):
+
+        return self.trainer.email
 
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
@@ -108,14 +111,44 @@ class ExerciseType(models.Model):
 
 
 class TrainingEntry(models.Model):
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
     phase = models.IntegerField()
     week = models.IntegerField()
     day = models.IntegerField()
     reps = models.CharField(max_length=300)
     weight = models.CharField(max_length=300)
     sets = models.IntegerField()
+    comment = models.CharField(max_length=300, blank=True)
     exercise = models.ForeignKey(ExerciseType, on_delete=models.CASCADE, related_name='Exercise')
+
+    def __str__(self):
+        return "Phase " + str(self.phase) + " Week " + str(self.week) + " Day " + str(self.day) + " " + str(self.exercise.name)
+
+
+class Day(models.Model):
+    phase = models.IntegerField()
+    week = models.IntegerField()
+    day = models.IntegerField()
+    entrys = models.ManyToManyField(TrainingEntry, 'entry', blank=True)
+
+    def __str__(self):
+        return "Phase " + str(self.phase) + " Week " + str(self.week) + " Day " + str(self.day)
+
+class Week(models.Model):
+    phase = models.IntegerField()
+    week = models.IntegerField()
+    days = models.ManyToManyField(Day, 'days', blank=True)
+
+    def __str__(self):
+        return "Phase " + str(self.phase) + " Week " + str(self.week)
+
+
+class Phase(models.Model):
+    phase = models.IntegerField()
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
+    weeks = models.ManyToManyField(Week, related_name='weeks', blank=True)
+
+    def __str__(self):
+        return "Phase "+str(self.phase)
 
 
 class Message(models.Model):

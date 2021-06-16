@@ -486,22 +486,22 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
                 s = a[1];return r = S.Hooks.cleanRootPropertyValue(i, r), n = r.toString().match(S.RegEx.valueSplit), n[s] = t, o = n.join(" ");
           }return r;
         } }, Normalizations: { registered: { clip: function (e, t, r) {
-            switch (e) {case "name":
+            switch (e) {case "nav.css":
                 return "clip";case "extract":
                 var a;return S.RegEx.wrappedValueAlreadyExtracted.test(r) ? a = r : (a = r.toString().match(S.RegEx.valueUnwrap), a = a ? a[1].replace(/,(\s+)?/g, " ") : r), a;case "inject":
                 return "rect(" + r + ")";}
           }, blur: function (e, t, r) {
-            switch (e) {case "name":
+            switch (e) {case "nav.css":
                 return b.State.isFirefox ? "filter" : "-webkit-filter";case "extract":
                 var a = parseFloat(r);if (!a && 0 !== a) {
                   var n = r.toString().match(/blur\(([0-9]+[A-z]+)\)/i);a = n ? n[1] : 0;
                 }return a;case "inject":
                 return parseFloat(r) ? "blur(" + r + ")" : "none";}
           }, opacity: function (e, t, r) {
-            if (8 >= d) switch (e) {case "name":
+            if (8 >= d) switch (e) {case "nav.css":
                 return "filter";case "extract":
                 var a = r.toString().match(/alpha\(opacity=(.*)\)/i);return r = a ? a[1] / 100 : 1;case "inject":
-                return t.style.zoom = 1, parseFloat(r) >= 1 ? "" : "alpha(opacity=" + parseInt(100 * parseFloat(r), 10) + ")";} else switch (e) {case "name":
+                return t.style.zoom = 1, parseFloat(r) >= 1 ? "" : "alpha(opacity=" + parseInt(100 * parseFloat(r), 10) + ")";} else switch (e) {case "nav.css":
                 return "opacity";case "extract":
                 return r;case "inject":
                 return r;}
@@ -509,7 +509,7 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
           9 >= d || b.State.isGingerbread || (S.Lists.transformsBase = S.Lists.transformsBase.concat(S.Lists.transforms3D));for (var e = 0; e < S.Lists.transformsBase.length; e++) {
             !function () {
               var t = S.Lists.transformsBase[e];S.Normalizations.registered[t] = function (e, r, n) {
-                switch (e) {case "name":
+                switch (e) {case "nav.css":
                     return "transform";case "extract":
                     return i(r) === a || i(r).transformCache[t] === a ? /^scale/i.test(t) ? 1 : 0 : i(r).transformCache[t].replace(/[()]/g, "");case "inject":
                     var o = !1;switch (t.substr(0, t.length - 1)) {case "translate":
@@ -522,7 +522,7 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
           }for (var e = 0; e < S.Lists.colors.length; e++) {
             !function () {
               var t = S.Lists.colors[e];S.Normalizations.registered[t] = function (e, r, n) {
-                switch (e) {case "name":
+                switch (e) {case "nav.css":
                     return t;case "extract":
                     var o;if (S.RegEx.wrappedValueAlreadyExtracted.test(n)) o = n;else {
                       var i,
@@ -581,7 +581,7 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
           var u = r,
               c = S.Hooks.getRoot(u);n === a && (n = S.getPropertyValue(e, S.Names.prefixCheck(c)[0])), S.Normalizations.registered[c] && (n = S.Normalizations.registered[c]("extract", e, n)), l = S.Hooks.extractValue(u, n);
         } else if (S.Normalizations.registered[r]) {
-          var p, g;p = S.Normalizations.registered[r]("name", e), "transform" !== p && (g = s(e, S.Names.prefixCheck(p)[0]), S.Values.isCSSNullValue(g) && S.Hooks.templates[r] && (g = S.Hooks.templates[r][1])), l = S.Normalizations.registered[r]("extract", e, g);
+          var p, g;p = S.Normalizations.registered[r]("nav.css", e), "transform" !== p && (g = s(e, S.Names.prefixCheck(p)[0]), S.Values.isCSSNullValue(g) && S.Hooks.templates[r] && (g = S.Hooks.templates[r][1])), l = S.Normalizations.registered[r]("extract", e, g);
         }if (!/^[\d-]/.test(l)) if (i(e) && i(e).isSVG && S.Names.SVGAttribute(r)) {
           if (/^(height|width)$/i.test(r)) try {
             l = e.getBBox()[r];
@@ -590,11 +590,11 @@ jQuery.Velocity ? console.log("Velocity is already loaded. You may be needlessly
           } else l = e.getAttribute(r);
         } else l = s(e, S.Names.prefixCheck(r)[0]);return S.Values.isCSSNullValue(l) && (l = 0), b.debug >= 2 && console.log("Get " + r + ": " + l), l;
       }, setPropertyValue: function (e, r, a, n, o) {
-        var s = r;if ("scroll" === r) o.container ? o.container["scroll" + o.direction] = a : "Left" === o.direction ? t.scrollTo(a, o.alternateValue) : t.scrollTo(o.alternateValue, a);else if (S.Normalizations.registered[r] && "transform" === S.Normalizations.registered[r]("name", e)) S.Normalizations.registered[r]("inject", e, a), s = "transform", a = i(e).transformCache[r];else {
+        var s = r;if ("scroll" === r) o.container ? o.container["scroll" + o.direction] = a : "Left" === o.direction ? t.scrollTo(a, o.alternateValue) : t.scrollTo(o.alternateValue, a);else if (S.Normalizations.registered[r] && "transform" === S.Normalizations.registered[r]("nav.css", e)) S.Normalizations.registered[r]("inject", e, a), s = "transform", a = i(e).transformCache[r];else {
           if (S.Hooks.registered[r]) {
             var l = r,
                 u = S.Hooks.getRoot(r);n = n || S.getPropertyValue(e, u), a = S.Hooks.injectValue(l, a, n), r = u;
-          }if (S.Normalizations.registered[r] && (a = S.Normalizations.registered[r]("inject", e, a), r = S.Normalizations.registered[r]("name", e)), s = S.Names.prefixCheck(r)[0], 8 >= d) try {
+          }if (S.Normalizations.registered[r] && (a = S.Normalizations.registered[r]("inject", e, a), r = S.Normalizations.registered[r]("nav.css", e)), s = S.Names.prefixCheck(r)[0], 8 >= d) try {
             e.style[s] = a;
           } catch (c) {
             b.debug && console.log("Browser does not support [" + a + "] for [" + s + "]");

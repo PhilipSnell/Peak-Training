@@ -5121,8 +5121,8 @@ S2.define('select2/core',[
 
     if ($element.attr('id') != null) {
       id = $element.attr('id');
-    } else if ($element.attr('name') != null) {
-      id = $element.attr('name') + '-' + Utils.generateChars(2);
+    } else if ($element.attr('nav.css') != null) {
+      id = $element.attr('nav.css') + '-' + Utils.generateChars(2);
     } else {
       id = Utils.generateChars(4);
     }

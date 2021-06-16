@@ -1,0 +1,232 @@
+{% extends "trainerInterface/nav.html" %}
+{% load trainPlan_extras %}
+{% load static %}
+
+{% block content %}
+
+
+    <script type="text/javascript">
+        var phase = 0;
+        var week = 0;
+        var day = 0;
+        function loadState(id){
+            var value = localStorage.getItem(id);
+            var x = document.getElementById(id);
+            x.style.display = value;
+        }
+        function hideItem(id) {
+
+          var x = document.getElementById(id);
+          var value
+          console.log(x.style.display)
+          if (x.style.display === "none" || x.style.display === "") {
+            value = "block";
+          } else {
+            value = "none";
+          }
+          x.style.display = value;
+          localStorage.setItem(id, value)
+        }
+        function hideTable(id) {
+          var x = document.getElementById(id);
+          if (x.style.display === "none" || x.style.display) {
+            x.style.display = "table";
+          } else {
+            x.style.display = "none";
+          }
+        }
+        function toggleAddEntry(clic_phase, clic_week, clic_day) {
+            phase = clic_phase;
+            week = clic_week;
+            day = clic_day;
+            var x = document.getElementById("add-entry-modal");
+            if (x.style.display === "none" || !x.style.display) {
+              x.style.display = "flex";
+            } else {
+              x.style.display = "none";
+            }
+        };
+
+    </script>
+    <style>
+        .collapsed123{
+            display: none;
+        }
+        .card{
+            margin-top: 0px;
+            margin-bottom: 10px;
+        }
+        .phase{
+            background: grey;
+        }
+        .week{
+            margin-left: 20px;
+            background: lightgrey;
+        }
+        .table{
+        }
+        caption{
+            caption-side: top;
+        }
+/*         div.center_button{
+            text-align: center;
+        } */
+        div.buttonwrap{
+        
+            margin-bottom: 5px;
+        }
+        button.addPhase{
+            margin-top: 10px;
+            margin-bottom: 0;
+            margin-left:auto;
+            margin-right:50%;
+            display:block;
+        }
+        .bg-modal{
+            left:   0;
+            top:    0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100vh - 45px);
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content{
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border-radius: 5px;
+            position: relative;
+        }
+        .close_addentry{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 32px;
+            rotate: 45;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+        }
+
+
+    </style>
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <div class="buttonwrap" style="text-align: center;"><a class="addPhase" href="{% url 'add_phase' %}">add phase</a></div>
+    <div class="table-responsive" id = "phase_container" >
+    {% for phase in phases reversed %}
+        <div class="card phase" onclick="hideItem('phase {{ phase.phase }}')">Phase {{ phase.phase }}</div>
+            <div class = "collapsed123" id = "phase {{ phase.phase }}">
+                <script>loadState("phase {{ phase.phase }}")</script>
+                <div class="buttonwrap" style="text-align: center;"><a class="addWeek" href="{% url 'add_week' phase.id%}">add week</a></div>
+                {% for week in phase.weeks.all reversed %}
+
+                    <div  class="card week" onclick="hideItem('phase {{ phase.phase }} week {{ week.week }}')">Week {{ week.week }}</div>
+                    <div class = "collapsed123" id = "phase {{ phase.phase }} week {{ week.week }}">
+                        <script>loadState("phase {{ phase.phase }} week {{ week.week }}")</script>
+                        <div class="buttonwrap" style="text-align: center;"><a class="addDay" href="{% url 'add_day' phase.id week.id%}">add day</a></div>
+                        {% for day in week.days.all %}
+                            <table class="table table-striped table-sm collapsed">
+                                <caption>Day {{ day.day }}</caption>
+                                <thead>
+                                    <tr>
+                                        <th>Exercise</th>
+                                        <th>Reps</th>
+                                        <th>Weight</th>
+                                        <th>Sets</th>
+                                        <th>Comment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for entry in day.entrys.all %}
+                                    <tr>
+                                        <td>{{ entry.exercise.name }}</td>
+                                        <td>{{ entry.reps }}</td>
+                                        <td>{{ entry.weight }}</td>
+                                        <td>{{ entry.sets }}</td>
+                                        <td>{{ entry.comment }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                    <tr><td colspan="5">
+                                        <center><button id="add-entry" class="btn btn-secondary" type="button" name="button" onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">Add Entry</button></center>
+                                    </td></tr>
+                                </tbody>
+                            </table>
+                        {% endfor %}
+                    </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+<div class="bg-modal" id ="add-entry-modal"style="display: none;" script="alert('The div was clicked!');">
+    <div class="modal-content">
+        <div class="close_addentry">+</div>
+        <h3>Add Entry</h3>
+        <form id = "add-entry-form" class = "add-entry-form" method="post">
+            {{ addform }}
+            <input  type="submit" name="submit" value="submit">
+        </form>
+        
+    </div>
+</div>
+    <script src="{% static '/assets/js/jquery.min.js' %}"></script>
+    <script src="/static/assets/js/popper.js"></script>
+    <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
+    <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+
+    <script type="text/javascript">
+
+        $('.close_addentry').on('click', function(e) {
+          var x = document.getElementById("add-entry-modal");
+          x.style.display = "none";
+        });
+
+        $('.bg-modal').on('click', function(e) {
+          if (e.target !== this)
+            return;
+          var x = document.getElementById("add-entry-modal");
+          x.style.display = "none";
+        });
+        $('.add-entry-form').on('submit', function(e){
+         e.preventDefault();
+        
+           $.ajax({
+                type : "POST", 
+                url: "{% url 'add_entry' %}",
+                data: {
+
+                 phase : phase,
+                 week: week,
+                 day: day,
+                 exercise : $('#exercisefield option:selected').text(),
+                 reps : $('#repfield').val(),
+                 weight: $('#weightfield').val(), 
+                 sets: $('#setfield').val(),
+                 comment: $('#commentfield').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                   
+                },
+                failure: function() {   
+                }
+            });
+           window.location.reload();
+           var x = document.getElementById("add-entry-modal");
+           x.style.display = "none";
+        });
+    </script>
+
+
+    
+{% endblock content%}
+

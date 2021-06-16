@@ -33,6 +33,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'bootstrap_modal_forms',
+    'bootstrap4',
     'trainerInterface',
     'chat',
     'api',
