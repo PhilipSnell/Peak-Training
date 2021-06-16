@@ -70,7 +70,7 @@ class Account(AbstractBaseUser):
     last_name = models.CharField(max_length=15)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username','first_name','last_name']
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
 
     objects = MyAccountManager()
     def __str__(self):
@@ -78,8 +78,10 @@ class Account(AbstractBaseUser):
 
     def has_perm(self,perm,obj=None):
         return self.is_admin
+
     def has_module_perms(self, app_label):
         return True
+
 class Trainer(models.Model):
     trainer = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='Trainer')
     clients = models.ManyToManyField(Account, related_name='Clients')

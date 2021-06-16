@@ -210,7 +210,7 @@ def exercises(request):
                     exercise.save()
                     print("exercise " + row[0].value + " updated")
         if 'addExercise' in request.POST:
-            print(request.POST.get("image"))
+
             addedExercise = AddExercise(request.POST, request.FILES)
             if addedExercise.is_valid():
                 name = addedExercise.cleaned_data.get("name")
