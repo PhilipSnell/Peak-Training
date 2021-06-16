@@ -10,7 +10,7 @@ class AddTrainerForm(forms.Form):
     username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'username_input'}))
     first_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'fname_input'}))
     last_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'lname_input'}))
-    email = forms.EmailField(max_length=20, widget=forms.TextInput(attrs={'class': 'email_input'}))
+    email = forms.EmailField(max_length=50, widget=forms.TextInput(attrs={'class': 'email_input'}))
     password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'class': 'pword_input'}))
 
     def create(self):
