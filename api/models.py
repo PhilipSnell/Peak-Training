@@ -113,6 +113,7 @@ class ExerciseType(models.Model):
 
 
 class TrainingEntry(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='client')
     phase = models.IntegerField()
     week = models.IntegerField()
     day = models.IntegerField()
