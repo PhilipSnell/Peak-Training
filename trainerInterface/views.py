@@ -126,16 +126,9 @@ def addEntry(request):
         sets = request.POST.get('sets', None)
         comment = request.POST.get('comment', None)
 
-        print("phase "+phase)
-        print("week " + week)
-        print("day " + day)
-        print("exercise " + exercise)
-        print("reps "+ reps)
-        print("weight " + weight)
-        print("sets " + sets)
-        print("comment "+comment)
         try:
             train_entry = TrainingEntry(
+                user=User.objects.get(email=request.session['selected_client']),
                 phase = phase,
                 week = week,
                 day = day,
