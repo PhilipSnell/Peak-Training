@@ -18,6 +18,9 @@ class ExerciseAdmin(admin.ModelAdmin):
     search_fields = ("name","description")
 
 
+admin.site.register(Day)
+admin.site.register(Week)
+admin.site.register(Phase)
 admin.site.register(Trainer)
 admin.site.register(Set_Entry)
 admin.site.register(Account, AccountAdmin)

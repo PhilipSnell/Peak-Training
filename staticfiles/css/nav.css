@@ -74,6 +74,17 @@ body {
  * Navbar
  */
 
+.dropdown-form {
+  padding-right: .25rem;
+}
+.dropdown {
+  text-decoration-color: #00acc1;
+  height : 35px;
+  border-radius: .5rem;
+  background-color: #424242;
+  color: #bec109;
+}
+
 .navbar-brand {
   padding-top: .75rem;
   padding-bottom: .75rem;
@@ -99,6 +110,10 @@ body {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
 }
 
+input[name="change_client"] {
+  display: none;
+  visibility: hidden;
+}
 /*
  * Utilities
  */

@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 from api.models import ExerciseType
 from .form import *
 import openpyxl
+from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+from bootstrap_modal_forms.generic import BSModalCreateView
 User = get_user_model()
 from collections import defaultdict
 
@@ -49,13 +52,9 @@ def trainplan(request):
         form = UserForm()
 
     trainingEntries = TrainingEntry.objects.all()
-    phases = defaultdict(lambda: defaultdict(list))
-    for entry in trainingEntries:
-        #phases[entry.phase].append(entry.week)
-        phases[entry.phase][entry.week].append(entry)
-    print(phases)
-
-    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases.items()})
+    phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
+    addform = AddTrainingEntry()
+    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -64,6 +63,104 @@ def deleteExercise(request, id=None):
     object.delete()
 
     return redirect('exercises')
+
+
+def addPhase(request):
+    objects = Phase.objects.all()
+    currPhase = 0
+    for phase in objects:
+        if  currPhase< phase.phase:
+            currPhase = phase.phase
+
+    newPhase = Phase(phase = currPhase+1,
+                     user = User.objects.get(email=request.session['selected_client']))
+    newPhase.save()
+
+    return redirect('trainplan')
+
+
+def addWeek(request, phaseID=None):
+    phase_selected = Phase.objects.get(id=phaseID)
+    objects = Week.objects.filter(phase=phase_selected.phase)
+    currWeek= 0
+    for week in objects:
+        if currWeek < week.week:
+            currWeek = week.week
+
+    newWeek = Week(week=currWeek+1,
+                   phase=phase_selected.phase)
+    newWeek.save()
+    phase_selected.weeks.add(newWeek)
+
+    return redirect('trainplan')
+
+
+def addDay(request, phaseID=None, weekID=None):
+    phase_selected = Phase.objects.get(id=phaseID)
+    week_selected = Week.objects.get(id=weekID)
+    objects = Day.objects.filter(phase=phase_selected.phase, week=week_selected.week)
+    currDay= 0
+    for day in objects:
+        if currDay < day.day:
+            currDay = day.day
+
+    newDay = Day(day=currDay+1,
+                 phase=phase_selected.phase,
+                 week=week_selected.week)
+    newDay.save()
+    week_selected.days.add(newDay)
+
+    return redirect('trainplan')
+
+
+
+def addEntry(request):
+
+    if request.is_ajax():
+        phase = request.POST.get('phase', None)
+        week = request.POST.get('week', None)
+        day = request.POST.get('day', None)
+        exercise = request.POST.get('exercise', None)
+        reps = request.POST.get('reps', None)
+        weight = request.POST.get('weight', None)
+        sets = request.POST.get('sets', None)
+        comment = request.POST.get('comment', None)
+
+        print("phase "+phase)
+        print("week " + week)
+        print("day " + day)
+        print("exercise " + exercise)
+        print("reps "+ reps)
+        print("weight " + weight)
+        print("sets " + sets)
+        print("comment "+comment)
+        try:
+            train_entry = TrainingEntry(
+                phase = phase,
+                week = week,
+                day = day,
+                exercise = ExerciseType.objects.get(name=exercise),
+                reps = reps,
+                weight = weight,
+                sets = sets,
+                comment = comment,
+            )
+            train_entry.save()
+            print("saved")
+            response = {
+                'msg': 'Your form has been submitted successfully'  # response message
+            }
+            day = Day.objects.get(phase=phase,week=week,day=day)
+            day.entrys.add(train_entry)
+
+        except:
+            print("not saved")
+            response = {
+                'msg': 'Your form has not been saved'  # response message
+            }
+
+    return redirect('trainplan')
+
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')

@@ -2,65 +2,47 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bee013e9-2b64-42f9-989d-a55128fb29bd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/static/assets/js/holder.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/holder.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/ie-emulation-modes-warning.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/ie10-viewport-bug-workaround.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/assets/js/popper.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/css/nav.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/form.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainProg.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/assets/js/jquery.bootstrap.modal.forms.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/assets/js/jquery.bootstrap.modal.forms.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainerInterface/templatetags/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/trainerInterface/templatetags/trainPlan_extras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0002_exercisetype_trainingentry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0003_trainingentry_day.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0004_remove_trainingentry_exercise.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0005_trainingentry_exercise.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0006_set_entry.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0007_auto_20210521_1817.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0008_auto_20210521_2040.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0009_message.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0010_auto_20210529_2116.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0011_trainer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0012_account_is_staff.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0013_auto_20210601_2029.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0014_auto_20210601_2140.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0015_trainer_selected_client.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0016_auto_20210604_1557.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0017_auto_20210604_1558.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0018_auto_20210604_1559.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0019_auto_20210604_1602.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0020_auto_20210604_1604.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0021_auto_20210604_1606.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/migrations/0022_auto_20210604_1607.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/migrations/0002_delete_message.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/materialize.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/materialize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/materialize.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/materialize.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.32ea9335ce47.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.32ea9335ce47.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/SelectFilter2.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.efa703f6f0b3.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.efa703f6f0b3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/DateTimeShortcuts.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/RelatedObjectLookups.ea0683bea064.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/RelatedObjectLookups.ea0683bea064.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/admin/RelatedObjectLookups.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/admin/RelatedObjectLookups.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.12d1af430335.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.12d1af430335.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.min.4d23f8660b21.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.min.4d23f8660b21.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/inlines.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/inlines.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/prepopulate_init.0d3b53c37074.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/prepopulate_init.0d3b53c37074.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/prepopulate_init.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/prepopulate_init.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.23c7c5d2d131.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.23c7c5d2d131.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.dc5e7f18c8d3.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.dc5e7f18c8d3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.a95323cb4760.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.a95323cb4760.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.min.da607360bcc6.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.min.da607360bcc6.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/admin/js/vendor/select2/select2.full.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/js/materialize.6c0a2223a1da.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/js/materialize.6c0a2223a1da.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/js/materialize.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/js/materialize.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/js/materialize.min.e98efeec88f7.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/js/materialize.min.e98efeec88f7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/js/materialize.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/js/materialize.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/api.c9743eab7a4f.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/api.c9743eab7a4f.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/highlight.pack.479b5f21dcba.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/highlight.pack.479b5f21dcba.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/highlight.pack.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/docs/js/highlight.pack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/coreapi-0.1.1.8851fb9336c9.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/coreapi-0.1.1.8851fb9336c9.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/coreapi-0.1.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/coreapi-0.1.1.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/default.5b08897dbdc3.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/default.5b08897dbdc3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/default.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/default.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/jquery-3.5.1.min.dc5e7f18c8d3.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/jquery-3.5.1.min.dc5e7f18c8d3.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/staticfiles/rest_framework/js/jquery-3.5.1.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/rest_framework/js/jquery-3.5.1.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/dashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/dashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/home.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/upload.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/nav.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/staticfiles/css/nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/staticfiles/css/nav.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainerInterface/form.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/form.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainerInterface/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trainerInterface/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/trainerInterface/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/xcell/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/xcell/settings.py" afterDir="false" />
@@ -90,41 +72,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="61" column="80" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="61" selection-end-column="80" />
+            <state>
+              <caret line="160" selection-start-line="160" selection-end-line="160" />
               <folding>
-                <element signature="e#2283#2316#0#HTML" expanded="true" />
+                <element signature="e#0#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/trainerInterface/form.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="307">
-              <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+            <state relative-caret-position="321">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
+        <entry file="file://$PROJECT_DIR$/trainerInterface/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="57" column="100" selection-start-line="57" selection-start-column="100" selection-end-line="57" selection-end-column="100" />
+            <state relative-caret-position="272">
+              <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+              <folding>
+                <element signature="e#1#44#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/api/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="125" selection-start-line="125" selection-end-line="125" />
+              <folding>
+                <element signature="e#0#28#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,8 +126,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="Python Script" />
         <option value="HTML File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -145,6 +136,7 @@
       <find>is_st</find>
       <find>is_staff</find>
       <find>content</find>
+      <find>session</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -173,22 +165,23 @@
         <option value="$PROJECT_DIR$/static/css/login.css" />
         <option value="$PROJECT_DIR$/trainerInterface/forms.py" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/home.html" />
-        <option value="$PROJECT_DIR$/xcell/settings.py" />
-        <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/upload.html" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainProg.html" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/dashboard.html" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/account_context_form.html" />
         <option value="$PROJECT_DIR$/trainerInterface/account_context_form.py" />
-        <option value="$PROJECT_DIR$/api/admin.py" />
-        <option value="$PROJECT_DIR$/trainerInterface/urls.py" />
         <option value="$PROJECT_DIR$/static/css/nav.css" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html" />
-        <option value="$PROJECT_DIR$/trainerInterface/form.py" />
-        <option value="$PROJECT_DIR$/api/models.py" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html" />
-        <option value="$PROJECT_DIR$/trainerInterface/views.py" />
         <option value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html" />
+        <option value="$PROJECT_DIR$/trainerInterface/templatetags/trainPlan_extras.py" />
+        <option value="$PROJECT_DIR$/api/admin.py" />
+        <option value="$PROJECT_DIR$/api/models.py" />
+        <option value="$PROJECT_DIR$/requirements.txt" />
+        <option value="$PROJECT_DIR$/xcell/settings.py" />
+        <option value="$PROJECT_DIR$/trainerInterface/urls.py" />
+        <option value="$PROJECT_DIR$/trainerInterface/form.py" />
+        <option value="$PROJECT_DIR$/trainerInterface/views.py" />
       </list>
     </option>
   </component>
@@ -203,7 +196,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -219,7 +211,8 @@
             <path>
               <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
               <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
-              <item name="chat" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
@@ -229,6 +222,25 @@
             <path>
               <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
               <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
+              <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
               <item name="trainerInterface" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -240,21 +252,20 @@
             <path>
               <item name="xcell" type="b2602c69:ProjectViewProjectNode" />
               <item name="xcellfitness" type="462c0819:PsiDirectoryNode" />
-              <item name="trainerInterface" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="trainerInterface" type="462c0819:PsiDirectoryNode" />
+              <item name="xcell" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/trainerInterface/templates/trainerInterface" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -267,19 +278,19 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static\js" />
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templatetags" />
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\trainerInterface" />
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\registration" />
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static\css" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static\assets\js" />
       <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static\css" />
       <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static" />
       <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\staticfiles" />
       <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\registration\login" />
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\registration" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\trainerInterface" />
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\registration" />
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static\css" />
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\trainerInterface\templates\login" />
-      <recent name="C:\Users\Phil\PycharmProjects\xcellfitness\static" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -340,7 +351,8 @@
       <workItem from="1622752045649" duration="3427000" />
       <workItem from="1622800350832" duration="2833000" />
       <workItem from="1622805632898" duration="7912000" />
-      <workItem from="1622816396889" duration="55715000" />
+      <workItem from="1622816396889" duration="56196000" />
+      <workItem from="1623354096270" duration="44305000" />
     </task>
     <task id="LOCAL-00001" summary="allowed hosts to all">
       <created>1620164311763</created>
@@ -493,13 +505,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="229107000" />
+    <option name="totallyTimeSpent" value="273893000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21860817" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.22163388" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -547,67 +559,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="added api interface for recording set entrys" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/media/images/celeb_cIjbUbB.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python39/Lib/site-packages/django/contrib/auth/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="40" column="6" selection-start-line="40" selection-start-column="6" selection-end-line="40" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/templates/image_display.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="65" selection-start-line="2" selection-start-column="65" selection-end-line="2" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat/templates/chat/register.html" />
-    <entry file="file://$PROJECT_DIR$/chat/templates/chat/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="34" column="23" selection-start-line="34" selection-start-column="23" selection-end-line="34" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat/templates/chat/messages.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="9" lean-forward="true" selection-start-line="22" selection-start-column="9" selection-end-line="22" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat/templates/chat/chat.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="58" column="23" selection-start-line="58" selection-start-column="23" selection-end-line="58" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/chat/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="67" column="30" lean-forward="true" selection-start-line="67" selection-start-column="30" selection-end-line="67" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xcell/wsgi.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#221#230#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/templates/registration/login/css/style.css" />
     <entry file="file://$PROJECT_DIR$/staticfiles/staticfiles.json">
       <provider selected="true" editor-type-id="text-editor" />
@@ -677,29 +628,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/requirements.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/serializers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1513">
           <caret line="92" column="6" selection-start-line="92" selection-start-column="6" selection-end-line="92" selection-end-column="6" />
           <folding>
             <element signature="e#1#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xcell/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
-          <folding>
-            <element signature="e#629#661#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -733,26 +667,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/account_context_form.html" />
     <entry file="file://$PROJECT_DIR$/trainerInterface/account_context_form.py" />
-    <entry file="file://$PROJECT_DIR$/api/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="20" column="28" lean-forward="true" selection-start-line="20" selection-start-column="28" selection-end-line="20" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/xcell/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="884">
-          <caret line="52" column="50" lean-forward="true" selection-start-line="52" selection-start-column="50" selection-end-line="52" selection-end-column="50" />
-          <folding>
-            <element signature="e#307#316#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="340">
@@ -787,64 +701,143 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html">
+    <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trainerInterface/form.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="31" lean-forward="true" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trainerInterface/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="62" lean-forward="true" selection-start-line="8" selection-start-column="62" selection-end-line="8" selection-end-column="62" />
-          <folding>
-            <element signature="e#1#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="107" column="29" selection-start-line="107" selection-start-column="29" selection-end-line="107" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="44" column="37" lean-forward="true" selection-start-line="44" selection-start-column="37" selection-end-line="44" selection-end-column="37" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/exercises.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
-          <caret line="61" column="80" lean-forward="true" selection-start-line="53" selection-start-column="28" selection-end-line="61" selection-end-column="80" />
+          <caret line="61" column="80" selection-start-line="53" selection-start-column="28" selection-end-line="61" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/nav.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/templatetags/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/admin.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="25" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
           <folding>
-            <element signature="e#2283#2316#0#HTML" expanded="true" />
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/0002_exercisetype_trainingentry.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/chat/migrations/0001_initial.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/templatetags/trainPlan_extras.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="18" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/migrations/0002_week_phase.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/requirements.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/assets/js/jquery.bootstrap.modal.forms.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="23" column="29" selection-start-line="23" selection-start-column="29" selection-end-line="23" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xcell/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="23" column="15" selection-start-line="23" selection-start-column="15" selection-end-line="23" selection-end-column="15" />
+          <folding>
+            <element signature="e#629#661#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xcell/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="38" column="11" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="11" />
+          <folding>
+            <element signature="e#307#316#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="125" selection-start-line="125" selection-end-line="125" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+          <folding>
+            <element signature="e#1#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/trainerInterface/form.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/trainerInterface/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="57" column="100" selection-start-line="57" selection-start-column="100" selection-end-line="57" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trainerInterface/templates/trainerInterface/trainPlan.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="307">
-          <caret line="55" column="13" lean-forward="true" selection-start-line="55" selection-start-column="13" selection-end-line="55" selection-end-column="13" />
+        <state>
+          <caret line="160" selection-start-line="160" selection-end-line="160" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
