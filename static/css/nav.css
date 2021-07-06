@@ -66,9 +66,10 @@ body {
  * Content
  */
 
+
 [role="main"] {
   top: 45px; /* Space for fixed navbar */
-  height:  calc(100vh - 45px);
+  /*height:  calc(100vh - 45px);*/
 }
 
 /*

@@ -163,9 +163,31 @@ def trainprog(request):
     if "selected_client" in request.session:
         form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
         form.fields["selected_client"].empty_label = None
+        phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     else:
         form = UserForm()
-    return render(request, 'trainerInterface/trainProg.html', {'form': form})
+        phases = None
+    # TrackingGroup.objects.all().delete()
+    return render(request, 'trainerInterface/trainProg.html', {'form': form, 'phases': phases})
+
+
+@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
+def dataTracking(request):
+    if request.method == "POST":
+        processForm(request)
+
+    if "selected_client" in request.session:
+        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
+        form.fields["selected_client"].empty_label = None
+        currUserID = request.user.id
+        groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
+    else:
+        form = UserForm()
+        groups = None
+    for group in groups:
+        print(group.name)
+    # TrackingGroup.objects.all().delete()
+    return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')

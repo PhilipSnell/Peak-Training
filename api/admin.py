@@ -18,6 +18,12 @@ class ExerciseAdmin(admin.ModelAdmin):
     search_fields = ("name","description")
 
 
+#admin.site.register(TrackingIntValue)
+admin.site.register(TrackingTextValue)
+# admin.site.register(DailyTracking)
+admin.site.register(TrackingTextField)
+#admin.site.register(TrackingIntField)
+admin.site.register(TrackingGroup)
 admin.site.register(Day)
 admin.site.register(Week)
 admin.site.register(Phase)
