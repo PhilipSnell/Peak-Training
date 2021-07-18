@@ -17,6 +17,6 @@ urlpatterns = [
     path('dashboard/addDay/<int:phaseID>/<int:weekID>/', addDay, name='add_day'),
     # path('dashboard/addExercise/<int:phaseID>/<int:weekID>/<int:dayID>/', addEntry, name='add_entry'),
     path('dashboard/addentry/', addEntry, name='add_entry'),
-
+    path('dashboard/addgroup/', addGroup, name='add_group'),
 ]
 

@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from django.contrib.auth import get_user_model
-from .models import TrainingEntry, ExerciseType, Set_Entry, Message
+from .models import *
 
 User = get_user_model()
 class ExerciseSerializer(serializers.ModelSerializer):
@@ -52,6 +52,16 @@ class SetSerializer(serializers.ModelSerializer):
             'e_id'
         )
 
+
+class GroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TrackingGroup
+        fields = (
+            'name',
+            'textfields',
+            'intfields'
+        )
 
 
 class UserSerializer(serializers.ModelSerializer):

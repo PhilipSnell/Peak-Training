@@ -43,3 +43,22 @@ class AddTrainingEntry(BSModalModelForm):
         model = TrainingEntry# Please use CamelCase when defining model class name
         fields = ['reps', 'weight', 'sets', 'comment', 'exercise']
 
+
+class GroupAddForm(BSModalModelForm):
+    name = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'id': 'groupname', 'placeholder':
+        'Group Name'}))
+
+
+    class Meta:
+        model = TrackingGroup# Please use CamelCase when defining model class name
+        fields = ['name']
+
+
+class GroupFieldForm(BSModalModelForm):
+    fieldname = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'id': 'fieldname', 'placeholder':
+        'Item name'}))
+
+    class Meta:
+        model = TrackingGroup# Please use CamelCase when defining model class name
+        fields = ['fieldname']
+

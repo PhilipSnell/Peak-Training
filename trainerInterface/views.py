@@ -184,11 +184,53 @@ def dataTracking(request):
     else:
         form = UserForm()
         groups = None
-    for group in groups:
-        print(group.name)
     # TrackingGroup.objects.all().delete()
-    return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups})
+    addGroupForm = GroupAddForm()
+    addFieldForm = GroupFieldForm()
+    return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
+        addGroupForm, 'addFieldForm': addFieldForm})
 
+def addGroup(request):
+
+    if request.is_ajax():
+        name = request.POST.get('name', None)
+        fieldname = request.POST.get('fieldname', None)
+        fieldSelect = request.POST.get('textOrInt',None)
+
+        try:
+
+            new_group = TrackingGroup(
+                name=name,
+                trainer=request.user,
+
+            )
+            new_group.save()
+            if fieldSelect == "text":
+                new_field = TrackingTextField(
+                    name=fieldname,
+                )
+                new_field.save()
+            else:
+                new_field = TrackingIntField(
+                    name=fieldname,
+                )
+                new_field.save()
+
+
+            new_group.textfields.add(new_field)
+            new_group.save()
+            print("saved")
+            response = {
+                'msg': 'Your form has been submitted successfully'  # response message
+            }
+
+
+        except:
+            print("not saved")
+            response = {
+                'msg': 'Your form has not been saved'  # response message
+            }
+    return redirect('dataTracking')
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def exercises(request):
