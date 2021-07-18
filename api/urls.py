@@ -15,4 +15,6 @@ urlpatterns = [
     path('data/', TrainingData.as_view(), name='training data'),
     path('exercise/', ExerciseData.as_view(), name='exercise data'),
     path('sets/', SetEntry.as_view(), name='set data'),
+    path('groups/', TrackingData.as_view(), name='group_data'),
+
 ]

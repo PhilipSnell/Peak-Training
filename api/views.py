@@ -1,11 +1,11 @@
-from .serializers import UserSerializer, TrainingSerializer, ExerciseSerializer, SetSerializer
+from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import api_view
-from .models import TrainingEntry, ExerciseType, Set_Entry
+from .models import *
 from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
@@ -106,12 +106,22 @@ class ExerciseData(APIView):
     authentication_classes = []  # disables authentication
     permission_classes = []  # disables permission
 
-    def post(self, request):
-        print(request.data['username']+ "- blah blah")
-        email_lookup = "psnell63@gmail.com"
-        user = User.objects.filter(email=email_lookup)
+    def post(self):
         exerciseData = ExerciseType.objects.all()
         serializer = ExerciseSerializer(exerciseData, many=True)
+
+        return Response(serializer.data)
+
+class TrackingData(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    def post(self, request):
+        email_lookup = request.data["username"]
+        user = User.objects.filter(email=email_lookup)
+        groupData = TrackingGroup.objects.filter(clientToggle__in=user)
+
+        serializer = GroupSerializer(groupData, many=True)
 
         return Response(serializer.data)
 
