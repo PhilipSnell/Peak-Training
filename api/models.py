@@ -166,4 +166,49 @@ class Message(models.Model):
 
     class Meta:
         ordering = ('-timestamp',)
+
+# class DailyTracking(models.Model):
+#
+#     client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='DTclient')
+#     date = models.DateField()
+
+# Todo add group of tracking field manytomany
+
+
+class TrackingTextValue(models.Model):
+    value = models.CharField(max_length=30)
+    client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='textFieldClient')
+    date = models.DateField()
+
+
+class TrackingTextField(models.Model):
+    name = models.CharField(max_length=30)
+    clientToggle = models.ManyToManyField(Account, blank=True, default=None)
+    values = models.ManyToManyField(TrackingTextValue, blank=True)
+
+
+class TrackingIntValue(models.Model):
+    value = models.IntegerField()
+    client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='intFieldClient')
+    date = models.DateField()
+
+
+class TrackingIntField(models.Model):
+    name = models.CharField(max_length=30)
+    clientToggle = models.ManyToManyField(Account, blank=True, default=None)
+    values = models.ManyToManyField(TrackingIntValue, blank=True)
+
+
+class TrackingGroup(models.Model):
+    trainer = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='groupTrainer')
+    name = models.CharField(max_length=30)
+    clientToggle = models.ManyToManyField(Account, blank=True, default=None, related_name='clientToggle')
+    textfields = models.ManyToManyField(TrackingTextField, related_name='textfield', blank=True)
+    intfields = models.ManyToManyField(TrackingIntField, related_name='intfield', blank=True)
+
+
+# class ClientConfig(models.Model):
+#     client = models.OneToOneField(Account, on_delete=models.CASCADE)
+#     groups = models.ManyToManyField(TrackingGroup, related_name='trackinggroup', blank=True)
+
 # Create your models here.

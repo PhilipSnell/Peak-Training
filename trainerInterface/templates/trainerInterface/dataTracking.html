@@ -1,0 +1,167 @@
+{% extends "trainerInterface/nav.html" %}
+{% load static %}
+{% block content %}
+    <style>
+
+    .groupRow {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(19%, 1fr));
+        grid-gap: 1rem;
+        width: calc(70vw);
+        border-spacing: 15px; /*Optional*/
+
+    }
+    .groupBox {
+        border-radius: 10px;
+        {#width: 200%;#}
+        height: 0;
+        padding-bottom: 100%;
+        display: table-cell;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .addGroupBox {
+        border-radius: 10px;
+        height: 0;
+        padding-bottom: 100%;
+        display: table-cell;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .groupContent {
+        position: relative;
+        top: 10px;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+
+        justify-content: center;     /* added for centered text */
+        align-items: center;         /* added for centered text */
+    }
+    .addGroupContent {
+        background-color: rgba(0, 0, 0, 0.3);
+        position: relative;
+        top: calc(12vh);
+        left: calc(2vw);
+        width: calc(5vw);
+        height: calc(5vw);
+        display: flex;
+        justify-content: center;     /* added for centered text */
+        align-items: center;         /* added for centered text */
+        border-radius: 10px;
+        font-size: 36px;
+        text-align: center;
+    }
+    div p {
+      top: 47%;
+      transform: translateY(-50%);
+      position: relative;
+    }
+    .bg-modal{
+            left:   0;
+            top:    0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100vh - 45px);
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content{
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border-radius: 5px;
+            position: relative;
+        }
+        .close_addentry{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 32px;
+            rotate: 45;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+        }
+    </style>
+    <div class="groupContainer">
+        <div class="groupRow">
+            {% for group in groups %}
+                <div class="groupBox">
+                    <div class="groupContent">
+                        {{ group.name }}
+                    </div>
+                </div>
+{#                {% if forloop.counter|divisibleby:4 %}#}
+{#                    </div>#}
+{#                    <div class="groupRow">#}
+{#                {% endif %}#}
+            {% endfor %}
+            <div class="addGroupBox">
+                <div class="addGroupContent" onclick="toggleAddEntry()"><p>+</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="bg-modal" id ="add-entry-modal"style="display: none;">
+    <div class="modal-content">
+        <div class="close_addentry">+</div>
+            <h3>Add Entry</h3>
+            <form id = "add-entry-form" class = "add-entry-form" method="post">
+                <input  type="submit" name="submit" value="submit">
+            </form>
+        </div>
+    </div>
+</div>
+<script src="{% static '/assets/js/jquery.min.js' %}"></script>
+<script src="/static/assets/js/popper.js"></script>
+<script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+        function toggleAddEntry() {
+            var x = document.getElementById("add-entry-modal");
+            if (x.style.display === "none" || !x.style.display) {
+              x.style.display = "flex";
+            } else {
+              x.style.display = "none";
+            }
+        };
+        $('.close_addentry').on('click', function(e) {
+          var x = document.getElementById("add-entry-modal");
+          x.style.display = "none";
+        });
+
+        $('.bg-modal').on('click', function(e) {
+          if (e.target !== this)
+            return;
+          var x = document.getElementById("add-entry-modal");
+          x.style.display = "none";
+        });
+        $('.add-entry-form').on('submit', function(e){
+         e.preventDefault();
+
+           $.ajax({
+                type : "POST",
+                url: "{% url 'add_entry' %}",
+                data: {
+
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+
+                },
+                failure: function() {
+                }
+            });
+           window.location.reload();
+           var x = document.getElementById("add-entry-modal");
+           x.style.display = "none";
+        });
+    </script>
+{% endblock content%}

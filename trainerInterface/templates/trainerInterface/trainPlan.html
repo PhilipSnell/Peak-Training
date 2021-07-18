@@ -112,6 +112,10 @@
             -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
             transform: rotate(45deg);
         }
+        .trainContent{
+            justify-content: center;
+            width: calc(80vw);
+        }
 
 
     </style>
@@ -120,6 +124,7 @@
         <div class="modal-content"></div>
       </div>
     </div>
+    <div class = "trainContent">
     {% if request.session.selected_client is None %}
         <div>Select a client</div>
         
@@ -170,15 +175,17 @@
             {% endfor %}
         </div>
     {% endfor %}
-<div class="bg-modal" id ="add-entry-modal"style="display: none;" script="alert('The div was clicked!');">
+    </div>
+<div class="bg-modal" id ="add-entry-modal"style="display: none;">
     <div class="modal-content">
         <div class="close_addentry">+</div>
-        <h3>Add Entry</h3>
-        <form id = "add-entry-form" class = "add-entry-form" method="post">
-            {{ addform }}
-            <input  type="submit" name="submit" value="submit">
-        </form>
-        
+            <h3>Add Entry</h3>
+            <form id = "add-entry-form" class = "add-entry-form" method="post">
+                {{ addform }}
+                <input  type="submit" name="submit" value="submit">
+            </form>
+        </div>
+
     </div>
 </div>
     <script src="{% static '/assets/js/jquery.min.js' %}"></script>
@@ -229,8 +236,4 @@
            x.style.display = "none";
         });
     </script>
-
-
-    
 {% endblock content%}
-

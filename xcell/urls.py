@@ -25,11 +25,6 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls', namespace='api')),
-    path('api-token-auth/', views.obtain_auth_token, name='api-token-auth'),
-    path('register/', Registration.as_view(), name="register"),
-    path('data/', TrainingData.as_view(), name='training data'),
-    path('exercise/', ExerciseData.as_view(), name='exercise data'),
-    path('sets/', SetEntry.as_view(), name='set data'),
     path('chat/', include('chat.urls')),
     path('', include('trainerInterface.urls')),
     path('', include('django.contrib.auth.urls')),

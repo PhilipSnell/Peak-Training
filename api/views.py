@@ -111,7 +111,6 @@ class ExerciseData(APIView):
         email_lookup = "psnell63@gmail.com"
         user = User.objects.filter(email=email_lookup)
         exerciseData = ExerciseType.objects.all()
-
         serializer = ExerciseSerializer(exerciseData, many=True)
 
         return Response(serializer.data)
