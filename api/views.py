@@ -106,7 +106,7 @@ class ExerciseData(APIView):
     authentication_classes = []  # disables authentication
     permission_classes = []  # disables permission
 
-    def post(self):
+    def post(self, request):
         exerciseData = ExerciseType.objects.all()
         serializer = ExerciseSerializer(exerciseData, many=True)
 
