@@ -52,15 +52,33 @@ class SetSerializer(serializers.ModelSerializer):
             'e_id'
         )
 
+class TextfieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrackingTextField
+        fields = (
+            'id',
+            'name',
+        )
+
+
+class IntfieldSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrackingTextField
+        fields = (
+            'id',
+            'name',
+        )
+
 
 class GroupSerializer(serializers.ModelSerializer):
-
+    textfields = TextfieldSerializer(many=True)
+    intfields = IntfieldSerializer(many=True)
     class Meta:
         model = TrackingGroup
         fields = (
             'name',
             'textfields',
-            'intfields'
+            'intfields',
         )
 
 
@@ -71,6 +89,7 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     class Meta:
+
         model = User
         fields = (
             'username',
