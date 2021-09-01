@@ -52,6 +52,29 @@ class SetSerializer(serializers.ModelSerializer):
             'e_id'
         )
 
+class TrackTextValueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TrackingTextValue
+        fields = (
+            "value",
+            "client",
+            "date",
+            "field_id",
+        )
+
+class TrackIntValueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TrackingIntValue
+        fields = (
+            "value",
+            "client",
+            "date",
+            "field_id",
+
+        )
+
 class TextfieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrackingTextField

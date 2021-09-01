@@ -179,6 +179,7 @@ class TrackingTextValue(models.Model):
     value = models.CharField(max_length=30)
     client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='textFieldClient')
     date = models.DateField()
+    field_id = models.IntegerField()
 
 
 class TrackingTextField(models.Model):
@@ -191,6 +192,7 @@ class TrackingIntValue(models.Model):
     value = models.IntegerField()
     client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='intFieldClient')
     date = models.DateField()
+    field_id = models.IntegerField()
 
 
 class TrackingIntField(models.Model):
