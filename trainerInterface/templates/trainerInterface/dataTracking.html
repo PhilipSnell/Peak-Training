@@ -17,6 +17,7 @@
 
     }
     .groupBox {
+        padding-top: 1%;
         border-radius: 10px;
         {#width: 200%;#}
         height: 0;
@@ -35,30 +36,67 @@
         left: 0;
         height: 100%;
         width: 100%;
-        display: flex;
+        display: table-column;
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;         /* added for centered text */
     }
-    .addGroupContent {
+    .groupContentTitle {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+
+        width: 100%;
+
+    }
+    .ContentTitle {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        width: 50%;
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .groupContentFields {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        width: 50%;
+        height: 100%;
+        background-color: whitesmoke;
+
+    }
+    .addGroupButton {
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.3);
         position: relative;
         top: calc(5.5vw);
         width: calc(5vw);
         height: calc(5vw);
-        display: flex;
-        justify-content: center;     /* added for centered text */
-        align-items: center;         /* added for centered text */
         border-radius: 10px;
         font-size: 36px;
         text-align: center;
+        display: flex;
         margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
     }
-    div p {
-      top: 47%;
-      transform: translateY(-50%);
-      position: relative;
+    .addIcon {
+        {#top: 47%;#}
+        {#transform: translateY(-50%);#}
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        font-size: 3.5vw;
     }
     .bg-modal{
         left:   0;
@@ -177,16 +215,21 @@
             {% for group in groups %}
                 <div class="groupBox">
                     <div class="groupContent">
-                        {{ group.name }}
+                        <div class="groupContentTitle">
+                            <div class="ContentTitle">
+                                {{ group.name }}
+                            </div>
+                        </div>
+                        <div class = "groupContentFields">
+                            {% for field in group.textfields.all %}
+                                {{ field.name }}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
-{#                {% if forloop.counter|divisibleby:4 %}#}
-{#                    </div>#}
-{#                    <div class="groupRow">#}
-{#                {% endif %}#}
             {% endfor %}
             <div class="groupBox">
-                <div class="addGroupContent" onclick="toggleAddEntry()"><p>+</p>
+                <div class="addGroupButton" onclick="toggleAddEntry()"><div class="addIcon">+</div>
                 </div>
             </div>
         </div>
