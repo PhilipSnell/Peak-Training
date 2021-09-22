@@ -46,7 +46,7 @@ class AddTrainingEntry(BSModalModelForm):
 
 class GroupAddForm(BSModalModelForm):
     name = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'id': 'groupname', 'placeholder':
-        'Group Name'}))
+        'Insert Group Name'}))
 
 
     class Meta:

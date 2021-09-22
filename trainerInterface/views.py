@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from api.models import ExerciseType
 from .form import *
 import openpyxl
+import json
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from bootstrap_modal_forms.generic import BSModalCreateView
@@ -188,14 +189,17 @@ def dataTracking(request):
     addGroupForm = GroupAddForm()
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
-        addGroupForm, 'addFieldForm': addFieldForm})
+        addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
 
 def addGroup(request):
 
     if request.is_ajax():
         name = request.POST.get('name', None)
-        fieldname = request.POST.get('fieldname', None)
-        fieldSelect = request.POST.get('textOrInt',None)
+        print(name)
+        fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
+        print(fieldnames)
+        fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
+        print(fieldSelects)
 
         try:
 
@@ -205,20 +209,21 @@ def addGroup(request):
 
             )
             new_group.save()
-            if fieldSelect == "text":
-                new_field = TrackingTextField(
-                    name=fieldname,
-                )
-                new_field.save()
-            else:
-                new_field = TrackingIntField(
-                    name=fieldname,
-                )
-                new_field.save()
+            for fieldSelect, fieldname in zip(fieldSelects, fieldnames):
+                if fieldSelect == "text":
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                    )
+                    new_field.save()
+                else:
+                    new_field = TrackingIntField(
+                        name=fieldname,
+                    )
+                    new_field.save()
+                new_group.textfields.add(new_field)
+                new_group.save()
 
 
-            new_group.textfields.add(new_field)
-            new_group.save()
             print("saved")
             response = {
                 'msg': 'Your form has been submitted successfully'  # response message

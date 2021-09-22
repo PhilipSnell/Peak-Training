@@ -1,5 +1,6 @@
 {% extends "trainerInterface/nav.html" %}
 {% load static %}
+{% load my_filters %}
 {% block content %}
     <style>
     .groupContainer {
@@ -18,28 +19,52 @@
     }
     .groupBox {
         padding-top: 1%;
+        padding-bottom: 1vw;
         border-radius: 10px;
         {#width: 200%;#}
-        height: 0;
-        padding-bottom: 100%;
+        height: 16.85vw;
+
         display: flex;
         position: relative;
         background-color: rgba(0, 0, 0, 0.3);
         justify-content: center;     /* added for centered text */
         align-items: center;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
+        .addgroupBox {
 
+        height: 16.85vw;
+        display: flex;
+        position: relative;
+        background-color: rgba(0, 0, 0, 0.3);
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .groupBox::-webkit-scrollbar {
+        width: 16px;
+        background-color: rgba(0, 0, 0, 0);
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
 
     .groupContent {
         position: relative;
-        top: 10px;
+        top: 0.4vw;
         left: 0;
         height: 100%;
         width: 100%;
         display: table-column;
         margin: auto;
         justify-content: center;     /* added for centered text */
-        align-items: center;         /* added for centered text */
+        align-items: center;
+
+        /* added for centered text */
+
     }
     .groupContentTitle {
         position: relative;
@@ -47,9 +72,8 @@
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;
-
         width: 100%;
-
+        padding-bottom: 0.4vw;
     }
     .ContentTitle {
         position: relative;
@@ -62,29 +86,44 @@
         border-color: rgba(0, 0, 0, 0.3);
         background-color: rgba(0, 0, 0, 0.3);
     }
-    .groupContentFields {
+    .groupContentTable{
         position: relative;
-        display: flex;
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;
         border-radius: 5px;
-        width: 50%;
-        height: 100%;
-        background-color: whitesmoke;
+        background-color: rgba(255, 255, 255, 0.4);
+        width: 95%;
+        margin-bottom: 0.4vw;
 
+    }
+    .groupBottomSpacer{
+        height: 0.5vw;
+    }
+    .groupContentRow{
+
+    }
+    .groupContentCell{
+        display: table-cell;
+        width: 50%;
+    }
+    .groupContentName{
+        padding-left: 2%;
+    }
+    .groupContentToggle{
+        text-align: right;
+        padding-right: 2%;
     }
     .addGroupButton {
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.3);
         position: relative;
-        top: calc(5.5vw);
+
         width: calc(5vw);
         height: calc(5vw);
         border-radius: 10px;
         font-size: 36px;
         text-align: center;
-        display: flex;
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;
@@ -122,11 +161,17 @@
         width: calc(21vw);
         min-height: calc(21vw);
         max-height: calc(25vw);
-        background-color: whitesmoke;
+        background-color:  #ababab;
         border-radius: 5px;
         align-items: center;
         {#justify-content: center;#}
 
+    }
+    .modal-content::-webkit-scrollbar {
+        width: 16px;
+        background-color: #ababab;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .close_addentry{
         background-color: rgba(0, 0, 0, 0);
@@ -154,12 +199,29 @@
     }
     #groupname{
         position: relative;
-        left: 20%;
-        width: 60%;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        margin-left: 3.5vw;
+        width: 70%;
         text-align: center;
+        border: none;
+        {#text-decoration-color: #0f0f0f;#}
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    #groupname:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    #groupname::placeholder{
+        color: lightgrey;
     }
     .addgroup{
-        padding-bottom: 1vw;
+        {#margin-left: 1vw;#}
+
     }
     .add_field_button{
         position: relative;
@@ -186,25 +248,71 @@
         width: 2vw;
 
     }
-    .clearfieldbutton{
-        position: relative;
-        border-color: rgba(0, 0, 0, 0.3);
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #0e0e0e;
-        width: 2vw;
-        left: 8vw;
-        margin-top: 0.5vw;
+    .clearFieldButton{
+        border-color: darkred;
+        background-color: darkred;
+        height: 1.6vw;
+        font-size: 1.1rem;
+        padding: .1rem .4rem;
+        line-height: .5;
+        border-radius: .2rem;
     }
-    .fields{
+    .addGroupContent{
         position: relative;
         width: 18vw;
+        margin-left: 1vw;
+        margin-top: 0.4vw;
+    }
+    .addGroupTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        background-color: #CDCDCD;
+        width: 100%;
+        height: 1vw;
+    }
+    .addGroupRow{
+
+    }
+    .addGroupCell{
+        position: relative;
+        display: table-cell;
+        width: 9vw;
+    }
+
+    .inputField{
+        margin-right: 0.3vw;
     }
     #fieldname{
-        width: 35%;
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        margin-right: 0.3vw;
+        text-align: center;
+        border: none;
+        outline: none;
+        {#text-decoration-color: #0f0f0f;#}
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    {##fieldname:focus:active{#}
+    {#    outline: none;#}
+    {#}#}
+    #fieldname:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    #fieldname::placeholder{
+        color: lightgrey;
     }
     .btn-group-xs > .btn, .btn-xs {
       padding: .1rem .4rem;
-      font-size: .875rem;
+      font-size: 0.9rem;
       line-height: .5;
       border-radius: .2rem;
 
@@ -220,15 +328,33 @@
                                 {{ group.name }}
                             </div>
                         </div>
-                        <div class = "groupContentFields">
-                            {% for field in group.textfields.all %}
-                                {{ field.name }}
-                            {% endfor %}
+
+
+                        {% for field in group.textfields.all %}
+                            <table class = "groupContentTable">
+                                <tr class = "groupContentRow">
+                                    <td class = "groupContentCell groupContentName">
+                                        {{ field.name }}
+                                    </td>
+                                    <td class = "groupContentCell groupContentToggle">
+
+                                         {% if selected_client|is_in:field.clientToggle.all %}
+                                            <i class="far fa-check-circle" style="color: green"></i>
+                                         {% else %}
+                                            <i class="far fa-times-circle" style="color: darkred"></i>
+                                         {% endif%}
+
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                        <div class="groupBottomSpacer">
                         </div>
+
                     </div>
                 </div>
             {% endfor %}
-            <div class="groupBox">
+            <div class="groupBox addgroupBox">
                 <div class="addGroupButton" onclick="toggleAddEntry()"><div class="addIcon">+</div>
                 </div>
             </div>
@@ -242,24 +368,38 @@
             <div class="addgroup">
                 {{ addGroupForm }}
             </div>
-            <div class="fields" id="fields">
-                <div class="field" id="field-0">
-                    <div style="display: inline; justify-content: center">
-                        {{ addFieldForm }}
-                    </div>
-                    <div class="btn-group"  style="display: inline">
-                        <select class="btn btn-secondary btn-xs dropdown-toggle" name="fieldSelect" id="fieldSelect">
-                            <option value="text">text</option>
-                            <option value="number">number</option>
-                        </select>
-                    </div>
-                    <div class="pull-right" style="display: inline">
-                        <button type="button" onClick="removeDiv(this)" class="delete-field btn btn-danger btn-sm">&times</button>
-                    </div>
-                </div>
+            <div class = "addGroupContent" id="fields">
+                <table class="addGroupTable" id="field-0">
+                    <tr class = "addGroupRow">
+                        <td >
+                            <input class = "addGroupCell inputField" type="text" id="fieldname" placeholder="Field Name">
+                        </td>
+                        <td class = "addGroupCell">
+                            <select class="btn btn-secondary btn-xs dropdown-toggle" name="fieldSelect" id="fieldSelect">
+                                <option value="text">text</option>
+                                <option value="number">number</option>
+                            </select>
+                        </td>
+                        <td class="addGroup" style="">
+                            <button type="button" onClick="removeDiv(this)" class="clearFieldButton btn btn-secondary">&times</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="addfieldbutton"><button class="add_field_button btn btn-sm btn-secondary">+</button></div>
-            <input  class="submit_add_form" type="submit" name="submit" value="submit">
+            <div class = "addGroupContent">
+                <table class="addGroupTable" >
+                    <tr class = "addGroupRow">
+                        <td >
+                            <div class="addfieldbutton"><button class="add_field_button btn btn-sm btn-secondary">+</button></div>
+                        </td>
+                        <td >
+                            <input  class="submit_add_form" type="submit" name="submit" value="submit">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
         </form>
 
     </div>
@@ -286,7 +426,12 @@
           x.style.display = "none";
         });
         function removeDiv(elem){
-            $(elem).parent('div').parent('div').remove();
+            var parent = $(elem).parent().parent().parent().parent();
+            console.log(parent.attr("id"));
+            if (parent.attr("id") != "field-0") {
+                parent.remove();
+            }
+
         }
 
         $('.bg-modal').on('click', function(e) {
@@ -297,25 +442,34 @@
         });
         $('.add_field_button').on('click', function(e) {
           e.preventDefault();
-          var x = document.getElementById('fields');
-          var div = document.getElementById('field-0');
-          var newDiv = div.cloneNode(true);
+          var x = $("#fields");
+          var table = $("#field-0").clone(true);
+
           addFieldCount = addFieldCount + 1;
-          newDiv.id = "field-"+addFieldCount;
-          x.appendChild(newDiv)
+          newID = "field-"+addFieldCount;
+          table.attr("id",newID);
+          table.appendTo(x);
 
         });
         $('.add-group-form').on('submit', function(e){
          e.preventDefault();
-
+            var fieldnames = $("[id=fieldname]").map(function() {
+                return $(this).val();
+            }).get();
+            var classifications = $("[id=fieldSelect]").map(function() {
+                return $(this).val();
+            }).get();
+            console.log(classifications)
+            fieldnames = JSON.stringify({fieldnames });
+            classifications = JSON.stringify({classifications });
            $.ajax({
                 type : "POST",
                 url: "{% url 'add_group' %}",
                 data: {
 
                  name : $('#groupname').val(),
-                 fieldname: $('#fieldname').val(),
-                 textOrInt: $('#fieldSelect').val(),
+                 fieldnames: fieldnames,
+                 classifications: classifications,
                  csrfmiddlewaretoken: '{{ csrf_token }}',
                  dataType: "json",
                 },
@@ -331,4 +485,5 @@
            {#x.style.display = "none";#}
         });
     </script>
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
 {% endblock content%}
