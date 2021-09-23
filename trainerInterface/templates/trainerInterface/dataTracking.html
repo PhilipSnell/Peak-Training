@@ -190,13 +190,7 @@
         align-items: center;
         display: inline;
     }
-    .submit_add_form{
-        position: relative;
-        margin-right: auto;
-        left: 31%;
-        width: 38%;
-        margin-top: 0.5vw;
-    }
+
     #groupname{
         position: relative;
         display: flex;
@@ -231,15 +225,7 @@
         width: 2vw;
 
     }
-    .addfieldbutton{
-        position: relative;
-        border-color: rgba(0, 0, 0, 0.3);
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #0e0e0e;
-        width: 2vw;
-        left: 8vw;
-        margin-top: 0.5vw;
-    }
+
     .clear_field_button{
 
         border-color: rgba(0, 0, 0, 0.3);
@@ -317,6 +303,37 @@
       border-radius: .2rem;
 
     }
+    .submitGroupContent{
+        position: relative;
+        width: 18vw;
+        margin-left: 1vw;
+        margin-top: 0.4vw;
+    }
+    .submitGroupTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        background-color: #CDCDCD;
+        width: 80%;
+
+    }
+    .addfieldbutton{
+        position: relative;
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+        color: #0e0e0e;
+        width: 2vw;
+        left: 8vw;
+        margin-top: 0.5vw;
+    }
+    .submit_add_form{
+        position: relative;
+        margin-right: auto;
+        width: 38%;
+        margin-top: 0.5vw;
+    }
     </style>
     <div class="groupContainer">
         <div class="groupRow">
@@ -386,11 +403,11 @@
                     </tr>
                 </table>
             </div>
-            <div class = "addGroupContent">
-                <table class="addGroupTable" >
+            <div class = "submitGroupContent">
+                <table class="submitGroupTable" >
                     <tr class = "addGroupRow">
                         <td >
-                            <div class="addfieldbutton"><button class="add_field_button btn btn-sm btn-secondary">+</button></div>
+                            <button class="add_field_button ">+</button>
                         </td>
                         <td >
                             <input  class="submit_add_form" type="submit" name="submit" value="submit">
