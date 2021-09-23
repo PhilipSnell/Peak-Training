@@ -278,7 +278,6 @@
         align-items: center;
         display: table-cell;
         width: 30%;
-        background-color: none;
         cursor: pointer;
 
     }
@@ -392,10 +391,11 @@
     }
 
     </style>
+    {% with groupId=0 %}
     <div class="groupContainer">
         <div class="groupRow">
             {% for group in groups %}
-                <div class="groupBox" onclick="toggleEditEntry({{ forloop.counter0 }})">
+                <div class="groupBox" onclick="toggleEditEntry({% groupId=forloop.counter0 %})">
                     <div class="groupContent">
                         <div class="groupContentTitle">
                             <div class="ContentTitle">
@@ -482,7 +482,10 @@
 <div class="bg-modal" id ="edit-group-modal"style="display: none;">
     <div class="modal-content" id="edit-modal-content">
         <div class="close_addentry">+</div>
-        {{groups.0.name}}
+
+        <div class="editGroupTitle" id="editGroupTitle">
+            {{ groups.groupId.name }}
+        </div>
         <!-- <form id = "add-group-form" class = "add-group-form" method="post">
             <div class="addgroup">
                 {{ addGroupForm }}
@@ -543,10 +546,13 @@
         }
         var y = document.getElementById("edit-group-modal");
         y.style.display = "none";
-        function toggleEditEntry(index) {
-            var y = document.getElementById("edit-modal-content");
+        function toggleEditEntry(  ) {
+
             var x = document.getElementById("edit-group-modal");
-            console.log(y.text)
+            var y = document.getElementById("editGroupTitle");
+
+            {#y.innerHTML = '{{index|get_group}}';#}
+
             if (x.style.display === "none" || x.style.display) {
               x.style.display = "flex";
             } else {
@@ -621,5 +627,6 @@
            {#x.style.display = "none";#}
         });
     </script>
+    {% endwith %}
     <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
 {% endblock content%}
