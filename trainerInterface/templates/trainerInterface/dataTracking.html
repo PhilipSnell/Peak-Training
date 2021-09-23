@@ -21,32 +21,37 @@
         padding-top: 1%;
         padding-bottom: 1vw;
         border-radius: 10px;
-        {#width: 200%;#}
-        height: 16.85vw;
-
+        
+    
         display: flex;
         position: relative;
+        /*sets height equal to the width*/
+        height: 0;
+        padding-bottom: 100%;
+
         background-color: rgba(0, 0, 0, 0.3);
         justify-content: center;     /* added for centered text */
         align-items: center;
+
+        /*makes the container scroll in y direction*/
         flex-direction: column;
         overflow-y: scroll;
         overflow-x: hidden;
     }
-        .addgroupBox {
-
-        height: 16.85vw;
+    .addgroupBox {
         display: flex;
         position: relative;
         background-color: rgba(0, 0, 0, 0.3);
         justify-content: center;     /* added for centered text */
         align-items: center;
-        flex-direction: column;
-        overflow-y: scroll;
+        overflow-y: hidden;
         overflow-x: hidden;
+        height:  0;
+        padding-top: 47%;
+        padding-bottom: 53%;
     }
     .groupBox::-webkit-scrollbar {
-        width: 16px;
+        width: 0.8vw;
         background-color: rgba(0, 0, 0, 0);
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
@@ -57,13 +62,12 @@
         top: 0.4vw;
         left: 0;
         height: 100%;
-        width: 100%;
+        width: 95%;
         display: table-column;
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;
-
-        /* added for centered text */
+        margin-left: 0.8vw;
 
     }
     .groupContentTitle {
@@ -115,12 +119,15 @@
         padding-right: 2%;
     }
     .addGroupButton {
+        
+        display: flex;
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.3);
         position: relative;
 
         width: calc(5vw);
-        height: calc(5vw);
+        
+        padding-top: 0%;
         border-radius: 10px;
         font-size: 36px;
         text-align: center;
@@ -129,7 +136,7 @@
         align-items: center;
     }
     .addIcon {
-        {#top: 47%;#}
+        top: -5%;
         {#transform: translateY(-50%);#}
         position: relative;
         margin: auto;
@@ -254,22 +261,54 @@
         margin: auto;
         justify-content: center;     /* added for centered text */
         align-items: center;
+        margin-bottom: 2.5%;
         border-radius: 5px;
-        background-color: #CDCDCD;
+        height: 0;
+        box-shadow: 0 0 0 1pt grey;
         width: 100%;
         height: 1vw;
     }
     .addGroupRow{
 
     }
-    .addGroupCell{
+    .addGroupCellSelect{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 30%;
+        background-color: none;
+        cursor: pointer;
+
+    }
+    .addGroupCellInput{
         position: relative;
         display: table-cell;
-        width: 9vw;
+        width: 50%;
     }
-
+    .addGroupCellRemove{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 8%;
+        padding-left: 1.5%;
+        cursor: pointer;
+    }
+    .selectField{
+        margin: auto;
+        text-align: center;     /* added for centered text */
+        align-items: center;
+        width:  100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        cursor: pointer;
+    }
     .inputField{
+        caret-color: red;
         margin-right: 0.3vw;
+        width:  95%;
     }
     #fieldname{
         position: relative;
@@ -315,25 +354,43 @@
         justify-content: center;     /* added for centered text */
         align-items: center;
         border-radius: 5px;
-        background-color: #CDCDCD;
         width: 80%;
 
     }
-    .addfieldbutton{
+
+    .addFieldButtonCell{
         position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 50%;
+        padding-left: 1.5%;
+    }
+    .add_field_button{
+
         border-color: rgba(0, 0, 0, 0.3);
         background-color: rgba(0, 0, 0, 0.3);
-        color: #0e0e0e;
-        width: 2vw;
-        left: 8vw;
-        margin-top: 0.5vw;
+        position: relative;
+        border-radius: 5px;
+        width: 100%;
     }
     .submit_add_form{
-        position: relative;
-        margin-right: auto;
-        width: 38%;
-        margin-top: 0.5vw;
+        margin: auto;
+        text-align: center;     /* added for centered text */
+        align-items: center;
+        width:  100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
     }
+    .submitFieldCell{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 50%;
+        padding-right: 1.5%;
+    }
+
     </style>
     <div class="groupContainer">
         <div class="groupRow">
@@ -388,17 +445,18 @@
             <div class = "addGroupContent" id="fields">
                 <table class="addGroupTable" id="field-0">
                     <tr class = "addGroupRow">
-                        <td >
-                            <input class = "addGroupCell inputField" type="text" id="fieldname" placeholder="Field Name">
+                        <td class = "addGroupCellInput">
+                            <input class = "inputField" type="text" id="fieldname" placeholder="Field Name">
                         </td>
-                        <td class = "addGroupCell">
-                            <select class="btn btn-secondary btn-xs dropdown-toggle" name="fieldSelect" id="fieldSelect">
+                        <td class = "addGroupCellSelect">
+                            <select class="dropdown-toggle selectField" name="fieldSelect" id="fieldSelect">
                                 <option value="text">text</option>
                                 <option value="number">number</option>
                             </select>
                         </td>
-                        <td class="addGroup" style="">
-                            <button type="button" onClick="removeDiv(this)" class="clearFieldButton btn btn-secondary">&times</button>
+                        <td class="addGroupCellRemove" style="" >
+                            <i class="far fa-times-circle" style="color: darkred" onClick="removeDiv(this)" ></i>
+
                         </td>
                     </tr>
                 </table>
@@ -406,11 +464,11 @@
             <div class = "submitGroupContent">
                 <table class="submitGroupTable" >
                     <tr class = "addGroupRow">
-                        <td >
-                            <button class="add_field_button ">+</button>
+                        <td class="addFieldButtonCell">
+                            <input class="add_field_button " type="button" value="Add Field">
                         </td>
-                        <td >
-                            <input  class="submit_add_form" type="submit" name="submit" value="submit">
+                        <td class="submitFieldCell">
+                            <input  class="submit_add_form" type="submit" name="submit" value="Submit">
                         </td>
                     </tr>
                 </table>
