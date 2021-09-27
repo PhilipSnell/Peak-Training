@@ -195,46 +195,58 @@ def addGroup(request):
 
     if request.is_ajax():
         name = request.POST.get('name', None)
-        print(name)
+
         fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
-        print(fieldnames)
+
         fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
-        print(fieldSelects)
 
-        try:
+        toggles = json.loads(request.POST.get('toggles', None))["toggles"]
+        print(toggles)
+        print(User.objects.get(email=request.session['selected_client']).id)
+        # try:
 
-            new_group = TrackingGroup(
-                name=name,
-                trainer=request.user,
+        new_group = TrackingGroup(
+            name=name,
+            trainer=request.user,
 
-            )
+        )
+        new_group.save()
+        for fieldSelect, fieldname, toggle in zip(fieldSelects, fieldnames, toggles):
+            if fieldSelect == "text":
+                new_field = TrackingTextField(
+                    name=fieldname,
+                )
+
+                if toggle == 'True':
+                    new_field.save()
+                    new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+
+                new_field.save()
+            else:
+
+                new_field = TrackingIntField(
+                    name=fieldname,
+                )
+
+                if toggle == 'True':
+                    new_field.save()
+                    new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                new_field.save()
+            new_group.textfields.add(new_field)
             new_group.save()
-            for fieldSelect, fieldname in zip(fieldSelects, fieldnames):
-                if fieldSelect == "text":
-                    new_field = TrackingTextField(
-                        name=fieldname,
-                    )
-                    new_field.save()
-                else:
-                    new_field = TrackingIntField(
-                        name=fieldname,
-                    )
-                    new_field.save()
-                new_group.textfields.add(new_field)
-                new_group.save()
 
 
-            print("saved")
-            response = {
-                'msg': 'Your form has been submitted successfully'  # response message
-            }
+        print("saved")
+        response = {
+            'msg': 'Your form has been submitted successfully'  # response message
+        }
 
 
-        except:
-            print("not saved")
-            response = {
-                'msg': 'Your form has not been saved'  # response message
-            }
+        # except:
+        #     print("not saved")
+        #     response = {
+        #         'msg': 'Your form has not been saved'  # response message
+        #     }
     return redirect('dataTracking')
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
