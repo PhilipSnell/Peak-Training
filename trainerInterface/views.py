@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import user_passes_test
 from api.models import ExerciseType
 from .form import *
 import openpyxl
+import json
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from bootstrap_modal_forms.generic import BSModalCreateView
@@ -188,15 +189,64 @@ def dataTracking(request):
     addGroupForm = GroupAddForm()
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
-        addGroupForm, 'addFieldForm': addFieldForm})
+        addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
+
+def editGroup(request):
+
+    if request.is_ajax():
+        groupId = request.POST.get('groupId', None)
+        name = request.POST.get('name', None)
+        fieldIds = json.loads(request.POST.get('fieldIds', None))['fieldIds']
+        fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
+        fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
+        toggles = json.loads(request.POST.get('toggles', None))["toggles"]
+
+        editGroup = TrackingGroup.objects.get(id=groupId)
+        editGroup.name = name
+        editGroup.save()
+        for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
+            if id == '':
+                if fieldselect == 'text':
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=False,
+                    )
+                else:
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=True,
+                    )
+
+                if toggle == 'True':
+                    new_field.save()
+                    new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+
+                new_field.save()
+                editGroup.textfields.add(new_field)
+                editGroup.save()
+            else:
+                editField = TrackingTextField.objects.get(id = id)
+                editField.name = fieldname
+                if toggle == 'True':
+                    editField.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                if fieldselect == 'text':
+                    editField.type = False
+                else:
+                    editField.type = True
+                editField.save()
+                editGroup.textfields.add(editField)
+                editGroup.save()
+
+    return redirect('trainprog')
 
 def addGroup(request):
 
     if request.is_ajax():
         name = request.POST.get('name', None)
-        fieldname = request.POST.get('fieldname', None)
-        fieldSelect = request.POST.get('textOrInt',None)
-
+        fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
+        fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
+        toggles = json.loads(request.POST.get('toggles', None))["toggles"]
+        print(fieldSelects)
         try:
 
             new_group = TrackingGroup(
@@ -205,20 +255,33 @@ def addGroup(request):
 
             )
             new_group.save()
-            if fieldSelect == "text":
-                new_field = TrackingTextField(
-                    name=fieldname,
-                )
-                new_field.save()
-            else:
-                new_field = TrackingIntField(
-                    name=fieldname,
-                )
-                new_field.save()
+            for fieldSelect, fieldname, toggle in zip(fieldSelects, fieldnames, toggles):
+                if fieldSelect == "text":
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=False,
+                    )
+
+                    if toggle == 'True':
+                        new_field.save()
+                        new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+
+                    new_field.save()
+                else:
+
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=True,
+                    )
+
+                    if toggle == 'True':
+                        new_field.save()
+                        new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                    new_field.save()
+                new_group.textfields.add(new_field)
+                new_group.save()
 
 
-            new_group.textfields.add(new_field)
-            new_group.save()
             print("saved")
             response = {
                 'msg': 'Your form has been submitted successfully'  # response message

@@ -1,5 +1,6 @@
 {% extends "trainerInterface/nav.html" %}
 {% load static %}
+{% load my_filters %}
 {% block content %}
     <style>
     .groupContainer {
@@ -17,48 +18,131 @@
 
     }
     .groupBox {
+        padding-top: 1%;
+        padding-bottom: 1vw;
         border-radius: 10px;
-        {#width: 200%;#}
+        
+    
+        display: flex;
+        position: relative;
+        /*sets height equal to the width*/
         height: 0;
         padding-bottom: 100%;
+
+        background-color: rgba(0, 0, 0, 0.3);
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+
+        /*makes the container scroll in y direction*/
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .addgroupBox {
         display: flex;
         position: relative;
         background-color: rgba(0, 0, 0, 0.3);
         justify-content: center;     /* added for centered text */
         align-items: center;
+        overflow-y: hidden;
+        overflow-x: hidden;
+        height:  0;
+        padding-top: 47%;
+        padding-bottom: 53%;
     }
-
+    .groupBox::-webkit-scrollbar {
+        width: 0.8vw;
+        background-color: rgba(0, 0, 0, 0);
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
 
     .groupContent {
         position: relative;
-        top: 10px;
+        top: 0.4vw;
         left: 0;
         height: 100%;
-        width: 100%;
+        width: 95%;
+        display: table-column;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        margin-left: 0.8vw;
+
+    }
+    .groupContentTitle {
+        position: relative;
         display: flex;
         margin: auto;
         justify-content: center;     /* added for centered text */
-        align-items: center;         /* added for centered text */
+        align-items: center;
+        width: 100%;
+        padding-bottom: 0.4vw;
     }
-    .addGroupContent {
+    .ContentTitle {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        width: 50%;
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .groupContentTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.4);
+        width: 95%;
+        margin-bottom: 0.4vw;
+
+    }
+    .groupBottomSpacer{
+        height: 0.5vw;
+    }
+    .groupContentRow{
+
+    }
+    .groupContentCell{
+        display: table-cell;
+        width: 50%;
+    }
+    .groupContentName{
+        padding-left: 2%;
+    }
+    .groupContentToggle{
+        text-align: right;
+        padding-right: 2%;
+    }
+    .addGroupButton {
+        
+        display: flex;
         cursor: pointer;
         background-color: rgba(0, 0, 0, 0.3);
         position: relative;
-        top: calc(5.5vw);
+
         width: calc(5vw);
-        height: calc(5vw);
-        display: flex;
-        justify-content: center;     /* added for centered text */
-        align-items: center;         /* added for centered text */
+        
+        padding-top: 0%;
         border-radius: 10px;
         font-size: 36px;
         text-align: center;
         margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
     }
-    div p {
-      top: 47%;
-      transform: translateY(-50%);
-      position: relative;
+    .addIcon {
+        top: -5%;
+        {#transform: translateY(-50%);#}
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        font-size: 3.5vw;
     }
     .bg-modal{
         left:   0;
@@ -84,11 +168,17 @@
         width: calc(21vw);
         min-height: calc(21vw);
         max-height: calc(25vw);
-        background-color: whitesmoke;
+        background-color:  #ababab;
         border-radius: 5px;
         align-items: center;
         {#justify-content: center;#}
 
+    }
+    .modal-content::-webkit-scrollbar {
+        width: 16px;
+        background-color: #ababab;
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
     }
     .close_addentry{
         background-color: rgba(0, 0, 0, 0);
@@ -107,21 +197,32 @@
         align-items: center;
         display: inline;
     }
-    .submit_add_form{
+
+    .groupname{
         position: relative;
-        margin-right: auto;
-        left: 31%;
-        width: 38%;
-        margin-top: 0.5vw;
-    }
-    #groupname{
-        position: relative;
-        left: 20%;
-        width: 60%;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        margin-left: 3.5vw;
+        width: 70%;
         text-align: center;
+        border: none;
+        {#text-decoration-color: #0f0f0f;#}
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .groupname:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .groupname::placeholder{
+        color: lightgrey;
     }
     .addgroup{
-        padding-bottom: 1vw;
+        {#margin-left: 1vw;#}
+
     }
     .add_field_button{
         position: relative;
@@ -131,15 +232,7 @@
         width: 2vw;
 
     }
-    .addfieldbutton{
-        position: relative;
-        border-color: rgba(0, 0, 0, 0.3);
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #0e0e0e;
-        width: 2vw;
-        left: 8vw;
-        margin-top: 0.5vw;
-    }
+
     .clear_field_button{
 
         border-color: rgba(0, 0, 0, 0.3);
@@ -148,45 +241,252 @@
         width: 2vw;
 
     }
-    .clearfieldbutton{
-        position: relative;
-        border-color: rgba(0, 0, 0, 0.3);
-        background-color: rgba(0, 0, 0, 0.3);
-        color: #0e0e0e;
-        width: 2vw;
-        left: 8vw;
-        margin-top: 0.5vw;
+    .clearFieldButton{
+        border-color: darkred;
+        background-color: darkred;
+        height: 1.6vw;
+        font-size: 1.1rem;
+        padding: .1rem .4rem;
+        line-height: .5;
+        border-radius: .2rem;
     }
-    .fields{
+    .addGroupContent{
         position: relative;
         width: 18vw;
+        margin-left: 1vw;
+        margin-top: 0.4vw;
     }
-    #fieldname{
-        width: 35%;
+    .addGroupTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        margin-bottom: 2.5%;
+        border-radius: 5px;
+        height: 0;
+        box-shadow: 0 0 0 1pt grey;
+        width: 100%;
+        height: 1vw;
+    }
+    .addGroupRow{
+
+    }
+    .addGroupCellSelect{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 30%;
+        cursor: pointer;
+
+    }
+    .addGroupCellInput{
+        position: relative;
+        display: table-cell;
+        width: 50%;
+    }
+    .addGroupCellRemove{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 8%;
+        padding-left: 1.5%;
+        cursor: pointer;
+    }
+    .selectField{
+        margin: auto;
+        text-align: center;     /* added for centered text */
+        align-items: center;
+        width:  100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .inputField{
+
+        margin-right: 0.3vw;
+        width:  95%;
+    }
+    .fieldname{
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        margin-right: 0.3vw;
+        text-align: center;
+        border: none;
+        outline: none;
+        {#text-decoration-color: #0f0f0f;#}
+
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    {##fieldname:focus:active{#}
+    {#    outline: none;#}
+    {#}#}
+    .fieldname:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .fieldname::placeholder{
+        color: lightgrey;
     }
     .btn-group-xs > .btn, .btn-xs {
       padding: .1rem .4rem;
-      font-size: .875rem;
+      font-size: 0.9rem;
       line-height: .5;
       border-radius: .2rem;
 
     }
+    .submitGroupContent{
+        background-color: #ababab;
+        position: sticky;
+        padding-bottom: 0.2vw;
+        padding-top: 0.2vw;
+        padding-left: 1vw;
+        bottom: 0;
+        width: 100%;
+        margin-left: 2vw;
+    }
+    .submitGroupTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        width: 80%;
+
+    }
+
+    .addFieldButtonCell{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 50%;
+        padding-left: 1.5%;
+    }
+    .add_field_button{
+
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+        position: relative;
+        border-radius: 5px;
+        width: 100%;
+    }
+    .submit_add_form{
+        margin: auto;
+        text-align: center;     /* added for centered text */
+        align-items: center;
+        width:  100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+    .submitFieldCell{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 50%;
+        padding-right: 1.5%;
+    }
+
+    /*%%%%%%%%%%%%%%%%%%%%%%%%% Edit Group Window %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+    .èditGroupContent{
+        position: relative;
+        width: 18vw;
+        margin-left: 1vw;
+        margin-top: 0.4vw;
+    }
+    .editGroupTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        margin-bottom: 2.5%;
+        border-radius: 5px;
+        height: 0;
+        box-shadow: 0 0 0 1pt grey;
+        width: 100%;
+        height: 1vw;
+    }
+    .editFieldRow{
+
+    }
+    .editFieldSelect{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 30%;
+        cursor: pointer;
+
+    }
+    .editFieldInput{
+        position: relative;
+        display: table-cell;
+        width: 50%;
+    }
+    .editFieldRemove{
+        position: relative;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        display: table-cell;
+        width: 8%;
+        padding-left: 1.5%;
+        cursor: pointer;
+    }
+    .add_field_button1{
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+        position: relative;
+        border-radius: 5px;
+        width: 100%;
+    }
     </style>
+    
     <div class="groupContainer">
         <div class="groupRow">
             {% for group in groups %}
-                <div class="groupBox">
+                <div class="groupBox" onclick="toggleEditEntry({{ forloop.counter0 }})">
                     <div class="groupContent">
-                        {{ group.name }}
+                        <div class="groupContentTitle">
+                            <div class="ContentTitle">
+                                {{ group.name }}
+                            </div>
+                        </div>
+
+
+                        {% for field in group.textfields.all %}
+                            <table class = "groupContentTable">
+                                <tr class = "groupContentRow">
+                                    <td class = "groupContentCell groupContentName">
+                                        {{ field.name }}
+                                    </td>
+                                    <td class = "groupContentCell groupContentToggle">
+
+                                         {% if selected_client|is_in:field.clientToggle.all %}
+                                            <i class="fas fa-toggle-on" style="color: green"></i>
+                                         {% else %}
+                                            <i class="fas fa-toggle-off" style="color: darkred"></i>
+                                         {% endif%}
+
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                        <div class="groupBottomSpacer">
+                        </div>
+
                     </div>
                 </div>
-{#                {% if forloop.counter|divisibleby:4 %}#}
-{#                    </div>#}
-{#                    <div class="groupRow">#}
-{#                {% endif %}#}
             {% endfor %}
-            <div class="groupBox">
-                <div class="addGroupContent" onclick="toggleAddEntry()"><p>+</p>
+            <div class="groupBox addgroupBox">
+                <div class="addGroupButton" onclick="toggleAddEntry()"><div class="addIcon">+</div>
                 </div>
             </div>
         </div>
@@ -196,29 +496,112 @@
         <div class="close_addentry">+</div>
 
         <form id = "add-group-form" class = "add-group-form" method="post">
-            <div class="addgroup">
+
+            <div class="addGroupTitle">
                 {{ addGroupForm }}
             </div>
-            <div class="fields" id="fields">
-                <div class="field" id="field-0">
-                    <div style="display: inline; justify-content: center">
-                        {{ addFieldForm }}
-                    </div>
-                    <div class="btn-group"  style="display: inline">
-                        <select class="btn btn-secondary btn-xs dropdown-toggle" name="fieldSelect" id="fieldSelect">
-                            <option value="text">text</option>
-                            <option value="number">number</option>
-                        </select>
-                    </div>
-                    <div class="pull-right" style="display: inline">
-                        <button type="button" onClick="removeDiv(this)" class="delete-field btn btn-danger btn-sm">&times</button>
-                    </div>
-                </div>
+            <div class = "addGroupContent" id="fields">
+                <table class="addGroupTable" id="field-0">
+                    <tr class = "addGroupRow">
+                        <td class = "addGroupCellInput">
+                                <input class = "inputField fieldname" type="text" id="fieldname" placeholder="Insert Name">
+                        </td>
+                        <td class = "addGroupCellSelect">
+                            <select class="dropdown-toggle selectField" name="fieldSelect" id="fieldSelect">
+                                <option value="text">text</option>
+                                <option value="number">number</option>
+                            </select>
+                        </td>
+                        <td class="addfieldToggle fieldToggle" style="" onclick="changeFieldToggle(this)" id="fieldToggle">
+                            <i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>
+                        </td>
+                        <td class="addGroupCellRemove" style="" >
+                            <i class="far fa-times-circle" style="color: darkred" onClick="removeDiv(this)"></i>
+
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <div class="addfieldbutton"><button class="add_field_button btn btn-sm btn-secondary">+</button></div>
-            <input  class="submit_add_form" type="submit" name="submit" value="submit">
+            <div class = "submitGroupContent">
+                <table class="submitGroupTable" >
+                    <tr class = "addGroupRow">
+                        <td class="addFieldButtonCell">
+                            <input class="add_field_button " type="button" value="Add Field">
+                        </td>
+                        <td class="submitFieldCell">
+                            <input  class="submit_add_form" type="submit" name="submit" value="Submit">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
         </form>
 
+    </div>
+</div>
+<div class="bg-modal" id ="edit-group-modal"style="display: none;">
+    <div class="modal-content" id="edit-modal-content">
+        <div class="close_addentry">+</div>
+
+        {% for group in groups %}
+        <form id = "edit-group-form-{{ forloop.counter0 }}" class = "edit-group-form-{{ forloop.counter0 }}" style="display: none;" method="post">
+
+            <div class="editGroupTitle" id="editGroup">
+                <input class = "inputField groupname edit-group-name-{{ forloop.counter0 }}" type="text" id="{{ group.id }}" value='{{ group.name }}'>
+            </div>
+            <div class = "addGroupContent" id="editfields-{{ forloop.counter0 }}">
+                {% for field in group.textfields.all %}
+                <table class="addGroupTable" id="{{ field.id }}">
+                    <tr class = "editFieldRow">
+                        <td class = "editFieldInput">
+                                <input class = "inputField fieldname" type="text" id="editfieldname" value='{{ field.name }}'>
+
+                        </td>
+                        <td class = "editfieldSelect">
+                            <select class="dropdown-toggle selectField" name="editfieldSelect" id="editfieldSelect">
+                                {% if field.type %}
+                                    <option value="text">text</option>
+                                    <option value="number" selected="selected">number</option>
+                                {% else %}
+                                    <option value="text" selected="selected">text</option>
+                                    <option value="number" >number</option>
+                                {% endif %}
+                            </select>
+                        </td>
+                        <td class="editfieldToggle editfieldToggle-{{ forloop.parentloop.counter0 }}"  style="" onclick="changeFieldToggle(this)" id="editfieldToggle-{{ forloop.counter0 }}">
+                            {% if selected_client|is_in:field.clientToggle.all %}
+                                <i class='fas fa-toggle-on' style='color: green'></i>
+                            {% else %}
+                                <i class='fas fa-toggle-off' style='color: darkred'></i>
+                            {% endif %}
+                        </td>
+                        <td class="editFieldRemove" style="" >
+                            <i class="far fa-times-circle" style="color: darkred" onClick="removeDiv(this)" ></i>
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+
+            </div>
+
+
+        </form>
+
+
+        {% endfor %}
+        <div class = "submitGroupContent">
+                <table class="submitGroupTable" >
+                    <tr class = "addGroupRow">
+                        <td class="addFieldButtonCell">
+                            <input class="add_field_button1 " type="button" value="Add Field">
+                        </td>
+                        <td class="submitFieldCell">
+                            <input class="submit-edit-button" id="submit-edit-button" type="button" value="Submit">
+                        </td>
+                    </tr>
+                </table>
+        </div>
     </div>
 </div>
 
@@ -228,8 +611,10 @@
 <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
 <script type="text/javascript">
         var x = document.getElementById("add-entry-modal");
-       x.style.display = "none";
+        x.style.display = "none";
+        var activeindex = 0;
         var addFieldCount = 0;
+        var activeState;
         function toggleAddEntry() {
             var x = document.getElementById("add-entry-modal");
             if (x.style.display === "none" || x.style.display) {
@@ -238,12 +623,58 @@
               x.style.display = "none";
             }
         }
+        var y = document.getElementById("edit-group-modal");
+        y.style.display = "none";
+        function toggleEditEntry(index) {
+            activeindex = index
+            console.log(activeindex);
+
+            var x = document.getElementById("edit-group-modal");
+
+
+            if (x.style.display === "none" || x.style.display) {
+                x.style.display = "flex";
+            } else {
+                x.style.display = "none";
+            }
+            var y = document.getElementById("edit-group-form-" + index);
+            if (y.style.display === "none" || y.style.display) {
+                y.style.display = "block";
+            } else {
+                y.style.display = "none";
+            }
+
+
+
+        }
+
+        function changeFieldToggle(elem) {
+
+            if (elem.innerHTML==='<i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>') {
+                elem.innerHTML='<i class="fas fa-toggle-off" style="color: darkred" aria-hidden="true"></i>';
+            
+            }
+            else {
+                elem.innerHTML ='<i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>';
+            }
+        }
         $('.close_addentry').on('click', function(e) {
-          var x = document.getElementById("add-entry-modal");
-          x.style.display = "none";
+            var x = document.getElementById("add-entry-modal");
+            x.style.display = "none";
+            var y = document.getElementById("edit-group-modal");
+            y.style.display = "none";
+
+            var z = document.getElementById("edit-group-form-"+activeindex);
+            z.style.display = "none";
+          //toggleEditEntry(activeindex);
         });
         function removeDiv(elem){
-            $(elem).parent('div').parent('div').remove();
+            var parent = $(elem).parent().parent().parent().parent();
+            console.log(parent.attr("id"));
+            if (parent.attr("id") != "field-0") {
+                parent.remove();
+            }
+
         }
 
         $('.bg-modal').on('click', function(e) {
@@ -251,28 +682,64 @@
             return;
           var x = document.getElementById("add-entry-modal");
           x.style.display = "none";
+          var y = document.getElementById("edit-group-modal");
+          y.style.display = "none";
+          var z = document.getElementById("edit-group-form-"+activeindex);
+          z.style.display = "none";
         });
         $('.add_field_button').on('click', function(e) {
           e.preventDefault();
-          var x = document.getElementById('fields');
-          var div = document.getElementById('field-0');
-          var newDiv = div.cloneNode(true);
-          addFieldCount = addFieldCount + 1;
-          newDiv.id = "field-"+addFieldCount;
-          x.appendChild(newDiv)
+          var x = $("#fields");
+          var table = $("#field-0").clone(true);
 
+          addFieldCount = addFieldCount + 1;
+          newID = "field-"+addFieldCount;
+          table.attr("id",newID);
+          table.appendTo(x)
+        });
+        $('.add_field_button1').on('click', function(e) {
+          e.preventDefault();
+
+          var x = $("#editfields-"+activeindex);
+          var table = $("#field-0").clone(true);
+
+          addFieldCount = addFieldCount + 1;
+          newID = '';
+          table.attr("id",newID);
+          table.appendTo(x)
         });
         $('.add-group-form').on('submit', function(e){
          e.preventDefault();
 
+            var fieldnames = $("[id=fieldname]").map(function() {
+                return $(this).val();
+            }).get();
+            var classifications = $("[id=fieldSelect]").map(function() {
+                return $(this).val();
+            }).get();
+
+            var toggleElem = document.getElementsByClassName("fieldToggle");;
+            var toggles = [];
+            for (let i = 0; i < toggleElem.length; i++) {
+                console.log(toggleElem[i].innerHTML)
+                if (toggleElem[i].innerHTML.includes('green')) {
+                    toggles.push('True');
+                } else {
+                    toggles.push('False');
+                }
+            }
+            fieldnames = JSON.stringify({fieldnames });
+            classifications = JSON.stringify({classifications });
+            toggles = JSON.stringify({toggles });
            $.ajax({
                 type : "POST",
                 url: "{% url 'add_group' %}",
                 data: {
 
                  name : $('#groupname').val(),
-                 fieldname: $('#fieldname').val(),
-                 textOrInt: $('#fieldSelect').val(),
+                 fieldnames: fieldnames,
+                 classifications: classifications,
+                 toggles: toggles,
                  csrfmiddlewaretoken: '{{ csrf_token }}',
                  dataType: "json",
                 },
@@ -283,9 +750,69 @@
                 }
             });
 
-           {#window.location.reload();#}
-           {#var x = document.getElementById("add-entry-modal");#}
-           {#x.style.display = "none";#}
+           window.location.reload();
+           var x = document.getElementById("add-entry-modal");
+           x.style.display = "none";
         });
+        $('.submit-edit-button').on('click', function(f) {
+
+            var fieldnames = [];
+
+            $("#edit-group-form-" + activeindex).find("[id^=editfieldname]").each(function() {
+                fieldnames.push($(this).val());
+            });
+            var fieldIds = [];
+
+            $("#edit-group-form-" + activeindex).find(".addGroupTable").each(function() {
+                fieldIds.push($(this).attr('id'));
+            });
+            var classifications = [];
+            $("#edit-group-form-" + activeindex).find("[id^=editfieldSelect]").each(function() {
+                classifications.push($(this).val());
+            });
+
+
+            var toggleElem = document.getElementsByClassName("editfieldToggle-"+activeindex);
+            var toggles = [];
+            for (let i = 0; i < toggleElem.length; i++) {
+                if (toggleElem[i].innerHTML.includes('green')) {
+                    toggles.push('True');
+                } else {
+                    toggles.push('False');
+                }
+            }
+            console.log($('.edit-group-name-'+activeindex).attr('id'));
+
+            fieldnames = JSON.stringify({fieldnames });
+            fieldIds = JSON.stringify({fieldIds });
+            classifications = JSON.stringify({classifications });
+            toggles = JSON.stringify({toggles });
+           $.ajax({
+                type : "POST",
+                url: "{% url 'edit_group' %}",
+                data: {
+
+                 name : $('.edit-group-name-'+activeindex).val(),
+                 groupId : $('.edit-group-name-'+activeindex).attr('id'),
+                 fieldIds : fieldIds,
+                 fieldnames: fieldnames,
+                 classifications: classifications,
+                 toggles: toggles,
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    {#location.reload();#}
+                },
+                failure: function() {
+                }
+            });
+
+           window.location.reload();
+           var x = document.getElementById("edit-group-modal");
+           x.style.display = "none";
+        });
+
     </script>
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
 {% endblock content%}

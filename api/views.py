@@ -70,7 +70,7 @@ class SetEntry(APIView):
         if request.method == 'POST':
             data = {}
             data['response'] = ""
-            index = 1;
+            index = 1
             for item in request.data:
                 serializer = SetSerializer(data=item)
 
@@ -124,6 +124,50 @@ class TrackingData(APIView):
         serializer = GroupSerializer(groupData, many=True)
 
         return Response(serializer.data)
+
+class TrackingValuesUpdate(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    # @api_view(['POST', ])
+    def post(self, request):
+        if request.method == 'POST':
+            data = {}
+            data['response'] = ""
+            textVals = {}
+
+            if request.data:
+                textVals = request.data.get("textVals")
+            index = 1
+            for item in textVals:
+
+                textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"), date=item.get("date"), client=item.get("client"))
+                if textVal:
+                    textVal.update(value=item.get("value"))
+                    data['response'] = data['response'] + "entry "+str(index) + " already exists, "
+
+                else:
+                    serializer = TrackTextValueSerializer(data=item)
+                    if serializer.is_valid():
+                        serializer.save()
+                        data['response'] = data['response'] + "entry "+str(index) + " entered, "
+                    else:
+                        data = serializer.errors
+                index += 1
+
+            return Response(data)
+
+class TrackingValuesGet(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    def post(self, request):
+        email_lookup = request.data["username"]
+        user = User.objects.filter(email=email_lookup)
+        textValues = TrackingTextValue.objects.filter(client__in=user)
+        print(textValues)
+        serializer = TrackTextValueSerializer(textValues, many=True)
+        return Response(serializer)
 
 def imageDisplay(request,id):
     emp = get_object_or_404(ExerciseType, pk=id)

@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.db import models
+
 
 from django.contrib.postgres.fields import ArrayField
 
@@ -179,24 +179,15 @@ class TrackingTextValue(models.Model):
     value = models.CharField(max_length=30)
     client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='textFieldClient')
     date = models.DateField()
+    field_id = models.IntegerField()
+
 
 
 class TrackingTextField(models.Model):
     name = models.CharField(max_length=30)
     clientToggle = models.ManyToManyField(Account, blank=True, default=None)
     values = models.ManyToManyField(TrackingTextValue, blank=True)
-
-
-class TrackingIntValue(models.Model):
-    value = models.IntegerField()
-    client = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='intFieldClient')
-    date = models.DateField()
-
-
-class TrackingIntField(models.Model):
-    name = models.CharField(max_length=30)
-    clientToggle = models.ManyToManyField(Account, blank=True, default=None)
-    values = models.ManyToManyField(TrackingIntValue, blank=True)
+    type = models.BooleanField() # False if text field, True if integer only field
 
 
 class TrackingGroup(models.Model):
@@ -204,7 +195,7 @@ class TrackingGroup(models.Model):
     name = models.CharField(max_length=30)
     clientToggle = models.ManyToManyField(Account, blank=True, default=None, related_name='clientToggle')
     textfields = models.ManyToManyField(TrackingTextField, related_name='textfield', blank=True)
-    intfields = models.ManyToManyField(TrackingIntField, related_name='intfield', blank=True)
+
 
 
 # class ClientConfig(models.Model):
