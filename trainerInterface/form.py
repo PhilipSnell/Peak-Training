@@ -45,9 +45,9 @@ class AddTrainingEntry(BSModalModelForm):
 
 
 class GroupAddForm(BSModalModelForm):
-    name = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'id': 'groupname', 'placeholder':
-        'Insert Group Name'}))
-
+    name = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'groupname',
+                                                                                  'id': 'groupname',
+                                                                                  'placeholder': 'Insert Group Name'}))
 
     class Meta:
         model = TrackingGroup# Please use CamelCase when defining model class name

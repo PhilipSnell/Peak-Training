@@ -198,7 +198,7 @@
         display: inline;
     }
 
-    #groupname{
+    .groupname{
         position: relative;
         display: flex;
         margin: auto;
@@ -213,11 +213,11 @@
 
         background-color: rgba(0, 0, 0, 0.3);
     }
-    #groupname:-webkit-autofill {
+    .groupname:-webkit-autofill {
         -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
         background-color: rgba(0, 0, 0, 0.3);
     }
-    #groupname::placeholder{
+    .groupname::placeholder{
         color: lightgrey;
     }
     .addgroup{
@@ -309,7 +309,7 @@
         margin-right: 0.3vw;
         width:  95%;
     }
-    #fieldname{
+    .fieldname{
         position: relative;
         display: flex;
         margin: auto;
@@ -327,11 +327,11 @@
     {##fieldname:focus:active{#}
     {#    outline: none;#}
     {#}#}
-    #fieldname:-webkit-autofill {
+    .fieldname:-webkit-autofill {
         -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
         background-color: rgba(0, 0, 0, 0.3);
     }
-    #fieldname::placeholder{
+    .fieldname::placeholder{
         color: lightgrey;
     }
     .btn-group-xs > .btn, .btn-xs {
@@ -342,10 +342,14 @@
 
     }
     .submitGroupContent{
-        position: relative;
-        width: 18vw;
-        margin-left: 1vw;
-        margin-top: 0.4vw;
+        background-color: #ababab;
+        position: sticky;
+        padding-bottom: 0.2vw;
+        padding-top: 0.2vw;
+        padding-left: 1vw;
+        bottom: 0;
+        width: 100%;
+        margin-left: 2vw;
     }
     .submitGroupTable{
         position: relative;
@@ -492,7 +496,7 @@
         <div class="close_addentry">+</div>
 
         <form id = "add-group-form" class = "add-group-form" method="post">
-            {% csrf_token %}
+
             <div class="addGroupTitle">
                 {{ addGroupForm }}
             </div>
@@ -500,7 +504,7 @@
                 <table class="addGroupTable" id="field-0">
                     <tr class = "addGroupRow">
                         <td class = "addGroupCellInput">
-                            <input class = "inputField" type="text" id="fieldname" placeholder="Field Name">
+                            <input class = "inputField fieldname" type="text" id="fieldname" placeholder="Field Name">
                         </td>
                         <td class = "addGroupCellSelect">
                             <select class="dropdown-toggle selectField" name="fieldSelect" id="fieldSelect">
@@ -541,31 +545,30 @@
         <div class="close_addentry">+</div>
 
         {% for group in groups %}
-        <form id = "edit-group-form-{{ forloop.counter0 }}" class = "edit-group-form-{{ forloop.counter0 }}" style="display: none" method="post">
-        {% csrf_token %}
+        <form id = "edit-group-form-{{ forloop.counter0 }}" class = "edit-group-form-{{ forloop.counter0 }}" style="display: none;" method="post">
+
             <div class="editGroupTitle" id="editGroup">
-                <input class = "inputField" type="text" id="groupname" value='{{ group.name }}'>
-                
+                <input class = "inputField groupname edit-group-name-{{ forloop.counter0 }}" type="text" id="{{ group.id }}" value='{{ group.name }}'>
             </div>
             <div class = "addGroupContent" id="editfields-{{ forloop.counter0 }}">
                 {% for field in group.textfields.all %}
-                <table class="addGroupTable" id="x">
+                <table class="addGroupTable" id="{{ field.id }}">
                     <tr class = "editFieldRow">
                         <td class = "editFieldInput">
-                            <input class = "inputField" type="text" id="editfieldname" value='{{ field.name }}'>
+                            <input class = "inputField fieldname" type="text" id="editfieldname" value='{{ field.name }}'>
                         </td>
                         <td class = "editfieldSelect">
-                            <select class="dropdown-toggle selectField" name="editfieldSelect" id="editfieldSelect-{{ forloop.counter0 }}">
+                            <select class="dropdown-toggle selectField" name="editfieldSelect" id="editfieldSelect">
                                 <option value="text">text</option>
                                 <option value="number">number</option>
                             </select>
                         </td>
-                        <td class="editfieldToggle" style="" onclick="changeFieldToggle(this)" id="editfieldToggle-{{ forloop.counter0 }}">
+                        <td class="editfieldToggle editfieldToggle-{{ forloop.parentloop.counter0 }}"  style="" onclick="changeFieldToggle(this)" id="editfieldToggle-{{ forloop.counter0 }}">
                             {% if selected_client|is_in:field.clientToggle.all %}
                                 <i class='fas fa-toggle-on' style='color: green'></i>
                             {% else %}
                                 <i class='fas fa-toggle-off' style='color: darkred'></i>
-                            {% endif%}
+                            {% endif %}
                         </td>
                         <td class="editFieldRemove" style="" >
                             <i class="far fa-times-circle" style="color: darkred" onClick="removeDiv(this)" ></i>
@@ -576,20 +579,23 @@
 
             </div>
 
-            <div class = "submitGroupContent">
+
+        </form>
+
+
+        {% endfor %}
+        <div class = "submitGroupContent">
                 <table class="submitGroupTable" >
                     <tr class = "addGroupRow">
                         <td class="addFieldButtonCell">
                             <input class="add_field_button1 " type="button" value="Add Field">
                         </td>
                         <td class="submitFieldCell">
-                            <input  class="submit_add_form" type="submit" name="submit" value="Submit">
+                            <input class="submit-edit-button" id="submit-edit-button" type="button" value="Submit">
                         </td>
                     </tr>
                 </table>
-            </div>
-        </form>
-        {% endfor %}
+        </div>
     </div>
 </div>
 
@@ -616,24 +622,24 @@
         function toggleEditEntry(index) {
             activeindex = index
             console.log(activeindex);
+
             var x = document.getElementById("edit-group-modal");
 
 
             if (x.style.display === "none" || x.style.display) {
-              x.style.display = "flex";
+                x.style.display = "flex";
             } else {
-              x.style.display = "none";
+                x.style.display = "none";
             }
-            var y = document.getElementById("edit-group-form-"+index);
+            var y = document.getElementById("edit-group-form-" + index);
             if (y.style.display === "none" || y.style.display) {
-              y.style.display = "block";
+                y.style.display = "block";
             } else {
-              y.style.display = "none";
+                y.style.display = "none";
             }
-            var fieldnames = $('#edit-group-form-'+activeindex).children("[id=editfieldname]").map(function() {
-                return $(this).val();
-            }).get();
-            console.log(fieldnames)
+
+
+
         }
 
 
@@ -693,78 +699,33 @@
           var table = $("#field-0").clone(true);
 
           addFieldCount = addFieldCount + 1;
-          newID = "field-"+addFieldCount;
+          newID = '';
           table.attr("id",newID);
           table.appendTo(x)
         });
         $('.add-group-form').on('submit', function(e){
          e.preventDefault();
-            var fieldnames = $("[id=fieldname]").map(function() {
-                return $(this).val();
-            }).get();
-            var classifications = $("[id=fieldSelect]").map(function() {
-                return $(this).val();
-            }).get();
-
-            var toggleElem = document.getElementsByClassName("fieldToggle");;
-            var toggles = [];
-            for (let i = 0; i < toggleElem.length; i++) {
-                console.log(toggleElem[i].innerHTML)
-                if (toggleElem[i].innerHTML.includes('green')) {
-                    toggles.push('True');
-                } else {
-                    toggles.push('False');
-                }
-            }
-            fieldnames = JSON.stringify({fieldnames });
-            classifications = JSON.stringify({classifications });
-            toggles = JSON.stringify({toggles });
-           $.ajax({
-                type : "POST",
-                url: "{% url 'add_group' %}",
-                data: {
-
-                 name : $('#groupname').val(),
-                 fieldnames: fieldnames,
-                 classifications: classifications,
-                 toggles: toggles,
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-                },
-                success: function(data){
-                    location.reload();
-                },
-                failure: function() {
-                }
-            });
-
-           window.location.reload();
-           var x = document.getElementById("add-entry-modal");
-           x.style.display = "none";
-        });
-        $('.edit-group-form-'+activeindex).on('submit', function(e){
-         e.preventDefault();
-            var fieldnames = $("[id=editfieldname-"+activeindex+"]").map(function() {
-                return $(this).val();
-            }).get();
-            console.log(fieldnames)
-            {#var classifications = $("[id=editfieldSelect"+addFieldCount+"]").map(function() {#}
-            {#    return $(this).val();#}
-            {#}).get();#}
-            {##}
-            {#var toggleElem = document.getElementsByClassName("editfieldToggle"+addFieldCount);#}
-            {#var toggles = [];#}
-            {#for (let i = 0; i < toggleElem.length; i++) {#}
-            {#    console.log(toggleElem[i].innerHTML)#}
-            {#    if (toggleElem[i].innerHTML.includes('green')) {#}
-            {#        toggles.push('True');#}
-            {#    } else {#}
-            {#        toggles.push('False');#}
-            {#    }#}
-
-            {#fieldnames = JSON.stringify({fieldnames });#}
-            {#classifications = JSON.stringify({classifications });#}
-            {#toggles = JSON.stringify({toggles });#}
+         alert("done");
+           {# var fieldnames = $("[id=fieldname]").map(function() {#}
+           {#     return $(this).val();#}
+           {# }).get();#}
+           {# var classifications = $("[id=fieldSelect]").map(function() {#}
+           {#     return $(this).val();#}
+           {# }).get();#}
+           {##}
+           {# var toggleElem = document.getElementsByClassName("fieldToggle");;#}
+           {# var toggles = [];#}
+           {# for (let i = 0; i < toggleElem.length; i++) {#}
+           {#     console.log(toggleElem[i].innerHTML)#}
+           {#     if (toggleElem[i].innerHTML.includes('green')) {#}
+           {#         toggles.push('True');#}
+           {#     } else {#}
+           {#         toggles.push('False');#}
+           {#     }#}
+           {# }#}
+           {# fieldnames = JSON.stringify({fieldnames });#}
+           {# classifications = JSON.stringify({classifications });#}
+           {# toggles = JSON.stringify({toggles });#}
            {#$.ajax({#}
            {#     type : "POST",#}
            {#     url: "{% url 'add_group' %}",#}
@@ -783,10 +744,68 @@
            {#     failure: function() {#}
            {#     }#}
            {# });#}
-
+           {##}
            {#window.location.reload();#}
-           {#var x = document.getElementById("edit-entry-modal");#}
+           {#var x = document.getElementById("add-entry-modal");#}
            {#x.style.display = "none";#}
+        });
+        $('.submit-edit-button').on('click', function(f) {
+
+            var fieldnames = [];
+
+            $("#edit-group-form-" + activeindex).find("[id^=editfieldname]").each(function() {
+                fieldnames.push($(this).val());
+            });
+            var fieldIds = [];
+
+            $("#edit-group-form-" + activeindex).find(".addGroupTable").each(function() {
+                fieldIds.push($(this).attr('id'));
+            });
+            var classifications = [];
+            $("#edit-group-form-" + activeindex).find("[id^=editfieldSelect]").each(function() {
+                classifications.push($(this).val());
+            });
+
+
+            var toggleElem = document.getElementsByClassName("editfieldToggle-"+activeindex);
+            var toggles = [];
+            for (let i = 0; i < toggleElem.length; i++) {
+                if (toggleElem[i].innerHTML.includes('green')) {
+                    toggles.push('True');
+                } else {
+                    toggles.push('False');
+                }
+            }
+            console.log($('.edit-group-name-'+activeindex).attr('id'));
+
+            fieldnames = JSON.stringify({fieldnames });
+            fieldIds = JSON.stringify({fieldIds });
+            classifications = JSON.stringify({classifications });
+            toggles = JSON.stringify({toggles });
+           $.ajax({
+                type : "POST",
+                url: "{% url 'edit_group' %}",
+                data: {
+
+                 name : $('.edit-group-name-'+activeindex).val(),
+                 groupId : $('.edit-group-name-'+activeindex).attr('id'),
+                 fieldIds : fieldIds,
+                 fieldnames: fieldnames,
+                 classifications: classifications,
+                 toggles: toggles,
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    {#location.reload();#}
+                },
+                failure: function() {
+                }
+            });
+
+           window.location.reload();
+           var x = document.getElementById("edit-group-modal");
+           x.style.display = "none";
         });
 
     </script>

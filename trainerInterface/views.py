@@ -191,28 +191,21 @@ def dataTracking(request):
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
         addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
 
-def addGroup(request):
+def editGroup(request):
 
     if request.is_ajax():
+        groupId = request.POST.get('groupId', None)
         name = request.POST.get('name', None)
-
+        fieldIds = json.loads(request.POST.get('fieldIds', None))['fieldIds']
         fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
-
         fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
-
         toggles = json.loads(request.POST.get('toggles', None))["toggles"]
-        print(toggles)
-        print(User.objects.get(email=request.session['selected_client']).id)
-        # try:
 
-        new_group = TrackingGroup(
-            name=name,
-            trainer=request.user,
-
-        )
-        new_group.save()
-        for fieldSelect, fieldname, toggle in zip(fieldSelects, fieldnames, toggles):
-            if fieldSelect == "text":
+        editGroup = TrackingGroup.objects.get(id=groupId)
+        editGroup.name = name
+        editGroup.save()
+        for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
+            if id == '':
                 new_field = TrackingTextField(
                     name=fieldname,
                 )
@@ -222,31 +215,71 @@ def addGroup(request):
                     new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
 
                 new_field.save()
+                editGroup.textfields.add(new_field)
+                editGroup.save()
             else:
-
-                new_field = TrackingIntField(
-                    name=fieldname,
-                )
-
+                editField = TrackingTextField.objects.get(id = id)
+                editField.name = fieldname
                 if toggle == 'True':
-                    new_field.save()
-                    new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
-                new_field.save()
-            new_group.textfields.add(new_field)
+                    editField.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                editField.save()
+                editGroup.textfields.add(editField)
+                editGroup.save()
+
+    return redirect('trainprog')
+
+def addGroup(request):
+
+    if request.is_ajax():
+        name = request.POST.get('name', None)
+        fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
+        fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
+        toggles = json.loads(request.POST.get('toggles', None))["toggles"]
+
+        try:
+
+            new_group = TrackingGroup(
+                name=name,
+                trainer=request.user,
+
+            )
             new_group.save()
+            for fieldSelect, fieldname, toggle in zip(fieldSelects, fieldnames, toggles):
+                if fieldSelect == "text":
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                    )
+
+                    if toggle == 'True':
+                        new_field.save()
+                        new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+
+                    new_field.save()
+                else:
+
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                    )
+
+                    if toggle == 'True':
+                        new_field.save()
+                        new_field.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                    new_field.save()
+                new_group.textfields.add(new_field)
+                new_group.save()
 
 
-        print("saved")
-        response = {
-            'msg': 'Your form has been submitted successfully'  # response message
-        }
+            print("saved")
+            response = {
+                'msg': 'Your form has been submitted successfully'  # response message
+            }
 
 
-        # except:
-        #     print("not saved")
-        #     response = {
-        #         'msg': 'Your form has not been saved'  # response message
-        #     }
+        except:
+            print("not saved")
+            response = {
+                'msg': 'Your form has not been saved'  # response message
+            }
     return redirect('dataTracking')
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
