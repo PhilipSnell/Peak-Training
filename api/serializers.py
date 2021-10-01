@@ -52,33 +52,37 @@ class SetSerializer(serializers.ModelSerializer):
             'e_id'
         )
 
+class TrackTextValueSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = TrackingTextValue
+        fields = (
+            "value",
+            "client",
+            "date",
+            "field_id",
+        )
+
+
 class TextfieldSerializer(serializers.ModelSerializer):
     class Meta:
         model = TrackingTextField
         fields = (
             'id',
             'name',
+            'type',
         )
 
-
-class IntfieldSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TrackingTextField
-        fields = (
-            'id',
-            'name',
-        )
 
 
 class GroupSerializer(serializers.ModelSerializer):
     textfields = TextfieldSerializer(many=True)
-    intfields = IntfieldSerializer(many=True)
+
     class Meta:
         model = TrackingGroup
         fields = (
             'name',
             'textfields',
-            'intfields',
         )
 
 
@@ -99,7 +103,7 @@ class UserSerializer(serializers.ModelSerializer):
             'password',
         )
         extra_kwags= {
-            'password' : {'write_only':True}
+            'password': {'write_only':True}
         }
         validators = [
             UniqueTogetherValidator(
