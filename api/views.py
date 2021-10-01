@@ -135,10 +135,9 @@ class TrackingValuesUpdate(APIView):
             data = {}
             data['response'] = ""
             textVals = {}
-            intVals = {}
+
             if request.data:
                 textVals = request.data.get("textVals")
-                intVals = request.data.get("intVals")
             index = 1
             for item in textVals:
 
@@ -155,21 +154,6 @@ class TrackingValuesUpdate(APIView):
                     else:
                         data = serializer.errors
                 index += 1
-            for item in intVals:
-
-                intVal = TrackingIntValue.objects.filter(field_id=item.get("field_id"), date=item.get("date"), client=item.get("client"))
-                if intVal:
-                    intVal.update(value=item.get("value"))
-                    data['response'] = data['response'] + "entry "+str(index) + " already exists, "
-
-                else:
-                    serializer = TrackIntValueSerializer(data=item)
-                    if serializer.is_valid():
-                        serializer.save()
-                        data['response'] = data['response'] + "entry "+str(index) + " entered, "
-                    else:
-                        data = serializer.errors
-                index += 1
 
             return Response(data)
 
@@ -180,12 +164,9 @@ class TrackingValuesGet(APIView):
     def post(self, request):
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
-        intValues = TrackingIntValue.objects.filter(client__in=user)
         textValues = TrackingTextValue.objects.filter(client__in=user)
         print(textValues)
-        serializer1 = TrackIntValueSerializer(intValues, many=True)
-        serializer2 = TrackTextValueSerializer(textValues, many=True)
-        serializer = {"intVals":serializer1.data, "textVals":serializer2.data}
+        serializer = TrackTextValueSerializer(textValues, many=True)
         return Response(serializer)
 
 def imageDisplay(request,id):

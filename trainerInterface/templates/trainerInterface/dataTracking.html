@@ -504,7 +504,7 @@
                 <table class="addGroupTable" id="field-0">
                     <tr class = "addGroupRow">
                         <td class = "addGroupCellInput">
-                            <input class = "inputField fieldname" type="text" id="fieldname" placeholder="Field Name">
+                                <input class = "inputField fieldname" type="text" id="fieldname" placeholder="Insert Name">
                         </td>
                         <td class = "addGroupCellSelect">
                             <select class="dropdown-toggle selectField" name="fieldSelect" id="fieldSelect">
@@ -555,12 +555,18 @@
                 <table class="addGroupTable" id="{{ field.id }}">
                     <tr class = "editFieldRow">
                         <td class = "editFieldInput">
-                            <input class = "inputField fieldname" type="text" id="editfieldname" value='{{ field.name }}'>
+                                <input class = "inputField fieldname" type="text" id="editfieldname" value='{{ field.name }}'>
+
                         </td>
                         <td class = "editfieldSelect">
                             <select class="dropdown-toggle selectField" name="editfieldSelect" id="editfieldSelect">
-                                <option value="text">text</option>
-                                <option value="number">number</option>
+                                {% if field.type %}
+                                    <option value="text">text</option>
+                                    <option value="number" selected="selected">number</option>
+                                {% else %}
+                                    <option value="text" selected="selected">text</option>
+                                    <option value="number" >number</option>
+                                {% endif %}
                             </select>
                         </td>
                         <td class="editfieldToggle editfieldToggle-{{ forloop.parentloop.counter0 }}"  style="" onclick="changeFieldToggle(this)" id="editfieldToggle-{{ forloop.counter0 }}">
@@ -642,7 +648,6 @@
 
         }
 
-
         function changeFieldToggle(elem) {
 
             if (elem.innerHTML==='<i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>') {
@@ -705,49 +710,49 @@
         });
         $('.add-group-form').on('submit', function(e){
          e.preventDefault();
-         alert("done");
-           {# var fieldnames = $("[id=fieldname]").map(function() {#}
-           {#     return $(this).val();#}
-           {# }).get();#}
-           {# var classifications = $("[id=fieldSelect]").map(function() {#}
-           {#     return $(this).val();#}
-           {# }).get();#}
-           {##}
-           {# var toggleElem = document.getElementsByClassName("fieldToggle");;#}
-           {# var toggles = [];#}
-           {# for (let i = 0; i < toggleElem.length; i++) {#}
-           {#     console.log(toggleElem[i].innerHTML)#}
-           {#     if (toggleElem[i].innerHTML.includes('green')) {#}
-           {#         toggles.push('True');#}
-           {#     } else {#}
-           {#         toggles.push('False');#}
-           {#     }#}
-           {# }#}
-           {# fieldnames = JSON.stringify({fieldnames });#}
-           {# classifications = JSON.stringify({classifications });#}
-           {# toggles = JSON.stringify({toggles });#}
-           {#$.ajax({#}
-           {#     type : "POST",#}
-           {#     url: "{% url 'add_group' %}",#}
-           {#     data: {#}
-           {##}
-           {#      name : $('#groupname').val(),#}
-           {#      fieldnames: fieldnames,#}
-           {#      classifications: classifications,#}
-           {#      toggles: toggles,#}
-           {#      csrfmiddlewaretoken: '{{ csrf_token }}',#}
-           {#      dataType: "json",#}
-           {#     },#}
-           {#     success: function(data){#}
-           {#         location.reload();#}
-           {#     },#}
-           {#     failure: function() {#}
-           {#     }#}
-           {# });#}
-           {##}
-           {#window.location.reload();#}
-           {#var x = document.getElementById("add-entry-modal");#}
-           {#x.style.display = "none";#}
+
+            var fieldnames = $("[id=fieldname]").map(function() {
+                return $(this).val();
+            }).get();
+            var classifications = $("[id=fieldSelect]").map(function() {
+                return $(this).val();
+            }).get();
+
+            var toggleElem = document.getElementsByClassName("fieldToggle");;
+            var toggles = [];
+            for (let i = 0; i < toggleElem.length; i++) {
+                console.log(toggleElem[i].innerHTML)
+                if (toggleElem[i].innerHTML.includes('green')) {
+                    toggles.push('True');
+                } else {
+                    toggles.push('False');
+                }
+            }
+            fieldnames = JSON.stringify({fieldnames });
+            classifications = JSON.stringify({classifications });
+            toggles = JSON.stringify({toggles });
+           $.ajax({
+                type : "POST",
+                url: "{% url 'add_group' %}",
+                data: {
+
+                 name : $('#groupname').val(),
+                 fieldnames: fieldnames,
+                 classifications: classifications,
+                 toggles: toggles,
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    location.reload();
+                },
+                failure: function() {
+                }
+            });
+
+           window.location.reload();
+           var x = document.getElementById("add-entry-modal");
+           x.style.display = "none";
         });
         $('.submit-edit-button').on('click', function(f) {
 

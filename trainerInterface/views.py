@@ -206,9 +206,16 @@ def editGroup(request):
         editGroup.save()
         for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
             if id == '':
-                new_field = TrackingTextField(
-                    name=fieldname,
-                )
+                if fieldselect == 'text':
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=False,
+                    )
+                else:
+                    new_field = TrackingTextField(
+                        name=fieldname,
+                        type=True,
+                    )
 
                 if toggle == 'True':
                     new_field.save()
@@ -222,6 +229,10 @@ def editGroup(request):
                 editField.name = fieldname
                 if toggle == 'True':
                     editField.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                if fieldselect == 'text':
+                    editField.type = False
+                else:
+                    editField.type = True
                 editField.save()
                 editGroup.textfields.add(editField)
                 editGroup.save()
@@ -235,7 +246,7 @@ def addGroup(request):
         fieldnames = json.loads(request.POST.get('fieldnames', None))["fieldnames"]
         fieldSelects = json.loads(request.POST.get('classifications', None))["classifications"]
         toggles = json.loads(request.POST.get('toggles', None))["toggles"]
-
+        print(fieldSelects)
         try:
 
             new_group = TrackingGroup(
@@ -248,6 +259,7 @@ def addGroup(request):
                 if fieldSelect == "text":
                     new_field = TrackingTextField(
                         name=fieldname,
+                        type=False,
                     )
 
                     if toggle == 'True':
@@ -259,6 +271,7 @@ def addGroup(request):
 
                     new_field = TrackingTextField(
                         name=fieldname,
+                        type=True,
                     )
 
                     if toggle == 'True':
