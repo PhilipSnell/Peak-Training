@@ -9,6 +9,7 @@ from .models import *
 from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
+from django.utils.dateparse import parse_date
 
 User = get_user_model()
 
@@ -142,7 +143,7 @@ class TrackingValuesUpdate(APIView):
             index = 1
             for item in textVals:
 
-                textVal = TrackingTextValue.objects.get(field_id=item.get("field_id"), date=datetime.datetime.strptime(request.POST.get('date')[0:9],"Y-mm-dd").date(), client=User.objects.get(email=email))
+                textVal = TrackingTextValue.objects.get(field_id=item.get("field_id"), date=parse_date(('date')[0:9]), client=User.objects.get(email=email))
                 if textVal:
                     textVal.update(value=item.get("value"))
                     data['response'] = data['response'] + "entry "+str(index) + " already exists, "
