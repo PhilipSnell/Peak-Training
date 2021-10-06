@@ -142,21 +142,28 @@ class TrackingValuesUpdate(APIView):
                 email = request.data.get("client")
             index = 1
             for item in textVals:
-
-                textVal = TrackingTextValue.objects.get(field_id=item.get("field_id"), date=parse_date(('date')[0:9]), client=User.objects.get(email=email))
+                print(item.get('date')[0:10])
+                textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
+                                                           date=parse_date(item.get('date')[0:10]),
+                                                           client=User.objects.get(email=email))
+                textVal.update(value=item.get("value"))
+                textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
+                                                           date=parse_date(item.get('date')[0:10]),
+                                                           client=User.objects.get(email=email))
                 if textVal:
                     textVal.update(value=item.get("value"))
                     data['response'] = data['response'] + "entry "+str(index) + " already exists, "
 
                 else:
-                    serializer = TrackTextValueSerializer(data=item)
+                    item["client"] = User.objects.get(email=email).id
+                    serializer = TrackTextValueSerializer(data=item,)
                     if serializer.is_valid():
                         serializer.save()
                         data['response'] = data['response'] + "entry "+str(index) + " entered, "
                     else:
                         data = serializer.errors
                 index += 1
-            print(data['response'])
+            print(data)
             return Response(data)
 
 class TrackingValuesGet(APIView):
