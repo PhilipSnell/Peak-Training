@@ -204,8 +204,14 @@ def editGroup(request):
         editGroup = TrackingGroup.objects.get(id=groupId)
         editGroup.name = name
         editGroup.save()
+        print(fieldIds)
+        print(fieldnames)
+        print(fieldSelects)
+        print(toggles)
         for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
-            if id == '':
+            print(id)
+            if not id:
+                print("here")
                 if fieldselect == 'text':
                     new_field = TrackingTextField(
                         name=fieldname,
@@ -224,6 +230,9 @@ def editGroup(request):
                 new_field.save()
                 editGroup.textfields.add(new_field)
                 editGroup.save()
+            elif 'delete' in id :
+                TrackingTextField.objects.get(id=id[0]).delete()
+
             else:
                 editField = TrackingTextField.objects.get(id = id)
                 editField.name = fieldname
@@ -252,7 +261,6 @@ def addGroup(request):
             new_group = TrackingGroup(
                 name=name,
                 trainer=request.user,
-
             )
             new_group.save()
             for fieldSelect, fieldname, toggle in zip(fieldSelects, fieldnames, toggles):

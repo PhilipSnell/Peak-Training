@@ -577,7 +577,7 @@
                             {% endif %}
                         </td>
                         <td class="editFieldRemove" style="" >
-                            <i class="far fa-times-circle" style="color: darkred" onClick="removeDiv(this)" ></i>
+                            <i class="far fa-times-circle" style="color: darkred" onClick="removeDivEdit(this)" ></i>
                         </td>
                     </tr>
                 </table>
@@ -670,10 +670,18 @@
         });
         function removeDiv(elem){
             var parent = $(elem).parent().parent().parent().parent();
-            console.log(parent.attr("id"));
-            if (parent.attr("id") != "field-0") {
+            if (parent.attr("id") !== "field-0") {
                 parent.remove();
             }
+
+        }
+        function removeDivEdit(elem){
+            // elem.style.display = "none";
+
+            var table = $(elem).parent().parent().parent().parent();
+            table.css('display','none');
+            var curID = table.attr("id");
+            table.attr("id",curID+"-delete");
 
         }
 
@@ -694,6 +702,7 @@
 
           addFieldCount = addFieldCount + 1;
           newID = "field-"+addFieldCount;
+          table.find('#fieldname').at = "";
           table.attr("id",newID);
           table.appendTo(x)
         });
@@ -706,6 +715,10 @@
           addFieldCount = addFieldCount + 1;
           newID = '';
           table.attr("id",newID);
+          table.find('#fieldname').value = "";
+          table.find('#fieldname').attr("id","editfieldname");
+          table.find('#fieldSelect').attr("id","editfieldSelect");
+          table.find('#fieldToggle').attr("class", "editfieldToggle editfieldToggle-"+activeindex);
           table.appendTo(x)
         });
         $('.add-group-form').on('submit', function(e){
