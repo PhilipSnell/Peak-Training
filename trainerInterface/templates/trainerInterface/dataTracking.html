@@ -137,7 +137,6 @@
     }
     .addIcon {
         top: -5%;
-        {#transform: translateY(-50%);#}
         position: relative;
         margin: auto;
         justify-content: center;     /* added for centered text */
@@ -171,7 +170,6 @@
         background-color:  #ababab;
         border-radius: 5px;
         align-items: center;
-        {#justify-content: center;#}
 
     }
     .modal-content::-webkit-scrollbar {
@@ -209,8 +207,6 @@
         width: 70%;
         text-align: center;
         border: none;
-        {#text-decoration-color: #0f0f0f;#}
-
         background-color: rgba(0, 0, 0, 0.3);
     }
     .groupname:-webkit-autofill {
@@ -220,10 +216,7 @@
     .groupname::placeholder{
         color: lightgrey;
     }
-    .addgroup{
-        {#margin-left: 1vw;#}
 
-    }
     .add_field_button{
         position: relative;
         border-color: rgba(0, 0, 0, 0.3);
@@ -320,13 +313,9 @@
         text-align: center;
         border: none;
         outline: none;
-        {#text-decoration-color: #0f0f0f;#}
-
         background-color: rgba(0, 0, 0, 0.3);
     }
-    {##fieldname:focus:active{#}
-    {#    outline: none;#}
-    {#}#}
+
     .fieldname:-webkit-autofill {
         -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
         background-color: rgba(0, 0, 0, 0.3);
@@ -450,9 +439,10 @@
     </style>
     
     <div class="groupContainer">
+
         <div class="groupRow">
             {% for group in groups %}
-                <div class="groupBox" onclick="toggleEditEntry({{ forloop.counter0 }})">
+                <div class="groupBox" onclick="toggleEditEntry( {{ forloop.counter0 }} )">
                     <div class="groupContent">
                         <div class="groupContentTitle">
                             <div class="ContentTitle">
@@ -490,6 +480,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 <div class="bg-modal" id ="add-entry-modal"style="display: none;">
     <div class="modal-content">
@@ -610,6 +601,11 @@
 <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
 <script type="text/javascript">
+    // js for daily tracking
+    var dailySettingToggle = true;
+</script>
+<script type="text/javascript">
+    //js for tracking config
         var x = document.getElementById("add-entry-modal");
         x.style.display = "none";
         var activeindex = 0;
@@ -652,7 +648,7 @@
 
             if (elem.innerHTML==='<i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>') {
                 elem.innerHTML='<i class="fas fa-toggle-off" style="color: darkred" aria-hidden="true"></i>';
-            
+
             }
             else {
                 elem.innerHTML ='<i class="fas fa-toggle-on" style="color: green" aria-hidden="true"></i>';
@@ -815,7 +811,7 @@
                  dataType: "json",
                 },
                 success: function(data){
-                    {#location.reload();#}
+                    location.reload();
                 },
                 failure: function() {
                 }
@@ -827,5 +823,7 @@
         });
 
     </script>
-    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+
 {% endblock content%}
+

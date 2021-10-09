@@ -39,24 +39,24 @@ function formEntries (form) {
   for (var i = 0; i < form.elements.length; i++) {
     var element = form.elements[i]
 
-    if (!element.nav) {
+    if (!element.name) {
       continue
     }
 
     if (element.type === 'file') {
       for (var j = 0; j < element.files.length; j++) {
-        entries.push([element.nav, element.files[j]])
+        entries.push([element.name, element.files[j]])
       }
     } else if (element.type === 'select-multiple' || element.type === 'select-one') {
       for (var j = 0; j < element.selectedOptions.length; j++) {
-        entries.push([element.nav, element.selectedOptions[j].value])
+        entries.push([element.name, element.selectedOptions[j].value])
       }
     } else if (element.type === 'checkbox') {
       if (element.checked) {
-        entries.push([element.nav, element.value])
+        entries.push([element.name, element.value])
       }
     } else {
-      entries.push([element.nav, element.value])
+      entries.push([element.name, element.value])
     }
   }
 
@@ -150,7 +150,7 @@ $(function () {
 
     $form.find(':checkbox').each(function (index) {
       // Handle unselected checkboxes
-      var name = $(this).attr('nav.css')
+      var name = $(this).attr('name')
       if (!params.hasOwnProperty(name)) {
         params[name] = false
       }

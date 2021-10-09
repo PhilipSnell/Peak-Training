@@ -314,7 +314,7 @@ function primitiveToNode(data, baseUrl) {
     var fields = [];
     for (var idx = 0, len = fieldsData.length; idx < len; idx++) {
       var value = fieldsData[idx];
-      var name = getString(value, 'nav.css');
+      var name = getString(value, 'name');
       var required = getBoolean(value, 'required');
       var location = getString(value, 'location');
       var fieldDescription = getString(value, 'fieldDescription');
@@ -654,24 +654,24 @@ var HTTPTransport = function () {
         var field = fields[idx];
 
         // Ensure any required fields are included
-        if (!params.hasOwnProperty(field.nav)) {
+        if (!params.hasOwnProperty(field.name)) {
           if (field.required) {
-            throw new errors.ParameterError('Missing required field: "' + field.nav + '"');
+            throw new errors.ParameterError('Missing required field: "' + field.name + '"');
           } else {
             continue;
           }
         }
 
-        fieldNames.push(field.nav);
+        fieldNames.push(field.name);
         if (field.location === 'query') {
-          queryParams[field.nav] = params[field.nav];
+          queryParams[field.name] = params[field.name];
         } else if (field.location === 'path') {
-          pathParams[field.nav] = params[field.nav];
+          pathParams[field.name] = params[field.name];
         } else if (field.location === 'form') {
-          formParams[field.nav] = params[field.nav];
+          formParams[field.name] = params[field.name];
           hasBody = true;
         } else if (field.location === 'body') {
-          formParams = params[field.nav];
+          formParams = params[field.name];
           hasBody = true;
         }
       }

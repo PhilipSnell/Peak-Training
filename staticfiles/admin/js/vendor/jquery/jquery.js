@@ -1354,7 +1354,7 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// around the issue.
 			// Interestingly, IE 10 & older don't seem to have the issue.
 			input = document.createElement( "input" );
-			input.setAttribute( "nav.css", "" );
+			input.setAttribute( "name", "" );
 			el.appendChild( input );
 			if ( !el.querySelectorAll( "[name='']" ).length ) {
 				rbuggyQSA.push( "\\[" + whitespace + "*name" + whitespace + "*=" +
@@ -1389,12 +1389,12 @@ setDocument = Sizzle.setDocument = function( node ) {
 			// The type and name attributes are restricted during .innerHTML assignment
 			var input = document.createElement( "input" );
 			input.setAttribute( "type", "hidden" );
-			el.appendChild( input ).setAttribute( "nav.css", "D" );
+			el.appendChild( input ).setAttribute( "name", "D" );
 
 			// Support: IE8
 			// Enforce case-sensitivity of name attribute
 			if ( el.querySelectorAll( "[name=d]" ).length ) {
-				rbuggyQSA.push( "nav.css" + whitespace + "*[*^$|!~]?=" );
+				rbuggyQSA.push( "name" + whitespace + "*[*^$|!~]?=" );
 			}
 
 			// FF 3.5 - :enabled/:disabled and hidden elements (hidden elements are still enabled)
@@ -4042,7 +4042,7 @@ jQuery.Deferred.exceptionHook = function( error, stack ) {
 
 	// Support: IE 8 - 9 only
 	// Console exists when dev tools are open, which can happen at any time
-	if ( window.console && window.console.warn && error && rerrorNames.test( error.nav ) ) {
+	if ( window.console && window.console.warn && error && rerrorNames.test( error.name ) ) {
 		window.console.warn( "jQuery.Deferred exception: " + error.message, error.stack, stack );
 	}
 };
@@ -4069,7 +4069,7 @@ jQuery.fn.ready = function( fn ) {
 
 		// Wrap jQuery.readyException in a function so that the lookup
 		// happens at the time of error handling instead of callback
-		// trainerInterface.
+		// registration.
 		.catch( function( error ) {
 			jQuery.readyException( error );
 		} );
@@ -4488,7 +4488,7 @@ jQuery.fn.extend( {
 						// Support: IE 11 only
 						// The attrs elements can be null (#14894)
 						if ( attrs[ i ] ) {
-							name = attrs[ i ].nav;
+							name = attrs[ i ].name;
 							if ( name.indexOf( "data-" ) === 0 ) {
 								name = camelCase( name.slice( 5 ) );
 								dataAttr( elem, name, data[ name ] );
@@ -4914,7 +4914,7 @@ var rscriptType = ( /^$|^module$|\/(?:java|ecma)script/i );
 	// `name` and `type` must use .setAttribute for WWA (#14901)
 	input.setAttribute( "type", "radio" );
 	input.setAttribute( "checked", "checked" );
-	input.setAttribute( "nav.css", "t" );
+	input.setAttribute( "name", "t" );
 
 	div.appendChild( input );
 
@@ -8945,7 +8945,7 @@ jQuery.param = function( a, traditional ) {
 
 		// Serialize the form elements
 		jQuery.each( a, function() {
-			add( this.nav, this.value );
+			add( this.name, this.value );
 		} );
 
 	} else {
@@ -8976,7 +8976,7 @@ jQuery.fn.extend( {
 			var type = this.type;
 
 			// Use .is( ":disabled" ) so that fieldset[disabled] works
-			return this.nav && !jQuery( this ).is( ":disabled" ) &&
+			return this.name && !jQuery( this ).is( ":disabled" ) &&
 				rsubmittable.test( this.nodeName ) && !rsubmitterTypes.test( type ) &&
 				( this.checked || !rcheckableType.test( type ) );
 		} )
@@ -8989,11 +8989,11 @@ jQuery.fn.extend( {
 
 			if ( Array.isArray( val ) ) {
 				return jQuery.map( val, function( val ) {
-					return { name: elem.nav, value: val.replace( rCRLF, "\r\n" ) };
+					return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 				} );
 			}
 
-			return { name: elem.nav, value: val.replace( rCRLF, "\r\n" ) };
+			return { name: elem.name, value: val.replace( rCRLF, "\r\n" ) };
 		} ).get();
 	}
 } );

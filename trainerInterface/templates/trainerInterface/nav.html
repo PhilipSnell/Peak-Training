@@ -118,34 +118,22 @@
                         </ul>
                     </div>
                 </nav>
-                <main role="main" class="col-auto align-self-end">
-{#                    <div class="contentBackground">#}
+                <div class="col-auto align-self-end content-backing">
+
                     <div class="content">
                     {% block content %}
                         <div>Nav</div>
                     {% endblock %}
                     </div>
-{#                    </div>#}
-                </main>
+
+                </div>
             </div>
         </div>
         <!-- Bootstrap core JavaScript
     ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <style>
-            {#.contentBackground {#}
-            {#    left:   0; <!-- lining up with sidebar -->#}
-            {#    top:    0;#}
-            {#    bottom: 0;#}
-            {##}
-                {#height: calc(100vh - 45px);#}
-            {#    background: rgba(0, 0, 0, 0.2);#}
-            {#    position: relative;#}
-            {#    display: flex;#}
-            {#    padding-top: 1%;#}
-            {#    padding-bottom: 0.8%;#}
-            {#    justify-content: center;#}
-            {#}#}
+
             ::-webkit-scrollbar-thumb {
               background-color: rgba(0, 0, 0, 0.2);
               border: 4px solid transparent;
@@ -168,10 +156,9 @@
                 height: calc(80vh);
                 background: whitesmoke;
                 border-radius: 5px;
-                {#justify-content: center;#}
                 align-items: center;
             }
-            [role="main"] {
+            .content-backing {
                 display:flex;
                 flex-direction: column;
                 overflow: hidden;
@@ -181,7 +168,7 @@
                 position: fixed;
                 right: 0;
                 left: calc(16.7vw);
-                background: rgba(0, 0, 0, 0.2);
+                background: lightgrey;
                 /*height:  calc(100vh - 45px);*/
             }
             @media (max-width:768px) {

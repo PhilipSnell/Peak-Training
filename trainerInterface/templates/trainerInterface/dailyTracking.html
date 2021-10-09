@@ -1,0 +1,286 @@
+{% extends "trainerInterface/nav.html" %}
+{% load static %}
+{% load my_filters %}
+{% block content %}
+
+<style>
+    .content{
+        /*position: relative;*/
+        padding-top: 0 !important;
+        /*height: 0;*/
+    }
+    /*--------------------------------------------------------------------------*/
+    /* Date Bar */
+    /*--------------------------------------------------------------------------*/
+    .dateHeader{
+
+        position:relative;
+        margin-left: auto;
+        margin-right: auto;
+        width:90%;
+        height: 30px;
+        top:0;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+    }
+    .dateSelectTable{
+        margin-top: 7px;
+        margin-bottom: 7px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+    .date{
+        padding-left: 1vw;
+        padding-right: 1vw;
+        font-size: 18px;
+    }
+    /*--------------------------------------------------------------------------*/
+    /* group boxs */
+    /*--------------------------------------------------------------------------*/
+    .groupRow {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(19%, 1fr));
+        grid-gap: 1rem;
+        width: calc(70vw);
+        border-spacing: 15px; /*Optional*/
+        padding-bottom: calc(5vh);
+
+    }
+    .groupBox {
+        padding-top: 1%;
+        padding-bottom: 1vw;
+        border-radius: 10px;
+
+
+        display: flex;
+        position: relative;
+        /*sets height equal to the width*/
+        height: 0;
+        padding-bottom: 100%;
+
+        background-color: #ababab;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+
+        /*makes the container scroll in y direction*/
+        flex-direction: column;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    .groupBox::-webkit-scrollbar {
+        width: 0.8vw;
+        background-color: rgba(0, 0, 0, 0);
+        border-bottom-right-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+    .groupContent {
+        position: relative;
+        top: 0.4vw;
+        left: 0;
+        height: 100%;
+        width: 95%;
+        display: table-column;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        margin-left: 0.8vw;
+
+    }
+    .groupContentTitle {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        width: 100%;
+        padding-bottom: 0.4vw;
+    }
+    .ContentTitle {
+        position: relative;
+        display: flex;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        width: 50%;
+        border-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    .groupContentTable{
+        position: relative;
+        margin: auto;
+        justify-content: center;     /* added for centered text */
+        align-items: center;
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.4);
+        width: 95%;
+        margin-bottom: 0.4vw;
+
+    }
+    .groupBottomSpacer{
+        height: 0.5vw;
+    }
+    .groupContentRow{
+
+    }
+    .groupContentCell{
+        display: table-cell;
+        width: 50%;
+    }
+    .groupContentName{
+        padding-left: 2%;
+    }
+</style>
+
+<div class="dateHeader">
+    <table class="dateSelectTable">
+        <tr>
+            <td>
+                <i class="fas fa-chevron-left" onclick="changeDay(-1)"></i>
+            </td>
+            <td>
+                <div class="date" id="date">{{ date }}</div>
+            </td>
+            <td>
+                <i class="fas fa-chevron-right" onclick="changeDay(1)"></i>
+            </td>
+        </tr>
+    </table>
+    <div class="groupRow">
+            {% for group in groups %}
+                <div class="groupBox">
+                    <div class="groupContent">
+                        <div class="groupContentTitle">
+                            <div class="ContentTitle">
+                                {{ group.name }}
+                            </div>
+                        </div>
+
+
+                        {% for field in group.textfields.all %}
+                            <table class = "groupContentTable">
+                                <tr class = "groupContentRow">
+                                    <td class = "groupContentCell groupContentName">
+                                        {{ field.name }}
+                                    </td>
+                                    <td class = "groupContentCell groupContentName">
+                                        {{ field.id|id_in:trackingVals }}
+
+                                    </td>
+                                </tr>
+                            </table>
+                        {% endfor %}
+                        <div class="groupBottomSpacer">
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+        <div>
+            {{ trackingVals.field_id }}
+        </div>
+
+
+
+</div>
+<script src="{% static '/assets/js/jquery.min.js' %}"></script>
+<script src="/static/assets/js/popper.js"></script>
+<script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+    const months = {
+      0: 'Jan',
+      1: 'Feb',
+      2: 'Mar',
+      3: 'Apr',
+      4: 'May',
+      5: 'Jun',
+      6: 'Jul',
+      7: 'Aug',
+      8: 'Sept',
+      9: 'Oct',
+      10: 'Nov',
+      11: 'Dec'
+    };
+    const days = [
+      'Sun',
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat'
+    ]
+
+    var n =  new Date("{{ date }}");
+    console.log(n);
+    var tomorrow = new Date();
+    var yesterday = new Date();
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    tomorrow.setDate(today.getDate()+1);
+    tomorrow.setHours(0,0,0,0);
+    yesterday.setDate(today.getDate()-1);
+    yesterday.setHours(0,0,0,0);
+
+    changeDay(0);
+
+    function changeDay(change){
+        console.log(n.getTime());
+        n.setDate(n.getDate()+change);
+        console.log(n.getTime());
+        y = n.getFullYear();
+        m = n.getMonth()+1;
+        month = months[n.getMonth()];
+        d = n.getDate();
+        if (n.getTime()==today.getTime()){
+            console.log("here");
+            document.getElementById("date").innerHTML = "Today";
+        }
+        else if (n.getTime()===tomorrow.getTime()){
+            document.getElementById("date").innerHTML = "Tomorrow";
+        }
+        else if (n.getTime()===yesterday.getTime()){
+            document.getElementById("date").innerHTML = "Yesterday";
+        }
+        else{
+
+            day = days[n.getDay()];
+
+            document.getElementById("date").innerHTML =day+ ", " + d+" "+month  ;
+        }
+        if (change != 0) {
+            date = y + "-" + pad(m) + "-" + pad(d);
+            console.log(date);
+
+            date = JSON.stringify({date});
+            console.log(date);
+
+            $.ajax({
+                type: "POST",
+                url: "{% url 'dailyTracking' %}",
+                data: {
+
+                    date: date,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    dataType: "json",
+                },
+                success: function (data) {
+                    location.reload();
+                },
+                failure: function () {
+                }
+            });
+        }
+        function pad(n) {
+            return (n < 10) ? ("0" + n) : n;
+        };
+
+    }
+</script>
+
+<script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+
+{% endblock content%}

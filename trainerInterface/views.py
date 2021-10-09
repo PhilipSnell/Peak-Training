@@ -8,8 +8,17 @@ import json
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 from bootstrap_modal_forms.generic import BSModalCreateView
+from datetime import date
+import datetime
+from django.utils.dateparse import parse_date
+
 User = get_user_model()
 from collections import defaultdict
+
+def processDate(request):
+    newdate = parse_date(json.loads(request.POST.get('date', None))["date"])
+    request.session["date"] = json.dumps(newdate, indent=4, sort_keys=True, default=str)
+
 
 def processForm(request):
 
@@ -19,7 +28,7 @@ def processForm(request):
             selected_client = ClientSelect.cleaned_data["selected_client"]
             print(selected_client.email)
             request.session["selected_client"] = selected_client.email
-        print("done")
+
 
 def home(request):
     context = {
@@ -144,7 +153,7 @@ def addEntry(request):
             response = {
                 'msg': 'Your form has been submitted successfully'  # response message
             }
-            day = Day.objects.get(phase=phase,week=week,day=day)
+            day = Day.objects.get(phase=phase, week=week, day=day)
             day.entrys.add(train_entry)
 
         except:
@@ -190,6 +199,37 @@ def dataTracking(request):
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
         addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
+
+@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
+def dailyTracking(request):
+    if request.method == "POST":
+        processForm(request)
+        if request.is_ajax():
+            processDate(request)
+
+    if "selected_client" in request.session:
+        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
+        form.fields["selected_client"].empty_label = None
+        currUserID = request.user.id
+        groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
+        if 'date' in request.session:
+            newdate = date(*map(int, json.loads(request.session['date']).split('-')))
+        
+        else:
+            newdate = date.today()
+        trackingVals = TrackingTextValue.objects.filter(client = User.objects.get(email=request.session['selected_client']), date = newdate)
+    else:
+        form = UserForm()
+        groups = None
+        trackingVals = None
+
+
+
+
+
+    return render(request, 'trainerInterface/dailyTracking.html',
+                  {'form': form, 'groups': groups, 'selected_client': request.session['selected_client'],
+                   'trackingVals': trackingVals, 'date': newdate})
 
 def editGroup(request):
 

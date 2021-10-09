@@ -18,7 +18,7 @@ $(document).ready(function() {
   });
 
   $('a[data-toggle="tab"]').click(function() {
-    document.cookie = "tabstyle=" + this.nav + "; path=/";
+    document.cookie = "tabstyle=" + this.name + "; path=/";
   });
 
   // Store tab preference in cookies & display appropriate tab on load.
