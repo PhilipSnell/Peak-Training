@@ -33,16 +33,16 @@ class AddExercise(forms.Form):
 
 
 class AddTrainingEntry(BSModalModelForm):
-    exercise = forms.ModelChoiceField(queryset=ExerciseType.objects.order_by('name'), widget=forms.Select(attrs={'id': 'exercisefield'}))
-    reps = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'repfield'}))
-    weight = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'weightfield'}))
-    sets = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'setfield'}))
-    comment = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'id': 'commentfield'}))
+    exercise = forms.ModelChoiceField(queryset=ExerciseType.objects.order_by('name'), widget=forms.Select(attrs={'id': 'exercisefield'}), label= "")
+    # reps = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'repfield'}))
+    # weight = forms.CharField(max_length=10, widget=forms.TextInput(attrs={'id': 'weightfield'}))
+    # sets = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'setfield'}))
+    # comment = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'id': 'commentfield'}))
 
     class Meta:
         model = TrainingEntry# Please use CamelCase when defining model class name
-        fields = ['reps', 'weight', 'sets', 'comment', 'exercise']
-
+        fields = ['exercise']
+        # fields = ['exercise','reps', 'weight', 'sets', 'comment']
 
 class GroupAddForm(BSModalModelForm):
     name = forms.CharField(label="", max_length=30, widget=forms.TextInput(attrs={'class': 'groupname',

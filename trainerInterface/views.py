@@ -64,7 +64,8 @@ def trainplan(request):
         phases = None
 
     addform = AddTrainingEntry()
-    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform})
+    exercises = ExerciseType.objects.order_by('name')
+    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -135,7 +136,7 @@ def addEntry(request):
         weight = request.POST.get('weight', None)
         sets = request.POST.get('sets', None)
         comment = request.POST.get('comment', None)
-
+        print(exercise)
         try:
             train_entry = TrainingEntry(
                 user=User.objects.get(email=request.session['selected_client']),
@@ -214,7 +215,7 @@ def dailyTracking(request):
         groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
         if 'date' in request.session:
             newdate = date(*map(int, json.loads(request.session['date']).split('-')))
-        
+
         else:
             newdate = date.today()
         trackingVals = TrackingTextValue.objects.filter(client = User.objects.get(email=request.session['selected_client']), date = newdate)

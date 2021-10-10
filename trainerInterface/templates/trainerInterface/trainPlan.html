@@ -96,10 +96,12 @@
         }
         .modal-content{
             width: 300px;
-            height: 400px;
-            background-color: white;
+            /*height: 300px;*/
+            background-color: #ababab;
             border-radius: 5px;
             position: relative;
+            align-items: center;
+            /*justify-content: center;*/
         }
         .close_addentry{
             cursor: pointer;
@@ -116,7 +118,65 @@
             justify-content: center;
             width: calc(80vw);
         }
+        .AddEntryTitleContainer{
+            width: 50%;
 
+            position: relative;
+            background-color: #787878;
+            align-items: center;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+
+
+        }
+        #exercisefield{
+
+            padding: 0;
+            margin:0;
+            display: table-cell;
+        }
+        .add-entry-form{
+            display: table-cell;
+            position: relative;
+            top: 0;
+            padding: 0;
+            margin:0;
+        }
+        .label {
+            display: table-cell;
+            width: 50%;
+            padding-left: 8px;
+        }
+        .addEntryCell {
+            display: table-cell;
+            width: 50%;
+        }
+        .addEntryInput {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            border-radius: 7px;
+            border: none;
+            background-color: #787878;
+        }
+        .addEntryTable{
+            position: relative;
+            display: table;
+            width: 95%;
+            border-radius: 7px;
+            box-shadow: 0 0 0 1pt grey;
+            margin-top: 5px;
+            margin-bottom: 7px;
+        }
+        .submitAddEntry{
+            border-radius: 7px;
+            background-color: #787878;
+            border: none;
+            box-shadow: 0 0 0 1pt #404040;
+            margin-bottom: 5px;
+        }
 
     </style>
     <div class="modal fade" tabindex="-1" role="dialog" id="modal">
@@ -176,16 +236,71 @@
         </div>
     {% endfor %}
     </div>
-<div class="bg-modal" id ="add-entry-modal"style="display: none;">
-    <div class="modal-content">
-        <div class="close_addentry">+</div>
-            <h3>Add Entry</h3>
-            <form id = "add-entry-form" class = "add-entry-form" method="post">
-                {{ addform }}
-                <input  type="submit" name="submit" value="submit">
-            </form>
-        </div>
+    <div class="bg-modal" id ="add-entry-modal"style="display: none;">
+        <div class="modal-content">
+            <div class="close_addentry">+</div>
+            <div class="AddEntryTitleContainer">
+                Add Exercise
+            </div>
 
+            <table class="exerciseTable addEntryTable">
+                <tr>
+                    <td class="exerciseSelectName label">
+                        Select Exercise
+                    </td>
+                    <td class="exerciseSelect addEntryCell">
+                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield">
+                        <datalist id="exerciseList">
+                            {% for exercise in exercises %}
+                                <option value="{{ exercise.name }}">
+                            {% endfor %}
+                        </datalist>
+                    </td>
+                </tr>
+            </table>
+            <table class="repsTable addEntryTable">
+                <tr>
+                    <td class="repsLabel label">
+                        Enter Reps
+                    </td>
+                    <td class="repsEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="repfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="weightTable addEntryTable">
+                <tr>
+                    <td class="weightLabel label">
+                        Enter Weight
+                    </td>
+                    <td class="weightEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="weightfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="setTable addEntryTable">
+                <tr>
+                    <td class="setLabel label">
+                        Enter Sets
+                    </td>
+                    <td class="setEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="setfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="commentTable addEntryTable">
+                <tr>
+                    <td class="commentLabel label">
+                        Comment
+                    </td>
+                    <td class="commentEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="commentfield">
+                    </td>
+                </tr>
+            </table>
+
+            <input  class="submitAddEntry" type="button" value="Add Entry">
+        </div>
     </div>
 </div>
     <script src="{% static '/assets/js/jquery.min.js' %}"></script>
@@ -206,8 +321,7 @@
           var x = document.getElementById("add-entry-modal");
           x.style.display = "none";
         });
-        $('.add-entry-form').on('submit', function(e){
-         e.preventDefault();
+        $('.submitAddEntry').on('click', function(e){
         
            $.ajax({
                 type : "POST", 
@@ -217,7 +331,7 @@
                  phase : phase,
                  week: week,
                  day: day,
-                 exercise : $('#exercisefield option:selected').text(),
+                 exercise : $('#exercisefield').val(),
                  reps : $('#repfield').val(),
                  weight: $('#weightfield').val(), 
                  sets: $('#setfield').val(),

@@ -128,7 +128,11 @@
         width: 50%;
     }
     .groupContentName{
-        padding-left: 2%;
+        padding-left: 4%;
+    }
+    .groupContentVal{
+        padding-right: 4%;
+        text-align: right;
     }
 </style>
 
@@ -163,7 +167,7 @@
                                     <td class = "groupContentCell groupContentName">
                                         {{ field.name }}
                                     </td>
-                                    <td class = "groupContentCell groupContentName">
+                                    <td class = "groupContentCell groupContentVal">
                                         {{ field.id|id_in:trackingVals }}
 
                                     </td>
