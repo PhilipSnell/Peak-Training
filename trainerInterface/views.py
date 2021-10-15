@@ -245,14 +245,12 @@ def editGroup(request):
         editGroup = TrackingGroup.objects.get(id=groupId)
         editGroup.name = name
         editGroup.save()
-        print(fieldIds)
-        print(fieldnames)
-        print(fieldSelects)
-        print(toggles)
+
         for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
             print(id)
             if not id:
-                print("here")
+
+
                 if fieldselect == 'text':
                     new_field = TrackingTextField(
                         name=fieldname,
@@ -279,6 +277,8 @@ def editGroup(request):
                 editField.name = fieldname
                 if toggle == 'True':
                     editField.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                else:
+                    editField.clientToggle.remove(User.objects.get(email=request.session['selected_client']))
                 if fieldselect == 'text':
                     editField.type = False
                 else:
