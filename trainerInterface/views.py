@@ -68,7 +68,7 @@ def trainplan(request):
 
     # when the add week button is pressed this results in the page reloading with weeks menu open rather than phase open
     weekOpen = False
-    if request.session["weekOpen"]:
+    if "weekOpen" in request.session:
         request.session["weekOpen"]=False
         weekOpen = True
 
