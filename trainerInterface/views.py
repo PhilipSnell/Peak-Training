@@ -65,7 +65,15 @@ def trainplan(request):
 
     addform = AddTrainingEntry()
     exercises = ExerciseType.objects.order_by('name')
-    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises})
+
+    # when the add week button is pressed this results in the page reloading with weeks menu open rather than phase open
+    weekOpen = False
+    if request.session["weekOpen"]:
+        request.session["weekOpen"]=False
+        weekOpen = True
+
+    return render(request, 'trainerInterface/trainPlan.html',
+                  {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises, 'weekOpen': weekOpen})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -102,7 +110,8 @@ def addWeek(request, phaseID=None):
                    phase=phase_selected.phase)
     newWeek.save()
     phase_selected.weeks.add(newWeek)
-
+    request.session['weekOpen'] = True
+    request.session['selectedPhase'] = phase_selected.phase
     return redirect('trainplan')
 
 

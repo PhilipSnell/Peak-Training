@@ -49,288 +49,678 @@
 
     </script>
     <style>
-/*        .collapsed123{*/
-/*            display: none;*/
-/*        }*/
-/*        .card{*/
-/*            margin-top: 0px;*/
-/*            margin-bottom: 10px;*/
-/*        }*/
-/*        .phase{*/
-/*            background: grey;*/
-/*        }*/
-/*        .week{*/
-/*            margin-left: 20px;*/
-/*            background: lightgrey;*/
-/*        }*/
-/*        .table{*/
-/*        }*/
-/*        caption{*/
-/*            caption-side: top;*/
-/*        }*/
-/*!*         div.center_button{*/
-/*            text-align: center;*/
-/*        } *!*/
-/*        div.buttonwrap{*/
-/*        */
-/*            margin-bottom: 5px;*/
-/*        }*/
-/*        button.addPhase{*/
-/*            margin-top: 10px;*/
-/*            margin-bottom: 0;*/
-/*            margin-left:auto;*/
-/*            margin-right:50%;*/
-/*            display:block;*/
-/*        }*/
-/*        .bg-modal{*/
-/*            left:   0;*/
-/*            top:    0;*/
-/*            bottom: 0;*/
-/*            width: 100%;*/
-/*            height: calc(100vh - 45px);*/
-/*            background: rgba(0, 0, 0, 0.7);*/
-/*            position: absolute;*/
-/*            display: flex;*/
-/*            align-items: center;*/
-/*            justify-content: center;*/
-/*        }*/
-/*        .modal-content{*/
-/*            width: 300px;*/
-/*            !*height: 300px;*!*/
-/*            background-color: #ababab;*/
-/*            border-radius: 5px;*/
-/*            position: relative;*/
-/*            align-items: center;*/
-/*            !*justify-content: center;*!*/
-/*        }*/
-/*        .close_addentry{*/
-/*            cursor: pointer;*/
-/*            position: absolute;*/
-/*            top: 0;*/
-/*            right: 10px;*/
-/*            font-size: 32px;*/
-/*            rotate: 45;*/
-/*            -ms-transform: rotate(45deg); !* IE 9 *!*/
-/*            -webkit-transform: rotate(45deg); !* Chrome, Safari, Opera *!*/
-/*            transform: rotate(45deg);*/
-/*        }*/
-/*        .trainContent{*/
-/*            justify-content: center;*/
-/*            width: calc(80vw);*/
-/*        }*/
-/*        .AddEntryTitleContainer{*/
-/*            width: 50%;*/
-
-/*            position: relative;*/
-/*            background-color: #787878;*/
-/*            align-items: center;*/
-/*            text-align: center;*/
-/*            border-radius: 8px;*/
-/*            margin-top: 5px;*/
-/*            margin-bottom: 5px;*/
-
-
-/*        }*/
-/*        #exercisefield{*/
-
-/*            padding: 0;*/
-/*            margin:0;*/
-/*            display: table-cell;*/
-/*        }*/
-/*        .add-entry-form{*/
-/*            display: table-cell;*/
-/*            position: relative;*/
-/*            top: 0;*/
-/*            padding: 0;*/
-/*            margin:0;*/
-/*        }*/
-/*        .label {*/
-/*            display: table-cell;*/
-/*            width: 50%;*/
-/*            padding-left: 8px;*/
-/*        }*/
-/*        .addEntryCell {*/
-/*            display: table-cell;*/
-/*            width: 50%;*/
-/*        }*/
-/*        .addEntryInput {*/
-/*            text-align: center;*/
-/*            position: relative;*/
-/*            width: 100%;*/
-/*            border-radius: 7px;*/
-/*            border: none;*/
-/*            background-color: #787878;*/
-/*        }*/
-/*        .addEntryTable{*/
-/*            position: relative;*/
-/*            display: table;*/
-/*            width: 95%;*/
-/*            border-radius: 7px;*/
-/*            box-shadow: 0 0 0 1pt grey;*/
-/*            margin-top: 5px;*/
-/*            margin-bottom: 7px;*/
-/*        }*/
-/*        .submitAddEntry{*/
-/*            border-radius: 7px;*/
-/*            background-color: #787878;*/
-/*            border: none;*/
-/*            box-shadow: 0 0 0 1pt #404040;*/
-/*            margin-bottom: 5px;*/
-/*        }*/
     .content{
-        padding-top: 16px !important;
+        padding-top: 5px !important;
         padding-right: 0 !important;
-        padding-left: 16px !important;;
+        padding-left: 16px !important;
+        padding-bottom: 16px !important;
     }
-    .topBarDropdown{
-        background-color: blue;
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Top Bar */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .topBarPhaseSelector{
         width: 100%;
-        height: 32px;
         border-radius: 5px;
-
+        text-align: center;
+        margin-bottom: 5px;
     }
-    .selectPhase{
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Phase or Week selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseOrWeek{
+        display: inline;
         float: right;
+    }
+    .phaseOrWeekButton{
+        border-radius: 4px;
+        width: 80px;
+        background-color: #9C9C9C;
+        border: none;
 
     }
+    .selectPhaseButton{
+        background-color: #787878;
+        color: #f4eb49;
+    }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Phase selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseButton{
+        display: inline;
+        width: 110px;
+        position: relative;
+        border-radius: 5px;
+        border: none;
+        background-color: #9C9C9C;
+    }
+    .phaseAddButton{
+        width: 35px;
+    }
+    .phaseSelectorWrapper{
+        display: inline-block;
+    }
+    .addForm{
+        display: inline-block;
+    }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Week selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .weekSelectorWrapper{
+        display: none;
+    }
+    .weekButton{
+        display: inline;
+        width: 110px;
+        position: relative;
+        border-radius: 5px;
+        border: none;
+        background-color: #9C9C9C;
+    }
+    .weekAddButton{
+        width: 35px;
+    }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Phase/Week content */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseContent {
+        display: flex;
+        min-width: 100%;
+        min-height: 94.8%;
+        position: relative;
+        flex-direction: column;
+
+    }
+    .phaseContentWrapper{
+        position: relative;
+        width: 100%;
+        height: 120%;
+        background-color: #9C9C9C;
+        border-radius: 5px;
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* day selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .daySelectorBar{
+        width: 100%;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    .daySelector{
+        width: 120px;
+        height: 25px;
+        float: right;
+        background-color: whitesmoke;
+        border-radius: 4px;
+        border: none;
+        margin-right: 5px;
+        margin-top: 5px;
+    }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* content Title */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .contentTitle{
+        height:25px;
+        line-height: 25px;
+        width: 210px;
+        display: inline-block;
+        margin-top: 5px;
+        background-color: #787878;
+        border-radius: 5px;
+        color: black;
+        text-align: center;
+    }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* table */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .tableWrapper{
+        width: 100%;
+
+    }
+    .dayTable{
+        border-radius: 5px;
+        box-shadow: 0 0 0 1pt #787878;
+        margin-left: 25px;
+        margin-right: 25px;
+        margin-top: 20px;
+    }
+    .addEntryButton{
+        border:none;
+        background-color: #787878;
+        border-radius: 5px;
+        box-shadow: 0 0 0 1pt #5c5c5c;
+        margin-bottom: 2px;
+    }
+    .addEntryButtonWrapper{
+        text-align: center;
+    }
+    .exerciseCell{
+        text-align: left;
+        padding-left: 5px;
+    }
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* adding entry window */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .bg-modal{
+            left:   0;
+            top:    0;
+            bottom: 0;
+            width: 100%;
+            height: calc(100vh - 45px);
+            background: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content{
+            width: 300px;
+            /*height: 300px;*/
+            background-color: #ababab;
+            border-radius: 5px;
+            position: relative;
+            align-items: center;
+            /*justify-content: center;*/
+        }
+        .close_addentry{
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 32px;
+            rotate: 45;
+            -ms-transform: rotate(45deg); /* IE 9 */
+            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+            transform: rotate(45deg);
+        }
+        .trainContent{
+            justify-content: center;
+            width: calc(80vw);
+        }
+        .AddEntryTitleContainer{
+            width: 50%;
+
+            position: relative;
+            background-color: #787878;
+            align-items: center;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            color: black;
+
+        }
+        #exercisefield{
+
+            padding: 0;
+            margin:0;
+            display: table-cell;
+        }
+        .add-entry-form{
+            display: table-cell;
+            position: relative;
+            top: 0;
+            padding: 0;
+            margin:0;
+        }
+        .label {
+            display: table-cell;
+            width: 50%;
+            padding-left: 8px;
+        }
+        .addEntryCell {
+            display: table-cell;
+            width: 50%;
+        }
+        .addEntryInput {
+            text-align: center;
+            position: relative;
+            width: 100%;
+            border-radius: 7px;
+            border: none;
+            background-color: #787878;
+        }
+        .addEntryTable{
+            position: relative;
+            display: table;
+            width: 95%;
+            border-radius: 7px;
+            box-shadow: 0 0 0 1pt grey;
+            margin-top: 5px;
+            margin-bottom: 7px;
+        }
+        .submitAddEntry{
+            border-radius: 7px;
+            background-color: #787878;
+            border: none;
+            box-shadow: 0 0 0 1pt #404040;
+            margin-bottom: 5px;
+        }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* day selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+        .multiselect {
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-right: 5px;
+            display: inline-block;
+            width: 140px;
+            float: right;
+            background-color: transparent;
+        }
+
+        .selectBox {
+            border-radius: 5px;
+            position: relative;
+            background-color: transparent;
+        }
+        .innerSelectBox {
+            height: 25px;
+            border-radius: 5px;
+            position: relative;
+            background-color: #787878;
+        }
+
+        .selectBox select {
+            text-align: center;
+            width: 100%;
+        }
+
+        .overSelect {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+
+        }
+
+        #checkboxes {
+            width: 140px;
+            position: absolute;
+            display: none;
+            border: none;
+            background-color: #888888;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+            color: black;
+        }
+
+        .dayOption {
+          display: none;
+        }
+
+        .dayOption:hover {
+          background-color: #787878;
+        }
+        .dayAdd{
+            font-weight: bold;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+
+            border: none;
+            background-color: #888888;
+        }
+        .dayAddButton{
+            border: none;
+            background-color: #888888;
+            width: 140px;
+            border-bottom-right-radius: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        .dayAddButton:hover {
+          background-color: #787878;
+        }
     </style>
-    <div class="topBarDropdown">
-        <select class="selectPhase"></select>
+    <div class="topBarPhaseSelector">
+        <div class="phaseSelectorWrapper">
+            {% for phase in phases %}
+                <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}" onclick="phaseSelected('{{ phase.phase }}')">
+            {% endfor %}
+            <form class="addForm" action="{% url 'add_phase' %}" method="get">
+                <input class="phaseButton phaseAddButton" type="submit" value="+" >
+            </form>
+
+        </div>
+        {% for phase in phases %}
+            <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
+                {% for week in phase.weeks.all %}
+                    <input class="weekButton" type="button" value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
+                {% endfor %}
+                <form class="addForm" action="{% url 'add_week' phase.id%}" method="get">
+                    <input class="weekButton weekAddButton" type="submit" value="+">
+                </form>
+
+            </div>
+        {% endfor %}
+
+        <div class="phaseOrWeek">
+            <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
+            <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
+        </div>
     </div>
-<!--    <div class="modal fade" tabindex="-1" role="dialog" id="modal">-->
-<!--      <div class="modal-dialog" role="document">-->
-<!--        <div class="modal-content"></div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class = "trainContent">-->
-<!--    {% if request.session.selected_client is None %}-->
-<!--        <div>Select a client</div>-->
-<!--        -->
-<!--    {% else %}-->
-<!--        <div class="buttonwrap" style="text-align: center;"><a class="addPhase" href="{% url 'add_phase' %}">add phase</a></div>-->
-<!--    {% endif %}-->
-<!--    <div class="table-responsive" id = "phase_container" >-->
-<!--    {% for phase in phases reversed %}-->
-<!--        <div class="card phase" onclick="hideItem('phase {{ phase.phase }}')">Phase {{ phase.phase }}</div>-->
-<!--            <div class = "collapsed123" id = "phase {{ phase.phase }}">-->
-<!--                <script>loadState("phase {{ phase.phase }}")</script>-->
-<!--                <div class="buttonwrap" style="text-align: center;"><a class="addWeek" href="{% url 'add_week' phase.id%}">add week</a></div>-->
-<!--                {% for week in phase.weeks.all reversed %}-->
+    <div class="phaseContent">
+        <div class="phaseContentWrapper">
+            <div class="daySelectorBar">
+                <div class="contentTitle">
+                    Phase 1 Week 1
+                </div>
 
-<!--                    <div  class="card week" onclick="hideItem('phase {{ phase.phase }} week {{ week.week }}')">Week {{ week.week }}</div>-->
-<!--                    <div class = "collapsed123" id = "phase {{ phase.phase }} week {{ week.week }}">-->
-<!--                        <script>loadState("phase {{ phase.phase }} week {{ week.week }}")</script>-->
-<!--                        <div class="buttonwrap" style="text-align: center;"><a class="addDay" href="{% url 'add_day' phase.id week.id%}">add day</a></div>-->
-<!--                        {% for day in week.days.all %}-->
-<!--                            <table class="table table-striped table-sm collapsed">-->
-<!--                                <caption>Day {{ day.day }}</caption>-->
-<!--                                <thead>-->
-<!--                                    <tr>-->
-<!--                                        <th>Exercise</th>-->
-<!--                                        <th>Reps</th>-->
-<!--                                        <th>Weight</th>-->
-<!--                                        <th>Sets</th>-->
-<!--                                        <th>Comment</th>-->
-<!--                                    </tr>-->
-<!--                                </thead>-->
-<!--                                <tbody>-->
-<!--                                    {% for entry in day.entrys.all %}-->
-<!--                                    <tr>-->
-<!--                                        <td>{{ entry.exercise.name }}</td>-->
-<!--                                        <td>{{ entry.reps }}</td>-->
-<!--                                        <td>{{ entry.weight }}</td>-->
-<!--                                        <td>{{ entry.sets }}</td>-->
-<!--                                        <td>{{ entry.comment }}</td>-->
-<!--                                    </tr>-->
-<!--                                    {% endfor %}-->
-<!--                                    <tr><td colspan="5">-->
-<!--                                        <center><button id="add-entry" class="btn btn-secondary" type="button" name="button" onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">Add Entry</button></center>-->
-<!--                                    </td></tr>-->
-<!--                                </tbody>-->
-<!--                            </table>-->
-<!--                        {% endfor %}-->
-<!--                    </div>-->
-<!--            {% endfor %}-->
-<!--        </div>-->
-<!--    {% endfor %}-->
-<!--    </div>-->
-<!--    <div class="bg-modal" id ="add-entry-modal"style="display: none;">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="close_addentry">+</div>-->
-<!--            <div class="AddEntryTitleContainer">-->
-<!--                Add Exercise-->
-<!--            </div>-->
+                <div class="multiselect">
+                    <div class="selectBox" onclick="showCheckboxes()">
+                    <select class="innerSelectBox">
+                      <option>Select days</option>
+                    </select>
+                    <div class="overSelect"></div>
+                    </div>
+                    <div class="checkboxes" id="checkboxes">
+                        {% for phase in phases %}
+                            {% for week in phase.weeks.all %}
+                                {% for day in week.days.all %}
+                                  <div class="dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" onclick="dayClicked(this)" id="{{ day.day }}">Day {{ day.day }}</div>
+                                {% endfor %}
+                                <form class="dayAdd dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" id="button" action="{% url 'add_day' phase.id week.id %}" method="get">
+                                    <input class="dayAddButton" type="submit" value="+">
+                                </form>
+                            {% endfor %}
+                        {% endfor %}
 
-<!--            <table class="exerciseTable addEntryTable">-->
-<!--                <tr>-->
-<!--                    <td class="exerciseSelectName label">-->
-<!--                        Select Exercise-->
-<!--                    </td>-->
-<!--                    <td class="exerciseSelect addEntryCell">-->
-<!--                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield">-->
-<!--                        <datalist id="exerciseList">-->
-<!--                            {% for exercise in exercises %}-->
-<!--                                <option value="{{ exercise.name }}">-->
-<!--                            {% endfor %}-->
-<!--                        </datalist>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <table class="repsTable addEntryTable">-->
-<!--                <tr>-->
-<!--                    <td class="repsLabel label">-->
-<!--                        Enter Reps-->
-<!--                    </td>-->
-<!--                    <td class="repsEntry addEntryCell">-->
-<!--                        <input class="addEntryInput" type="text" id="repfield">-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <table class="weightTable addEntryTable">-->
-<!--                <tr>-->
-<!--                    <td class="weightLabel label">-->
-<!--                        Enter Weight-->
-<!--                    </td>-->
-<!--                    <td class="weightEntry addEntryCell">-->
-<!--                        <input class="addEntryInput" type="text" id="weightfield">-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <table class="setTable addEntryTable">-->
-<!--                <tr>-->
-<!--                    <td class="setLabel label">-->
-<!--                        Enter Sets-->
-<!--                    </td>-->
-<!--                    <td class="setEntry addEntryCell">-->
-<!--                        <input class="addEntryInput" type="text" id="setfield">-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <table class="commentTable addEntryTable">-->
-<!--                <tr>-->
-<!--                    <td class="commentLabel label">-->
-<!--                        Comment-->
-<!--                    </td>-->
-<!--                    <td class="commentEntry addEntryCell">-->
-<!--                        <input class="addEntryInput" type="text" id="commentfield">-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--            </table>-->
 
-<!--            <input  class="submitAddEntry" type="button" value="Add Entry">-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="tableWrapper">
+                {% for phase in phases %}
+                    {% for week in phase.weeks.all %}
+                        {% for day in week.days.all %}
+                            <div class="dayTable" id ="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
+                                <table class="table-striped" style="width: 100%">
+                                        <tr>
+                                            <td class="addEntryButtonWrapper" colspan="5">
+                                                Day {{ day.day }}
+                                            </td>
+                                        </tr>
+                                        <tr style="text-align: center">
+                                            <th class="exerciseCell">Exercise</th>
+                                            <th>Reps</th>
+                                            <th>Weight</th>
+                                            <th>Sets</th>
+                                            <th>Comment</th>
+                                        </tr>
+
+                                        {% for entry in day.entrys.all %}
+                                        <tr style="text-align: center">
+                                            <td class="exerciseCell">{{ entry.exercise.name }}</td>
+                                            <td>{{ entry.reps }}</td>
+                                            <td>{{ entry.weight }}</td>
+                                            <td>{{ entry.sets }}</td>
+                                            <td>{{ entry.comment }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td class="addEntryButtonWrapper" colspan="5">
+                                                <button id="add-entry" class="addEntryButton" type="button" name="button" onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">+</button>
+                                            </td>
+                                        </tr>
+                                </table>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<div class="bg-modal" id ="add-entry-modal"style="display: none;">
+        <div class="modal-content">
+            <div class="close_addentry">+</div>
+            <div class="AddEntryTitleContainer">
+                Add Exercise
+            </div>
+
+            <table class="exerciseTable addEntryTable">
+                <tr>
+                    <td class="exerciseSelectName label">
+                        Select Exercise
+                    </td>
+                    <td class="exerciseSelect addEntryCell">
+                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield">
+                        <datalist id="exerciseList">
+                            {% for exercise in exercises %}
+                                <option value="{{ exercise.name }}">
+                            {% endfor %}
+                        </datalist>
+                    </td>
+                </tr>
+            </table>
+            <table class="repsTable addEntryTable">
+                <tr>
+                    <td class="repsLabel label">
+                        Enter Reps
+                    </td>
+                    <td class="repsEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="repfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="weightTable addEntryTable">
+                <tr>
+                    <td class="weightLabel label">
+                        Enter Weight
+                    </td>
+                    <td class="weightEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="weightfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="setTable addEntryTable">
+                <tr>
+                    <td class="setLabel label">
+                        Enter Sets
+                    </td>
+                    <td class="setEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="setfield">
+                    </td>
+                </tr>
+            </table>
+            <table class="commentTable addEntryTable">
+                <tr>
+                    <td class="commentLabel label">
+                        Comment
+                    </td>
+                    <td class="commentEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="commentfield">
+                    </td>
+                </tr>
+            </table>
+
+            <input  class="submitAddEntry" type="button" value="Add Entry">
+        </div>
+    </div>
+
     <script src="{% static '/assets/js/jquery.min.js' %}"></script>
     <script src="/static/assets/js/popper.js"></script>
     <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
     <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
 
     <script type="text/javascript">
+        var dayOptions = new Set();
+// set last phase to selected color
+        var lastPhase =$('.phaseButton:nth-last-child(2)'); // second last phaseButton since the add button is also a phaseButton
+        lastPhase.css({"background-color": "#787878", 'color':'#f4eb49'});
+        var selectedPhase = lastPhase.attr('id');
 
+// ---------------------------------------------------------------------------------------------------------------------
+
+
+// set if week or phase should be shown on page load
+        var phaseStatus = true;
+        var weekOpen = "{{ weekOpen }}";
+        console.log(weekOpen);
+        if(weekOpen == "True"){
+            phaseSelected("{{ request.session.selectedPhase }}");
+            console.log(selectedPhase);
+            weekClicked();
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+
+// set last week to selected color
+
+        var selectedWeek;
+        setLastWeek();
+        function setLastWeek(){
+            var lastWeek =$("#"+selectedPhase+".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
+            lastWeek.css({"background-color": "#787878", 'color':'#f4eb49'});
+            weekSelected(lastWeek.attr('id'));
+            console.log("week ID:" +selectedWeek);
+
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// set content title to phase and week
+        setContentTitle();
+        function setContentTitle() {
+            $('.contentTitle').html('Phase ' + selectedPhase + ' Week ' + selectedWeek);
+        }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// display days table
+
+        function displayTable(){
+            days = new Array();
+            days = Array.from(dayOptions).sort();
+            console.log('set: '+ dayOptions);
+            console.log('days: '+ days);
+            $('.dayTable').each(function(){
+                $(this).css("display", "none");
+            });
+            for (index in days) {
+                // console.log('day: '+'#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+day);
+                $('#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+days[index]).css("display", "block");
+            }
+
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// display days option
+
+
+        function getDayOptions(){
+            dayOptions = new Set();
+            $('.dayOption').each(function() {
+                $(this).css('display','none');
+            })
+            $('.OptionPhase'+selectedPhase+'Week'+selectedWeek).each(function () {
+                option = $(this)
+                option.css("display", "block");
+                id = option.attr('id');
+                option.css({'background-color': '#787878', 'color': '#f4eb49'});
+                if (id !== 'button'){
+                    dayOptions.add(id);
+                }
+            })
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// phase/week button clicked
+
+        function phaseClicked(){
+            if (!phaseStatus){
+                // change the button color
+                $('.selectPhaseButton').css({"background-color": "#787878", 'color':'#f4eb49'});
+                $('.selectWeekButton').css({"background-color": "#9C9C9C", 'color':'black'});
+                phaseStatus=true;
+                // change from weeks to phases
+                $('.weekSelectorWrapper').css("display","none");
+                $('.phaseSelectorWrapper').css("display","inline-block");
+
+            }
+
+        }
+        function weekClicked(){
+            if (phaseStatus){
+                //set the last week to be active
+
+                // change the button color
+                $('.selectPhaseButton').css({"background-color": "#9C9C9C", 'color':'black'});
+                $('.selectWeekButton').css({"background-color": "#787878", 'color':'#f4eb49'});
+                phaseStatus=false;
+                // change from phase to weeks
+                $('.phaseSelectorWrapper').css("display","none");
+                $('#'+selectedPhase+'.weekSelectorWrapper').css("display","inline-block");
+
+            }
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+
+// selecting phase
+        function phaseSelected(id){
+            if(id!=selectedPhase) {
+                $('#' + id + '.phaseButton').css({"background-color": "#787878", 'color': '#f4eb49'});
+                $('#' + selectedPhase + '.phaseButton').css({"background-color": "#9C9C9C", 'color': 'black'});
+                selectedPhase = id;
+                setLastWeek();
+                setContentTitle();
+                getDayOptions();
+                displayTable();
+            }
+            weekClicked();
+        }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// selecting week
+        function weekSelected(id){
+            if(id!=selectedWeek) {
+                $('#' + id + '.weekButton').css({"background-color": "#787878", 'color': '#f4eb49'});
+                $('#' + selectedWeek + '.weekButton').css({"background-color": "#9C9C9C", 'color': 'black'});
+                selectedWeek = id;
+                setContentTitle();
+                getDayOptions();
+                displayTable();
+            }
+        }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// day select box
+        var expanded = false;
+
+        function showCheckboxes() {
+          var checkboxes = document.getElementById("checkboxes");
+          if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+            $('.innerSelectBox').css({'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px'});
+          } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+            $('.innerSelectBox').css("border-radius","5px");
+          }
+        }
+
+        function dayClicked(elem) {
+            dayOption = $(elem);
+            if (dayOptions.length !== 0) {
+                id = dayOption.attr('id');
+                if (dayOptions.has(id)) {
+                    dayOptions.delete(id);
+                    dayOption.css({'background-color': '#888888', 'color': 'black'});
+                }
+                else{
+                    dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
+                    dayOptions.add(id);
+                }
+            }
+            else{
+                dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
+                dayOptions.add(id);
+            }
+            displayTable();
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// selecting week
         $('.close_addentry').on('click', function(e) {
-          var x = document.getElementById("add-entry-modal");
-          x.style.display = "none";
+            var x = document.getElementById("add-entry-modal");
+            x.style.display = "none";
         });
 
         $('.bg-modal').on('click', function(e) {
@@ -339,10 +729,11 @@
           var x = document.getElementById("add-entry-modal");
           x.style.display = "none";
         });
+
         $('.submitAddEntry').on('click', function(e){
-        
+
            $.ajax({
-                type : "POST", 
+                type : "POST",
                 url: "{% url 'add_entry' %}",
                 data: {
 
@@ -351,16 +742,16 @@
                  day: day,
                  exercise : $('#exercisefield').val(),
                  reps : $('#repfield').val(),
-                 weight: $('#weightfield').val(), 
+                 weight: $('#weightfield').val(),
                  sets: $('#setfield').val(),
                  comment: $('#commentfield').val(),
                  csrfmiddlewaretoken: '{{ csrf_token }}',
                  dataType: "json",
                 },
                 success: function(data){
-                   
+
                 },
-                failure: function() {   
+                failure: function() {
                 }
             });
            window.location.reload();
