@@ -65,7 +65,15 @@ def trainplan(request):
 
     addform = AddTrainingEntry()
     exercises = ExerciseType.objects.order_by('name')
-    return render(request, 'trainerInterface/trainPlan.html', {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises})
+
+    # when the add week button is pressed this results in the page reloading with weeks menu open rather than phase open
+    weekOpen = False
+    if request.session["weekOpen"]:
+        request.session["weekOpen"]=False
+        weekOpen = True
+
+    return render(request, 'trainerInterface/trainPlan.html',
+                  {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises, 'weekOpen': weekOpen})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -102,7 +110,8 @@ def addWeek(request, phaseID=None):
                    phase=phase_selected.phase)
     newWeek.save()
     phase_selected.weeks.add(newWeek)
-
+    request.session['weekOpen'] = True
+    request.session['selectedPhase'] = phase_selected.phase
     return redirect('trainplan')
 
 
@@ -245,14 +254,12 @@ def editGroup(request):
         editGroup = TrackingGroup.objects.get(id=groupId)
         editGroup.name = name
         editGroup.save()
-        print(fieldIds)
-        print(fieldnames)
-        print(fieldSelects)
-        print(toggles)
+
         for id, fieldname, fieldselect, toggle in zip(fieldIds, fieldnames, fieldSelects, toggles):
             print(id)
             if not id:
-                print("here")
+
+
                 if fieldselect == 'text':
                     new_field = TrackingTextField(
                         name=fieldname,
@@ -279,6 +286,8 @@ def editGroup(request):
                 editField.name = fieldname
                 if toggle == 'True':
                     editField.clientToggle.add(User.objects.get(email=request.session['selected_client']))
+                else:
+                    editField.clientToggle.remove(User.objects.get(email=request.session['selected_client']))
                 if fieldselect == 'text':
                     editField.type = False
                 else:
