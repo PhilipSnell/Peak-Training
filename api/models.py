@@ -140,6 +140,7 @@ class Week(models.Model):
     phase = models.IntegerField()
     week = models.IntegerField()
     days = models.ManyToManyField(Day, 'days', blank=True)
+    isActive = models.BooleanField(default=False)
 
     def __str__(self):
         return "Phase " + str(self.phase) + " Week " + str(self.week)

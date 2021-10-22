@@ -97,7 +97,13 @@ class TrainingData(APIView):
         # print(request.data["username"]+ "- blah blah")
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
-        trainingData = TrainingEntry.objects.filter(user=user[0].id)
+        phases = Phase.objects.filter(user=user[0].id)
+        for phase in phases:
+            try:
+                activeWeek = phase.weeks.get(isActive=True)
+            except:
+                print('active week not found')
+        trainingData = TrainingEntry.objects.filter(user=user[0].id, phase = activeWeek.phase, week = activeWeek.week)
 
         serializer = TrainingSerializer(trainingData, many=True)
 

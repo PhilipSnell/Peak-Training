@@ -18,7 +18,7 @@
 
           var x = document.getElementById(id);
           var value
-          console.log(x.style.display)
+
           if (x.style.display === "none" || x.style.display === "") {
             value = "block";
           } else {
@@ -125,18 +125,21 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
     .phaseContent {
         display: flex;
-        min-width: 100%;
-        min-height: 94.8%;
+        width: 100%;
+        height: 94.8%;
+
         position: relative;
         flex-direction: column;
+        background-color: #9C9C9C;
+        border-radius: 5px;
 
     }
     .phaseContentWrapper{
         position: relative;
-        width: 100%;
-        height: 120%;
+        display: block;
         background-color: #9C9C9C;
         border-radius: 5px;
+        padding-bottom: 16px;
     }
 
 /*--------------------------------------------------------------------------------------------------------------------*/
@@ -163,9 +166,10 @@
     .contentTitle{
         height:25px;
         line-height: 25px;
-        width: 210px;
+        width: 30%;
         display: inline-block;
         margin-top: 5px;
+        margin-left: 12.5%; /* Centers Title */
         background-color: #787878;
         border-radius: 5px;
         color: black;
@@ -192,6 +196,7 @@
         box-shadow: 0 0 0 1pt #5c5c5c;
         margin-bottom: 2px;
     }
+
     .addEntryButtonWrapper{
         text-align: center;
     }
@@ -226,23 +231,28 @@
         }
         .close_addentry{
             cursor: pointer;
-            position: absolute;
-            top: 0;
-            right: 10px;
+            position: relative;
+            line-height: 20px;
             font-size: 32px;
             rotate: 45;
             -ms-transform: rotate(45deg); /* IE 9 */
             -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
             transform: rotate(45deg);
+            display: inline-block;
+            float: right;
+            margin-right: 5px;
+            margin-top: 5px;
         }
+
         .trainContent{
             justify-content: center;
             width: calc(80vw);
         }
         .AddEntryTitleContainer{
             width: 50%;
-
+            margin-left: 25%;
             position: relative;
+            display: inline-block;
             background-color: #787878;
             align-items: center;
             text-align: center;
@@ -306,7 +316,7 @@
             margin-top: 5px;
             margin-right: 5px;
             display: inline-block;
-            width: 140px;
+            width: 20%;
             float: right;
             background-color: transparent;
         }
@@ -373,6 +383,60 @@
         .dayAddButton:hover {
           background-color: #787878;
         }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* delete Entry button */
+/*--------------------------------------------------------------------------------------------------------------------*/
+        .deleteEntryButtonWrapper{
+            border:none;
+            background-color: #787878;
+            border-radius: 5px;
+            box-shadow: 0 0 0 1pt #5c5c5c;
+        }
+        .deleteEntryButton{
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 17px;
+            color: #7E3535;
+            transform: rotate(45deg);
+            width: 10px;
+        }
+/*--------------------------------------------------------------------------------------------------------------------*/
+    /* Active Toggle */
+/*--------------------------------------------------------------------------------------------------------------------*/
+    .toggleActive{
+        display: inline-block;
+        float: left;
+        height: 25px;
+        line-height: 25px;
+        margin-left: 25px;
+        margin-top: 5px;
+
+    }
+    .toggleOn{
+        color: #228124;
+        font-size: 25px;
+    }
+    .toggleOff{
+        color: #7E3535;
+        font-size: 25px;
+    }
+    .toggleConfirmationMessage{
+        position: relative;
+        display: inline-block;
+        background-color: #787878;
+        align-items: center;
+        text-align: center;
+        border-radius: 8px;
+        margin: 5px;
+        margin: 5px;
+        color: black;
+        font-weight: normal;
+    }
+    .toggleConfirmationSubMessage{
+        font-weight: lighter;
+        font-size: 12px;
+        border-radius: 8px;
+    }
     </style>
     <div class="topBarPhaseSelector">
         <div class="phaseSelectorWrapper">
@@ -387,7 +451,7 @@
         {% for phase in phases %}
             <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
                 {% for week in phase.weeks.all %}
-                    <input class="weekButton" type="button" value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
+                    <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button" value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
                 {% endfor %}
                 <form class="addForm" action="{% url 'add_week' phase.id%}" method="get">
                     <input class="weekButton weekAddButton" type="submit" value="+">
@@ -404,6 +468,9 @@
     <div class="phaseContent">
         <div class="phaseContentWrapper">
             <div class="daySelectorBar">
+                <div class="toggleActive">
+                    <i class="fas fa-toggle-off toggleActiveIcon toggleOff"  aria-hidden="true" onclick="toggleConfirmation()"></i>
+                </div>
                 <div class="contentTitle">
                     Phase 1 Week 1
                 </div>
@@ -440,7 +507,7 @@
                             <div class="dayTable" id ="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
                                 <table class="table-striped" style="width: 100%">
                                         <tr>
-                                            <td class="addEntryButtonWrapper" colspan="5">
+                                            <td class="addEntryButtonWrapper" colspan="6">
                                                 Day {{ day.day }}
                                             </td>
                                         </tr>
@@ -450,19 +517,21 @@
                                             <th>Weight</th>
                                             <th>Sets</th>
                                             <th>Comment</th>
+                                            <th></th>
                                         </tr>
 
                                         {% for entry in day.entrys.all %}
-                                        <tr style="text-align: center">
+                                        <tr style="text-align: center" onclick="editEntry('{{ entry.exercise.name }}', '{{ entry.reps }}', '{{ entry.weight }}','{{ entry.sets }}', '{{ entry.comment }}', '{{ entry.id }}')">
                                             <td class="exerciseCell">{{ entry.exercise.name }}</td>
                                             <td>{{ entry.reps }}</td>
                                             <td>{{ entry.weight }}</td>
                                             <td>{{ entry.sets }}</td>
                                             <td>{{ entry.comment }}</td>
+                                            <td style="width: 50px"><button class="deleteEntryButtonWrapper" type="button" name="button" onclick="deleteEntry({{ entry.id }})"><div class="deleteEntryButton">+</div></button></td>
                                         </tr>
                                         {% endfor %}
                                         <tr>
-                                            <td class="addEntryButtonWrapper" colspan="5">
+                                            <td class="addEntryButtonWrapper" colspan="6">
                                                 <button id="add-entry" class="addEntryButton" type="button" name="button" onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">+</button>
                                             </td>
                                         </tr>
@@ -474,73 +543,160 @@
             </div>
         </div>
     </div>
-<div class="bg-modal" id ="add-entry-modal"style="display: none;">
+    <div class="bg-modal" id ="add-entry-modal"style="display: none;">
         <div class="modal-content">
-            <div class="close_addentry">+</div>
-            <div class="AddEntryTitleContainer">
-                Add Exercise
+            <div style="width:100%">
+                <div class="AddEntryTitleContainer">
+                    Add Exercise
+                </div>
+                <div class="close_addentry">+</div>
             </div>
+            <form id="addEntryForm">
+                <table class="exerciseTable addEntryTable">
+                    <tr>
+                        <td class="exerciseSelectName label">
+                            Select Exercise
+                        </td>
+                        <td class="exerciseSelect addEntryCell">
+                            <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield" required>
+                            <datalist id="exerciseList">
+                                {% for exercise in exercises %}
+                                    <option value="{{ exercise.name }}">
+                                {% endfor %}
+                            </datalist>
+                        </td>
+                    </tr>
+                </table>
+                <table class="repsTable addEntryTable">
+                    <tr>
+                        <td class="repsLabel label">
+                            Enter Reps
+                        </td>
+                        <td class="repsEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="repfield" required>
+                        </td>
+                    </tr>
+                </table>
+                <table class="weightTable addEntryTable">
+                    <tr>
+                        <td class="weightLabel label">
+                            Enter Weight
+                        </td>
+                        <td class="weightEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="weightfield" required>
+                        </td>
+                    </tr>
+                </table>
+                <table class="setTable addEntryTable">
+                    <tr>
+                        <td class="setLabel label">
+                            Enter Sets
+                        </td>
+                        <td class="setEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="setfield" required>
+                        </td>
+                    </tr>
+                </table>
+                <table class="commentTable addEntryTable">
+                    <tr>
+                        <td class="commentLabel label">
+                            Comment
+                        </td>
+                        <td class="commentEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="commentfield" required>
+                        </td>
+                    </tr>
+                </table>
 
-            <table class="exerciseTable addEntryTable">
-                <tr>
-                    <td class="exerciseSelectName label">
-                        Select Exercise
-                    </td>
-                    <td class="exerciseSelect addEntryCell">
-                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield">
-                        <datalist id="exerciseList">
-                            {% for exercise in exercises %}
-                                <option value="{{ exercise.name }}">
-                            {% endfor %}
-                        </datalist>
-                    </td>
-                </tr>
-            </table>
-            <table class="repsTable addEntryTable">
-                <tr>
-                    <td class="repsLabel label">
-                        Enter Reps
-                    </td>
-                    <td class="repsEntry addEntryCell">
-                        <input class="addEntryInput" type="text" id="repfield">
-                    </td>
-                </tr>
-            </table>
-            <table class="weightTable addEntryTable">
-                <tr>
-                    <td class="weightLabel label">
-                        Enter Weight
-                    </td>
-                    <td class="weightEntry addEntryCell">
-                        <input class="addEntryInput" type="text" id="weightfield">
-                    </td>
-                </tr>
-            </table>
-            <table class="setTable addEntryTable">
-                <tr>
-                    <td class="setLabel label">
-                        Enter Sets
-                    </td>
-                    <td class="setEntry addEntryCell">
-                        <input class="addEntryInput" type="text" id="setfield">
-                    </td>
-                </tr>
-            </table>
-            <table class="commentTable addEntryTable">
-                <tr>
-                    <td class="commentLabel label">
-                        Comment
-                    </td>
-                    <td class="commentEntry addEntryCell">
-                        <input class="addEntryInput" type="text" id="commentfield">
-                    </td>
-                </tr>
-            </table>
-
-            <input  class="submitAddEntry" type="button" value="Add Entry">
+                <input  class="submitAddEntry" type="submit" name="submit" value="Add Entry">
+            </form>
         </div>
     </div>
 
+    <div class="bg-modal" id ="edit-entry-modal"style="display: none;">
+        <div class="modal-content">
+            <div style="width:100%">
+                <div class="close_addentry">+</div>
+                <div class="AddEntryTitleContainer">
+                    Edit Exercise
+                </div>
+            </div>
+            <form id="editEntryForm">
+                <table class="exerciseTable addEntryTable">
+                    <tr>
+                        <td class="exerciseSelectName label">
+                            Select Exercise
+                        </td>
+                        <td class="exerciseSelect addEntryCell">
+                            <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="editExerciseField">
+                            <datalist id="exerciseList">
+                                {% for exercise in exercises %}
+                                    <option value="{{ exercise.name }}">
+                                {% endfor %}
+                            </datalist>
+                        </td>
+                    </tr>
+                </table>
+                <table class="repsTable addEntryTable">
+                    <tr>
+                        <td class="repsLabel label">
+                            Enter Reps
+                        </td>
+                        <td class="repsEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="editRepField">
+                        </td>
+                    </tr>
+                </table>
+                <table class="weightTable addEntryTable">
+                    <tr>
+                        <td class="weightLabel label">
+                            Enter Weight
+                        </td>
+                        <td class="weightEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="editWeightField">
+                        </td>
+                    </tr>
+                </table>
+                <table class="setTable addEntryTable">
+                    <tr>
+                        <td class="setLabel label">
+                            Enter Sets
+                        </td>
+                        <td class="setEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="editSetField">
+                        </td>
+                    </tr>
+                </table>
+                <table class="commentTable addEntryTable">
+                    <tr>
+                        <td class="commentLabel label">
+                            Comment
+                        </td>
+                        <td class="commentEntry addEntryCell">
+                            <input class="addEntryInput" type="text" id="editCommentField">
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" id="idField">
+                <input  class="submitAddEntry" type="submit" value="Edit Entry">
+            </form>
+        </div>
+    </div>
+
+    <div class="bg-modal" id ="toggle-modal"style="display: none;">
+        <div class="modal-content">
+            <div style="width:100%">
+                <div class="toggleConfirmationMessage">
+                    Are you sure you want to activate this week?
+                    <div class="toggleConfirmationSubMessage"> Your client can only see the active week on their mobile application.</div>
+                </div>
+            </div>
+            <form id="toggleWeekForm">
+
+                <input  class="submitAddEntry" type="submit" name="submit" value="Activate">
+            </form>
+        </div>
+    </div>
     <script src="{% static '/assets/js/jquery.min.js' %}"></script>
     <script src="/static/assets/js/popper.js"></script>
     <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
@@ -559,10 +715,10 @@
 // set if week or phase should be shown on page load
         var phaseStatus = true;
         var weekOpen = "{{ weekOpen }}";
-        console.log(weekOpen);
+
         if(weekOpen == "True"){
             phaseSelected("{{ request.session.selectedPhase }}");
-            console.log(selectedPhase);
+
             weekClicked();
         }
 // ---------------------------------------------------------------------------------------------------------------------
@@ -575,8 +731,28 @@
             var lastWeek =$("#"+selectedPhase+".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
             lastWeek.css({"background-color": "#787878", 'color':'#f4eb49'});
             weekSelected(lastWeek.attr('id'));
-            console.log("week ID:" +selectedWeek);
 
+
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// delete Entry
+
+        function deleteEntry(id){
+            $.ajax({
+                type : "POST",
+                url: "{% url 'delete_entry' %}",
+                data: {
+                 id : id,
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    // tempAlert("entry deleted",6000)
+                    window.location.reload();
+                },
+                failure: function() {
+                }
+            });
         }
 // ---------------------------------------------------------------------------------------------------------------------
 // set content title to phase and week
@@ -591,13 +767,11 @@
         function displayTable(){
             days = new Array();
             days = Array.from(dayOptions).sort();
-            console.log('set: '+ dayOptions);
-            console.log('days: '+ days);
+
             $('.dayTable').each(function(){
                 $(this).css("display", "none");
             });
             for (index in days) {
-                // console.log('day: '+'#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+day);
                 $('#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+days[index]).css("display", "block");
             }
 
@@ -671,15 +845,35 @@
 // selecting week
         function weekSelected(id){
             if(id!=selectedWeek) {
-                $('#' + id + '.weekButton').css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedWeek + '.weekButton').css({"background-color": "#9C9C9C", 'color': 'black'});
+                $('#' + id + '.weekButton'+selectedPhase).css({"background-color": "#787878", 'color': '#f4eb49'});
+                $('#' + selectedWeek + '.weekButton'+selectedPhase).css({"background-color": "#9C9C9C", 'color': 'black'});
+
                 selectedWeek = id;
                 setContentTitle();
                 getDayOptions();
                 displayTable();
+                toggleActive();
+
             }
         }
+        function toggleActive(){
+            console.log(selectedWeek);
+            console.log($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name'));
+            if ($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name') === 'True'){
+                    $('.toggleActiveIcon').removeClass('toggleOff');
+                    $('.toggleActiveIcon').removeClass('fa-toggle-off');
 
+                    $('.toggleActiveIcon').addClass('toggleOn');
+                    $('.toggleActiveIcon').addClass('fa-toggle-on');
+
+                }
+                else {
+                    $('.toggleActiveIcon').removeClass('toggleOn');
+                    $('.toggleActiveIcon').removeClass('fa-toggle-on');
+                    $('.toggleActiveIcon').addClass('toggleOff');
+                    $('.toggleActiveIcon').addClass('fa-toggle-off');
+                }
+        }
 // ---------------------------------------------------------------------------------------------------------------------
 // day select box
         var expanded = false;
@@ -717,22 +911,39 @@
             displayTable();
         }
 // ---------------------------------------------------------------------------------------------------------------------
-// selecting week
+// display add/edit entry
         $('.close_addentry').on('click', function(e) {
             var x = document.getElementById("add-entry-modal");
+            var y = document.getElementById("edit-entry-modal");
+            var z = document.getElementById("toggle-modal");
             x.style.display = "none";
+            y.style.display = "none";
+            z.style.display = "none";
         });
 
         $('.bg-modal').on('click', function(e) {
           if (e.target !== this)
             return;
           var x = document.getElementById("add-entry-modal");
+          var y = document.getElementById("edit-entry-modal");
           x.style.display = "none";
+          y.style.display = "none";
         });
-
-        $('.submitAddEntry').on('click', function(e){
-
-           $.ajax({
+        function editEntry(name, reps, weight, sets, comment, id){
+            var y = document.getElementById("edit-entry-modal");
+            $('#editExerciseField').val(name);
+            $('#editRepField').val(reps);
+            $('#editWeightField').val(weight);
+            $('#editSetField').val(sets);
+            $('#editCommentField').val(comment);
+            $('#idField').val(id);
+            y.style.display = "flex";
+        }
+// ---------------------------------------------------------------------------------------------------------------------
+// submit add entry
+        $('#addEntryForm').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
                 type : "POST",
                 url: "{% url 'add_entry' %}",
                 data: {
@@ -749,14 +960,86 @@
                  dataType: "json",
                 },
                 success: function(data){
-
+                    window.location.reload();
                 },
                 failure: function() {
+
                 }
             });
-           window.location.reload();
-           var x = document.getElementById("add-entry-modal");
-           x.style.display = "none";
+
+            var x = document.getElementById("add-entry-modal");
+            x.style.display = "none";
         });
+// ---------------------------------------------------------------------------------------------------------------------
+// submit edit entry
+        $('#editEntryForm').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                type : "POST",
+                url: "{% url 'edit_entry' %}",
+                data: {
+                 id: $('#idField').val(),
+                 exercise : $('#editExerciseField').val(),
+                 reps : $('#editRepField').val(),
+                 weight: $('#editWeightField').val(),
+                 sets: $('#editSetField').val(),
+                 comment: $('#editCommentField').val(),
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    window.location.reload();
+                },
+                failure: function() {
+
+                }
+            });
+
+            var x = document.getElementById("edit-entry-modal");
+            x.style.display = "none";
+        });
+// ---------------------------------------------------------------------------------------------------------------------
+// toggle confirmation
+        function toggleConfirmation(){
+            if($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name') !== 'True'){
+                var y = document.getElementById("toggle-modal");
+                y.style.display = "flex";
+            }
+
+        };
+        $('#toggleWeekForm').on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                type : "POST",
+                url: "{% url 'toggle_active_week' %}",
+                data: {
+                 phase: selectedPhase,
+                 week : selectedWeek,
+
+                 csrfmiddlewaretoken: '{{ csrf_token }}',
+                 dataType: "json",
+                },
+                success: function(data){
+                    window.location.reload();
+                },
+                failure: function() {
+
+                }
+            });
+
+            var x = document.getElementById("toggle-modal");
+            x.style.display = "none";
+        });
+
+        function tempAlert(msg,duration) {
+             var el = document.createElement("div");
+             el.setAttribute("style","position:absolute;background-color:white;");
+             el.innerHTML = msg;
+             setTimeout(function(){
+              el.parentNode.removeChild(el);
+             },duration);
+             document.body.appendChild(el);
+        }
     </script>
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
 {% endblock content%}

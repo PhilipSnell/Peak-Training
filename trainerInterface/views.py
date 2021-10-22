@@ -172,8 +172,78 @@ def addEntry(request):
                 'msg': 'Your form has not been saved'  # response message
             }
     return redirect('trainplan')
+def toggleActiveWeek(request):
+    if request.is_ajax():
+        phaseNum = request.POST.get('phase', None)
+        weekNum = request.POST.get('week', None)
+        # try:
+        allPhases = Phase.objects.filter(user = User.objects.get(email=request.session['selected_client']))
+        for phase in allPhases:
+            try:
+                activeWeek = phase.weeks.get(isActive=True)
+                activeWeek.isActive = False;
+                activeWeek.save()
+                print("found active week" +activeWeek.week)
+            except:
+                print("active week not found")
+
+        phase = Phase.objects.get(user = User.objects.get(email=request.session['selected_client']), phase=phaseNum)
+        # for week in phase.weeks.all():
+        #     print(week.week)
+        #     print(weekNum)
+        # print(phase.weeks)
+        week = phase.weeks.get(week=weekNum)
+        week.isActive = True
+        week.save()
 
 
+        # except:
+        #     print("changing active week didnt work")
+    return redirect('trainplan')
+
+def editEntry(request):
+
+    if request.is_ajax():
+        id = request.POST.get('id', None)
+        exerciseName = request.POST.get('exercise', None)
+        reps = request.POST.get('reps', None)
+        weight = request.POST.get('weight', None)
+        sets = request.POST.get('sets', None)
+        comment = request.POST.get('comment', None)
+
+        try:
+            train_entry = TrainingEntry.objects.get(id=id)
+            train_entry.exercise = ExerciseType.objects.get(name = exerciseName)
+            train_entry.reps = reps
+            train_entry.weight = weight
+            train_entry.sets = sets
+            train_entry.comment = comment
+            train_entry.save()
+            print("entry updated")
+
+        except:
+            print("entry not edited")
+            response = {
+                'msg': 'not edited'  # response message
+            }
+    return redirect('trainplan')
+
+def deleteEntry(request):
+
+    if request.is_ajax():
+        id = request.POST.get('id', None)
+
+        try:
+            train_entry = TrainingEntry.objects.get(id=id)
+            train_entry.delete()
+
+
+        except:
+            print("entry not deleted")
+            response = {
+                'msg': 'not deleted'  # response message
+            }
+    return redirect('trainplan')
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def trainprog(request):
