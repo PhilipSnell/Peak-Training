@@ -172,33 +172,82 @@ def addEntry(request):
                 'msg': 'Your form has not been saved'  # response message
             }
     return redirect('trainplan')
+
+def cloneWeek(request):
+    if request.is_ajax():
+        phaseFromNum = request.POST.get('phaseFrom', None)
+        weekFromNum = request.POST.get('weekFrom', None)
+        phaseToNum = request.POST.get('phaseTo', None)
+        weekToNum = request.POST.get('weekTo', None)
+        # try:
+        phaseFrom = Phase.objects.get(user=User.objects.get(email=request.session['selected_client']),
+                                      phase=phaseFromNum)
+        weekFrom = phaseFrom.weeks.get(week=weekFromNum)
+
+        phaseTo = Phase.objects.get(user=User.objects.get(email=request.session['selected_client']),
+                                      phase=phaseToNum)
+        weekTo = phaseTo.weeks.get(week=weekToNum)
+
+        # Clear all current days
+        for day in weekTo.days.all():
+            for entry in day.entrys.all():
+                entry.delete()
+            day.delete()
+        copiedDays = []
+        for day in weekFrom.days.all():
+            copiedEntrys = []
+            for entry in day.entrys.all():
+                copiedEntry = TrainingEntry(
+                    user = User.objects.get(email=request.session['selected_client']),
+                    phase=weekTo.phase,
+                    week=weekTo.week,
+                    day=day.day,
+                    reps = entry.reps,
+                    weight = entry.weight,
+                    sets = entry.sets,
+                    comment = entry.comment,
+                    exercise = entry.exercise
+                )
+                copiedEntry.save()
+                copiedEntrys.append(copiedEntry)
+            copiedDay = Day(
+                phase= weekTo.phase,
+                week = weekTo.week,
+                day = day.day
+            )
+            copiedDay.save()
+            copiedDay.entrys.add(*copiedEntrys)
+            copiedDay.save()
+            copiedDays.append(copiedDay)
+        weekTo.days.add(*copiedDays)
+        weekTo.save()
+        # except:
+
+    return redirect('trainplan')
+
 def toggleActiveWeek(request):
     if request.is_ajax():
         phaseNum = request.POST.get('phase', None)
         weekNum = request.POST.get('week', None)
-        # try:
-        allPhases = Phase.objects.filter(user = User.objects.get(email=request.session['selected_client']))
-        for phase in allPhases:
-            try:
-                activeWeek = phase.weeks.get(isActive=True)
-                activeWeek.isActive = False;
-                activeWeek.save()
-                print("found active week" +activeWeek.week)
-            except:
-                print("active week not found")
+        try:
+            allPhases = Phase.objects.filter(user = User.objects.get(email=request.session['selected_client']))
+            for phase in allPhases:
+                try:
+                    activeWeek = phase.weeks.get(isActive=True)
+                    activeWeek.isActive = False;
+                    activeWeek.save()
+                    print("found active week" +activeWeek.week)
+                except:
+                    print("active week not found")
 
-        phase = Phase.objects.get(user = User.objects.get(email=request.session['selected_client']), phase=phaseNum)
-        # for week in phase.weeks.all():
-        #     print(week.week)
-        #     print(weekNum)
-        # print(phase.weeks)
-        week = phase.weeks.get(week=weekNum)
-        week.isActive = True
-        week.save()
+            phase = Phase.objects.get(user = User.objects.get(email=request.session['selected_client']), phase=phaseNum)
+            week = phase.weeks.get(week=weekNum)
+            week.isActive = True
+            week.save()
 
 
-        # except:
-        #     print("changing active week didnt work")
+        except:
+            print("changing active week didnt work")
     return redirect('trainplan')
 
 def editEntry(request):

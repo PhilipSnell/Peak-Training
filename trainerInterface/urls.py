@@ -23,5 +23,6 @@ urlpatterns = [
     path('dashboard/addgroup/', addGroup, name='add_group'),
     path('dashboard/editgroup/', editGroup, name='edit_group'),
     path('dashboard/toggleWeek/', toggleActiveWeek, name='toggle_active_week'),
+    path('dashboard/cloneWeek/', cloneWeek, name='clone_week'),
 ]
 
