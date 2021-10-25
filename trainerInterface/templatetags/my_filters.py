@@ -44,7 +44,7 @@ def get_sets(entry):
 
         for i in range(set_entry[0].sets):
             set = Set(
-                set = i,
+                set = i+1,
                 reps = reps[i],
                 weights = weights[i]
             )
