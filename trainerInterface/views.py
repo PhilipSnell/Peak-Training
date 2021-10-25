@@ -51,6 +51,27 @@ def dashboard(request):
     return render(request, 'trainerInterface/dashboard.html', {'form': form})
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
+def trainprog(request):
+    if request.method == "POST":
+        processForm(request)
+
+    if "selected_client" in request.session:
+        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
+        form.fields["selected_client"].empty_label = None
+        phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
+    else:
+        form = UserForm()
+        phases = None
+
+    day = Day.objects.get(week=1, phase = 5, day =1)
+    for entry in day.entrys.all():
+        print(str(entry.exercise.name) + " Entry ID: "+str(entry.id)+" Exercise Id: " +str(entry.exercise.id))
+
+
+    # TrackingGroup.objects.all().delete()
+    return render(request, 'trainerInterface/trainProg.html', {'form': form, 'phases': phases})
+
+@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def trainplan(request):
     if request.method == "POST":
         processForm(request)
@@ -297,20 +318,7 @@ def deleteEntry(request):
             }
     return redirect('trainplan')
 
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def trainprog(request):
-    if request.method == "POST":
-        processForm(request)
 
-    if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
-        phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
-    else:
-        form = UserForm()
-        phases = None
-    # TrackingGroup.objects.all().delete()
-    return render(request, 'trainerInterface/trainProg.html', {'form': form, 'phases': phases})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')

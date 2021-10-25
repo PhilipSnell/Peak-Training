@@ -532,6 +532,11 @@
         margin-bottom: 5px;
         margin-top: 7px;
     }
+    .dayTitle{
+            background-color: #787878;
+            border-radius: 5px;
+            color: #f4eb49;
+    }
     </style>
     <div class="topBarPhaseSelector">
         <div class="phaseSelectorWrapper">
@@ -620,7 +625,7 @@
                                 <table class="table-striped" style="width: 100%">
                                         <tr>
                                             <td class="addEntryButtonWrapper" colspan="6">
-                                                Day {{ day.day }}
+                                                <div class="dayTitle"> Day {{ day.day }} </div>
                                             </td>
                                         </tr>
                                         <tr style="text-align: center">
@@ -834,6 +839,9 @@
                         Week 1
                     </div>
                 </div>
+                <div class="toggleConfirmationSubMessage" style="text-align: center">
+                    Note: This we erase all current exercises in this set
+                </div>
             </div>
             <form id="cloneForm">
                 <input  class="submitClone" type="submit" name="submit" value="Confirm Clone">
@@ -875,7 +883,7 @@
             $('#cloneFromPhase').html('Phase ' +phase);
             $('#cloneFromWeek').attr('name', week);
             $('#cloneFromPhase').attr('name', phase);
-            $('#cloneToWeek').html('Week ' +selectedWeek);
+            $('#cloneToWeek').html('Week ' +selectedWeek[parseInt(selectedPhase)-1]);
             $('#cloneToPhase').html('Phase ' +selectedPhase);
         };
         $('#cloneForm').on('submit', function(e){
@@ -885,7 +893,7 @@
                 url: "{% url 'clone_week' %}",
                 data: {
                  phaseTo: selectedPhase,
-                 weekTo : selectedWeek,
+                 weekTo : selectedWeek[parseInt(selectedPhase)-1],
                  phaseFrom: $('#cloneFromPhase').attr('name'),
                  weekFrom : $('#cloneFromWeek').attr('name'),
                  csrfmiddlewaretoken: '{{ csrf_token }}',
@@ -927,14 +935,16 @@
 
 // set last week to selected color
 
-        var selectedWeek;
+        var selectedWeek = Array.apply(null, Array(parseInt(selectedPhase))).map(function () {});
+        console.log(selectedWeek);
         setLastWeek();
         function setLastWeek(){
-            var lastWeek =$("#"+selectedPhase+".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
-            lastWeek.css({"background-color": "#787878", 'color':'#f4eb49'});
-            weekSelected(lastWeek.attr('id'));
-
-
+            console.log(typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined');
+            if (typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined') {
+                var lastWeek = $("#" + selectedPhase + ".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
+                lastWeek.css({"background-color": "#787878", 'color': '#f4eb49'});
+                weekSelected(lastWeek.attr('id'));
+            }
         }
 // ---------------------------------------------------------------------------------------------------------------------
 // delete Entry
@@ -974,11 +984,11 @@
             }else{
                 phaseTitle = 'Phase '+ selectedPhase;
             }
-            if (typeof selectedWeek === 'undefined'){
+            if (typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined'){
                 weekTitle = ' Week 0';
             }
             else{
-                weekTitle = ' Week '+ selectedWeek;
+                weekTitle = ' Week '+ selectedWeek[parseInt(selectedPhase)-1];
             }
             $('.contentTitle').html(phaseTitle + weekTitle);
         }
@@ -994,7 +1004,7 @@
                 $(this).css("display", "none");
             });
             for (index in days) {
-                $('#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+days[index]).css("display", "block");
+                $('#Phase'+selectedPhase+'Week'+selectedWeek[parseInt(selectedPhase)-1]+'Day'+days[index]).css("display", "block");
             }
 
         }
@@ -1007,7 +1017,7 @@
             $('.dayOption').each(function() {
                 $(this).css('display','none');
             })
-            $('.OptionPhase'+selectedPhase+'Week'+selectedWeek).each(function () {
+            $('.OptionPhase'+selectedPhase+'Week'+selectedWeek[parseInt(selectedPhase)-1]).each(function () {
                 option = $(this)
                 option.css("display", "block");
                 id = option.attr('id');
@@ -1066,22 +1076,23 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // selecting week
         function weekSelected(id){
-            if(id!=selectedWeek) {
-                $('#' + id + '.weekButton'+selectedPhase).css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedWeek + '.weekButton'+selectedPhase).css({"background-color": "#9C9C9C", 'color': 'black'});
 
-                selectedWeek = id;
+            if (id !== selectedWeek[parseInt(selectedPhase)-1]){
+                $('#' + id + '.weekButton'+selectedPhase).css({"background-color": "#787878", 'color': '#f4eb49'});
+                $('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).css({"background-color": "#9C9C9C", 'color': 'black'});
+
+                selectedWeek[parseInt(selectedPhase)-1] = id;
+                console.log(selectedWeek);
                 setContentTitle();
                 getDayOptions();
                 displayTable();
                 toggleActive();
-
             }
+
         }
         function toggleActive(){
-            console.log(selectedWeek);
-            console.log($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name'));
-            if ($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name') === 'True'){
+
+            if ($('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).attr('name') === 'True'){
                     $('.toggleActiveIcon').removeClass('toggleOff');
                     $('.toggleActiveIcon').removeClass('fa-toggle-off');
 
@@ -1223,7 +1234,7 @@
 // ---------------------------------------------------------------------------------------------------------------------
 // toggle confirmation
         function toggleConfirmation(){
-            if($('#' + selectedWeek + '.weekButton'+selectedPhase).attr('name') !== 'True'){
+            if($('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).attr('name') !== 'True'){
                 var y = document.getElementById("toggle-modal");
                 y.style.display = "flex";
             }
@@ -1236,7 +1247,7 @@
                 url: "{% url 'toggle_active_week' %}",
                 data: {
                  phase: selectedPhase,
-                 week : selectedWeek,
+                 week : selectedWeek[parseInt(selectedPhase)-1],
 
                  csrfmiddlewaretoken: '{{ csrf_token }}',
                  dataType: "json",
