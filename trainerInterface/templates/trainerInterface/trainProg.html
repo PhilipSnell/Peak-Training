@@ -390,7 +390,7 @@
                                             <th>Comment</th>
                                         </tr>
 
-                                        {% for entry in day.entrys.all %}
+                                        {% for entry in day.entrys.all|dictsort:"id"%}
                                             <tr style="text-align: center" >
                                                 <td class="exerciseCell">{{ entry.exercise.name }}</td>
                                                 <td>{{ entry.reps }}</td>
