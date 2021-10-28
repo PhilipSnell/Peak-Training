@@ -50,6 +50,12 @@ class SetFeedbackSerializer(serializers.ModelSerializer):
             'difficulty',
         )
 
+    def to_internal_value(self, data):
+        if data.get('difficulty') == '':
+            data['difficulty'] = None
+
+        return super(SetFeedbackSerializer, self).to_internal_value(data)
+
 class SetSerializer(serializers.ModelSerializer):
 
     class Meta:

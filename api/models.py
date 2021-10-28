@@ -130,8 +130,8 @@ class TrainingEntry(models.Model):
 
 class SetFeedback(models.Model):
     t_id = models.IntegerField(unique=True)
-    feedback = models.CharField(max_length=300)
-    difficulty = models.IntegerField()
+    feedback = models.CharField(max_length=300, blank=True)
+    difficulty = models.IntegerField(null=True)
 
 
 class Day(models.Model):
