@@ -16,6 +16,7 @@ urlpatterns = [
     path('exercise/', ExerciseData.as_view(), name='exercise data'),
     path('sets/', SetEntry.as_view(), name='set data'),
     path('setfeedback/', SetEntryFeedback.as_view(), name='set feedback'),
+    path('getfeedback/', getSetFeedback.as_view(), name='get feedback'),
     path('groups/', TrackingData.as_view(), name='group_data'),
     path('trackingValsGet/', TrackingValuesGet.as_view(), name='tracking_vals_get'),
     path('trackingValsUpdate/', TrackingValuesUpdate.as_view(), name='tracking_vals_update'),

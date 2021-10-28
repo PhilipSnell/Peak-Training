@@ -133,6 +133,16 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class getSetFeedbackSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SetFeedback
+        fields = (
+            'feedback',
+            'difficulty',
+        )
+
+
 class MessageSerializer(serializers.ModelSerializer):
     sender = serializers.SlugRelatedField(many=False, slug_field='id', queryset=User.objects.all())
     receiver = serializers.SlugRelatedField(many=False, slug_field='id', queryset=User.objects.all())

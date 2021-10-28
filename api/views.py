@@ -63,6 +63,18 @@ class Registration(APIView):
             return Response(data)
 
 
+class getSetFeedback(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    # @api_view(['POST', ])
+    def post(self, request):
+        if request.method == 'POST':
+            setFeedback = SetFeedback.objects.get(t_id=request.data.get('t_id'))
+            serializer = getSetFeedbackSerializer(setFeedback)
+
+            return Response(serializer.data)
+
 class SetEntryFeedback(APIView):
     authentication_classes = []  # disables authentication
     permission_classes = []  # disables permission
