@@ -89,6 +89,7 @@ class Trainer(models.Model):
 
         return self.trainer.email
 
+
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
     sets = models.IntegerField()
@@ -125,6 +126,12 @@ class TrainingEntry(models.Model):
 
     def __str__(self):
         return "Phase " + str(self.phase) + " Week " + str(self.week) + " Day " + str(self.day) + " " + str(self.exercise.name)
+
+
+class SetFeedback(models.Model):
+    t_id = models.IntegerField(unique=True)
+    feedback = models.CharField(max_length=300)
+    difficulty = models.IntegerField()
 
 
 class Day(models.Model):

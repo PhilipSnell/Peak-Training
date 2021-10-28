@@ -19,7 +19,7 @@ class ExerciseAdmin(admin.ModelAdmin):
 
 
 admin.site.register(TrackingTextValue)
-# admin.site.register(DailyTracking)
+admin.site.register(SetFeedback)
 admin.site.register(TrackingTextField)
 admin.site.register(TrackingGroup)
 admin.site.register(Day)

@@ -62,6 +62,42 @@ class Registration(APIView):
                 data = serializer.errors
             return Response(data)
 
+
+class SetEntryFeedback(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    # @api_view(['POST', ])
+    def post(self, request):
+        if request.method == 'POST':
+            data = {}
+            data['response'] = ""
+
+            serializer = SetFeedbackSerializer(data=request.data)
+
+            set_feedback = SetFeedback.objects.filter(t_id=request.data.get("t_id"))
+            if set_feedback:
+                set_feedback = SetFeedback.objects.get(t_id=request.data.get("t_id"))
+                if request.data.get("feedback") != "dif":
+
+                    set_feedback.feedback=request.data.get("feedback")
+                    set_feedback.save()
+
+                if request.data.get("difficulty") != "":
+                    set_feedback.difficulty=request.data.get("difficulty")
+                    set_feedback.save()
+
+                data['response'] = data['response'] + "entry already exists, updated "
+
+            else:
+                if serializer.is_valid():
+                    serializer.save()
+                    data['response'] = data['response'] + "feedback " " entered, "
+                else:
+                    data = serializer.errors
+
+            return Response(data)
+
 class SetEntry(APIView):
     authentication_classes = []  # disables authentication
     permission_classes = []  # disables permission
@@ -77,7 +113,11 @@ class SetEntry(APIView):
 
                 set_entry = Set_Entry.objects.filter(t_id=item.get("t_id"))
                 if set_entry:
-                    set_entry.update(sets=item.get("sets"),reps=item.get("reps"),weights=item.get("weights"))
+                    set_entry = Set_Entry.objects.get(t_id=item.get("t_id"))
+                    set_entry.sets=item.get("sets")
+                    set_entry.reps=item.get("reps")
+                    set_entry.weights=item.get("weights")
+                    set_entry.save()
                     data['response'] = data['response'] + "entry "+str(index)+ " already exists, "
 
                 else:

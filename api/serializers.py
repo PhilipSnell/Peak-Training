@@ -41,6 +41,15 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'comment'
                   )
 
+class SetFeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SetFeedback
+        fields = (
+            't_id',
+            'feedback',
+            'difficulty',
+        )
+
 class SetSerializer(serializers.ModelSerializer):
 
     class Meta:
