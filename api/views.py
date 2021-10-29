@@ -70,10 +70,13 @@ class getSetFeedback(APIView):
     # @api_view(['POST', ])
     def post(self, request):
         if request.method == 'POST':
-            setFeedback = SetFeedback.objects.get(t_id=request.data.get('t_id'))
-            serializer = getSetFeedbackSerializer(setFeedback)
+            try:
+                setFeedback = SetFeedback.objects.get(t_id=request.data.get('t_id'))
+                serializer = getSetFeedbackSerializer(setFeedback)
+                return Response(serializer.data)
+            except:
+                return Response({"feedback":"","difficulty":""})
 
-            return Response(serializer.data)
 
 class SetEntryFeedback(APIView):
     authentication_classes = []  # disables authentication
