@@ -442,6 +442,48 @@
             margin-right: 5px;
             width: calc(100% - 10px);
         }
+        .difficulty{
+            width: 200px;
+            align-content: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .difficultyLabel{
+            display: inline-block;
+            background-color: #585858;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            width: 120px;
+            text-align: center;
+            margin-right: -4px;
+        }
+        .difficultyValue{
+            background-color: #787878;
+            width: 50px;
+            display: inline-block;
+            text-align: center;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .feedbackLabel{
+            display: inline-block;
+            background-color: #585858;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            width: 90px;
+            text-align: center;
+            margin-right: -4px;
+        }
+        .feedbackValue{
+            background-color: #888888;
+            display: inline-block;
+            text-align: center;
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            width: calc(100% - 90px);
+        }
 
 
 
@@ -543,6 +585,24 @@
                                         </div>
                                     </div>
                                     <table class="table-striped">
+                                        {% with feedback=entry.id|get_feedback %}
+                                            {% if feedback %}
+                                            <tr style="height: 28px">
+
+                                                <td class="difficulty" colspan="1">
+                                                    <div class="difficultyLabel">Difficulty</div>
+                                                    <div class="difficultyValue">{{ feedback.difficulty }}</div>
+                                                </td>
+                                                <td class="feedback" colspan="4">
+                                                    <div class="feedbackLabel">Feedback</div>
+                                                    <div class="feedbackValue">{{ feedback.feedback }}</div>
+                                                </td>
+
+                                            </tr>
+                                            {% else %}
+                                            
+                                            {% endif %}
+                                        {% endwith %}
                                         {% with sets=entry|get_sets %}
                                             {% for set in sets %}
                                                 <tr>

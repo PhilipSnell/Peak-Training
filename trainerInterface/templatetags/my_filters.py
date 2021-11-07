@@ -58,7 +58,14 @@ def sliceVideo(video):
     print(video[-11:])
     return video[-11:]+"/1.jpg"
 
+def get_feedback(id):
+    try:
+        feedback = SetFeedback.objects.get(t_id=id)
+    except:
+        feedback = None
+    return feedback
 
+register.filter(get_feedback)
 register.filter(sliceVideo)
 register.filter(get_sets)
 register.filter(get_group)
