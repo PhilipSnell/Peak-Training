@@ -109,7 +109,7 @@ def deleteExercise(request, id=None):
 
 
 def addPhase(request):
-    objects = Phase.objects.filter(user = User.objects.get(email=request.session['selected_client']))
+    objects = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     currPhase = 0
     for phase in objects:
         if  currPhase< phase.phase:

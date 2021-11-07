@@ -53,6 +53,13 @@ def get_sets(entry):
     #     print('no sets')
     return sets
 
+
+def sliceVideo(video):
+    print(video[-11:])
+    return video[-11:]+"/1.jpg"
+
+
+register.filter(sliceVideo)
 register.filter(get_sets)
 register.filter(get_group)
 register.filter(is_in)
