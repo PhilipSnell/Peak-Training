@@ -566,58 +566,6 @@
                                         {% endwith %}
                                     </table>
                                 {% endfor %}
-                                <table class="table-striped" style="width: 100%">
-                                        <tr>
-                                            <td class="addEntryButtonWrapper" colspan="5">
-
-                                            </td>
-                                        </tr>
-                                        <tr style="text-align: center">
-                                            <th class="exerciseCell">Exercise</th>
-                                            <th>Reps</th>
-                                            <th>Weight</th>
-                                            <th>Sets</th>
-                                            <th>Comment</th>
-                                        </tr>
-
-                                        {% for entry in day.entrys.all|dictsort:"id"%}
-                                            <tr style="text-align: center" >
-                                                <td class="exerciseCell">{{ entry.exercise.name }}</td>
-                                                <td>{{ entry.reps }}</td>
-                                                <td>{{ entry.weight }}</td>
-                                                <td>{{ entry.sets }}</td>
-                                                <td>{{ entry.comment }}</td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="addEntryButtonWrapper" colspan="5">
-                                                    <div class="addEntryButtonWrapper"><div class="completedSetsTitle">Completed Sets</div></div>
-                                                </td>
-                                            </tr>
-                                            {% with sets=entry|get_sets %}
-                                                {% for set in sets %}
-                                                    <tr>
-                                                        <td class="setNameCell">
-                                                            <div class="setNameCellInner">Set {{ set.set }}</div>
-                                                        </td>
-                                                        <td class="setCell">
-                                                            <div class="setCellLabel">reps</div>
-                                                        </td>
-                                                        <td class="setCell">
-                                                            <div class="setCellValue">{{ set.reps }}</div>
-                                                        </td>
-                                                        <td class="setCell">
-                                                            <div class="setCellLabel">weight</div>
-                                                        </td>
-                                                        <td class="setCell">
-                                                            <div class="setCellValue">{{ set.weights }}</div>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-                                            {% endwith %}
-                                        {% endfor %}
-
-                                </table>
                             </div>
                         {% endfor %}
                     {% endfor %}
