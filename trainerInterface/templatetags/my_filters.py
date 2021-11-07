@@ -61,6 +61,8 @@ def sliceVideo(video):
 def get_feedback(id):
     try:
         feedback = SetFeedback.objects.get(t_id=id)
+        if feedback.feedback == "dif":
+            feedback.feedback = ""
     except:
         feedback = None
     return feedback
