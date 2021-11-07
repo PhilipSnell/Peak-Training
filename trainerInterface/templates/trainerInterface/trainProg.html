@@ -387,24 +387,26 @@
         }
         .exerciseContentItem{
             display: inline-block;
-            width: 80px;
-            margin: 0;
-            padding: 0;
+            width: 20.5%;
+            margin-left: 0;
+            padding: 0 !important;
+            height:25px;
         }
         .exerciseContentLabel{
             display: inline-block;
-            width: 55px;
-            margin: 0;
-            padding: 0;
+            width:12%;
+            margin-right: -4px;
+            height:25px;
         }
         .itemLabel{
             background-color: #585858;
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
             text-align: center;
-            margin-right: 0;
-            padding-right: 0;
+            margin-right: 0 !important;
+            padding-right: 0 !important;
             font-size: 12px;
+            line-height: 25px;
         }
         .itemValue{
             background-color: #686868;
@@ -412,9 +414,33 @@
             border-top-right-radius: 5px;
             border-bottom-right-radius: 5px;
             text-align: center;
-            margin-left: 0;
-            padding-left: 0;
+            margin-left: 0 !important;
+            padding-left: 0 !important;
             font-size: 12px;
+            line-height: 25px;
+            height:25px;
+        }
+        .exerciseContentUpper{
+            height: 35px;
+            margin-top: 5px;
+        }
+        .exerciseContentLower{
+            height: 35px;
+            margin-bottom: 5px;
+        }
+        .commentBox{
+            width: 100%;
+            background-color: #585858;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 12px;
+            height: 25px;
+            line-height: 25px;
+        }
+        .table-striped{
+            margin-left: 5px;
+            margin-right: 5px;
+            width: calc(100% - 10px);
         }
 
 
@@ -489,26 +515,56 @@
                                             </div>
                                         </div>
                                         <div class="exerciseContent">
-                                            <div class="exerciseContentLabel">
-                                                <div class="itemLabel">reps</div>
+                                            <div class="exerciseContentUpper">
+                                                <div class="exerciseContentLabel">
+                                                    <div class="itemLabel">reps</div>
+                                                </div>
+                                                <div class="exerciseContentItem">
+                                                    <div class="itemValue">{{ entry.reps }}</div>
+                                                </div>
+                                                <div class="exerciseContentLabel">
+                                                    <div class="itemLabel">weight</div>
+                                                </div>
+                                                <div class="exerciseContentItem">
+                                                    <div class="itemValue">{{ entry.weight }}</div>
+                                                </div>
+                                                <div class="exerciseContentLabel">
+                                                    <div class="itemLabel">sets</div>
+                                                </div>
+                                                <div class="exerciseContentItem">
+                                                    <div class="itemValue">{{ entry.sets }}</div>
+                                                </div>
                                             </div>
-                                            <div class="exerciseContentItem">
-                                                <div class="itemValue">1</div>
-                                            </div>
-                                            <div class="exerciseContentLabel">
-                                                <div class="itemLabel">weight</div>
-                                            </div>
-                                            <div class="exerciseContentItem">
-                                                <div class="itemValue">1</div>
-                                            </div>
-                                            <div class="exerciseContentLabel">
-                                                <div class="itemLabel">sets</div>
-                                            </div>
-                                            <div class="exerciseContentItem">
-                                                <div class="itemValue">1</div>
+                                            <div class="exerciseContentLower">
+                                                <div class="commentBox">
+                                                    {{ entry.comment }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <table class="table-striped">
+                                        {% with sets=entry|get_sets %}
+                                            {% for set in sets %}
+                                                <tr>
+                                                    <td class="setNameCell">
+                                                        <div class="setNameCellInner">Set {{ set.set }}</div>
+                                                    </td>
+                                                    <td class="setCell">
+                                                        <div class="setCellLabel">reps</div>
+                                                    </td>
+                                                    <td class="setCell">
+                                                        <div class="setCellValue">{{ set.reps }}</div>
+                                                    </td>
+                                                    <td class="setCell">
+                                                        <div class="setCellLabel">weight</div>
+                                                    </td>
+                                                    <td class="setCell">
+                                                        <div class="setCellValue">{{ set.weights }}</div>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endwith %}
+                                    </table>
                                 {% endfor %}
                                 <table class="table-striped" style="width: 100%">
                                         <tr>
