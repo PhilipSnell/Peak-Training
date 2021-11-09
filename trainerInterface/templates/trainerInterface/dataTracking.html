@@ -436,10 +436,23 @@
         border-radius: 5px;
         width: 100%;
     }
+    .trackingTool{
+        float: right;
+        font-size: 18px;
+        margin-top: -10px;
+        margin-right: -40px;
+        color: #787878;
+    }
+    .trackingTool:hover{
+        color: #585858;
+    }
     </style>
-    
-    <div class="groupContainer">
 
+
+    <div class="groupContainer">
+        <a class="trackingTool" href="{% url 'dailyTracking' %}">
+            <i class="far fa-calendar-check"></i>
+        </a>
         <div class="groupRow">
             {% for group in groups %}
                 <div class="groupBox" onclick="toggleEditEntry( {{ forloop.counter0 }} )">

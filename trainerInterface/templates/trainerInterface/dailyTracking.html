@@ -134,10 +134,24 @@
         padding-right: 4%;
         text-align: right;
     }
+    .trackingTool{
+        float: right;
+        font-size: 18px;
+        margin-top: 10px;
+        margin-right: -40px;
+        color: #787878;
+    }
+    .trackingTool:hover{
+        color: #585858;
+    }
 </style>
 
-<div class="dateHeader">
+<div class="tableContent">
+
     <table class="dateSelectTable">
+        <a class="trackingTool" href="{% url 'dataTracking' %}">
+            <i class="fas fa-tools"></i>
+        </a>
         <tr>
             <td>
                 <i class="fas fa-chevron-left" onclick="changeDay(-1)"></i>
@@ -286,5 +300,6 @@
 </script>
 
 <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script>feather.replace()</script>
 {% endblock content%}
