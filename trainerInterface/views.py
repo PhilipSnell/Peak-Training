@@ -163,7 +163,7 @@ def addDay(request, phaseID=None, weekID=None):
 
 
 def addEntry(request):
-
+    user = User.objects.get(email=request.session['selected_client'])
     if request.is_ajax():
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
@@ -176,7 +176,7 @@ def addEntry(request):
         print(exercise)
         try:
             train_entry = TrainingEntry(
-                user=User.objects.get(email=request.session['selected_client']),
+                user=user,
                 phase = phase,
                 week = week,
                 day = day,
@@ -191,7 +191,7 @@ def addEntry(request):
             response = {
                 'msg': 'Your form has been submitted successfully'  # response message
             }
-            day = Day.objects.get(phase=phase, week=week, day=day)
+            day = Day.objects.get(phase=phase, week=week, day=day, user=user)
             day.entrys.add(train_entry)
 
         except:
@@ -202,19 +202,20 @@ def addEntry(request):
     return redirect('trainplan')
 
 def cloneWeek(request):
+    user=User.objects.get(email=request.session['selected_client'])
     if request.is_ajax():
         phaseFromNum = request.POST.get('phaseFrom', None)
         weekFromNum = request.POST.get('weekFrom', None)
         phaseToNum = request.POST.get('phaseTo', None)
         weekToNum = request.POST.get('weekTo', None)
         # try:
-        phaseFrom = Phase.objects.get(user=User.objects.get(email=request.session['selected_client']),
+        phaseFrom = Phase.objects.get(user=user,
                                       phase=phaseFromNum)
-        weekFrom = phaseFrom.weeks.get(week=weekFromNum)
+        weekFrom = phaseFrom.weeks.get(week=weekFromNum, user=user)
 
         phaseTo = Phase.objects.get(user=User.objects.get(email=request.session['selected_client']),
                                       phase=phaseToNum)
-        weekTo = phaseTo.weeks.get(week=weekToNum)
+        weekTo = phaseTo.weeks.get(week=weekToNum, user=user)
 
         # Clear all current days
         for day in weekTo.days.all():
@@ -241,7 +242,8 @@ def cloneWeek(request):
             copiedDay = Day(
                 phase= weekTo.phase,
                 week = weekTo.week,
-                day = day.day
+                day = day.day,
+                user = user
             )
             copiedDay.save()
             copiedDay.entrys.add(*copiedEntrys)
