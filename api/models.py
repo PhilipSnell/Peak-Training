@@ -138,6 +138,7 @@ class Day(models.Model):
     phase = models.IntegerField()
     week = models.IntegerField()
     day = models.IntegerField()
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='DayUser')
     entrys = models.ManyToManyField(TrainingEntry, 'entry', blank=True)
 
     def __str__(self):
@@ -147,6 +148,7 @@ class Week(models.Model):
     phase = models.IntegerField()
     week = models.IntegerField()
     days = models.ManyToManyField(Day, 'days', blank=True)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='WeekUser')
     isActive = models.BooleanField(default=False)
 
     def __str__(self):
@@ -155,7 +157,7 @@ class Week(models.Model):
 
 class Phase(models.Model):
     phase = models.IntegerField()
-    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='User')
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='PhaseUser')
     weeks = models.ManyToManyField(Week, related_name='weeks', blank=True)
 
     def __str__(self):

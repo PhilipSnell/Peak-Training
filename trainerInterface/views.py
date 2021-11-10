@@ -124,14 +124,16 @@ def addPhase(request):
 
 def addWeek(request, phaseID=None):
     phase_selected = Phase.objects.get(id=phaseID)
-    objects = Week.objects.filter(phase=phase_selected.phase)
+    user = User.objects.get(email=request.session['selected_client'])
+    objects = Week.objects.filter(phase=phase_selected.phase, user=user)
     currWeek= 0
     for week in objects:
         if currWeek < week.week:
             currWeek = week.week
 
     newWeek = Week(week=currWeek+1,
-                   phase=phase_selected.phase)
+                   phase=phase_selected.phase,
+                   user = user)
     newWeek.save()
     phase_selected.weeks.add(newWeek)
     request.session['weekOpen'] = True
@@ -142,7 +144,8 @@ def addWeek(request, phaseID=None):
 def addDay(request, phaseID=None, weekID=None):
     phase_selected = Phase.objects.get(id=phaseID)
     week_selected = Week.objects.get(id=weekID)
-    objects = Day.objects.filter(phase=phase_selected.phase, week=week_selected.week)
+    user = User.objects.get(email=request.session['selected_client'])
+    objects = Day.objects.filter(phase=phase_selected.phase, week=week_selected.week, user=user)
     currDay= 0
     for day in objects:
         if currDay < day.day:
@@ -150,7 +153,8 @@ def addDay(request, phaseID=None, weekID=None):
 
     newDay = Day(day=currDay+1,
                  phase=phase_selected.phase,
-                 week=week_selected.week)
+                 week=week_selected.week,
+                 user=user)
     newDay.save()
     week_selected.days.add(newDay)
 
