@@ -638,7 +638,7 @@
                                         </tr>
 
                                         {% for entry in day.entrys.all|dictsort:"id" %}
-                                        <tr style="text-align: center" onclick="editEntry('{{ entry.exercise.name }}', '{{ entry.reps }}', '{{ entry.weight }}','{{ entry.sets }}', '{{ entry.comment }}', '{{ entry.id }}')">
+                                        <tr style="text-align: center" onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
                                             <td class="exerciseCell">{{ entry.exercise.name }}</td>
                                             <td>{{ entry.reps }}</td>
                                             <td>{{ entry.weight }}</td>
