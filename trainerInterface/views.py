@@ -201,6 +201,21 @@ def addEntry(request):
             }
     return redirect('trainplan')
 
+def changeOrder(request):
+    if request.is_ajax():
+        idOrder = json.loads(request.POST.get('idOrder', None))['idOrder']
+        order = 1
+        for id in idOrder:
+            print(id)
+            exercise = TrainingEntry.objects.get(id=id)
+            exercise.order = order
+            exercise.save()
+            order += 1
+
+        print(idOrder)
+
+    return redirect('trainplan')
+
 def cloneWeek(request):
     user=User.objects.get(email=request.session['selected_client'])
     if request.is_ajax():
