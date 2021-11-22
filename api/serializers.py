@@ -29,7 +29,8 @@ class TrainingSerializer(serializers.ModelSerializer):
         return training.id
     class Meta:
         model = TrainingEntry
-        fields = ("id",
+
+        fields = ('id',
                   'user',
                   'phase',
                   'week',
@@ -38,7 +39,8 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'weight',
                   'sets',
                   'exercise',
-                  'comment'
+                  'comment',
+                  'order'
                   )
 
 class SetFeedbackSerializer(serializers.ModelSerializer):

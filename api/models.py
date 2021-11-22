@@ -123,6 +123,10 @@ class TrainingEntry(models.Model):
     sets = models.IntegerField()
     comment = models.CharField(max_length=300, blank=True)
     exercise = models.ForeignKey(ExerciseType, on_delete=models.CASCADE, related_name='Exercise')
+    order = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['day', 'order']
 
     def __str__(self):
         return "Phase " + str(self.phase) + " Week " + str(self.week) + " Day " + str(self.day) + " " + str(self.exercise.name)

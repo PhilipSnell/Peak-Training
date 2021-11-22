@@ -24,5 +24,6 @@ urlpatterns = [
     path('dashboard/editgroup/', editGroup, name='edit_group'),
     path('dashboard/toggleWeek/', toggleActiveWeek, name='toggle_active_week'),
     path('dashboard/cloneWeek/', cloneWeek, name='clone_week'),
+    path('dashboard/changeOrder/', changeOrder, name='change_order'),
 ]
 
