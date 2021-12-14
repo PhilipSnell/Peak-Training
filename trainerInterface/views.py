@@ -23,11 +23,19 @@ def processDate(request):
 def processForm(request):
 
         # Get the posted form
-        ClientSelect = UserForm(request.POST)
+        ClientSelect = UserForm(request.POST, request=request)
         if ClientSelect.is_valid():
             selected_client = ClientSelect.cleaned_data["selected_client"]
             print(selected_client.email)
             request.session["selected_client"] = selected_client.email
+
+def getUserform(request):
+    if "selected_client" in request.session:
+        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])}, request=request)
+        form.fields["selected_client"].empty_label = None
+    else:
+        form = UserForm(request=request)
+    return form
 
 
 def home(request):
@@ -41,14 +49,26 @@ def home(request):
 def dashboard(request):
     if request.method == "POST":
         processForm(request)
-
-    if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
-    else:
-        form = UserForm()
+        
+    form = getUserform(request)
+    
 
     return render(request, 'trainerInterface/dashboard.html', {'form': form})
+
+def clients(request):
+    if request.method == "POST":
+        processForm(request)
+
+    form = getUserform(request)
+
+    print(request.user.id)
+
+    trainer = Trainer.objects.get(trainer = request.user)
+    print(trainer)
+    print(trainer.clients.all())
+
+
+    return render(request, 'trainerInterface/clients.html', {'form': form})
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def trainprog(request):
@@ -56,17 +76,10 @@ def trainprog(request):
         processForm(request)
 
     if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
         phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     else:
-        form = UserForm()
         phases = None
-
-    day = Day.objects.get(week=1, phase = 5, day =1)
-    for entry in day.entrys.all():
-        print(str(entry.exercise.name) + " Entry ID: "+str(entry.id)+" Exercise Id: " +str(entry.exercise.id))
-
+    form = getUserform(request)
 
     # TrackingGroup.objects.all().delete()
     return render(request, 'trainerInterface/trainProg.html', {'form': form, 'phases': phases})
@@ -77,13 +90,10 @@ def trainplan(request):
         processForm(request)
 
     if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
         phases = Phase.objects.filter(user=User.objects.get(email=request.session['selected_client']))
     else:
-        form = UserForm()
         phases = None
-
+    form = getUserform(request)
     addform = AddTrainingEntry()
     exercises = ExerciseType.objects.order_by('name')
 
@@ -348,14 +358,12 @@ def dataTracking(request):
         processForm(request)
 
     if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
         currUserID = request.user.id
         groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
     else:
-        form = UserForm()
         groups = None
     # TrackingGroup.objects.all().delete()
+    form = getUserform(request)
     addGroupForm = GroupAddForm()
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
@@ -369,8 +377,6 @@ def dailyTracking(request):
             processDate(request)
 
     if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
         currUserID = request.user.id
         groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
         if 'date' in request.session:
@@ -380,11 +386,10 @@ def dailyTracking(request):
             newdate = date.today()
         trackingVals = TrackingTextValue.objects.filter(client = User.objects.get(email=request.session['selected_client']), date = newdate)
     else:
-        form = UserForm()
         groups = None
         trackingVals = None
 
-
+    form = getUserform(request)
 
 
 
@@ -562,11 +567,9 @@ def exercises(request):
                     exercise.video = video
                     exercise.save()
                     print("exercise " + name + " updated")
-    if "selected_client" in request.session:
-        form = UserForm(initial={'selected_client': User.objects.get(email=request.session['selected_client'])})
-        form.fields["selected_client"].empty_label = None
-    else:
-        form = UserForm()
+
+    form = getUserform(request)
+
     return render(request, 'trainerInterface/exercises.html', {'form': form, 'exercises': exercises, 'exerciseForm': exerciseForm})
 
 
