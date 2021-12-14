@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class UserForm(forms.Form):
-    selected_client = forms.ModelChoiceField(queryset=User.objects.all(), label="", widget=forms.Select(
+    selected_client = forms.ModelChoiceField(queryset=None, label="", widget=forms.Select(
         attrs={'onchange': 'this.form.submit();', 'class': 'dropdown', 'name': "change_client"}))
 
     class Meta:
@@ -15,8 +15,11 @@ class UserForm(forms.Form):
         fields = ['email']
 
     def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request')
         super(UserForm, self).__init__(*args, **kwargs)
+        self.fields['selected_client'].queryset = Trainer.objects.get(trainer=self.request.user).clients.all()
         self.fields['selected_client'].empty_label = "Select a Client"
+
 
 class AddExercise(forms.Form):
     name = forms.CharField(max_length=100)
