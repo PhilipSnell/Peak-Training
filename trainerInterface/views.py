@@ -60,15 +60,9 @@ def clients(request):
         processForm(request)
 
     form = getUserform(request)
+    trainer = Trainer.objects.get(trainer=request.user)
 
-    print(request.user.id)
-
-    trainer = Trainer.objects.get(trainer = request.user)
-    print(trainer)
-    print(trainer.clients.all())
-
-
-    return render(request, 'trainerInterface/clients.html', {'form': form})
+    return render(request, 'trainerInterface/clients.html', {'form': form, 'clients': trainer.clients.all()})
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def trainprog(request):
