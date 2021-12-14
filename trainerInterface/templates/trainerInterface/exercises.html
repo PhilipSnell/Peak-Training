@@ -1,4 +1,16 @@
 {% extends "trainerInterface/nav.html" %}
+
+{% block nav-exercises %}
+    <a class="nav-link" href="{% url 'exercises' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
+        <div class="iconWrapper">
+            <i class="fas fa-dumbbell sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
+        </div>
+        <div class="textWrap" style="color:  #f4eb49">
+            Exercises
+        </div>
+    </a>
+{% endblock %}
+
 {% block content %}
     <body style="margin-top: 30px;margin-left: 30px;">
         <form action="{% url 'exercises' %}" method="post" enctype="multipart/form-data">

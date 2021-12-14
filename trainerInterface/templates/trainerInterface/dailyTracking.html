@@ -1,6 +1,18 @@
 {% extends "trainerInterface/nav.html" %}
 {% load static %}
 {% load my_filters %}
+
+{% block nav-dataTracking-prog %}
+    <a class="nav-link" href="{% url 'dailyTracking' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
+        <div class="iconWrapper">
+            <i class="fas fa-clipboard-list sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
+        </div>
+        <div class="textWrap" style="color:  #f4eb49">
+            Data Tracking
+        </div>
+    </a>
+{% endblock %}
+
 {% block content %}
 
 <style>

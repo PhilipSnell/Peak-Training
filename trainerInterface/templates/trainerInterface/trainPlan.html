@@ -2,6 +2,17 @@
 {% load trainPlan_extras %}
 {% load static %}
 
+{% block nav-train-plan %}
+    <a class="nav-link" href="{% url 'trainplan' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
+        <div class="iconWrapper">
+            <i class="far fa-calendar-alt sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
+        </div>
+        <div class="textWrap" style="color:  #f4eb49">
+            Training Plan
+        </div>
+    </a>
+{% endblock %}
+
 {% block content %}
 
 

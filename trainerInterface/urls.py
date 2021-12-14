@@ -12,6 +12,8 @@ urlpatterns = [
     path('dashboard/trainprog/', trainprog, name='trainprog'),
     path('dashboard/dataTracking/', dataTracking, name='dataTracking'),
     path('dashboard/dailyTracking/', dailyTracking, name='dailyTracking'),
+    path('dashboard/clients/', clients, name='clients'),
+
     path('dashboard/delete/<int:id>/', deleteExercise, name='delete_exercise'),
     path('dashboard/addPhase/', addPhase, name='add_phase'),
     path('dashboard/addWeek/<int:phaseID>/', addWeek, name='add_week'),

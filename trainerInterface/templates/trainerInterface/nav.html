@@ -20,7 +20,7 @@
 
     <body>
         <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-sm-2 col-md-2 mr-2" href="#">Company name</a>
+            <a class="navbar-brand col-sm-2 col-md-2 mr-2" href="#">PT App</a>
 
             <form class = "dropdown-form" action="" method="post" >
                 {% csrf_token %}
@@ -38,79 +38,97 @@
                         <ul class="nav flex-column">
                             <li class="nav-item">
                                 {% block nav-dashboard %}
-                                <a class="nav-link" href="{% url 'dashboard' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home">
-                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-                                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-                                    </svg>
-                                Dashboard <span class="sr-only"></span> </a>
+                                <a class="nav-link" href="{% url 'dashboard' %}">
+                                    <div class="iconWrapper">
+                                        <i class="fas fa-home sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Dashboard
+                                    </div>
+                                </a>
                                 {% endblock %}
                             </li>
                             <li class="nav-item">
                                 {% block nav-train-plan %}
-                                <a class="nav-link" href="{% url 'trainplan' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file">
-                                        <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
-                                        <polyline points="13 2 13 9 20 9"></polyline>
-                                    </svg>
-                                Training Plan
+                                <a class="nav-link" href="{% url 'trainplan' %}">
+                                    <div class="iconWrapper">
+                                        <i class="far fa-calendar-alt sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Training Plan
+                                    </div>
                                 </a>
                                 {% endblock %}
 
                             </li>
                             <li class="nav-item">
                                 {% block nav-train-prog %}
-                                <a class="nav-link" href="{% url 'trainprog' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart">
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                                    </svg>
-                                Training Progress
+                                <a class="nav-link" href="{% url 'trainprog' %}">
+                                    <div class="iconWrapper">
+                                        <i class="far fa-calendar-check sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Training Progress
+                                    </div>
                                 </a>
                                 {% endblock %}
 
                             </li>
                             <li class="nav-item">
                                 {% block nav-dataTracking-prog %}
-                                <a class="nav-link" href="{% url 'dailyTracking' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard">
-                                        <circle cx="9" cy="21" r="1"></circle>
-                                        <circle cx="20" cy="21" r="1"></circle>
-                                        <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-                                    </svg>
-                                Data Tracking
+                                <a class="nav-link" href="{% url 'dailyTracking' %}">
+                                    <div class="iconWrapper">
+                                        <i class="fas fa-clipboard-list sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Data Tracking
+                                    </div>
                                 </a>
                                 {% endblock %}
 
                             </li>
                             <li class="nav-item">
                                 {% block nav-chat %}
-                                <a class="nav-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users">
-                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                        <circle cx="9" cy="7" r="4"></circle>
-                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                    </svg>
-                                Chat
+                                <a class="nav-link" href="#">
+                                    <div class="iconWrapper">
+                                        <i class="far fa-comment-alt sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Chat
+                                    </div>
 
                                 </a>
                                 {% endblock %}
                             </li>
+<!--                            <li class="nav-item">-->
+<!--                                {% block nav-reports %}-->
+<!--                                <a class="nav-link" href="#">-->
+<!--                                    <i class="fas fa-dumbbell sidebarIcon"  aria-hidden="true"></i>-->
+<!--                                Reports </a>-->
+<!--                                {% endblock %}-->
+<!--                            </li>-->
                             <li class="nav-item">
-                                {% block nav-reports %}
-                                <a class="nav-link" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2">
-                                        <line x1="18" y1="20" x2="18" y2="10"></line>
-                                        <line x1="12" y1="20" x2="12" y2="4"></line>
-                                        <line x1="6" y1="20" x2="6" y2="14"></line>
-                                    </svg>
-                                Reports </a>
+                                {% block nav-exercises %}
+                                <a class="nav-link" href="{% url 'exercises' %}">
+                                    <div class="iconWrapper">
+                                        <i class="fas fa-dumbbell sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Exercises
+                                    </div>
+                                </a>
+
                                 {% endblock %}
                             </li>
                             <li class="nav-item">
-                                {% block nav-exercises %}
-                                <a class="nav-link" href="{% url 'exercises' %}"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
-                                        <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                                        <polyline points="2 17 12 22 22 17"></polyline>
-                                        <polyline points="2 12 12 17 22 12"></polyline>
-                                    </svg>
-                                Exercises
+                                {% block nav-clients %}
+                                <a class="nav-link" href="{% url 'clients' %}">
+                                    <div class="iconWrapper">
+                                        <i class="fas fa-users sidebarIcon"  aria-hidden="true"></i>
+                                    </div>
+                                    <div class="textWrap">
+                                        Clients
+                                    </div>
                                 </a>
 
                                 {% endblock %}
@@ -133,7 +151,23 @@
     ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
         <style>
-
+            .nav-link{
+                padding: 0;
+                margin: 0;
+                height: 30px;
+                line-height: 30px;
+            }
+            .textWrap{
+                display: inline-block;
+            }
+            .iconWrapper{
+                display: inline-block;
+                width: 30px;
+                text-align: center;
+            }
+            .sidebarIcon{
+                color: #979797;
+            }
             ::-webkit-scrollbar-thumb {
               background-color: rgba(0, 0, 0, 0.2);
               border: 4px solid transparent;
@@ -187,7 +221,7 @@
 
         <!-- Graphs -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-
+        <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
     </body>
 </html>
 {% endblock %}
