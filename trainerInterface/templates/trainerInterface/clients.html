@@ -1,5 +1,6 @@
 {% extends "trainerInterface/nav.html" %}
 {% load my_filters %}
+{% load static %}
 
 {% block nav-clients %}
 <a class="nav-link" href="{% url 'clients' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
@@ -88,94 +89,78 @@
         margin-left: auto;
         margin-right: auto;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* adding entry window */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .bg-modal{
-            left:   0;
-            top:    0;
-            bottom: 0;
-            width: 100%;
-            height: calc(100vh - 45px);
-            background: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content{
-            width: 300px;
-            /*height: 300px;*/
-            background-color: #ababab;
-            border-radius: 5px;
-            position: relative;
-            align-items: center;
-            /*justify-content: center;*/
-        }
-        .close_addentry{
-            cursor: pointer;
-            position: relative;
-            line-height: 20px;
-            font-size: 32px;
-            rotate: 45;
-            -ms-transform: rotate(45deg); /* IE 9 */
-            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-            transform: rotate(45deg);
-            display: inline-block;
-            float: right;
-            margin-right: 5px;
-            margin-top: 5px;
-        }
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .bg-modal {
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(100vh - 45px);
+        background: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .trainContent{
-            justify-content: center;
-            width: calc(80vw);
-        }
-        .AddEntryTitleContainer{
-            width: 50%;
-            margin-left: 25%;
-            position: relative;
-            display: inline-block;
-            background-color: #787878;
-            align-items: center;
-            text-align: center;
-            border-radius: 8px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            color: black;
+    .modal-content {
+        width: 300px;
+        /*height: 300px;*/
+        background-color: #ababab;
+        border-radius: 5px;
+        position: relative;
+        align-items: center;
+        /*justify-content: center;*/
+    }
 
-        }
-        #exercisefield{
+    .close_addClient {
+        cursor: pointer;
+        position: relative;
+        line-height: 20px;
+        font-size: 32px;
+        rotate: 45;
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+        display: inline-block;
+        float: right;
+        margin-right: 5px;
+        margin-top: 5px;
+    }
 
-            padding: 0;
-            margin:0;
-            display: table-cell;
-        }
-        .add-client-form{
-            display: table-cell;
-            position: relative;
-            top: 0;
-            padding: 0;
-            margin:0;
-        }
+    .AddClientTitleContainer {
+        width: 50%;
+        margin-left: 25%;
+        position: relative;
+        display: inline-block;
+        background-color: #787878;
+        align-items: center;
+        text-align: center;
+        border-radius: 8px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        color: black;
 
+    }
 
-        .addClientTable{
-            position: relative;
-            display: table;
-            width: 95%;
-            border-radius: 7px;
-            box-shadow: 0 0 0 1pt grey;
-            margin-top: 5px;
-            margin-bottom: 7px;
-        }
-        .submitAddClient{
-            border-radius: 7px;
-            background-color: #787878;
-            border: none;
-            box-shadow: 0 0 0 1pt #404040;
-            margin-bottom: 5px;
-        }
+    .add-client-form {
+        display: table-cell;
+        position: relative;
+        top: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .submitAddClient {
+        border-radius: 7px;
+        background-color: #787878;
+        border: none;
+        box-shadow: 0 0 0 1pt #404040;
+        margin-bottom: 5px;
+    }
 
 </style>
 <div class="userTable">
@@ -212,36 +197,39 @@
             <div class="AddClientTitleContainer">
                 Add a new client
             </div>
-            <div class="close_addclient">+</div>
+            <div class="close_addClient">+</div>
         </div>
-        <form id="addClientForm">
+        <form id="addClientForm" class="add-client-form">
 
             <input class="submitAddClient" type="submit" name="submit" value="Add Entry">
         </form>
     </div>
 </div>
-
+<script src="{% static '/assets/js/jquery.min.js' %}"></script>
+<script src="/static/assets/js/popper.js"></script>
+<script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
 <script>
     // display modals
-        function toggleAddClient() {
-            var x = document.getElementById("add-client-modal");
-            if (x.style.display === "none" || !x.style.display) {
-              x.style.display = "flex";
-            } else {
-              x.style.display = "none";
-            }
-        };
-        $('.close_addentry').on('click', function(e) {
-            var x = document.getElementById("add-client-modal");
+    function toggleAddClient() {
+        var x = document.getElementById("add-client-modal");
+        if (x.style.display === "none" || !x.style.display) {
+            x.style.display = "flex";
+        } else {
             x.style.display = "none";
-        });
+        }
+    };
+    $('.close_addClient').on('click', function (e) {
+        var x = document.getElementById("add-client-modal");
+        x.style.display = "none";
+    });
 
-        $('.bg-modal').on('click', function(e) {
-          if (e.target !== this)
+    $('.bg-modal').on('click', function (e) {
+        if (e.target !== this)
             return;
-          var x = document.getElementById("add-entry-modal");
-          x.style.display = "none";
-        });
+        var x = document.getElementById("add-client-modal");
+        x.style.display = "none";
+    });
 </script>
 
 {% endblock %}
