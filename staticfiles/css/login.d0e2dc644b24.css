@@ -3,7 +3,6 @@ body {
     font-family: 'Ubuntu', sans-serif;
     padding: 100px;
 }
-
 div.lgn-container {
     justify-content: center;
     background-color: #606060;
@@ -13,31 +12,17 @@ div.lgn-container {
     padding: 10px;
     border-radius: 25px;
 }
-
-form {
+form{
     margin: auto;
     width: 50%;
-    padding: 0;
+    padding: 0px;
 }
-
 i[id='userIcon'] {
-    font-size: 5vw;
+    font-size: 60px;
     padding: 10px;
 }
-
 h1 {
-    font-size: 2vw;
     padding-top: 10px;
     margin: 0;
 }
 
-input:not([type='submit']) {
-    display: block;
-    width: 16vw;
-}
-
-label {
-    text-align: left;
-    font-size: 1vw;
-    float: left;
-}

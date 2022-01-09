@@ -1,12 +1,12 @@
 body {
-    background-color: #444444;
+    background-color: #606060;
     font-family: 'Ubuntu', sans-serif;
     padding: 100px;
 }
 
 div.lgn-container {
     justify-content: center;
-    background-color: #606060;
+    background-color: #444444;
     margin: auto;
     width: 40%;
     height: 95%;
