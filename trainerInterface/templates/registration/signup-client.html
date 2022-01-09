@@ -11,7 +11,7 @@
         <center>
 
             <form id="login-form" method="post">
-                <img src="http://127.0.0.1:8000/media/images/logo-1.png">
+                <img src="/media/images/logo-1.png">
                 <h1>Create Your Account</h1>
                 <h2>Start your training with {{ trainer }}!</h2>
                 {% csrf_token %} {{ form }} {% if form.errors %}
