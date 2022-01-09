@@ -4,3 +4,7 @@
 .idea/
 
 db.sqlite3
+
+.vscode/settings.json
+
+.vscode/extensions.json

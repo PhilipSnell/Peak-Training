@@ -67,6 +67,14 @@ def get_feedback(id):
         feedback = None
     return feedback
 
+def getActiveWeek(client):
+    week = Week.objects.filter(user=client, isActive=True)
+    print(week)
+    if week:
+        return week[0]
+    return
+
+register.filter(getActiveWeek)
 register.filter(get_feedback)
 register.filter(sliceVideo)
 register.filter(get_sets)

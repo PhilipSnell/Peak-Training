@@ -20,3 +20,17 @@ def Signup(request):
     else:
         form = AddTrainerForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+def SignupClient(request, trainer=None):
+    if request.method == "POST":
+        form =AddClientForm(request.POST)
+        if form.is_valid():
+            form.create()
+            email = form.cleaned_data.get('email')
+            raw_password = form.cleaned_data.get('password')
+            user = authenticate(username=email, password=raw_password)
+            login(request, user)
+            return redirect('dashboard')
+    else:
+        form = AddClientForm()
+    return render(request, 'registration/signup-client.html', {'form': form, 'trainer': trainer})

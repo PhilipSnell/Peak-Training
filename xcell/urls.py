@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('trainerInterface.urls')),
     path('', include('django.contrib.auth.urls')),
     path('signup/', Signup),
+    path('signup/<str:trainer>/', SignupClient),
 
 ]
 if settings.DEBUG:

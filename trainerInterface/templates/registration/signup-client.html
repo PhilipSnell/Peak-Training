@@ -1,0 +1,30 @@
+ {% block title %}{% endblock %} {% load static %} {% block content %}
+
+<head>
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/signup-client.css' %}">
+
+</head>
+<div id="content-container" class="container p-none">
+
+    <div class="lgn-container">
+        <center>
+
+            <form id="login-form" method="post">
+                <img src="http://127.0.0.1:8000/media/images/logo-1.png">
+                <h1>Create Your Account</h1>
+                <h2>Start your training with {{ trainer }}!</h2>
+                {% csrf_token %} {{ form }} {% if form.errors %}
+                <p class=" label label-danger">
+                    sign up unsuccessful try again
+                </p>
+                {% endif %}
+                <center>
+                    <input type="submit" value="Create Account" class="btn btn-primary pull-right" />
+                </center>
+                <input type="hidden" name="next" value="{{ next }}" />
+            </form>
+        </center>
+    </div>
+</div>
+{% endblock content %}
