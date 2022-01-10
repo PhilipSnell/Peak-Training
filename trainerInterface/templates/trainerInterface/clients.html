@@ -1,8 +1,4 @@
-{% extends "trainerInterface/nav.html" %}
-{% load my_filters %}
-{% load static %}
-
-{% block nav-clients %}
+{% extends "trainerInterface/nav.html" %} {% load my_filters %} {% load static %} {% block nav-clients %}
 <a class="nav-link" href="{% url 'clients' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
     <div class="iconWrapper">
         <i class="fas fa-users sidebarIcon" aria-hidden="true" style="color:  #f4eb49"></i>
@@ -11,8 +7,7 @@
         Clients
     </div>
 </a>
-{% endblock %}
-{% block content %}
+{% endblock %} {% block content %}
 <style>
     .content {
         padding-top: 16px !important;
@@ -20,7 +15,7 @@
         padding-left: 16px !important;
         padding-bottom: 16px !important;
     }
-
+    
     .userTable {
         display: flex;
         width: 100%;
@@ -32,53 +27,51 @@
         background-color: #D6D6D6;
         border-radius: 5px;
     }
-
+    
     .userTableHeader {
         position: relative;
         background-color: #777777;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-
     }
-
+    
     .headerCell {
         display: inline-block;
         text-align: center;
     }
-
+    
     .contentCell {
         display: inline-block;
-
     }
-
+    
     .client {
         width: 30%;
     }
-
+    
     .email {
         width: 25%;
     }
-
+    
     .phase {
         width: 7.5%;
         text-align: center;
     }
-
+    
     .week {
         width: 7.5%;
         text-align: center;
     }
-
+    
     .lastSeen {
         width: 27%;
         text-align: center;
     }
-
+    
     .userImage {
         margin-left: 5px;
         margin-right: 5px;
     }
-
+    
     .addEntryButton {
         border: none;
         background-color: #787878;
@@ -89,10 +82,10 @@
         margin-left: auto;
         margin-right: auto;
     }
-
     /*--------------------------------------------------------------------------------------------------------------------*/
     /* adding entry window */
     /*--------------------------------------------------------------------------------------------------------------------*/
+    
     .bg-modal {
         left: 0;
         top: 0;
@@ -105,7 +98,7 @@
         align-items: center;
         justify-content: center;
     }
-
+    
     .modal-content {
         width: 300px;
         /*height: 300px;*/
@@ -115,22 +108,24 @@
         align-items: center;
         /*justify-content: center;*/
     }
-
+    
     .close_addClient {
         cursor: pointer;
         position: relative;
         line-height: 20px;
         font-size: 32px;
         rotate: 45;
-        -ms-transform: rotate(45deg); /* IE 9 */
-        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        -ms-transform: rotate(45deg);
+        /* IE 9 */
+        -webkit-transform: rotate(45deg);
+        /* Chrome, Safari, Opera */
         transform: rotate(45deg);
         display: inline-block;
         float: right;
         margin-right: 5px;
         margin-top: 5px;
     }
-
+    
     .AddClientTitleContainer {
         width: 70%;
         margin-left: 15%;
@@ -143,9 +138,8 @@
         margin-top: 5px;
         margin-bottom: 15px;
         color: black;
-
     }
-
+    
     .add-client-form {
         display: table-cell;
         position: relative;
@@ -153,7 +147,7 @@
         padding: 0;
         margin: 0;
     }
-
+    
     .submitAddClient {
         border-radius: 7px;
         background-color: #787878;
@@ -161,63 +155,63 @@
         box-shadow: 0 0 0 1pt #404040;
         margin-bottom: 5px;
     }
-
-    .trainerLink div{
+    
+    .trainerLink div {
         display: inline-block;
         border-radius: 4px;
         line-height: 25px;
         margin-top: 0;
         height: 25px;
-        
         text-align: center;
         background: #686868;
     }
-    .trainerLink{
+    
+    .trainerLink {
         width: 80%;
         padding-bottom: 20px;
     }
-    .t-link{
+    
+    .t-link {
         width: 25px;
         font-size: 12px;
         width: calc(100% - 29px);
-        
     }
-    .t-copy{
+    
+    .t-copy {
         font-size: 18px;
         width: 25px;
     }
-    .fa-copy:hover{
+    
+    .fa-copy:hover {
         color: #484848;
-        
     }
-    .fa-copy:active{
+    
+    .fa-copy:active {
         color: white;
-        
     }
-
-
-
-    .popup{
-        position:absolute;
+    
+    .popup {
+        position: absolute;
         width: 100px;
         border-radius: 4px;
-        
         left: calc(58.33% - 50px);
-        background-color:#5DB679;
+        background-color: #5DB679;
         text-align: center;
     }
+    
     .slideAnim {
         animation: slideA 1.5s 2;
         animation-direction: alternate;
+    }
     
-    }
     @keyframes slideA {
-        from {  top: 0}
-        to { top: 8%}
-           
+        from {
+            top: 0
+        }
+        to {
+            top: 8%
+        }
     }
-
-
 </style>
 <div class="userTable">
     <div class="userTableHeader">
@@ -230,8 +224,7 @@
     {% for client in clients %}
     <div class="userTableContent">
         {% with week=client|getActiveWeek %}
-        <div class="contentCell client"><i class="fas fa-user userImage" aria-hidden="true"></i>{{client.first_name}}
-            {{client.last_name}}
+        <div class="contentCell client"><i class="fas fa-user userImage" aria-hidden="true"></i>{{client.first_name}} {{client.last_name}}
         </div>
         <div class="contentCell email">{{client.email}}</div>
         {% if week %}
@@ -256,7 +249,8 @@
             <div class="close_addClient">+</div>
         </div>
         <div class="trainerLink">
-            <div id="linkCopy" class="t-link">{{ request.get_host }}/signup/{{ user.first_name }}{{ user.last_name }}</div> <div class="t-copy"> <i class="fas fa-copy"  aria-hidden="true" onclick="copyEvent('linkCopy')"></i></div> 
+            <div id="linkCopy" class="t-link">{{ request.get_host }}/signup/{{ user.first_name }}-{{ user.last_name }}</div>
+            <div class="t-copy"> <i class="fas fa-copy" aria-hidden="true" onclick="copyEvent('linkCopy')"></i></div>
         </div>
     </div>
 </div>
@@ -265,18 +259,17 @@
 <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
 <script>
-    function tempAlert(msg,duration)
-    {
+    function tempAlert(msg, duration) {
         var el = document.createElement("div");
         el.setAttribute("class", "popup slideAnim");
         el.innerHTML = msg;
-        setTimeout(function(){
-        el.parentNode.removeChild(el);
-        },duration);
+        setTimeout(function() {
+            el.parentNode.removeChild(el);
+        }, duration);
         document.body.appendChild(el);
     }
-    function copyEvent(id)
-    {
+
+    function copyEvent(id) {
         var str = document.getElementById(id);
         window.getSelection().selectAllChildren(str);
         document.execCommand("Copy")
@@ -292,12 +285,12 @@
             x.style.display = "none";
         }
     };
-    $('.close_addClient').on('click', function (e) {
+    $('.close_addClient').on('click', function(e) {
         var x = document.getElementById("add-client-modal");
         x.style.display = "none";
     });
 
-    $('.bg-modal').on('click', function (e) {
+    $('.bg-modal').on('click', function(e) {
         if (e.target !== this)
             return;
         var x = document.getElementById("add-client-modal");

@@ -1,17 +1,23 @@
+from django.contrib.auth.forms import UserCreationForm
+from rest_framework.validators import UniqueTogetherValidator
 from django import forms
 from django.contrib.auth import get_user_model
 from api.models import MyAccountManager
 from api.models import *
 User = get_user_model()
-from rest_framework.validators import UniqueTogetherValidator
-from django.contrib.auth.forms import UserCreationForm
+
 
 class AddTrainerForm(forms.Form):
-    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'username_input'}))
-    first_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'fname_input'}))
-    last_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'lname_input'}))
-    email = forms.EmailField(max_length=50, widget=forms.TextInput(attrs={'class': 'email_input'}))
-    password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'class': 'pword_input'}))
+    username = forms.CharField(max_length=20, widget=forms.TextInput(
+        attrs={'class': 'username_input'}))
+    first_name = forms.CharField(
+        max_length=20, widget=forms.TextInput(attrs={'class': 'fname_input'}))
+    last_name = forms.CharField(
+        max_length=20, widget=forms.TextInput(attrs={'class': 'lname_input'}))
+    email = forms.EmailField(max_length=50, widget=forms.TextInput(
+        attrs={'class': 'email_input'}))
+    password = forms.CharField(
+        max_length=20, widget=forms.PasswordInput(attrs={'class': 'pword_input'}))
 
     def create(self):
         user = User.objects.create_traineruser(**self.cleaned_data)
@@ -26,7 +32,7 @@ class AddTrainerForm(forms.Form):
             'email',
             'password',
         ]
-        extra_kwags= {
+        extra_kwags = {
             'password': {'write_only': True}
         }
         validators = [
@@ -35,6 +41,7 @@ class AddTrainerForm(forms.Form):
                 fields=['username', 'email']
             )
         ]
+
     def save(self):
         user = User(
             username=self.cleaned_data['username'],
@@ -49,11 +56,16 @@ class AddTrainerForm(forms.Form):
 
 
 class AddClientForm(forms.Form):
-    username = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'username_input'}))
-    first_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'fname_input'}))
-    last_name = forms.CharField(max_length=20, widget=forms.TextInput(attrs={'class': 'lname_input'}))
-    email = forms.EmailField(max_length=50, widget=forms.TextInput(attrs={'class': 'email_input'}))
-    password = forms.CharField(max_length=20, widget=forms.PasswordInput(attrs={'class': 'pword_input'}))
+    username = forms.CharField(max_length=20, widget=forms.TextInput(
+        attrs={'class': 'username_input'}))
+    first_name = forms.CharField(
+        max_length=20, widget=forms.TextInput(attrs={'class': 'fname_input'}))
+    last_name = forms.CharField(
+        max_length=20, widget=forms.TextInput(attrs={'class': 'lname_input'}))
+    email = forms.EmailField(max_length=50, widget=forms.TextInput(
+        attrs={'class': 'email_input'}))
+    password = forms.CharField(
+        max_length=20, widget=forms.PasswordInput(attrs={'class': 'pword_input'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -72,7 +84,7 @@ class AddClientForm(forms.Form):
             'email',
             'password',
         ]
-        extra_kwags= {
+        extra_kwags = {
             'password': {'write_only': True}
         }
         validators = [
@@ -81,6 +93,7 @@ class AddClientForm(forms.Form):
                 fields=['username', 'email']
             )
         ]
+
     def save(self):
         user = User(
             username=self.cleaned_data['username'],
