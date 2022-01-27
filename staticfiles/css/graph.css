@@ -1,0 +1,13 @@
+/* Medium Devices, Desktops */
+
+@media only screen and (max-device-width: 768px) {}
+
+@media only screen and (min-device-width: 768px) {}
+
+.x-axis {
+    width: 100px;
+    height: 10px;
+    background-color: red;
+    position: relative;
+    top: 0;
+}

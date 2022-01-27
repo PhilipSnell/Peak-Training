@@ -1,5 +1,7 @@
 
-from django.urls import path, include # new
+from django.urls import path, include
+
+from trainerInterface.splitViews.graph import graphTracking  # new
 from .views import *
 
 urlpatterns = [
@@ -27,5 +29,5 @@ urlpatterns = [
     path('dashboard/toggleWeek/', toggleActiveWeek, name='toggle_active_week'),
     path('dashboard/cloneWeek/', cloneWeek, name='clone_week'),
     path('dashboard/changeOrder/', changeOrder, name='change_order'),
+    path('dashboard/graph/', graphTracking, name='graph')
 ]
-

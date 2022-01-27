@@ -24,17 +24,18 @@ def Signup(request):
 
 
 def SignupClient(request, trainer=None):
-    trainer_name = trainer.split('-')
+    try:
+        trainerUser = User.objects.get(username=trainer)
+        trainer = Trainer.objects.get(trainer=trainerUser)
+        username = trainerUser.username
+        first_name = trainerUser.first_name
+        last_name = trainerUser.last_name
+    except:
+        username = ''
+        first_name = ''
+        last_name = ''
     if request.method == "POST":
         form = AddClientForm(request.POST)
-        try:
-            trainer = User.objects.get(
-                first_name=trainer_name[0], last_name=trainer_name[1])
-            trainer = Trainer.objects.get(trainer=trainer)
-
-        except:
-
-            form.add_error('', 'trainer doesnt exist')
 
         if form.is_valid():
 
@@ -49,4 +50,4 @@ def SignupClient(request, trainer=None):
     else:
         form = AddClientForm()
 
-    return render(request, 'registration/signup-client.html', {'form': form, 'firstName': trainer_name[0], 'lastName': trainer_name[1]})
+    return render(request, 'registration/signup-client.html', {'form': form, 'username': username, 'first_name': first_name, 'last_name': last_name})
