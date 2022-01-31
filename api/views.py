@@ -71,11 +71,12 @@ class getSetFeedback(APIView):
     def post(self, request):
         if request.method == 'POST':
             try:
-                setFeedback = SetFeedback.objects.get(t_id=request.data.get('t_id'))
+                setFeedback = SetFeedback.objects.get(
+                    t_id=request.data.get('t_id'))
                 serializer = getSetFeedbackSerializer(setFeedback)
                 return Response(serializer.data)
             except:
-                return Response({"feedback":"","difficulty":""})
+                return Response({"feedback": "", "difficulty": ""})
 
 
 class SetEntryFeedback(APIView):
@@ -90,28 +91,33 @@ class SetEntryFeedback(APIView):
 
             serializer = SetFeedbackSerializer(data=request.data)
 
-            set_feedback = SetFeedback.objects.filter(t_id=request.data.get("t_id"))
+            set_feedback = SetFeedback.objects.filter(
+                t_id=request.data.get("t_id"))
             if set_feedback:
-                set_feedback = SetFeedback.objects.get(t_id=request.data.get("t_id"))
+                set_feedback = SetFeedback.objects.get(
+                    t_id=request.data.get("t_id"))
                 if request.data.get("feedback") != "dif":
 
-                    set_feedback.feedback=request.data.get("feedback")
+                    set_feedback.feedback = request.data.get("feedback")
                     set_feedback.save()
 
                 if request.data.get("difficulty") != "":
-                    set_feedback.difficulty=request.data.get("difficulty")
+                    set_feedback.difficulty = request.data.get("difficulty")
                     set_feedback.save()
 
-                data['response'] = data['response'] + "entry already exists, updated "
+                data['response'] = data['response'] + \
+                    "entry already exists, updated "
 
             else:
                 if serializer.is_valid():
                     serializer.save()
-                    data['response'] = data['response'] + "feedback " " entered, "
+                    data['response'] = data['response'] + \
+                        "feedback " " entered, "
                 else:
                     data = serializer.errors
 
             return Response(data)
+
 
 class SetEntry(APIView):
     authentication_classes = []  # disables authentication
@@ -129,20 +135,51 @@ class SetEntry(APIView):
                 set_entry = Set_Entry.objects.filter(t_id=item.get("t_id"))
                 if set_entry:
                     set_entry = Set_Entry.objects.get(t_id=item.get("t_id"))
-                    set_entry.sets=item.get("sets")
-                    set_entry.reps=item.get("reps")
-                    set_entry.weights=item.get("weights")
+                    set_entry.sets = item.get("sets")
+                    set_entry.reps = item.get("reps")
+                    set_entry.weights = item.get("weights")
                     set_entry.save()
-                    data['response'] = data['response'] + "entry "+str(index)+ " already exists, "
+                    data['response'] = data['response'] + \
+                        "entry "+str(index) + " already exists, "
 
                 else:
                     if serializer.is_valid():
                         serializer.save()
-                        data['response'] = data['response'] + "entry "+str(index)+ " entered, "
+                        data['response'] = data['response'] + \
+                            "entry "+str(index) + " entered, "
+                    else:
+                        data = serializer.errors
+
+                serializer = SetFeedbackSerializer(data=item)
+
+                set_feedback = SetFeedback.objects.filter(
+                    t_id=item.get("t_id"))
+                if set_feedback:
+                    set_feedback = SetFeedback.objects.get(
+                        t_id=item.get("t_id"))
+                    if item.get("feedback") != "dif":
+
+                        set_feedback.feedback = item.get("feedback")
+                        set_feedback.save()
+
+                    if item.get("difficulty") != "":
+                        set_feedback.difficulty = item.get("difficulty")
+                        set_feedback.save()
+
+                    data['response'] = data['response'] + \
+                        "entry already exists, updated "
+
+                else:
+                    if serializer.is_valid():
+                        serializer.save()
+                        data['response'] = data['response'] + \
+                            "feedback " " entered, "
                     else:
                         data = serializer.errors
                 index += 1
+
             return Response(data)
+
 
 class TrainingData(APIView):
     authentication_classes = []  # disables authentication
@@ -158,11 +195,13 @@ class TrainingData(APIView):
                 activeWeek = phase.weeks.get(isActive=True)
             except:
                 print('active week not found')
-        trainingData = TrainingEntry.objects.filter(user=user[0].id, phase = activeWeek.phase, week = activeWeek.week)
+        trainingData = TrainingEntry.objects.filter(
+            user=user[0].id, phase=activeWeek.phase, week=activeWeek.week)
 
         serializer = TrainingSerializer(trainingData, many=True)
 
         return Response(serializer.data)
+
 
 class ExerciseData(APIView):
     authentication_classes = []  # disables authentication
@@ -173,6 +212,7 @@ class ExerciseData(APIView):
         serializer = ExerciseSerializer(exerciseData, many=True)
 
         return Response(serializer.data)
+
 
 class TrackingData(APIView):
     authentication_classes = []  # disables authentication
@@ -186,6 +226,7 @@ class TrackingData(APIView):
         serializer = GroupSerializer(groupData, many=True)
 
         return Response(serializer.data)
+
 
 class TrackingValuesUpdate(APIView):
     authentication_classes = []  # disables authentication
@@ -205,27 +246,32 @@ class TrackingValuesUpdate(APIView):
             for item in textVals:
                 print(item.get('date')[0:10])
                 textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
-                                                           date=parse_date(item.get('date')[0:10]),
+                                                           date=parse_date(
+                                                               item.get('date')[0:10]),
                                                            client=User.objects.get(email=email))
                 textVal.update(value=item.get("value"))
                 textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
-                                                           date=parse_date(item.get('date')[0:10]),
+                                                           date=parse_date(
+                                                               item.get('date')[0:10]),
                                                            client=User.objects.get(email=email))
                 if textVal:
                     textVal.update(value=item.get("value"))
-                    data['response'] = data['response'] + "entry "+str(index) + " already exists, "
+                    data['response'] = data['response'] + \
+                        "entry "+str(index) + " already exists, "
 
                 else:
                     item["client"] = User.objects.get(email=email).id
                     serializer = TrackTextValueSerializer(data=item,)
                     if serializer.is_valid():
                         serializer.save()
-                        data['response'] = data['response'] + "entry "+str(index) + " entered, "
+                        data['response'] = data['response'] + \
+                            "entry "+str(index) + " entered, "
                     else:
                         data = serializer.errors
                 index += 1
             print(data)
             return Response(data)
+
 
 class TrackingValuesGet(APIView):
     authentication_classes = []  # disables authentication
@@ -235,11 +281,12 @@ class TrackingValuesGet(APIView):
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
         textValues = TrackingTextValue.objects.filter(client=user)
-        print(textValues)   
+        print(textValues)
         serializer = TrackTextValueSerializer(textValues, many=True)
         return Response(serializer)
 
-def imageDisplay(request,id):
+
+def imageDisplay(request, id):
     emp = get_object_or_404(ExerciseType, pk=id)
 
     return render(request, 'image_display.html', {'emp': emp})
