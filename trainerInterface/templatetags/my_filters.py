@@ -11,6 +11,7 @@ def is_in(case, accounts):
             return True
     return False
 
+
 def id_in(case, trackingVals):
     for trackingVal in trackingVals:
         if case == trackingVal.field_id:
@@ -29,6 +30,7 @@ class Set(models.Model):
     reps = models.CharField(max_length=300)
     weights = models.CharField(max_length=300)
 
+
 def get_sets(entry):
     entryId = entry.id
     exerciseId = entry.exercise.id
@@ -44,11 +46,13 @@ def get_sets(entry):
 
         for i in range(set_entry[0].sets):
             set = Set(
-                set = i+1,
-                reps = reps[i],
-                weights = weights[i]
+                set=i+1,
+                reps=reps[i],
+                weights=weights[i]
             )
-            sets.append(set)
+            if reps[i] != '-1':
+                sets.append(set)
+
     # except:
     #     print('no sets')
     return sets
@@ -57,6 +61,7 @@ def get_sets(entry):
 def sliceVideo(video):
     print(video[-11:])
     return video[-11:]+"/1.jpg"
+
 
 def get_feedback(id):
     try:
@@ -67,12 +72,14 @@ def get_feedback(id):
         feedback = None
     return feedback
 
+
 def getActiveWeek(client):
     week = Week.objects.filter(user=client, isActive=True)
     print(week)
     if week:
         return week[0]
     return
+
 
 register.filter(getActiveWeek)
 register.filter(get_feedback)
@@ -81,4 +88,3 @@ register.filter(get_sets)
 register.filter(get_group)
 register.filter(is_in)
 register.filter(id_in)
-

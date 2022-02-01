@@ -139,14 +139,12 @@ class SetEntry(APIView):
                     set_entry.reps = item.get("reps")
                     set_entry.weights = item.get("weights")
                     set_entry.save()
-                    data['response'] = data['response'] + \
-                        "entry "+str(index) + " already exists, "
+                    data['response'] = data['response'] + "entry "+str(index) + " already exists, updated, "
 
                 else:
                     if serializer.is_valid():
                         serializer.save()
-                        data['response'] = data['response'] + \
-                            "entry "+str(index) + " entered, "
+                        data['response'] = data['response'] + "entry "+str(index) + " entered, "
                     else:
                         data = serializer.errors
 
@@ -155,25 +153,21 @@ class SetEntry(APIView):
                 set_feedback = SetFeedback.objects.filter(
                     t_id=item.get("t_id"))
                 if set_feedback:
-                    set_feedback = SetFeedback.objects.get(
-                        t_id=item.get("t_id"))
+                    set_feedback = SetFeedback.objects.get(t_id=item.get("t_id"))
                     if item.get("feedback") != "dif":
 
                         set_feedback.feedback = item.get("feedback")
                         set_feedback.save()
+                        
 
                     if item.get("difficulty") != "":
                         set_feedback.difficulty = item.get("difficulty")
                         set_feedback.save()
 
-                    data['response'] = data['response'] + \
-                        "entry already exists, updated "
-
                 else:
                     if serializer.is_valid():
                         serializer.save()
-                        data['response'] = data['response'] + \
-                            "feedback " " entered, "
+
                     else:
                         data = serializer.errors
                 index += 1
