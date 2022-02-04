@@ -12,14 +12,47 @@
 <head>
     <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'css/graph.css' %}">
+    
 
 </head>
-<div class="xaxis">
 
+<div class="graphContent">
+    <ul class="line-chart">
+        <li>
+          <div class="data-point" data-value="25" style="--yPos:6.14%"></div>
+        </li>
+        <li>
+          <div class="data-point" data-value="60" style="--yPos:20.43%"></div>
+        </li>
+        <li>
+          <div class="data-point" data-value="45" style="--yPos:34.71%"></div>
+        </li>
+        <li>
+          <div class="data-point" data-value="50" style="--yPos:49%"></div>
+        </li>
+        <li>
+          <div class="data-point" data-value="40" style="--yPos:63.28%"></div>
+        </li>
+        <li>
+            <div class="data-point" data-value="40" style="--yPos:77.57%"></div>
+        </li>
+        <li>
+            <div class="data-point" data-value="40" style="--yPos:91.86%"></div>
+        </li>
+      </ul>
 </div>
+<div class="dayLabelWrapper">  
+    <div class="dayLabel">Mon </div><div class="dayLabel">Tue</div><div class="dayLabel">Wed </div><div class="dayLabel">Thur </div><div class="dayLabel">Fri </div><div class="dayLabel">Sat </div><div class="dayLabel">Sun </div>
+</div>
+
 
 <script src="{% static '/assets/js/jquery.min.js' %}"></script>
 <script src="/static/assets/js/popper.js"></script>
 <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
 <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+
+<script>
+    var passedDate = "{{ date }}";
+</script>
+<script src="{% static 'js/graph.js' %}"></script> 
 {% endblock %}
