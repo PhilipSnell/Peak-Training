@@ -1,7 +1,10 @@
 
 from django.urls import path, include
 
-from trainerInterface.splitViews.graph import graphTracking  # new
+from trainerInterface.splitViews.graph import graphTracking
+from trainerInterface.splitViews.daily_tracking import dailyTracking
+from trainerInterface.splitViews.training_progress import trainprog
+from trainerInterface.splitViews.training_plan import trainplan
 from .views import *
 
 urlpatterns = [

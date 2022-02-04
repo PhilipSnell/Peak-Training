@@ -1,103 +1,95 @@
-{% extends "trainerInterface/nav.html" %}
 {% load trainPlan_extras %}
 {% load static %}
-
-{% block nav-train-plan %}
-    <a class="nav-link" href="{% url 'trainplan' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
-        <div class="iconWrapper">
-            <i class="far fa-calendar-alt sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
-        </div>
-        <div class="textWrap" style="color:  #f4eb49">
-            Training Plan
-        </div>
-    </a>
-{% endblock %}
 
 {% block content %}
 
 
-    <script type="text/javascript">
-        var phase = 0;
-        var week = 0;
-        var day = 0;
-        function loadState(id){
-            var value = localStorage.getItem(id);
-            var x = document.getElementById(id);
-            x.style.display = value;
-        }
-        function hideItem(id) {
+<script type="text/javascript">
+    var phase = 0;
+    var week = 0;
+    var day = 0;
+    function loadState(id) {
+        var value = localStorage.getItem(id);
+        var x = document.getElementById(id);
+        x.style.display = value;
+    }
+    function hideItem(id) {
 
-          var x = document.getElementById(id);
-          var value
+        var x = document.getElementById(id);
+        var value
 
-          if (x.style.display === "none" || x.style.display === "") {
+        if (x.style.display === "none" || x.style.display === "") {
             value = "block";
-          } else {
+        } else {
             value = "none";
-          }
-          x.style.display = value;
-          localStorage.setItem(id, value)
         }
-        function hideTable(id) {
-          var x = document.getElementById(id);
-          if (x.style.display === "none" || x.style.display) {
+        x.style.display = value;
+        localStorage.setItem(id, value)
+    }
+    function hideTable(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display) {
             x.style.display = "table";
-          } else {
+        } else {
             x.style.display = "none";
-          }
         }
-        function toggleAddEntry(clic_phase, clic_week, clic_day) {
-            phase = clic_phase;
-            week = clic_week;
-            day = clic_day;
-            var x = document.getElementById("add-entry-modal");
-            if (x.style.display === "none" || !x.style.display) {
-              x.style.display = "flex";
-            } else {
-              x.style.display = "none";
-            }
-        };
+    }
+    function toggleAddEntry(clic_phase, clic_week, clic_day) {
+        phase = clic_phase;
+        week = clic_week;
+        day = clic_day;
+        var x = document.getElementById("add-entry-modal");
+        if (x.style.display === "none" || !x.style.display) {
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    };
 
-    </script>
-    <style>
-    .content{
+</script>
+<style>
+    .content {
         padding-top: 5px !important;
         padding-right: 0 !important;
         padding-left: 16px !important;
         padding-bottom: 16px !important;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Top Bar */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .topBarPhaseSelector{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .topBarPhaseSelector {
         width: 100%;
         border-radius: 5px;
         text-align: center;
         margin-bottom: 5px;
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase or Week selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .phaseOrWeek{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseOrWeek {
         display: inline;
         float: right;
     }
-    .phaseOrWeekButton{
+
+    .phaseOrWeekButton {
         border-radius: 4px;
         width: 80px;
         background-color: #9C9C9C;
         border: none;
 
     }
-    .selectPhaseButton{
+
+    .selectPhaseButton {
         background-color: #787878;
         color: #f4eb49;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .phaseButton{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseButton {
         display: inline;
         width: 110px;
         position: relative;
@@ -105,22 +97,27 @@
         border: none;
         background-color: #9C9C9C;
     }
-    .phaseAddButton{
+
+    .phaseAddButton {
         width: 35px;
     }
-    .phaseSelectorWrapper{
+
+    .phaseSelectorWrapper {
         display: inline-block;
     }
-    .addForm{
+
+    .addForm {
         display: inline-block;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Week selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .weekSelectorWrapper{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .weekSelectorWrapper {
         display: none;
     }
-    .weekButton{
+
+    .weekButton {
         display: inline;
         width: 110px;
         position: relative;
@@ -128,12 +125,14 @@
         border: none;
         background-color: #9C9C9C;
     }
-    .weekAddButton{
+
+    .weekAddButton {
         width: 35px;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase/Week content */
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     .phaseContent {
         display: flex;
         width: 100%;
@@ -145,7 +144,8 @@
         border-radius: 5px;
 
     }
-    .phaseContentWrapper{
+
+    .phaseContentWrapper {
         position: relative;
         display: block;
         background-color: #9C9C9C;
@@ -153,15 +153,16 @@
         padding-bottom: 16px;
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* day selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .daySelectorBar{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .daySelectorBar {
         width: 100%;
         margin-bottom: 5px;
         text-align: center;
     }
-    .daySelector{
+
+    .daySelector {
         width: 120px;
         height: 25px;
         float: right;
@@ -171,256 +172,283 @@
         margin-right: 5px;
         margin-top: 5px;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* content Title */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .contentTitle{
-        height:25px;
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .contentTitle {
+        height: 25px;
         line-height: 25px;
         width: 30%;
         display: inline-block;
         margin-top: 5px;
-        margin-left: 7%; /* Centers Title */
+        margin-left: 7%;
+        /* Centers Title */
         background-color: #787878;
         border-radius: 5px;
         color: black;
         text-align: center;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* table */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .tableWrapper{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .tableWrapper {
         width: 100%;
 
     }
-    .dayTable{
+
+    .dayTable {
         border-radius: 5px;
         box-shadow: 0 0 0 1pt #787878;
         margin-left: 25px;
         margin-right: 25px;
         margin-top: 20px;
     }
-    .addEntryButton{
-        border:none;
+
+    .addEntryButton {
+        border: none;
         background-color: #787878;
         border-radius: 5px;
         box-shadow: 0 0 0 1pt #5c5c5c;
         margin-bottom: 2px;
     }
 
-    .addEntryButtonWrapper{
+    .addEntryButtonWrapper {
         text-align: center;
     }
-    .exerciseCell{
+
+    .exerciseCell {
         text-align: left;
         padding-left: 5px;
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* adding entry window */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .bg-modal{
-            left:   0;
-            top:    0;
-            bottom: 0;
-            width: 100%;
-            height: calc(100vh - 45px);
-            background: rgba(0, 0, 0, 0.7);
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content{
-            width: 300px;
-            /*height: 300px;*/
-            background-color: #ababab;
-            border-radius: 5px;
-            position: relative;
-            align-items: center;
-            /*justify-content: center;*/
-        }
-        .close_addentry{
-            cursor: pointer;
-            position: relative;
-            line-height: 20px;
-            font-size: 32px;
-            rotate: 45;
-            -ms-transform: rotate(45deg); /* IE 9 */
-            -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-            transform: rotate(45deg);
-            display: inline-block;
-            float: right;
-            margin-right: 5px;
-            margin-top: 5px;
-        }
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .bg-modal {
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: calc(100vh - 45px);
+        background: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
-        .trainContent{
-            justify-content: center;
-            width: calc(80vw);
-        }
-        .AddEntryTitleContainer{
-            width: 50%;
-            margin-left: 25%;
-            position: relative;
-            display: inline-block;
-            background-color: #787878;
-            align-items: center;
-            text-align: center;
-            border-radius: 8px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            color: black;
+    .modal-content {
+        width: 300px;
+        /*height: 300px;*/
+        background-color: #ababab;
+        border-radius: 5px;
+        position: relative;
+        align-items: center;
+        /*justify-content: center;*/
+    }
 
-        }
-        #exercisefield{
+    .close_addentry {
+        cursor: pointer;
+        position: relative;
+        line-height: 20px;
+        font-size: 32px;
+        rotate: 45;
+        -ms-transform: rotate(45deg);
+        /* IE 9 */
+        -webkit-transform: rotate(45deg);
+        /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+        display: inline-block;
+        float: right;
+        margin-right: 5px;
+        margin-top: 5px;
+    }
 
-            padding: 0;
-            margin:0;
-            display: table-cell;
-        }
-        .add-entry-form{
-            display: table-cell;
-            position: relative;
-            top: 0;
-            padding: 0;
-            margin:0;
-        }
-        .label {
-            display: table-cell;
-            width: 50%;
-            padding-left: 8px;
-        }
-        .addEntryCell {
-            display: table-cell;
-            width: 50%;
-        }
-        .addEntryInput {
-            text-align: center;
-            position: relative;
-            width: 100%;
-            border-radius: 7px;
-            border: none;
-            background-color: #787878;
-        }
-        .addEntryTable{
-            position: relative;
-            display: table;
-            width: 95%;
-            border-radius: 7px;
-            box-shadow: 0 0 0 1pt grey;
-            margin-top: 5px;
-            margin-bottom: 7px;
-        }
-        .submitAddEntry{
-            border-radius: 7px;
-            background-color: #787878;
-            border: none;
-            box-shadow: 0 0 0 1pt #404040;
-            margin-bottom: 5px;
-        }
-/*--------------------------------------------------------------------------------------------------------------------*/
+    .trainContent {
+        justify-content: center;
+        width: calc(80vw);
+    }
+
+    .AddEntryTitleContainer {
+        width: 50%;
+        margin-left: 25%;
+        position: relative;
+        display: inline-block;
+        background-color: #787878;
+        align-items: center;
+        text-align: center;
+        border-radius: 8px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        color: black;
+
+    }
+
+    #exercisefield {
+
+        padding: 0;
+        margin: 0;
+        display: table-cell;
+    }
+
+    .add-entry-form {
+        display: table-cell;
+        position: relative;
+        top: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .label {
+        display: table-cell;
+        width: 50%;
+        padding-left: 8px;
+    }
+
+    .addEntryCell {
+        display: table-cell;
+        width: 50%;
+    }
+
+    .addEntryInput {
+        text-align: center;
+        position: relative;
+        width: 100%;
+        border-radius: 7px;
+        border: none;
+        background-color: #787878;
+    }
+
+    .addEntryTable {
+        position: relative;
+        display: table;
+        width: 95%;
+        border-radius: 7px;
+        box-shadow: 0 0 0 1pt grey;
+        margin-top: 5px;
+        margin-bottom: 7px;
+    }
+
+    .submitAddEntry {
+        border-radius: 7px;
+        background-color: #787878;
+        border: none;
+        box-shadow: 0 0 0 1pt #404040;
+        margin-bottom: 5px;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* day selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-        .multiselect {
-            border-radius: 5px;
-            margin-top: 5px;
-            margin-right: 5px;
-            display: inline-block;
-            width: 120px;
-            float: right;
-            background-color: transparent;
-        }
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .multiselect {
+        border-radius: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+        display: inline-block;
+        width: 120px;
+        float: right;
+        background-color: transparent;
+    }
 
-        .selectBox {
-            border-radius: 5px;
-            position: relative;
-            background-color: transparent;
-        }
-        .innerSelectBox {
-            height: 25px;
-            border-radius: 5px;
-            position: relative;
-            background-color: #787878;
-        }
-        .innerSelectBox:hover {
-            background-color: #5e5e5e;
-        }
+    .selectBox {
+        border-radius: 5px;
+        position: relative;
+        background-color: transparent;
+    }
 
-        .selectBox select {
-            text-align: center;
-            width: 100%;
-        }
+    .innerSelectBox {
+        height: 25px;
+        border-radius: 5px;
+        position: relative;
+        background-color: #787878;
+    }
 
-        .overSelect {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
+    .innerSelectBox:hover {
+        background-color: #5e5e5e;
+    }
 
-        }
+    .selectBox select {
+        text-align: center;
+        width: 100%;
+    }
 
-        #checkboxes {
-            width: 120px;
-            position: absolute;
-            display: none;
-            border: none;
-            background-color: #787878;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-            color: black;
-            z-index: 2;
-        }
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
 
-        .dayOption {
-          display: none;
-            background-color: #787878;
-        }
+    }
 
-        .dayOption:hover {
-          background-color: #888888;
-        }
-        .dayAdd{
-            font-weight: bold;
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
+    #checkboxes {
+        width: 120px;
+        position: absolute;
+        display: none;
+        border: none;
+        background-color: #787878;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: black;
+        z-index: 2;
+    }
 
-            border: none;
-            background-color: #787878;
-        }
-        .dayAddButton{
-            border: none;
-            background-color: #787878;
-            width: 120px;
-            border-bottom-right-radius: 5px;
-            border-bottom-left-radius: 5px;
-        }
-        .dayAddButton:hover {
-          background-color: #888888;
-        }
-/*--------------------------------------------------------------------------------------------------------------------*/
+    .dayOption {
+        display: none;
+        background-color: #787878;
+    }
+
+    .dayOption:hover {
+        background-color: #888888;
+    }
+
+    .dayAdd {
+        font-weight: bold;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        border: none;
+        background-color: #787878;
+    }
+
+    .dayAddButton {
+        border: none;
+        background-color: #787878;
+        width: 120px;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+    }
+
+    .dayAddButton:hover {
+        background-color: #888888;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* delete Entry button */
-/*--------------------------------------------------------------------------------------------------------------------*/
-        .deleteEntryButtonWrapper{
-            border:none;
-            background-color: #787878;
-            border-radius: 5px;
-            box-shadow: 0 0 0 1pt #5c5c5c;
-        }
-        .deleteEntryButton{
-            font-size: 18px;
-            font-weight: bold;
-            line-height: 17px;
-            color: #7E3535;
-            transform: rotate(45deg);
-            width: 10px;
-            position: relative;
-        }
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .deleteEntryButtonWrapper {
+        border: none;
+        background-color: #787878;
+        border-radius: 5px;
+        box-shadow: 0 0 0 1pt #5c5c5c;
+    }
+
+    .deleteEntryButton {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 17px;
+        color: #7E3535;
+        transform: rotate(45deg);
+        width: 10px;
+        position: relative;
+    }
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Active Toggle */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .toggleActive{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .toggleActive {
         display: inline-block;
         float: left;
         height: 25px;
@@ -429,15 +457,18 @@
         margin-top: 5px;
 
     }
-    .toggleOn{
+
+    .toggleOn {
         color: #228124;
         font-size: 25px;
     }
-    .toggleOff{
+
+    .toggleOff {
         color: #7E3535;
         font-size: 25px;
     }
-    .toggleConfirmationMessage{
+
+    .toggleConfirmationMessage {
         position: relative;
         display: inline-block;
         background-color: #787878;
@@ -449,15 +480,17 @@
         color: black;
         font-weight: normal;
     }
-    .toggleConfirmationSubMessage{
+
+    .toggleConfirmationSubMessage {
         font-weight: lighter;
         font-size: 12px;
         border-radius: 8px;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* clone */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .cloneWeek{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .cloneWeek {
         line-height: 25px;
         height: 25px;
         width: 25px;
@@ -468,13 +501,16 @@
         justify-content: center;
         align-items: center;
     }
-    .cloneWeekIcon{
+
+    .cloneWeekIcon {
         color: #5E5E5E;
     }
-    .cloneWeekIcon:hover{
+
+    .cloneWeekIcon:hover {
         color: #3E3E3E;
     }
-    .cloneOptionsWrapper{
+
+    .cloneOptionsWrapper {
         position: absolute;
         display: none;
         width: 140px;
@@ -488,12 +524,14 @@
         z-index: 2;
 
     }
-    .cloneOption:hover{
+
+    .cloneOption:hover {
         background-color: #B0B0B0;
         border-radius: 5px;
         cursor: pointer;
     }
-    .cloneTitle{
+
+    .cloneTitle {
         position: relative;
         display: block;
         background-color: #787878;
@@ -504,10 +542,11 @@
         margin-left: 25%;
         color: black;
         font-weight: bold;
-        width:50%;
+        width: 50%;
 
     }
-    .clonePhaseBackground{
+
+    .clonePhaseBackground {
         position: relative;
         display: inline-block;
         background-color: #919191;
@@ -520,22 +559,25 @@
         padding-right: 7px;
     }
 
-    .clonePhaseContainer{
+    .clonePhaseContainer {
         line-height: 25px;
         padding-left: 7px;
         padding-right: 7px;
-        display:inline-block;
+        display: inline-block;
         border-radius: 5px;
         background-color: #787878;
         margin-right: 5px;
     }
-    .cloneArrow{
+
+    .cloneArrow {
         display: inline-block;
     }
-    .cloneWeekContainer{
+
+    .cloneWeekContainer {
         display: inline-block;
     }
-    .submitClone{
+
+    .submitClone {
         border-radius: 7px;
         background-color: #787878;
         border: none;
@@ -543,1019 +585,1033 @@
         margin-bottom: 5px;
         margin-top: 7px;
     }
-    .dayTitle{
-            background-color: #787878;
-            border-radius: 5px;
-            color: #f4eb49;
+
+    .dayTitle {
+        background-color: #787878;
+        border-radius: 5px;
+        color: #f4eb49;
     }
-    .exerciseCell{
+
+    .exerciseCell {
         cursor: pointer;
     }
-    </style>
-    <div class="topBarPhaseSelector">
-        <div class="phaseSelectorWrapper">
-            {% for phase in phases %}
-                <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}" onclick="phaseSelected('{{ phase.phase }}')">
-            {% endfor %}
-            <form class="addForm" action="{% url 'add_phase' %}" method="get">
-                <input class="phaseButton phaseAddButton" type="submit" value="+" >
-            </form>
-
-        </div>
+</style>
+<div class="topBarPhaseSelector">
+    <div class="phaseSelectorWrapper">
         {% for phase in phases %}
-            <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
-                {% for week in phase.weeks.all %}
-                    <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button" value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
-                {% endfor %}
-                <form class="addForm" action="{% url 'add_week' phase.id%}" method="get">
-                    <input class="weekButton weekAddButton" type="submit" value="+">
-                </form>
-
-            </div>
+        <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}"
+            onclick="phaseSelected('{{ phase.phase }}')">
         {% endfor %}
+        <form class="addForm" action="{% url 'add_phase' %}" method="get">
+            <input class="phaseButton phaseAddButton" type="submit" value="+">
+        </form>
 
-        <div class="phaseOrWeek">
-            <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
-            <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
-        </div>
     </div>
-    <div class="phaseContent">
-        <div class="phaseContentWrapper">
-            <div class="daySelectorBar">
-                <div class="toggleActive">
-                    <i class="fas fa-toggle-off toggleActiveIcon toggleOff"  aria-hidden="true" onclick="toggleConfirmation()"></i>
-                </div>
-                <div class="contentTitle">
-                    Phase 1 Week 1
-                </div>
+    {% for phase in phases %}
+    <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
+        {% for week in phase.weeks.all %}
+        <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button"
+            value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
+        {% endfor %}
+        <form class="addForm" action="{% url 'add_week' phase.id%}" method="get">
+            <input class="weekButton weekAddButton" type="submit" value="+">
+        </form>
 
-                <div class="multiselect">
-                    <div class="selectBox" onclick="showCheckboxes()">
-                        <select class="innerSelectBox">
-                          <option>Select days</option>
-                        </select>
-                        <div class="overSelect"></div>
-                    </div>
-                    <div class="checkboxes" id="checkboxes">
-                        {% for phase in phases %}
-                            {% for week in phase.weeks.all %}
-                                {% for day in week.days.all %}
-                                  <div class="dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" onclick="dayClicked(this)" id="{{ day.day }}">Day {{ day.day }}</div>
-                                {% endfor %}
-                                <form class="dayAdd dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" id="button" action="{% url 'add_day' phase.id week.id %}" method="get">
-                                    <input class="dayAddButton" type="submit" value="+">
-                                </form>
-                            {% endfor %}
-                        {% endfor %}
+    </div>
+    {% endfor %}
 
-
-                    </div>
-                </div>
-                <div class="cloneWeek">
-                    <i class="fas fa-clone cloneWeekIcon"  aria-hidden="true" onclick="showCloneOptions()"></i>
-                    <div class = "cloneOptionsWrapper" id="cloneOptionsWrapper">
-                        <div class="cloneOptions" >
-                            {% for phase in phases reversed %}
-                                {% for week in phase.weeks.all reversed%}
-                                    <div class="cloneOption" onclick="cloneConfirmation({{ phase.phase }}, {{ week.week }})">
-                                        Phase {{ phase.phase }} Week {{ week.week }}
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-
-
-                        </div>
-                    </div>
-                </div>
-
-
-
+    <div class="phaseOrWeek">
+        <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
+        <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
+    </div>
+</div>
+<div class="phaseContent">
+    <div class="phaseContentWrapper">
+        <div class="daySelectorBar">
+            <div class="toggleActive">
+                <i class="fas fa-toggle-off toggleActiveIcon toggleOff" aria-hidden="true"
+                    onclick="toggleConfirmation()"></i>
             </div>
-            <div class="tableWrapper">
-                {% for phase in phases %}
+            <div class="contentTitle">
+                Phase 1 Week 1
+            </div>
+
+            <div class="multiselect">
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select class="innerSelectBox">
+                        <option>Select days</option>
+                    </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div class="checkboxes" id="checkboxes">
+                    {% for phase in phases %}
                     {% for week in phase.weeks.all %}
-                        {% for day in week.days.all %}
-                            <div class="dayTable" id ="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
-                                <table id="table{{ phase.phase }}{{ week.week }}{{ day.day }}" class="table-striped" style="width: 100%">
-                                    <thead>
-                                        <tr>
-                                            <td class="addEntryButtonWrapper" colspan="6">
-                                                <div class="dayTitle"> Day {{ day.day }} </div>
-                                            </td>
-                                        </tr>
-                                        <tr style="text-align: center">
-                                            <th class="exerciseCell">Exercise</th>
-                                            <th>Reps</th>
-                                            <th>Weight</th>
-                                            <th>Sets</th>
-                                            <th>Comment</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for entry in day.entrys.all|dictsort:"order" %}
-                                        <tr class = "entryRow" id="{{ entry.id }}" style="text-align: center" >
-                                            <td class="exerciseCell">{{ entry.exercise.name }}</td>
-                                            <td onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>{{ entry.reps }}</td>
-                                            <td onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>{{ entry.weight }}</td>
-                                            <td onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>{{ entry.sets }}</td>
-                                            <td onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>{{ entry.comment }}</td>
-                                            <td style="width: 50px"><button class="deleteEntryButtonWrapper"
-                                                                            type="button" name="button"
-                                                                            onclick="deleteEntry({{ entry.id }})">
-                                                <div class="deleteEntryButton">+</div></button></td>
-                                        </tr>
-                                        {% endfor %}
-                                    </tbody>
-                                    <tr>
-                                        <td id="addentry" class="addEntryButtonWrapper" colspan="6">
-                                            <button id="add-entry" class="addEntryButton" type="button" name="button" onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">+</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                        {% endfor %}
+                    {% for day in week.days.all %}
+                    <div class="dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" onclick="dayClicked(this)"
+                        id="{{ day.day }}">Day {{ day.day }}</div>
                     {% endfor %}
-                {% endfor %}
+                    <form class="dayAdd dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" id="button"
+                        action="{% url 'add_day' phase.id week.id %}" method="get">
+                        <input class="dayAddButton" type="submit" value="+">
+                    </form>
+                    {% endfor %}
+                    {% endfor %}
+
+
+                </div>
             </div>
+            <div class="cloneWeek">
+                <i class="fas fa-clone cloneWeekIcon" aria-hidden="true" onclick="showCloneOptions()"></i>
+                <div class="cloneOptionsWrapper" id="cloneOptionsWrapper">
+                    <div class="cloneOptions">
+                        {% for phase in phases reversed %}
+                        {% for week in phase.weeks.all reversed%}
+                        <div class="cloneOption" onclick="cloneConfirmation({{ phase.phase }}, {{ week.week }})">
+                            Phase {{ phase.phase }} Week {{ week.week }}
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+
+
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="tableWrapper">
+            {% for phase in phases %}
+            {% for week in phase.weeks.all %}
+            {% for day in week.days.all %}
+            <div class="dayTable" id="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
+                <table id="table{{ phase.phase }}{{ week.week }}{{ day.day }}" class="table-striped"
+                    style="width: 100%">
+                    <thead>
+                        <tr>
+                            <td class="addEntryButtonWrapper" colspan="6">
+                                <div class="dayTitle"> Day {{ day.day }} </div>
+                            </td>
+                        </tr>
+                        <tr style="text-align: center">
+                            <th class="exerciseCell">Exercise</th>
+                            <th>Reps</th>
+                            <th>Weight</th>
+                            <th>Sets</th>
+                            <th>Comment</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in day.entrys.all|dictsort:"order" %}
+                        <tr class="entryRow" id="{{ entry.id }}" style="text-align: center">
+                            <td class="exerciseCell">{{ entry.exercise.name }}</td>
+                            <td
+                                onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                                {{ entry.reps }}</td>
+                            <td
+                                onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                                {{ entry.weight }}</td>
+                            <td
+                                onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                                {{ entry.sets }}</td>
+                            <td
+                                onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                                {{ entry.comment }}</td>
+                            <td style="width: 50px"><button class="deleteEntryButtonWrapper" type="button" name="button"
+                                    onclick="deleteEntry({{ entry.id }})">
+                                    <div class="deleteEntryButton">+</div>
+                                </button></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tr>
+                        <td id="addentry" class="addEntryButtonWrapper" colspan="6">
+                            <button id="add-entry" class="addEntryButton" type="button" name="button"
+                                onclick="toggleAddEntry({{phase.phase}}, {{week.week}}, {{day.day}})">+</button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
         </div>
     </div>
-    <div class="bg-modal" id ="add-entry-modal"style="display: none;">
-        <div class="modal-content">
-            <div style="width:100%">
-                <div class="AddEntryTitleContainer">
-                    Add Exercise
-                </div>
-                <div class="close_addentry">+</div>
+</div>
+<div class="bg-modal" id="add-entry-modal" style="display: none;">
+    <div class="modal-content">
+        <div style="width:100%">
+            <div class="AddEntryTitleContainer">
+                Add Exercise
             </div>
-            <form id="addEntryForm">
-                <table class="exerciseTable addEntryTable">
-                    <tr>
-                        <td class="exerciseSelectName label">
-                            Select Exercise
-                        </td>
-                        <td class="exerciseSelect addEntryCell">
-                            <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield" required>
-                            <datalist id="exerciseList">
-                                {% for exercise in exercises %}
-                                    <option value="{{ exercise.name }}">
+            <div class="close_addentry">+</div>
+        </div>
+        <form id="addEntryForm">
+            <table class="exerciseTable addEntryTable">
+                <tr>
+                    <td class="exerciseSelectName label">
+                        Select Exercise
+                    </td>
+                    <td class="exerciseSelect addEntryCell">
+                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="exercisefield" required>
+                        <datalist id="exerciseList">
+                            {% for exercise in exercises %}
+                            <option value="{{ exercise.name }}">
                                 {% endfor %}
-                            </datalist>
-                        </td>
-                    </tr>
-                </table>
-                <table class="repsTable addEntryTable">
-                    <tr>
-                        <td class="repsLabel label">
-                            Enter Reps
-                        </td>
-                        <td class="repsEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="repfield" maxlength="12" required>
-                        </td>
-                    </tr>
-                </table>
-                <table class="weightTable addEntryTable">
-                    <tr>
-                        <td class="weightLabel label">
-                            Enter Weight
-                        </td>
-                        <td class="weightEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="weightfield" required>
-                        </td>
-                    </tr>
-                </table>
-                <table class="setTable addEntryTable">
-                    <tr>
-                        <td class="setLabel label">
-                            Enter Sets
-                        </td>
-                        <td class="setEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="setfield" required>
-                        </td>
-                    </tr>
-                </table>
-                <table class="commentTable addEntryTable">
-                    <tr>
-                        <td class="commentLabel label">
-                            Comment
-                        </td>
-                        <td class="commentEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="commentfield" required>
-                        </td>
-                    </tr>
-                </table>
+                        </datalist>
+                    </td>
+                </tr>
+            </table>
+            <table class="repsTable addEntryTable">
+                <tr>
+                    <td class="repsLabel label">
+                        Enter Reps
+                    </td>
+                    <td class="repsEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="repfield" maxlength="12" required>
+                    </td>
+                </tr>
+            </table>
+            <table class="weightTable addEntryTable">
+                <tr>
+                    <td class="weightLabel label">
+                        Enter Weight
+                    </td>
+                    <td class="weightEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="weightfield" required>
+                    </td>
+                </tr>
+            </table>
+            <table class="setTable addEntryTable">
+                <tr>
+                    <td class="setLabel label">
+                        Enter Sets
+                    </td>
+                    <td class="setEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="setfield" required>
+                    </td>
+                </tr>
+            </table>
+            <table class="commentTable addEntryTable">
+                <tr>
+                    <td class="commentLabel label">
+                        Comment
+                    </td>
+                    <td class="commentEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="commentfield" required>
+                    </td>
+                </tr>
+            </table>
 
-                <input  class="submitAddEntry" type="submit" name="submit" value="Add Entry">
-            </form>
-        </div>
+            <input class="submitAddEntry" type="submit" name="submit" value="Add Entry">
+        </form>
     </div>
+</div>
 
-    <div class="bg-modal" id ="edit-entry-modal"style="display: none;">
-        <div class="modal-content">
-            <div style="width:100%">
-                <div class="close_addentry">+</div>
-                <div class="AddEntryTitleContainer">
-                    Edit Exercise
-                </div>
+<div class="bg-modal" id="edit-entry-modal" style="display: none;">
+    <div class="modal-content">
+        <div style="width:100%">
+            <div class="close_addentry">+</div>
+            <div class="AddEntryTitleContainer">
+                Edit Exercise
             </div>
-            <form id="editEntryForm">
-                <table class="exerciseTable addEntryTable">
-                    <tr>
-                        <td class="exerciseSelectName label">
-                            Select Exercise
-                        </td>
-                        <td class="exerciseSelect addEntryCell">
-                            <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="editExerciseField">
-                            <datalist id="exerciseList">
-                                {% for exercise in exercises %}
-                                    <option value="{{ exercise.name }}">
+        </div>
+        <form id="editEntryForm">
+            <table class="exerciseTable addEntryTable">
+                <tr>
+                    <td class="exerciseSelectName label">
+                        Select Exercise
+                    </td>
+                    <td class="exerciseSelect addEntryCell">
+                        <input class="exerciseSelectElem addEntryInput" list="exerciseList" id="editExerciseField">
+                        <datalist id="exerciseList">
+                            {% for exercise in exercises %}
+                            <option value="{{ exercise.name }}">
                                 {% endfor %}
-                            </datalist>
-                        </td>
-                    </tr>
-                </table>
-                <table class="repsTable addEntryTable">
-                    <tr>
-                        <td class="repsLabel label">
-                            Enter Reps
-                        </td>
-                        <td class="repsEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="editRepField">
-                        </td>
-                    </tr>
-                </table>
-                <table class="weightTable addEntryTable">
-                    <tr>
-                        <td class="weightLabel label">
-                            Enter Weight
-                        </td>
-                        <td class="weightEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="editWeightField">
-                        </td>
-                    </tr>
-                </table>
-                <table class="setTable addEntryTable">
-                    <tr>
-                        <td class="setLabel label">
-                            Enter Sets
-                        </td>
-                        <td class="setEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="editSetField">
-                        </td>
-                    </tr>
-                </table>
-                <table class="commentTable addEntryTable">
-                    <tr>
-                        <td class="commentLabel label">
-                            Comment
-                        </td>
-                        <td class="commentEntry addEntryCell">
-                            <input class="addEntryInput" type="text" id="editCommentField">
-                        </td>
-                    </tr>
-                </table>
-                <input type="hidden" id="idField">
-                <input  class="submitAddEntry" type="submit" value="Edit Entry">
-            </form>
-        </div>
+                        </datalist>
+                    </td>
+                </tr>
+            </table>
+            <table class="repsTable addEntryTable">
+                <tr>
+                    <td class="repsLabel label">
+                        Enter Reps
+                    </td>
+                    <td class="repsEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="editRepField">
+                    </td>
+                </tr>
+            </table>
+            <table class="weightTable addEntryTable">
+                <tr>
+                    <td class="weightLabel label">
+                        Enter Weight
+                    </td>
+                    <td class="weightEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="editWeightField">
+                    </td>
+                </tr>
+            </table>
+            <table class="setTable addEntryTable">
+                <tr>
+                    <td class="setLabel label">
+                        Enter Sets
+                    </td>
+                    <td class="setEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="editSetField">
+                    </td>
+                </tr>
+            </table>
+            <table class="commentTable addEntryTable">
+                <tr>
+                    <td class="commentLabel label">
+                        Comment
+                    </td>
+                    <td class="commentEntry addEntryCell">
+                        <input class="addEntryInput" type="text" id="editCommentField">
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" id="idField">
+            <input class="submitAddEntry" type="submit" value="Edit Entry">
+        </form>
     </div>
+</div>
 
-    <div class="bg-modal" id ="toggle-modal"style="display: none;">
-        <div class="modal-content">
-            <div style="width:100%">
-                <div class="toggleConfirmationMessage">
-                    Are you sure you want to activate this week?
-                    <div class="toggleConfirmationSubMessage"> Your client can only see the active week on their mobile application.</div>
+<div class="bg-modal" id="toggle-modal" style="display: none;">
+    <div class="modal-content">
+        <div style="width:100%">
+            <div class="toggleConfirmationMessage">
+                Are you sure you want to activate this week?
+                <div class="toggleConfirmationSubMessage"> Your client can only see the active week on their mobile
+                    application.</div>
+            </div>
+        </div>
+        <form id="toggleWeekForm">
+
+            <input class="submitAddEntry" type="submit" name="submit" value="Activate">
+        </form>
+    </div>
+</div>
+
+<div class="bg-modal" id="clone-modal" style="display: none;">
+    <div class="modal-content">
+        <div style="width:100%">
+            <div class="cloneTitle"> Cloning </div>
+            <div class="clonePhaseBackground">
+                <div class="clonePhaseContainer" id="cloneFromPhase">
+                    Phase 1
+                </div>
+                <div class="cloneWeekContainer" id="cloneFromWeek">
+                    Week 1
                 </div>
             </div>
-            <form id="toggleWeekForm">
-
-                <input  class="submitAddEntry" type="submit" name="submit" value="Activate">
-            </form>
-        </div>
-    </div>
-
-    <div class="bg-modal" id ="clone-modal"style="display: none;">
-        <div class="modal-content">
-            <div style="width:100%">
-                <div class="cloneTitle"> Cloning </div>
-                <div class="clonePhaseBackground">
-                    <div class="clonePhaseContainer" id="cloneFromPhase">
-                        Phase 1
-                    </div>
-                    <div class="cloneWeekContainer" id="cloneFromWeek">
-                        Week 1
-                    </div>
+            <i class="fas fa-arrow-right cloneArrow" aria-hidden="true"></i>
+            <div class="clonePhaseBackground">
+                <div class="clonePhaseContainer" id="cloneToPhase">
+                    Phase 1
                 </div>
-                <i class="fas fa-arrow-right cloneArrow"  aria-hidden="true" ></i>
-                <div class="clonePhaseBackground" >
-                    <div class="clonePhaseContainer" id="cloneToPhase">
-                        Phase 1
-                    </div>
-                    <div class="cloneWeekContainer" id="cloneToWeek">
-                        Week 1
-                    </div>
-                </div>
-                <div class="toggleConfirmationSubMessage" style="text-align: center">
-                    Note: This we erase all current exercises in this set
+                <div class="cloneWeekContainer" id="cloneToWeek">
+                    Week 1
                 </div>
             </div>
-            <form id="cloneForm">
-                <input  class="submitClone" type="submit" name="submit" value="Confirm Clone">
-            </form>
+            <div class="toggleConfirmationSubMessage" style="text-align: center">
+                Note: This we erase all current exercises in this set
+            </div>
         </div>
+        <form id="cloneForm">
+            <input class="submitClone" type="submit" name="submit" value="Confirm Clone">
+        </form>
     </div>
-    <script src="{% static '/assets/js/jquery.min.js' %}"></script>
-    <script src="/static/assets/js/popper.js"></script>
-    <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+</div>
 
-    <script>
+<script>
 
-            document.addEventListener('DOMContentLoaded', function () {
-                // const table = document.getElementById('table511');
-                var table;
-                $('td.exerciseCell').mousedown(function() {
-                    event.stopPropagation();
-                    var tableId = $(this).parents("table").attr("id");
+    document.addEventListener('DOMContentLoaded', function () {
+        // const table = document.getElementById('table511');
+        var table;
+        $('td.exerciseCell').mousedown(function () {
+            event.stopPropagation();
+            var tableId = $(this).parents("table").attr("id");
 
-                    table = document.getElementById(tableId);
-                    getRows();
-                    var cell = $(this).children("td").get(0);
-                    if (typeof cell !== "undefined" && cell.id !== "addentry") {
-                      mouseDownHandlerJ($(this).get(0));
-                    }
-                });
-
-
-                let draggingEle;
-                let draggingRowIndex;
-                let placeholder;
-                let list;
-                let isDraggingStarted = false;
-
-                // The current position of mouse relative to the dragging element
-                let x = 0;
-                let y = 0;
-
-                // Swap two nodes
-                const swap = function (nodeA, nodeB) {
-                    const parentA = nodeA.parentNode;
-                    const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
-
-                    // Move `nodeA` to before the `nodeB`
-                    nodeB.parentNode.insertBefore(nodeA, nodeB);
-
-                    // Move `nodeB` to before the sibling of `nodeA`
-                    parentA.insertBefore(nodeB, siblingA);
-                };
-
-                // Check if `nodeA` is above `nodeB`
-                const isAbove = function (nodeA, nodeB) {
-                    // Get the bounding rectangle of nodes
-                    const rectA = nodeA.getBoundingClientRect();
-                    const rectB = nodeB.getBoundingClientRect();
-
-                    return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-                };
-
-                const cloneTable = function () {
-                    const rect = table.getBoundingClientRect();
-                    const width = parseInt(window.getComputedStyle(table).width);
-
-                    list = document.createElement('div');
-                    list.classList.add('clone-list');
-                    list.style.position = 'relative';
-                    // list.style.left = `${rect.left}px`;
-                    // list.style.top = `${rect.top}px`;
-                    table.parentNode.insertBefore(list, table);
-
-                    // Hide the original table
-                    table.style.display = 'none';
-
-                    table.querySelectorAll('tr').forEach(function (row) {
-                        // Create a new table from given row
-                        const item = document.createElement('div');
-                        item.classList.add('draggable');
-
-                        const newTable = document.createElement('table');
-                        newTable.setAttribute('class', 'clone-table');
-                        newTable.style.width = `${width}px`;
-
-                        const newRow = document.createElement('tr');
-                        const cells = [].slice.call(row.children);
-                        cells.forEach(function (cell) {
-                            const newCell = cell.cloneNode(true);
-                            newCell.style.width = `${parseInt(window.getComputedStyle(cell).width)}px`;
-                            newRow.appendChild(newCell);
-                        });
-
-                        newTable.appendChild(newRow);
-                        item.appendChild(newTable);
-                        list.appendChild(item);
-                    });
-                };
-                const mouseDownHandlerJ = function (e) {
-                    // Get the original row
-                    event.stopPropagation();
-                    const originalRow = e.parentNode;
-                    draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
-                    console.log(draggingRowIndex)
-                    // Determine the mouse position
-                    if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
-                        x = e.clientX;
-                        y = e.clientY;
-
-                        // Attach the listeners to `document`
-                        document.addEventListener('mousemove', mouseMoveHandler);
-                        document.addEventListener('mouseup', mouseUpHandler);
-
-                    }
-                };
-                const mouseDownHandler = function (e) {
-                    // Get the original row
-                    event.stopPropagation();
-                    const originalRow = e.target.parentNode;
-                    draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
-                    console.log(draggingRowIndex)
-                    // Determine the mouse position
-                    if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
-                        x = e.clientX;
-                        y = e.clientY;
-
-                        // Attach the listeners to `document`
-                        var editwindow = document.getElementById("edit-entry-modal");
-                        console.log(editwindow.style.display);
-
-                        document.addEventListener('mousemove', mouseMoveHandler);
-                        document.addEventListener('mouseup', mouseUpHandler);
-
-                    }
-                };
-
-
-                function mouseMoveHandler(e) {
-                    if (!isDraggingStarted) {
-                        isDraggingStarted = true;
-
-                        cloneTable();
-
-                        draggingEle = [].slice.call(list.children)[draggingRowIndex];
-                        draggingEle.classList.add('dragging');
-
-                        // Let the placeholder take the height of dragging element
-                        // So the next element won't move up
-                        placeholder = document.createElement('div');
-                        placeholder.classList.add('placeholder');
-                        draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
-                        placeholder.style.height = `${draggingEle.offsetHeight}px`;
-                    }
-
-                    // Set position for dragging element
-                    draggingEle.style.position = 'absolute';
-                    draggingEle.style.top = `${draggingEle.offsetTop + e.clientY - y}px`;
-                    draggingEle.style.left = `${draggingEle.offsetLeft + e.clientX - x}px`;
-
-                    // Reassign the position of mouse
-                    x = e.clientX;
-                    y = e.clientY;
-
-                    // The current order
-                    // prevEle
-                    // draggingEle
-                    // placeholder
-                    // nextEle
-                    const prevEle = draggingEle.previousElementSibling;
-                    const nextEle = placeholder.nextElementSibling;
-
-                    // The dragging element is above the previous element
-                    // User moves the dragging element to the top
-                    // We don't allow to drop above the header
-                    // (which doesn't have `previousElementSibling`)
-                    if (prevEle && prevEle.previousElementSibling && prevEle.previousElementSibling.previousElementSibling && isAbove(draggingEle, prevEle)) {
-                        // The current order    -> The new order
-                        // prevEle              -> placeholder
-                        // draggingEle          -> draggingEle
-                        // placeholder          -> prevEle
-                        swap(placeholder, draggingEle);
-                        swap(placeholder, prevEle);
-                        return;
-                    }
-
-                    // The dragging element is below the next element
-                    // User moves the dragging element to the bottom
-                    if (nextEle && nextEle.nextElementSibling && isAbove(nextEle, draggingEle)) {
-                        // The current order    -> The new order
-                        // draggingEle          -> nextEle
-                        // placeholder          -> placeholder
-                        // nextEle              -> draggingEle
-                        swap(nextEle, placeholder);
-                        swap(nextEle, draggingEle);
-                    }
-                };
-
-                function mouseUpHandler() {
-                    // Remove the placeholder
-                    placeholder && placeholder.parentNode.removeChild(placeholder);
-
-                    draggingEle.classList.remove('dragging');
-                    draggingEle.style.removeProperty('top');
-                    draggingEle.style.removeProperty('left');
-                    draggingEle.style.removeProperty('position');
-
-                    // Get the end index
-                    const endRowIndex = [].slice.call(list.children).indexOf(draggingEle);
-
-                    isDraggingStarted = false;
-
-                    // Remove the `list` element
-                    list.parentNode.removeChild(list);
-
-                    // Move the dragged row to `endRowIndex`
-                    let rows = [].slice.call(table.querySelectorAll('tr'));
-                    draggingRowIndex > endRowIndex
-                        ? rows[endRowIndex].parentNode.insertBefore(rows[draggingRowIndex], rows[endRowIndex])
-                        : rows[endRowIndex].parentNode.insertBefore(
-                              rows[draggingRowIndex],
-                              rows[endRowIndex].nextSibling
-                          );
-
-                    // Bring back the table
-                    table.style.display="table";
-
-                    // Remove the handlers of `mousemove` and `mouseup`
-                    document.removeEventListener('mousemove', mouseMoveHandler);
-                    document.removeEventListener('mouseup', mouseUpHandler);
-                    var idOrder = [];
-                    table.querySelectorAll('tr.entryRow').forEach(function (row) {
-                        idOrder.push(row.id);
-                    });
-                    idOrder =  JSON.stringify({idOrder});
-                    $.ajax({
-                        type : "POST",
-                        url: "{% url 'change_order' %}",
-                        data: {
-                         idOrder : idOrder,
-                         csrfmiddlewaretoken: '{{ csrf_token }}',
-                         dataType: "json",
-                        },
-                        success: function(data){
-
-                        },
-                        failure: function() {
-                        }
-                    });
-                    console.log(idOrder);
-
-                };
-                function getRows() {
-                    table.querySelectorAll('tr').forEach(function (row, index) {
-                        // Ignore the header
-                        // We don't want user to change the order of header
-
-                        if (index === 0) {
-
-                        }
-                        else if (row.firstElementChild.id === "addentry"){
-
-
-                        }
-                        else {
-
-                            const firstCell = row.firstElementChild;
-                            firstCell.classList.add('draggable');
-                            firstCell.addEventListener('mousedown', mouseDownHandler);
-                        }
-                    });
-                };
-            });
-        </script>
-    <script type="text/javascript">
-
-// ---------------------------------------------------------------------------------------------------------------------
-// clone week dropdown
-        var cloneExpanded = false;
-
-        function showCloneOptions() {
-          var cloneOptions = document.getElementById("cloneOptionsWrapper");
-          if (!cloneExpanded) {
-            cloneOptions.style.display = "block";
-            cloneExpanded = true;
-            $('.innerCloneBox').css({'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px'});
-            $('.cloneWeek').css('background-color','#D6D6D6')
-          } else {
-            cloneOptions.style.display = "none";
-            cloneExpanded = false;
-            $('.cloneWeek').css('background-color','transparent')
-          }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// clone confirmation
-
-        function cloneConfirmation(phase, week){
-            var y = document.getElementById("clone-modal");
-            y.style.display = "flex";
-
-            $('#cloneFromWeek').html('Week ' +week);
-            $('#cloneFromPhase').html('Phase ' +phase);
-            $('#cloneFromWeek').attr('name', week);
-            $('#cloneFromPhase').attr('name', phase);
-            $('#cloneToWeek').html('Week ' +selectedWeek[parseInt(selectedPhase)-1]);
-            $('#cloneToPhase').html('Phase ' +selectedPhase);
-        };
-        $('#cloneForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                type : "POST",
-                url: "{% url 'clone_week' %}",
-                data: {
-                 phaseTo: selectedPhase,
-                 weekTo : selectedWeek[parseInt(selectedPhase)-1],
-                 phaseFrom: $('#cloneFromPhase').attr('name'),
-                 weekFrom : $('#cloneFromWeek').attr('name'),
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-                },
-                success: function(data){
-                    window.location.reload();
-                },
-                failure: function() {
-
-                }
-            });
-
-            var x = document.getElementById("toggle-modal");
-            x.style.display = "none";
+            table = document.getElementById(tableId);
+            getRows();
+            var cell = $(this).children("td").get(0);
+            if (typeof cell !== "undefined" && cell.id !== "addentry") {
+                mouseDownHandlerJ($(this).get(0));
+            }
         });
 
 
+        let draggingEle;
+        let draggingRowIndex;
+        let placeholder;
+        let list;
+        let isDraggingStarted = false;
 
-        var dayOptions = new Set();
-// set last phase to selected color
-        var lastPhase =$('.phaseButton:nth-last-child(2)'); // second last phaseButton since the add button is also a phaseButton
-        lastPhase.css({"background-color": "#787878", 'color':'#f4eb49'});
-        var selectedPhase = lastPhase.attr('id');
+        // The current position of mouse relative to the dragging element
+        let x = 0;
+        let y = 0;
 
-// ---------------------------------------------------------------------------------------------------------------------
+        // Swap two nodes
+        const swap = function (nodeA, nodeB) {
+            const parentA = nodeA.parentNode;
+            const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
 
+            // Move `nodeA` to before the `nodeB`
+            nodeB.parentNode.insertBefore(nodeA, nodeB);
 
-// set if week or phase should be shown on page load
-        var phaseStatus = true;
-        var weekOpen = "{{ weekOpen }}";
+            // Move `nodeB` to before the sibling of `nodeA`
+            parentA.insertBefore(nodeB, siblingA);
+        };
 
-        if(weekOpen == "True"){
-            phaseSelected("{{ request.session.selectedPhase }}");
+        // Check if `nodeA` is above `nodeB`
+        const isAbove = function (nodeA, nodeB) {
+            // Get the bounding rectangle of nodes
+            const rectA = nodeA.getBoundingClientRect();
+            const rectB = nodeB.getBoundingClientRect();
 
-            weekClicked();
-        }
-// ---------------------------------------------------------------------------------------------------------------------
+            return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+        };
 
-// set last week to selected color
+        const cloneTable = function () {
+            const rect = table.getBoundingClientRect();
+            const width = parseInt(window.getComputedStyle(table).width);
 
-        var selectedWeek = Array.apply(null, Array(parseInt(selectedPhase))).map(function () {});
-        console.log(selectedWeek);
-        setLastWeek();
-        function setLastWeek(){
-            console.log(typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined');
-            if (typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined') {
-                var lastWeek = $("#" + selectedPhase + ".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
-                lastWeek.css({"background-color": "#787878", 'color': '#f4eb49'});
-                weekSelected(lastWeek.attr('id'));
-            }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// delete Entry
-//         function triggerMouseEvent (node, eventType) {
-//             var clickEvent = document.createEvent ('MouseEvents');
-//             clickEvent.initEvent (eventType, true, true);
-//             node.dispatchEvent (clickEvent);
-//         }
-        function editEntry(name, reps, weight, sets, comment, id){
+            list = document.createElement('div');
+            list.classList.add('clone-list');
+            list.style.position = 'relative';
+            // list.style.left = `${rect.left}px`;
+            // list.style.top = `${rect.top}px`;
+            table.parentNode.insertBefore(list, table);
+
+            // Hide the original table
+            table.style.display = 'none';
+
+            table.querySelectorAll('tr').forEach(function (row) {
+                // Create a new table from given row
+                const item = document.createElement('div');
+                item.classList.add('draggable');
+
+                const newTable = document.createElement('table');
+                newTable.setAttribute('class', 'clone-table');
+                newTable.style.width = `${width}px`;
+
+                const newRow = document.createElement('tr');
+                const cells = [].slice.call(row.children);
+                cells.forEach(function (cell) {
+                    const newCell = cell.cloneNode(true);
+                    newCell.style.width = `${parseInt(window.getComputedStyle(cell).width)}px`;
+                    newRow.appendChild(newCell);
+                });
+
+                newTable.appendChild(newRow);
+                item.appendChild(newTable);
+                list.appendChild(item);
+            });
+        };
+        const mouseDownHandlerJ = function (e) {
+            // Get the original row
             event.stopPropagation();
-            var y = document.getElementById("edit-entry-modal");
-            $('#editExerciseField').val(name);
-            $('#editRepField').val(reps);
-            $('#editWeightField').val(weight);
-            $('#editSetField').val(sets);
-            $('#editCommentField').val(comment);
-            $('#idField').val(id);
-            y.style.display = "flex";
-        }
-        function deleteEntry(id, e){
+            const originalRow = e.parentNode;
+            draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
+            console.log(draggingRowIndex)
+            // Determine the mouse position
+            if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
+                x = e.clientX;
+                y = e.clientY;
 
-            // stops button press counting as edit entry press on row
-            if (!e) var e = window.event;
-            e.cancelBubble = true;
-            if (e.stopPropagation) e.stopPropagation();
+                // Attach the listeners to `document`
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
+
+            }
+        };
+        const mouseDownHandler = function (e) {
+            // Get the original row
+            event.stopPropagation();
+            const originalRow = e.target.parentNode;
+            draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
+            console.log(draggingRowIndex)
+            // Determine the mouse position
+            if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
+                x = e.clientX;
+                y = e.clientY;
+
+                // Attach the listeners to `document`
+                var editwindow = document.getElementById("edit-entry-modal");
+                console.log(editwindow.style.display);
+
+                document.addEventListener('mousemove', mouseMoveHandler);
+                document.addEventListener('mouseup', mouseUpHandler);
+
+            }
+        };
 
 
+        function mouseMoveHandler(e) {
+            if (!isDraggingStarted) {
+                isDraggingStarted = true;
+
+                cloneTable();
+
+                draggingEle = [].slice.call(list.children)[draggingRowIndex];
+                draggingEle.classList.add('dragging');
+
+                // Let the placeholder take the height of dragging element
+                // So the next element won't move up
+                placeholder = document.createElement('div');
+                placeholder.classList.add('placeholder');
+                draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
+                placeholder.style.height = `${draggingEle.offsetHeight}px`;
+            }
+
+            // Set position for dragging element
+            draggingEle.style.position = 'absolute';
+            draggingEle.style.top = `${draggingEle.offsetTop + e.clientY - y}px`;
+            draggingEle.style.left = `${draggingEle.offsetLeft + e.clientX - x}px`;
+
+            // Reassign the position of mouse
+            x = e.clientX;
+            y = e.clientY;
+
+            // The current order
+            // prevEle
+            // draggingEle
+            // placeholder
+            // nextEle
+            const prevEle = draggingEle.previousElementSibling;
+            const nextEle = placeholder.nextElementSibling;
+
+            // The dragging element is above the previous element
+            // User moves the dragging element to the top
+            // We don't allow to drop above the header
+            // (which doesn't have `previousElementSibling`)
+            if (prevEle && prevEle.previousElementSibling && prevEle.previousElementSibling.previousElementSibling && isAbove(draggingEle, prevEle)) {
+                // The current order    -> The new order
+                // prevEle              -> placeholder
+                // draggingEle          -> draggingEle
+                // placeholder          -> prevEle
+                swap(placeholder, draggingEle);
+                swap(placeholder, prevEle);
+                return;
+            }
+
+            // The dragging element is below the next element
+            // User moves the dragging element to the bottom
+            if (nextEle && nextEle.nextElementSibling && isAbove(nextEle, draggingEle)) {
+                // The current order    -> The new order
+                // draggingEle          -> nextEle
+                // placeholder          -> placeholder
+                // nextEle              -> draggingEle
+                swap(nextEle, placeholder);
+                swap(nextEle, draggingEle);
+            }
+        };
+
+        function mouseUpHandler() {
+            // Remove the placeholder
+            placeholder && placeholder.parentNode.removeChild(placeholder);
+
+            draggingEle.classList.remove('dragging');
+            draggingEle.style.removeProperty('top');
+            draggingEle.style.removeProperty('left');
+            draggingEle.style.removeProperty('position');
+
+            // Get the end index
+            const endRowIndex = [].slice.call(list.children).indexOf(draggingEle);
+
+            isDraggingStarted = false;
+
+            // Remove the `list` element
+            list.parentNode.removeChild(list);
+
+            // Move the dragged row to `endRowIndex`
+            let rows = [].slice.call(table.querySelectorAll('tr'));
+            draggingRowIndex > endRowIndex
+                ? rows[endRowIndex].parentNode.insertBefore(rows[draggingRowIndex], rows[endRowIndex])
+                : rows[endRowIndex].parentNode.insertBefore(
+                    rows[draggingRowIndex],
+                    rows[endRowIndex].nextSibling
+                );
+
+            // Bring back the table
+            table.style.display = "table";
+
+            // Remove the handlers of `mousemove` and `mouseup`
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+            var idOrder = [];
+            table.querySelectorAll('tr.entryRow').forEach(function (row) {
+                idOrder.push(row.id);
+            });
+            idOrder = JSON.stringify({ idOrder });
             $.ajax({
-                type : "POST",
-                url: "{% url 'delete_entry' %}",
+                type: "POST",
+                url: "{% url 'change_order' %}",
                 data: {
-                 id : id,
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
+                    idOrder: idOrder,
+                    csrfmiddlewaretoken: '{{ csrf_token }}',
+                    dataType: "json",
                 },
-                success: function(data){
-                    // tempAlert("entry deleted",6000)
-                    window.location.reload();
+                success: function (data) {
+
                 },
-                failure: function() {
+                failure: function () {
                 }
             });
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// set content title to phase and week
-        setContentTitle();
-        var phaseTitle;
-        var weekTitle;
-        function setContentTitle() {
-            if (typeof selectedPhase === 'undefined') {
-                phaseTitle = 'Phase 0';
-            }else{
-                phaseTitle = 'Phase '+ selectedPhase;
-            }
-            if (typeof selectedWeek[parseInt(selectedPhase)-1] === 'undefined'){
-                weekTitle = ' Week 0';
-            }
-            else{
-                weekTitle = ' Week '+ selectedWeek[parseInt(selectedPhase)-1];
-            }
-            $('.contentTitle').html(phaseTitle + weekTitle);
-        }
+            console.log(idOrder);
 
-// ---------------------------------------------------------------------------------------------------------------------
-// display days table
+        };
+        function getRows() {
+            table.querySelectorAll('tr').forEach(function (row, index) {
+                // Ignore the header
+                // We don't want user to change the order of header
 
-        function displayTable(){
-            days = new Array();
-            days = Array.from(dayOptions).sort();
+                if (index === 0) {
 
-            $('.dayTable').each(function(){
-                $(this).css("display", "none");
-            });
-            for (index in days) {
-                $('#Phase'+selectedPhase+'Week'+selectedWeek[parseInt(selectedPhase)-1]+'Day'+days[index]).css("display", "block");
-            }
-
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// display days option
-
-
-        function getDayOptions(){
-            dayOptions = new Set();
-            $('.dayOption').each(function() {
-                $(this).css('display','none');
-            })
-            $('.OptionPhase'+selectedPhase+'Week'+selectedWeek[parseInt(selectedPhase)-1]).each(function () {
-                option = $(this)
-                option.css("display", "block");
-                id = option.attr('id');
-                option.css({'background-color': '#787878', 'color': '#f4eb49'});
-                if (id !== 'button'){
-                    dayOptions.add(id);
                 }
-            })
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// phase/week button clicked
+                else if (row.firstElementChild.id === "addentry") {
 
-        function phaseClicked(){
-            if (!phaseStatus){
-                // change the button color
-                $('.selectPhaseButton').css({"background-color": "#787878", 'color':'#f4eb49'});
-                $('.selectWeekButton').css({"background-color": "#9C9C9C", 'color':'black'});
-                phaseStatus=true;
-                // change from weeks to phases
-                $('.weekSelectorWrapper').css("display","none");
-                $('.phaseSelectorWrapper').css("display","inline-block");
-
-            }
-
-        }
-        function weekClicked(){
-            if (phaseStatus){
-                //set the last week to be active
-
-                // change the button color
-                $('.selectPhaseButton').css({"background-color": "#9C9C9C", 'color':'black'});
-                $('.selectWeekButton').css({"background-color": "#787878", 'color':'#f4eb49'});
-                phaseStatus=false;
-                // change from phase to weeks
-                $('.phaseSelectorWrapper').css("display","none");
-                $('#'+selectedPhase+'.weekSelectorWrapper').css("display","inline-block");
-
-            }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-
-// selecting phase
-        function phaseSelected(id){
-            if(id!=selectedPhase) {
-                $('#' + id + '.phaseButton').css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedPhase + '.phaseButton').css({"background-color": "#9C9C9C", 'color': 'black'});
-                selectedPhase = id;
-                setLastWeek();
-                setContentTitle();
-                getDayOptions();
-                displayTable();
-            }
-            weekClicked();
-        }
-
-// ---------------------------------------------------------------------------------------------------------------------
-// selecting week
-        function weekSelected(id){
-
-            if (id !== selectedWeek[parseInt(selectedPhase)-1]){
-                $('#' + id + '.weekButton'+selectedPhase).css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).css({"background-color": "#9C9C9C", 'color': 'black'});
-
-                selectedWeek[parseInt(selectedPhase)-1] = id;
-                console.log(selectedWeek);
-                setContentTitle();
-                getDayOptions();
-                displayTable();
-                toggleActive();
-            }
-
-        }
-        function toggleActive(){
-
-            if ($('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).attr('name') === 'True'){
-                    $('.toggleActiveIcon').removeClass('toggleOff');
-                    $('.toggleActiveIcon').removeClass('fa-toggle-off');
-
-                    $('.toggleActiveIcon').addClass('toggleOn');
-                    $('.toggleActiveIcon').addClass('fa-toggle-on');
 
                 }
                 else {
-                    $('.toggleActiveIcon').removeClass('toggleOn');
-                    $('.toggleActiveIcon').removeClass('fa-toggle-on');
-                    $('.toggleActiveIcon').addClass('toggleOff');
-                    $('.toggleActiveIcon').addClass('fa-toggle-off');
-                }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// day select box
-        var expanded = false;
 
-        function showCheckboxes() {
-          var checkboxes = document.getElementById("checkboxes");
-          if (!expanded) {
-            checkboxes.style.display = "block";
-            expanded = true;
-            $('.innerSelectBox').css({'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px'});
-          } else {
-            checkboxes.style.display = "none";
-            expanded = false;
-            $('.innerSelectBox').css("border-radius","5px");
-          }
-        }
+                    const firstCell = row.firstElementChild;
+                    firstCell.classList.add('draggable');
+                    firstCell.addEventListener('mousedown', mouseDownHandler);
+                }
+            });
+        };
+    });
+</script>
+<script type="text/javascript">
 
-        function dayClicked(elem) {
-            dayOption = $(elem);
-            if (dayOptions.length !== 0) {
-                id = dayOption.attr('id');
-                if (dayOptions.has(id)) {
-                    dayOptions.delete(id);
-                    dayOption.css({'background-color': '#888888', 'color': 'black'});
-                }
-                else{
-                    dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
-                    dayOptions.add(id);
-                }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // clone week dropdown
+    var cloneExpanded = false;
+
+    function showCloneOptions() {
+        var cloneOptions = document.getElementById("cloneOptionsWrapper");
+        if (!cloneExpanded) {
+            cloneOptions.style.display = "block";
+            cloneExpanded = true;
+            $('.innerCloneBox').css({ 'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px' });
+            $('.cloneWeek').css('background-color', '#D6D6D6')
+        } else {
+            cloneOptions.style.display = "none";
+            cloneExpanded = false;
+            $('.cloneWeek').css('background-color', 'transparent')
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // clone confirmation
+
+    function cloneConfirmation(phase, week) {
+        var y = document.getElementById("clone-modal");
+        y.style.display = "flex";
+
+        $('#cloneFromWeek').html('Week ' + week);
+        $('#cloneFromPhase').html('Phase ' + phase);
+        $('#cloneFromWeek').attr('name', week);
+        $('#cloneFromPhase').attr('name', phase);
+        $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
+        $('#cloneToPhase').html('Phase ' + selectedPhase);
+    };
+    $('#cloneForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'clone_week' %}",
+            data: {
+                phaseTo: selectedPhase,
+                weekTo: selectedWeek[parseInt(selectedPhase) - 1],
+                phaseFrom: $('#cloneFromPhase').attr('name'),
+                weekFrom: $('#cloneFromWeek').attr('name'),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (data) {
+                window.location.reload();
+            },
+            failure: function () {
+
             }
-            else{
-                dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
+        });
+
+        var x = document.getElementById("toggle-modal");
+        x.style.display = "none";
+    });
+
+
+
+    var dayOptions = new Set();
+    // set last phase to selected color
+    var lastPhase = $('.phaseButton:nth-last-child(2)'); // second last phaseButton since the add button is also a phaseButton
+    lastPhase.css({ "background-color": "#787878", 'color': '#f4eb49' });
+    var selectedPhase = lastPhase.attr('id');
+
+    // ---------------------------------------------------------------------------------------------------------------------
+
+
+    // set if week or phase should be shown on page load
+    var phaseStatus = true;
+    var weekOpen = "{{ weekOpen }}";
+
+    if (weekOpen == "True") {
+        phaseSelected("{{ request.session.selectedPhase }}");
+
+        weekClicked();
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+
+    // set last week to selected color
+
+    var selectedWeek = Array.apply(null, Array(parseInt(selectedPhase))).map(function () { });
+    console.log(selectedWeek);
+    setLastWeek();
+    function setLastWeek() {
+        console.log(typeof selectedWeek[parseInt(selectedPhase) - 1] === 'undefined');
+        if (typeof selectedWeek[parseInt(selectedPhase) - 1] === 'undefined') {
+            var lastWeek = $("#" + selectedPhase + ".weekSelectorWrapper .weekButton:nth-last-child(2)"); // second last phaseButton since the add button is also a phaseButton
+            lastWeek.css({ "background-color": "#787878", 'color': '#f4eb49' });
+            weekSelected(lastWeek.attr('id'));
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // delete Entry
+    //         function triggerMouseEvent (node, eventType) {
+    //             var clickEvent = document.createEvent ('MouseEvents');
+    //             clickEvent.initEvent (eventType, true, true);
+    //             node.dispatchEvent (clickEvent);
+    //         }
+    function editEntry(name, reps, weight, sets, comment, id) {
+        event.stopPropagation();
+        var y = document.getElementById("edit-entry-modal");
+        $('#editExerciseField').val(name);
+        $('#editRepField').val(reps);
+        $('#editWeightField').val(weight);
+        $('#editSetField').val(sets);
+        $('#editCommentField').val(comment);
+        $('#idField').val(id);
+        y.style.display = "flex";
+    }
+    function deleteEntry(id, e) {
+
+        // stops button press counting as edit entry press on row
+        if (!e) var e = window.event;
+        e.cancelBubble = true;
+        if (e.stopPropagation) e.stopPropagation();
+
+
+        $.ajax({
+            type: "POST",
+            url: "{% url 'delete_entry' %}",
+            data: {
+                id: id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (data) {
+                // tempAlert("entry deleted",6000)
+                window.location.reload();
+            },
+            failure: function () {
+            }
+        });
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // set content title to phase and week
+    setContentTitle();
+    var phaseTitle;
+    var weekTitle;
+    function setContentTitle() {
+        if (typeof selectedPhase === 'undefined') {
+            phaseTitle = 'Phase 0';
+        } else {
+            phaseTitle = 'Phase ' + selectedPhase;
+        }
+        if (typeof selectedWeek[parseInt(selectedPhase) - 1] === 'undefined') {
+            weekTitle = ' Week 0';
+        }
+        else {
+            weekTitle = ' Week ' + selectedWeek[parseInt(selectedPhase) - 1];
+        }
+        $('.contentTitle').html(phaseTitle + weekTitle);
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // display days table
+
+    function displayTable() {
+        days = new Array();
+        days = Array.from(dayOptions).sort();
+
+        $('.dayTable').each(function () {
+            $(this).css("display", "none");
+        });
+        for (index in days) {
+            $('#Phase' + selectedPhase + 'Week' + selectedWeek[parseInt(selectedPhase) - 1] + 'Day' + days[index]).css("display", "block");
+        }
+
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // display days option
+
+
+    function getDayOptions() {
+        dayOptions = new Set();
+        $('.dayOption').each(function () {
+            $(this).css('display', 'none');
+        })
+        $('.OptionPhase' + selectedPhase + 'Week' + selectedWeek[parseInt(selectedPhase) - 1]).each(function () {
+            option = $(this)
+            option.css("display", "block");
+            id = option.attr('id');
+            option.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+            if (id !== 'button') {
                 dayOptions.add(id);
             }
+        })
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // phase/week button clicked
+
+    function phaseClicked() {
+        if (!phaseStatus) {
+            // change the button color
+            $('.selectPhaseButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('.selectWeekButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            phaseStatus = true;
+            // change from weeks to phases
+            $('.weekSelectorWrapper').css("display", "none");
+            $('.phaseSelectorWrapper').css("display", "inline-block");
+
+        }
+
+    }
+    function weekClicked() {
+        if (phaseStatus) {
+            //set the last week to be active
+
+            // change the button color
+            $('.selectPhaseButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            $('.selectWeekButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            phaseStatus = false;
+            // change from phase to weeks
+            $('.phaseSelectorWrapper').css("display", "none");
+            $('#' + selectedPhase + '.weekSelectorWrapper').css("display", "inline-block");
+
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+
+    // selecting phase
+    function phaseSelected(id) {
+        if (id != selectedPhase) {
+            $('#' + id + '.phaseButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('#' + selectedPhase + '.phaseButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            selectedPhase = id;
+            setLastWeek();
+            setContentTitle();
+            getDayOptions();
             displayTable();
         }
-// ---------------------------------------------------------------------------------------------------------------------
-// display modals
-        $('.close_addentry').on('click', function(e) {
-            var x = document.getElementById("add-entry-modal");
-            var y = document.getElementById("edit-entry-modal");
-            x.style.display = "none";
-            y.style.display = "none";
-        });
+        weekClicked();
+    }
 
-        $('.bg-modal').on('click', function(e) {
-          if (e.target !== this)
-            return;
-          var clone = document.getElementById("clone-modal");
-          var x = document.getElementById("add-entry-modal");
-          var y = document.getElementById("edit-entry-modal");
-          x.style.display = "none";
-          y.style.display = "none";
-          clone.style.display = 'none';
-        });
+    // ---------------------------------------------------------------------------------------------------------------------
+    // selecting week
+    function weekSelected(id) {
 
-// ---------------------------------------------------------------------------------------------------------------------
-// submit add entry
-        $('#addEntryForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                type : "POST",
-                url: "{% url 'add_entry' %}",
-                data: {
+        if (id !== selectedWeek[parseInt(selectedPhase) - 1]) {
+            $('#' + id + '.weekButton' + selectedPhase).css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('#' + selectedWeek[parseInt(selectedPhase) - 1] + '.weekButton' + selectedPhase).css({ "background-color": "#9C9C9C", 'color': 'black' });
 
-                 phase : phase,
-                 week: week,
-                 day: day,
-                 exercise : $('#exercisefield').val(),
-                 reps : $('#repfield').val(),
-                 weight: $('#weightfield').val(),
-                 sets: $('#setfield').val(),
-                 comment: $('#commentfield').val(),
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-                },
-                success: function(data){
-                    window.location.reload();
-                },
-                failure: function() {
-
-                }
-            });
-
-            var x = document.getElementById("add-entry-modal");
-            x.style.display = "none";
-        });
-// ---------------------------------------------------------------------------------------------------------------------
-// submit edit entry
-        $('#editEntryForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                type : "POST",
-                url: "{% url 'edit_entry' %}",
-                data: {
-                 id: $('#idField').val(),
-                 exercise : $('#editExerciseField').val(),
-                 reps : $('#editRepField').val(),
-                 weight: $('#editWeightField').val(),
-                 sets: $('#editSetField').val(),
-                 comment: $('#editCommentField').val(),
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-                },
-                success: function(data){
-                    window.location.reload();
-                },
-                failure: function() {
-
-                }
-            });
-
-            var x = document.getElementById("edit-entry-modal");
-            x.style.display = "none";
-        });
-// ---------------------------------------------------------------------------------------------------------------------
-// toggle confirmation
-        function toggleConfirmation(){
-            if($('#' + selectedWeek[parseInt(selectedPhase)-1] + '.weekButton'+selectedPhase).attr('name') !== 'True'){
-                var y = document.getElementById("toggle-modal");
-                y.style.display = "flex";
-            }
-
-        };
-        $('#toggleWeekForm').on('submit', function(e){
-            e.preventDefault();
-            $.ajax({
-                type : "POST",
-                url: "{% url 'toggle_active_week' %}",
-                data: {
-                 phase: selectedPhase,
-                 week : selectedWeek[parseInt(selectedPhase)-1],
-
-                 csrfmiddlewaretoken: '{{ csrf_token }}',
-                 dataType: "json",
-                },
-                success: function(data){
-                    window.location.reload();
-                },
-                failure: function() {
-
-                }
-            });
-
-            var x = document.getElementById("toggle-modal");
-            x.style.display = "none";
-        });
-
-        function tempAlert(msg,duration) {
-             var el = document.createElement("div");
-             el.setAttribute("style","position:absolute;background-color:white;");
-             el.innerHTML = msg;
-             setTimeout(function(){
-              el.parentNode.removeChild(el);
-             },duration);
-             document.body.appendChild(el);
+            selectedWeek[parseInt(selectedPhase) - 1] = id;
+            console.log(selectedWeek);
+            setContentTitle();
+            getDayOptions();
+            displayTable();
+            toggleActive();
         }
-    </script>
-    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+
+    }
+    function toggleActive() {
+
+        if ($('#' + selectedWeek[parseInt(selectedPhase) - 1] + '.weekButton' + selectedPhase).attr('name') === 'True') {
+            $('.toggleActiveIcon').removeClass('toggleOff');
+            $('.toggleActiveIcon').removeClass('fa-toggle-off');
+
+            $('.toggleActiveIcon').addClass('toggleOn');
+            $('.toggleActiveIcon').addClass('fa-toggle-on');
+
+        }
+        else {
+            $('.toggleActiveIcon').removeClass('toggleOn');
+            $('.toggleActiveIcon').removeClass('fa-toggle-on');
+            $('.toggleActiveIcon').addClass('toggleOff');
+            $('.toggleActiveIcon').addClass('fa-toggle-off');
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // day select box
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+            $('.innerSelectBox').css({ 'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px' });
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+            $('.innerSelectBox').css("border-radius", "5px");
+        }
+    }
+
+    function dayClicked(elem) {
+        dayOption = $(elem);
+        if (dayOptions.length !== 0) {
+            id = dayOption.attr('id');
+            if (dayOptions.has(id)) {
+                dayOptions.delete(id);
+                dayOption.css({ 'background-color': '#888888', 'color': 'black' });
+            }
+            else {
+                dayOption.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+                dayOptions.add(id);
+            }
+        }
+        else {
+            dayOption.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+            dayOptions.add(id);
+        }
+        displayTable();
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // display modals
+    $('.close_addentry').on('click', function (e) {
+        var x = document.getElementById("add-entry-modal");
+        var y = document.getElementById("edit-entry-modal");
+        x.style.display = "none";
+        y.style.display = "none";
+    });
+
+    $('.bg-modal').on('click', function (e) {
+        if (e.target !== this)
+            return;
+        var clone = document.getElementById("clone-modal");
+        var x = document.getElementById("add-entry-modal");
+        var y = document.getElementById("edit-entry-modal");
+        x.style.display = "none";
+        y.style.display = "none";
+        clone.style.display = 'none';
+    });
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // submit add entry
+    $('#addEntryForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'add_entry' %}",
+            data: {
+
+                phase: phase,
+                week: week,
+                day: day,
+                exercise: $('#exercisefield').val(),
+                reps: $('#repfield').val(),
+                weight: $('#weightfield').val(),
+                sets: $('#setfield').val(),
+                comment: $('#commentfield').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (data) {
+                window.location.reload();
+            },
+            failure: function () {
+
+            }
+        });
+
+        var x = document.getElementById("add-entry-modal");
+        x.style.display = "none";
+    });
+    // ---------------------------------------------------------------------------------------------------------------------
+    // submit edit entry
+    $('#editEntryForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'edit_entry' %}",
+            data: {
+                id: $('#idField').val(),
+                exercise: $('#editExerciseField').val(),
+                reps: $('#editRepField').val(),
+                weight: $('#editWeightField').val(),
+                sets: $('#editSetField').val(),
+                comment: $('#editCommentField').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (data) {
+                window.location.reload();
+            },
+            failure: function () {
+
+            }
+        });
+
+        var x = document.getElementById("edit-entry-modal");
+        x.style.display = "none";
+    });
+    // ---------------------------------------------------------------------------------------------------------------------
+    // toggle confirmation
+    function toggleConfirmation() {
+        if ($('#' + selectedWeek[parseInt(selectedPhase) - 1] + '.weekButton' + selectedPhase).attr('name') !== 'True') {
+            var y = document.getElementById("toggle-modal");
+            y.style.display = "flex";
+        }
+
+    };
+    $('#toggleWeekForm').on('submit', function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "{% url 'toggle_active_week' %}",
+            data: {
+                phase: selectedPhase,
+                week: selectedWeek[parseInt(selectedPhase) - 1],
+
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                dataType: "json",
+            },
+            success: function (data) {
+                window.location.reload();
+            },
+            failure: function () {
+
+            }
+        });
+
+        var x = document.getElementById("toggle-modal");
+        x.style.display = "none";
+    });
+
+    function tempAlert(msg, duration) {
+        var el = document.createElement("div");
+        el.setAttribute("style", "position:absolute;background-color:white;");
+        el.innerHTML = msg;
+        setTimeout(function () {
+            el.parentNode.removeChild(el);
+        }, duration);
+        document.body.appendChild(el);
+    }
+</script>
+
 {% endblock content%}

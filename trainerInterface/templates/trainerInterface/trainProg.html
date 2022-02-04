@@ -1,105 +1,95 @@
-{% extends "trainerInterface/nav.html" %}
 {% load trainPlan_extras %}
 {% load static %}
 {% load my_filters %}
-
-{% block nav-train-prog %}
-    <a class="nav-link" href="{% url 'trainprog' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
-        <div class="iconWrapper">
-            <i class="far fa-calendar-check sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
-        </div>
-        <div class="textWrap" style="color:  #f4eb49">
-            Training Progress
-        </div>
-    </a>
-{% endblock %}
-
-
 {% block content %}
 
 
-    <script type="text/javascript">
-        var phase = 0;
-        var week = 0;
-        var day = 0;
-        function loadState(id){
-            var value = localStorage.getItem(id);
-            var x = document.getElementById(id);
-            x.style.display = value;
-        }
-        function hideItem(id) {
+<script type="text/javascript">
+    var phase = 0;
+    var week = 0;
+    var day = 0;
+    function loadState(id) {
+        var value = localStorage.getItem(id);
+        var x = document.getElementById(id);
+        x.style.display = value;
+    }
+    function hideItem(id) {
 
-          var x = document.getElementById(id);
-          var value
+        var x = document.getElementById(id);
+        var value
 
-          if (x.style.display === "none" || x.style.display === "") {
+        if (x.style.display === "none" || x.style.display === "") {
             value = "block";
-          } else {
+        } else {
             value = "none";
-          }
-          x.style.display = value;
-          localStorage.setItem(id, value)
         }
-        function hideTable(id) {
-          var x = document.getElementById(id);
-          if (x.style.display === "none" || x.style.display) {
+        x.style.display = value;
+        localStorage.setItem(id, value)
+    }
+    function hideTable(id) {
+        var x = document.getElementById(id);
+        if (x.style.display === "none" || x.style.display) {
             x.style.display = "table";
-          } else {
+        } else {
             x.style.display = "none";
-          }
         }
-        function toggleAddEntry(clic_phase, clic_week, clic_day) {
-            phase = clic_phase;
-            week = clic_week;
-            day = clic_day;
-            var x = document.getElementById("add-entry-modal");
-            if (x.style.display === "none" || !x.style.display) {
-              x.style.display = "flex";
-            } else {
-              x.style.display = "none";
-            }
-        };
+    }
+    function toggleAddEntry(clic_phase, clic_week, clic_day) {
+        phase = clic_phase;
+        week = clic_week;
+        day = clic_day;
+        var x = document.getElementById("add-entry-modal");
+        if (x.style.display === "none" || !x.style.display) {
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    };
 
-    </script>
-    <style>
-    .content{
+</script>
+<style>
+    .content {
         padding-top: 5px !important;
         padding-right: 0 !important;
         padding-left: 16px !important;
         padding-bottom: 16px !important;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Top Bar */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .topBarPhaseSelector{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .topBarPhaseSelector {
         width: 100%;
         border-radius: 5px;
         text-align: center;
         margin-bottom: 5px;
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase or Week selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .phaseOrWeek{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseOrWeek {
         display: inline;
         float: right;
     }
-    .phaseOrWeekButton{
+
+    .phaseOrWeekButton {
         border-radius: 4px;
         width: 80px;
         background-color: #9C9C9C;
         border: none;
 
     }
-    .selectPhaseButton{
+
+    .selectPhaseButton {
         background-color: #787878;
         color: #f4eb49;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .phaseButton{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .phaseButton {
         display: inline;
         width: 110px;
         position: relative;
@@ -107,22 +97,27 @@
         border: none;
         background-color: #9C9C9C;
     }
-    .phaseAddButton{
+
+    .phaseAddButton {
         width: 35px;
     }
-    .phaseSelectorWrapper{
+
+    .phaseSelectorWrapper {
         display: inline-block;
     }
-    .addForm{
+
+    .addForm {
         display: inline-block;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Week selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .weekSelectorWrapper{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .weekSelectorWrapper {
         display: none;
     }
-    .weekButton{
+
+    .weekButton {
         display: inline;
         width: 110px;
         position: relative;
@@ -130,12 +125,14 @@
         border: none;
         background-color: #9C9C9C;
     }
-    .weekAddButton{
+
+    .weekAddButton {
         width: 35px;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* Phase/Week content */
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     .phaseContent {
         display: flex;
         width: 100%;
@@ -147,7 +144,8 @@
         border-radius: 5px;
 
     }
-    .phaseContentWrapper{
+
+    .phaseContentWrapper {
         position: relative;
         display: block;
         background-color: #9C9C9C;
@@ -155,15 +153,16 @@
         padding-bottom: 16px;
     }
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* day selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .daySelectorBar{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .daySelectorBar {
         width: 100%;
         margin-bottom: 5px;
         text-align: center;
     }
-    .daySelector{
+
+    .daySelector {
         width: 120px;
         height: 25px;
         float: right;
@@ -173,29 +172,33 @@
         margin-right: 5px;
         margin-top: 5px;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* content Title */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .contentTitle{
-        height:25px;
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .contentTitle {
+        height: 25px;
         line-height: 25px;
         width: 30%;
         display: inline-block;
         margin-top: 5px;
-        margin-left: 7%; /* Centers Title */
+        margin-left: 7%;
+        /* Centers Title */
         background-color: #787878;
         border-radius: 5px;
         color: black;
         text-align: center;
     }
-/*--------------------------------------------------------------------------------------------------------------------*/
+
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* table */
-/*--------------------------------------------------------------------------------------------------------------------*/
-    .tableWrapper{
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .tableWrapper {
         width: 100%;
 
     }
-    .dayTable{
+
+    .dayTable {
         padding-top: 5px;
         border-radius: 5px;
         box-shadow: 0 0 0 1pt #787878;
@@ -206,645 +209,667 @@
         align-items: center;
         align-content: center;
     }
-    .addEntryButton{
-        border:none;
+
+    .addEntryButton {
+        border: none;
         background-color: #787878;
         border-radius: 5px;
         box-shadow: 0 0 0 1pt #5c5c5c;
         margin-bottom: 2px;
     }
 
-    .addEntryButtonWrapper{
+    .addEntryButtonWrapper {
         text-align: center;
         justify-content: center;
         align-items: center;
         align-content: center;
     }
-    .exerciseCell{
+
+    .exerciseCell {
         text-align: left;
         padding-left: 5px;
     }
 
 
-/*--------------------------------------------------------------------------------------------------------------------*/
+    /*--------------------------------------------------------------------------------------------------------------------*/
     /* day selector */
-/*--------------------------------------------------------------------------------------------------------------------*/
-        .multiselect {
-            border-radius: 5px;
-            margin-top: 5px;
-            margin-right: 5px;
-            display: inline-block;
-            width: 120px;
-            float: right;
-            background-color: transparent;
-        }
+    /*--------------------------------------------------------------------------------------------------------------------*/
+    .multiselect {
+        border-radius: 5px;
+        margin-top: 5px;
+        margin-right: 5px;
+        display: inline-block;
+        width: 120px;
+        float: right;
+        background-color: transparent;
+    }
 
-        .selectBox {
-            border-radius: 5px;
-            position: relative;
-            background-color: transparent;
-        }
-        .innerSelectBox {
-            height: 25px;
-            border-radius: 5px;
-            position: relative;
-            background-color: #787878;
-        }
-        .innerSelectBox:hover {
-            background-color: #5e5e5e;
-        }
+    .selectBox {
+        border-radius: 5px;
+        position: relative;
+        background-color: transparent;
+    }
 
-        .selectBox select {
-            text-align: center;
-            width: 100%;
-        }
+    .innerSelectBox {
+        height: 25px;
+        border-radius: 5px;
+        position: relative;
+        background-color: #787878;
+    }
 
-        .overSelect {
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
+    .innerSelectBox:hover {
+        background-color: #5e5e5e;
+    }
 
-        }
+    .selectBox select {
+        text-align: center;
+        width: 100%;
+    }
 
-        #checkboxes {
-            width: 120px;
-            position: absolute;
-            display: none;
-            border: none;
-            background-color: #787878;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-            color: black;
-            z-index: 2;
-        }
+    .overSelect {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
 
-        .dayOption {
-          display: none;
-            background-color: #787878;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
+    }
 
-        .dayOption:hover {
-          background-color: #888888;
-        }
-        .dayTitle{
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            width: 200px;
-            background-color: #585858;
-            border-radius: 5px;
-            color: #f4eb49;
-        }
-        .completedSetsTitle{
-            margin-left: 35%;
-            background-color: #787878;
-            border-radius: 5px;
-            width: 30%;
-        }
-        .setNameCell{
-            text-align: center;
-            width: 33%;
-        }
-        .setNameCellInner{
-            text-align: center;
-            width: 50%;
-            background-color: #787878;
-            margin-left: 25%;
-            border-radius: 5px;
-        }
-        .setCell{
-            width: 16.5%;
-            padding: 0;
-        }
-        .setCellLabel{
-            background-color: #787878;
-            width: 50%;
-            margin-left: 50%;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            text-align: center;
-        }
-        .setCellValue{
-            background-color: #888888;
-            width: 95%;
-            height: 21px;
-            position: relative;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            text-align: center;
-        }
+    #checkboxes {
+        width: 120px;
+        position: absolute;
+        display: none;
+        border: none;
+        background-color: #787878;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        color: black;
+        z-index: 2;
+    }
 
-        .exerciseCard{
+    .dayOption {
+        display: none;
+        background-color: #787878;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
 
-            height: 80px;
-            background-color: #787878;
-            margin-top: 5px;
-            margin-right: 5px;
-            margin-left: 5px;
-            border-radius: 5px;
-            padding-top: 5px;
-            padding-left: 5px;
-            display: block;
-        }
-        .imageBox{
-            width: 70px;
-            height: 70px;
-            overflow: hidden;
-            border-radius: 5px;
-            box-shadow: 0 0 2pt 0.5pt #f4eb49;
-            display: inline-block;
-        }
-        .cropImage{
-            margin-left: -35px;
-            margin-top: -17.5px;
-            /*object-fit: cover;*/
-            width: 140px;
-            height: 105px;
+    .dayOption:hover {
+        background-color: #888888;
+    }
 
-        }
-        .exerciseBox{
-            position: relative;
-            vertical-align: top;
-            bottom:0;
-            width: 250px;
-            height: 70px;
-            display: inline-block;
-            padding-top:22.5px;
-            margin-left: 5px;
-        }
-        .exerciseBoxInner{
-            /*display: block;*/
-            background-color: #585858;
-            text-align: center;
-            line-height: 25px;
-            width: 250px;
-            height: 25px;
-            justify-content: center;
-            align-items: center;
-            align-content: center;
-            border-radius: 5px;
-            color: #f4eb49;
-        }
-        .exerciseContent{
-            display: inline-block;
-            position: relative;
-            vertical-align: top;
+    .dayTitle {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        width: 200px;
+        background-color: #585858;
+        border-radius: 5px;
+        color: #f4eb49;
+    }
 
-            height: 70px;
-            width: calc(100% - 345px);
-        }
-        .exerciseContentItem{
-            display: inline-block;
-            width: 20.5%;
-            margin-left: 0;
-            padding: 0 !important;
-            height:25px;
-        }
-        .exerciseContentLabel{
-            display: inline-block;
-            width:12%;
-            margin-right: -4px;
-            height:25px;
-        }
-        .itemLabel{
-            background-color: #585858;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            text-align: center;
-            margin-right: 0 !important;
-            padding-right: 0 !important;
-            font-size: 12px;
-            line-height: 25px;
-        }
-        .itemValue{
-            background-color: #686868;
-            height: 21px;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            text-align: center;
-            margin-left: 0 !important;
-            padding-left: 0 !important;
-            font-size: 12px;
-            line-height: 25px;
-            height:25px;
-        }
-        .exerciseContentUpper{
-            height: 35px;
-            margin-top: 5px;
-        }
-        .exerciseContentLower{
-            height: 35px;
-            margin-bottom: 5px;
-        }
-        .commentBox{
-            width: 100%;
-            background-color: #585858;
-            border-radius: 5px;
-            text-align: center;
-            font-size: 12px;
-            height: 25px;
-            line-height: 25px;
-        }
-        .table-striped{
-            margin-left: 5px;
-            margin-right: 5px;
-            width: calc(100% - 10px);
-        }
-        .difficulty{
-            width: 200px;
-            align-content: center;
-            justify-content: center;
-            text-align: center;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-        .difficultyLabel{
-            display: inline-block;
-            background-color: #585858;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            width: 120px;
-            text-align: center;
-            margin-right: -4px;
-        }
-        .difficultyValue{
-            background-color: #787878;
-            width: 50px;
-            display: inline-block;
-            text-align: center;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
-        .feedbackLabel{
-            display: inline-block;
-            background-color: #585858;
-            border-top-left-radius: 5px;
-            border-bottom-left-radius: 5px;
-            width: 90px;
-            text-align: center;
-            margin-right: -4px;
-        }
-        .feedbackValue{
-            background-color: #888888;
-            display: inline-block;
-            text-align: center;
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
-            width: calc(100% - 90px);
-        }
+    .completedSetsTitle {
+        margin-left: 35%;
+        background-color: #787878;
+        border-radius: 5px;
+        width: 30%;
+    }
 
+    .setNameCell {
+        text-align: center;
+        width: 33%;
+    }
 
+    .setNameCellInner {
+        text-align: center;
+        width: 50%;
+        background-color: #787878;
+        margin-left: 25%;
+        border-radius: 5px;
+    }
 
+    .setCell {
+        width: 16.5%;
+        padding: 0;
+    }
 
+    .setCellLabel {
+        background-color: #787878;
+        width: 50%;
+        margin-left: 50%;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        text-align: center;
+    }
 
+    .setCellValue {
+        background-color: #888888;
+        width: 95%;
+        height: 21px;
+        position: relative;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        text-align: center;
+    }
 
-    </style>
-    <div class="topBarPhaseSelector">
-        <div class="phaseSelectorWrapper">
-            {% for phase in phases %}
-                <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}" onclick="phaseSelected('{{ phase.phase }}')">
-            {% endfor %}
+    .exerciseCard {
 
-        </div>
+        height: 80px;
+        background-color: #787878;
+        margin-top: 5px;
+        margin-right: 5px;
+        margin-left: 5px;
+        border-radius: 5px;
+        padding-top: 5px;
+        padding-left: 5px;
+        display: block;
+    }
+
+    .imageBox {
+        width: 70px;
+        height: 70px;
+        overflow: hidden;
+        border-radius: 5px;
+        box-shadow: 0 0 2pt 0.5pt #f4eb49;
+        display: inline-block;
+    }
+
+    .cropImage {
+        margin-left: -35px;
+        margin-top: -17.5px;
+        /*object-fit: cover;*/
+        width: 140px;
+        height: 105px;
+
+    }
+
+    .exerciseBox {
+        position: relative;
+        vertical-align: top;
+        bottom: 0;
+        width: 250px;
+        height: 70px;
+        display: inline-block;
+        padding-top: 22.5px;
+        margin-left: 5px;
+    }
+
+    .exerciseBoxInner {
+        /*display: block;*/
+        background-color: #585858;
+        text-align: center;
+        line-height: 25px;
+        width: 250px;
+        height: 25px;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        border-radius: 5px;
+        color: #f4eb49;
+    }
+
+    .exerciseContent {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+
+        height: 70px;
+        width: calc(100% - 345px);
+    }
+
+    .exerciseContentItem {
+        display: inline-block;
+        width: 20.5%;
+        margin-left: 0;
+        padding: 0 !important;
+        height: 25px;
+    }
+
+    .exerciseContentLabel {
+        display: inline-block;
+        width: 12%;
+        margin-right: -4px;
+        height: 25px;
+    }
+
+    .itemLabel {
+        background-color: #585858;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        text-align: center;
+        margin-right: 0 !important;
+        padding-right: 0 !important;
+        font-size: 12px;
+        line-height: 25px;
+    }
+
+    .itemValue {
+        background-color: #686868;
+        height: 21px;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        text-align: center;
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+        font-size: 12px;
+        line-height: 25px;
+        height: 25px;
+    }
+
+    .exerciseContentUpper {
+        height: 35px;
+        margin-top: 5px;
+    }
+
+    .exerciseContentLower {
+        height: 35px;
+        margin-bottom: 5px;
+    }
+
+    .commentBox {
+        width: 100%;
+        background-color: #585858;
+        border-radius: 5px;
+        text-align: center;
+        font-size: 12px;
+        height: 25px;
+        line-height: 25px;
+    }
+
+    .table-striped {
+        margin-left: 5px;
+        margin-right: 5px;
+        width: calc(100% - 10px);
+    }
+
+    .difficulty {
+        width: 200px;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .difficultyLabel {
+        display: inline-block;
+        background-color: #585858;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 120px;
+        text-align: center;
+        margin-right: -4px;
+    }
+
+    .difficultyValue {
+        background-color: #787878;
+        width: 50px;
+        display: inline-block;
+        text-align: center;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .feedbackLabel {
+        display: inline-block;
+        background-color: #585858;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        width: 90px;
+        text-align: center;
+        margin-right: -4px;
+    }
+
+    .feedbackValue {
+        background-color: #888888;
+        display: inline-block;
+        text-align: center;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        width: calc(100% - 90px);
+    }
+</style>
+<div class="topBarPhaseSelector">
+    <div class="phaseSelectorWrapper">
         {% for phase in phases %}
-            <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
-                {% for week in phase.weeks.all %}
-                    <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button" value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
-                {% endfor %}
-            </div>
+        <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}"
+            onclick="phaseSelected('{{ phase.phase }}')">
         {% endfor %}
 
-        <div class="phaseOrWeek">
-            <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
-            <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
-        </div>
     </div>
-    <div class="phaseContent">
-        <div class="phaseContentWrapper">
-            <div class="daySelectorBar">
+    {% for phase in phases %}
+    <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
+        {% for week in phase.weeks.all %}
+        <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button"
+            value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
+        {% endfor %}
+    </div>
+    {% endfor %}
 
-                <div class="contentTitle">
-                    Phase 1 Week 1
-                </div>
+    <div class="phaseOrWeek">
+        <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
+        <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
+    </div>
+</div>
+<div class="phaseContent">
+    <div class="phaseContentWrapper">
+        <div class="daySelectorBar">
 
-                <div class="multiselect">
-                    <div class="selectBox" onclick="showCheckboxes()">
-                        <select class="innerSelectBox">
-                          <option>Select days</option>
-                        </select>
-                        <div class="overSelect"></div>
-                    </div>
-                    <div class="checkboxes" id="checkboxes">
-                        {% for phase in phases %}
-                            {% for week in phase.weeks.all %}
-                                {% for day in week.days.all %}
-                                  <div class="dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" onclick="dayClicked(this)" id="{{ day.day }}">Day {{ day.day }}</div>
-                                {% endfor %}
-
-                            {% endfor %}
-                        {% endfor %}
-
-                    </div>
-                </div>
-
+            <div class="contentTitle">
+                Phase 1 Week 1
             </div>
-            <div class="tableWrapper">
-                {% for phase in phases %}
+
+            <div class="multiselect">
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select class="innerSelectBox">
+                        <option>Select days</option>
+                    </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div class="checkboxes" id="checkboxes">
+                    {% for phase in phases %}
                     {% for week in phase.weeks.all %}
-                        {% for day in week.days.all %}
-                            <div class="dayTable" id ="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
-                                <div class="dayTitle"> Day {{ day.day }} </div>
-                                {% for entry in day.entrys.all|dictsort:"id"%}
-                                    <div class="exerciseCard">
-                                        <div class="imageBox">
-                                            <img class="cropImage" height="110" src="https://img.youtube.com/vi/{{ entry.exercise.video|sliceVideo }}">
-                                        </div>
-                                        <div class="exerciseBox">
-                                            <div class="exerciseBoxInner">
-                                                {{ entry.exercise.name }}
-                                            </div>
-                                        </div>
-                                        <div class="exerciseContent">
-                                            <div class="exerciseContentUpper">
-                                                <div class="exerciseContentLabel">
-                                                    <div class="itemLabel">reps</div>
-                                                </div>
-                                                <div class="exerciseContentItem">
-                                                    <div class="itemValue">{{ entry.reps }}</div>
-                                                </div>
-                                                <div class="exerciseContentLabel">
-                                                    <div class="itemLabel">weight</div>
-                                                </div>
-                                                <div class="exerciseContentItem">
-                                                    <div class="itemValue">{{ entry.weight }}</div>
-                                                </div>
-                                                <div class="exerciseContentLabel">
-                                                    <div class="itemLabel">sets</div>
-                                                </div>
-                                                <div class="exerciseContentItem">
-                                                    <div class="itemValue">{{ entry.sets }}</div>
-                                                </div>
-                                            </div>
-                                            <div class="exerciseContentLower">
-                                                <div class="commentBox">
-                                                    {{ entry.comment }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <table class="table-striped">
-                                        {% with feedback=entry.id|get_feedback %}
-                                            {% if feedback %}
-                                            <tr style="height: 28px">
-
-                                                <td class="difficulty" colspan="1">
-                                                    <div class="difficultyLabel">Difficulty</div>
-                                                    <div class="difficultyValue">{{ feedback.difficulty }}</div>
-                                                </td>
-                                                <td class="feedback" colspan="4">
-                                                    <div class="feedbackLabel">Feedback</div>
-                                                    <div class="feedbackValue">{{ feedback.comment }}</div>
-                                                </td>
-
-                                            </tr>
-                                            {% else %}
-
-                                            {% endif %}
-                                        {% endwith %}
-                                        {% with sets=entry|get_sets %}
-                                            {% for set in sets %}
-                                                <tr>
-                                                    <td class="setNameCell">
-                                                        <div class="setNameCellInner">Set {{ set.set }}</div>
-                                                    </td>
-                                                    <td class="setCell">
-                                                        <div class="setCellLabel">reps</div>
-                                                    </td>
-                                                    <td class="setCell">
-                                                        <div class="setCellValue">{{ set.reps }}</div>
-                                                    </td>
-                                                    <td class="setCell">
-                                                        <div class="setCellLabel">weight</div>
-                                                    </td>
-                                                    <td class="setCell">
-                                                        <div class="setCellValue">{{ set.weights }}</div>
-                                                    </td>
-                                                </tr>
-                                            {% endfor %}
-                                        {% endwith %}
-                                    </table>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
+                    {% for day in week.days.all %}
+                    <div class="dayOption OptionPhase{{ phase.phase }}Week{{ week.week }}" onclick="dayClicked(this)"
+                        id="{{ day.day }}">Day {{ day.day }}</div>
                     {% endfor %}
+
+                    {% endfor %}
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+        <div class="tableWrapper">
+            {% for phase in phases %}
+            {% for week in phase.weeks.all %}
+            {% for day in week.days.all %}
+            <div class="dayTable" id="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}" style="display: none">
+                <div class="dayTitle"> Day {{ day.day }} </div>
+                {% for entry in day.entrys.all|dictsort:"id"%}
+                <div class="exerciseCard">
+                    <div class="imageBox">
+                        <img class="cropImage" height="110"
+                            src="https://img.youtube.com/vi/{{ entry.exercise.video|sliceVideo }}">
+                    </div>
+                    <div class="exerciseBox">
+                        <div class="exerciseBoxInner">
+                            {{ entry.exercise.name }}
+                        </div>
+                    </div>
+                    <div class="exerciseContent">
+                        <div class="exerciseContentUpper">
+                            <div class="exerciseContentLabel">
+                                <div class="itemLabel">reps</div>
+                            </div>
+                            <div class="exerciseContentItem">
+                                <div class="itemValue">{{ entry.reps }}</div>
+                            </div>
+                            <div class="exerciseContentLabel">
+                                <div class="itemLabel">weight</div>
+                            </div>
+                            <div class="exerciseContentItem">
+                                <div class="itemValue">{{ entry.weight }}</div>
+                            </div>
+                            <div class="exerciseContentLabel">
+                                <div class="itemLabel">sets</div>
+                            </div>
+                            <div class="exerciseContentItem">
+                                <div class="itemValue">{{ entry.sets }}</div>
+                            </div>
+                        </div>
+                        <div class="exerciseContentLower">
+                            <div class="commentBox">
+                                {{ entry.comment }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table class="table-striped">
+                    {% with feedback=entry.id|get_feedback %}
+                    {% if feedback %}
+                    <tr style="height: 28px">
+
+                        <td class="difficulty" colspan="1">
+                            <div class="difficultyLabel">Difficulty</div>
+                            <div class="difficultyValue">{{ feedback.difficulty }}</div>
+                        </td>
+                        <td class="feedback" colspan="4">
+                            <div class="feedbackLabel">Feedback</div>
+                            <div class="feedbackValue">{{ feedback.comment }}</div>
+                        </td>
+
+                    </tr>
+                    {% else %}
+
+                    {% endif %}
+                    {% endwith %}
+                    {% with sets=entry|get_sets %}
+                    {% for set in sets %}
+                    <tr>
+                        <td class="setNameCell">
+                            <div class="setNameCellInner">Set {{ set.set }}</div>
+                        </td>
+                        <td class="setCell">
+                            <div class="setCellLabel">reps</div>
+                        </td>
+                        <td class="setCell">
+                            <div class="setCellValue">{{ set.reps }}</div>
+                        </td>
+                        <td class="setCell">
+                            <div class="setCellLabel">weight</div>
+                        </td>
+                        <td class="setCell">
+                            <div class="setCellValue">{{ set.weights }}</div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endwith %}
+                </table>
                 {% endfor %}
             </div>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
         </div>
     </div>
+</div>
 
 
-    <script src="{% static '/assets/js/jquery.min.js' %}"></script>
-    <script src="/static/assets/js/popper.js"></script>
-    <script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
-
-    <script type="text/javascript">
+<script type="text/javascript">
 
 
-        var dayOptions = new Set();
-// set last phase to selected color
-        var lastPhase =$('.phaseButton:nth-last-child(1)'); // second last phaseButton since the add button is also a phaseButton
-        lastPhase.css({"background-color": "#787878", 'color':'#f4eb49'});
-        var selectedPhase = lastPhase.attr('id');
+    var dayOptions = new Set();
+    // set last phase to selected color
+    var lastPhase = $('.phaseButton:nth-last-child(1)'); // second last phaseButton since the add button is also a phaseButton
+    lastPhase.css({ "background-color": "#787878", 'color': '#f4eb49' });
+    var selectedPhase = lastPhase.attr('id');
 
-// ---------------------------------------------------------------------------------------------------------------------
+    // ---------------------------------------------------------------------------------------------------------------------
 
 
-// set if week or phase should be shown on page load
-        var phaseStatus = true;
-        var weekOpen = "{{ weekOpen }}";
+    // set if week or phase should be shown on page load
+    var phaseStatus = true;
+    var weekOpen = "{{ weekOpen }}";
 
-        if(weekOpen == "True"){
-            phaseSelected("{{ request.session.selectedPhase }}");
+    if (weekOpen == "True") {
+        phaseSelected("{{ request.session.selectedPhase }}");
 
-            weekClicked();
+        weekClicked();
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+
+    // set last week to selected color
+
+    var selectedWeek;
+    setLastWeek();
+    function setLastWeek() {
+        var lastWeek = $("#" + selectedPhase + ".weekSelectorWrapper .weekButton:last-child"); // second last phaseButton since the add button is also a phaseButton
+        lastWeek.css({ "background-color": "#787878", 'color': '#f4eb49' });
+        weekSelected(lastWeek.attr('id'));
+
+
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // set content title to phase and week
+    setContentTitle();
+    var phaseTitle;
+    var weekTitle;
+    function setContentTitle() {
+        if (typeof selectedPhase === 'undefined') {
+            phaseTitle = 'Phase 0';
+        } else {
+            phaseTitle = 'Phase ' + selectedPhase;
         }
-// ---------------------------------------------------------------------------------------------------------------------
-
-// set last week to selected color
-
-        var selectedWeek;
-        setLastWeek();
-        function setLastWeek(){
-            var lastWeek =$("#"+selectedPhase+".weekSelectorWrapper .weekButton:last-child"); // second last phaseButton since the add button is also a phaseButton
-            lastWeek.css({"background-color": "#787878", 'color':'#f4eb49'});
-            weekSelected(lastWeek.attr('id'));
-
-
+        if (typeof selectedWeek === 'undefined') {
+            weekTitle = ' Week 0';
         }
-// ---------------------------------------------------------------------------------------------------------------------
-// set content title to phase and week
-        setContentTitle();
-        var phaseTitle;
-        var weekTitle;
-        function setContentTitle() {
-            if (typeof selectedPhase === 'undefined') {
-                phaseTitle = 'Phase 0';
-            }else{
-                phaseTitle = 'Phase '+ selectedPhase;
-            }
-            if (typeof selectedWeek === 'undefined'){
-                weekTitle = ' Week 0';
-            }
-            else{
-                weekTitle = ' Week '+ selectedWeek;
-            }
-            $('.contentTitle').html(phaseTitle + weekTitle);
+        else {
+            weekTitle = ' Week ' + selectedWeek;
         }
+        $('.contentTitle').html(phaseTitle + weekTitle);
+    }
 
-// ---------------------------------------------------------------------------------------------------------------------
-// display days table
+    // ---------------------------------------------------------------------------------------------------------------------
+    // display days table
 
-        function displayTable(){
-            days = new Array();
-            days = Array.from(dayOptions).sort();
+    function displayTable() {
+        days = new Array();
+        days = Array.from(dayOptions).sort();
 
-            $('.dayTable').each(function(){
-                $(this).css("display", "none");
-            });
-            for (index in days) {
-                $('#Phase'+selectedPhase+'Week'+selectedWeek+'Day'+days[index]).css("display", "block");
-            }
-
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// display days option
-
-        getDayOptions();
-        function getDayOptions(){
-            dayOptions = new Set();
-            $('.dayOption').each(function() {
-                $(this).css('display','none');
-            })
-            $('.OptionPhase'+selectedPhase+'Week'+selectedWeek).each(function () {
-                option = $(this)
-                option.css("display", "block");
-                id = option.attr('id');
-                option.css({'background-color': '#787878', 'color': '#f4eb49'});
-                if (id !== 'button'){
-                    dayOptions.add(id);
-                }
-            })
-            if (dayOptions.size === 0){
-                $('.multiselect').css('display', 'none');
-            }
-            else{
-                $('.multiselect').css('display', 'inline-block');
-            }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-// phase/week button clicked
-
-        function phaseClicked(){
-            if (!phaseStatus){
-                // change the button color
-                $('.selectPhaseButton').css({"background-color": "#787878", 'color':'#f4eb49'});
-                $('.selectWeekButton').css({"background-color": "#9C9C9C", 'color':'black'});
-                phaseStatus=true;
-                // change from weeks to phases
-                $('.weekSelectorWrapper').css("display","none");
-                $('.phaseSelectorWrapper').css("display","inline-block");
-
-            }
-
-        }
-        function weekClicked(){
-            if (phaseStatus){
-                //set the last week to be active
-
-                // change the button color
-                $('.selectPhaseButton').css({"background-color": "#9C9C9C", 'color':'black'});
-                $('.selectWeekButton').css({"background-color": "#787878", 'color':'#f4eb49'});
-                phaseStatus=false;
-                // change from phase to weeks
-                $('.phaseSelectorWrapper').css("display","none");
-                $('#'+selectedPhase+'.weekSelectorWrapper').css("display","inline-block");
-
-            }
-        }
-// ---------------------------------------------------------------------------------------------------------------------
-
-// selecting phase
-        function phaseSelected(id){
-            if(id!=selectedPhase) {
-                $('#' + id + '.phaseButton').css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedPhase + '.phaseButton').css({"background-color": "#9C9C9C", 'color': 'black'});
-                selectedPhase = id;
-                setLastWeek();
-                setContentTitle();
-                getDayOptions();
-                displayTable();
-            }
-            weekClicked();
+        $('.dayTable').each(function () {
+            $(this).css("display", "none");
+        });
+        for (index in days) {
+            $('#Phase' + selectedPhase + 'Week' + selectedWeek + 'Day' + days[index]).css("display", "block");
         }
 
-// ---------------------------------------------------------------------------------------------------------------------
-// selecting week
-        function weekSelected(id){
-            if(id!=selectedWeek) {
-                $('#' + id + '.weekButton'+selectedPhase).css({"background-color": "#787878", 'color': '#f4eb49'});
-                $('#' + selectedWeek + '.weekButton'+selectedPhase).css({"background-color": "#9C9C9C", 'color': 'black'});
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // display days option
 
-                selectedWeek = id;
-                setContentTitle();
-                getDayOptions();
-                displayTable();
-
-            }
-        }
-
-// ---------------------------------------------------------------------------------------------------------------------
-// day select box
-        var expanded = false;
-
-        function showCheckboxes() {
-          var checkboxes = document.getElementById("checkboxes");
-          if (!expanded) {
-            checkboxes.style.display = "block";
-            expanded = true;
-            $('.innerSelectBox').css({'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px'});
-          } else {
-            checkboxes.style.display = "none";
-            expanded = false;
-            $('.innerSelectBox').css("border-radius","5px");
-          }
-        }
-
-        function dayClicked(elem) {
-            dayOption = $(elem);
-            if (dayOptions.length !== 0) {
-                id = dayOption.attr('id');
-                if (dayOptions.has(id)) {
-                    dayOptions.delete(id);
-                    dayOption.css({'background-color': '#888888', 'color': 'black'});
-                }
-                else{
-                    dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
-                    dayOptions.add(id);
-                }
-            }
-            else{
-                dayOption.css({'background-color': '#787878', 'color': '#f4eb49'});
+    getDayOptions();
+    function getDayOptions() {
+        dayOptions = new Set();
+        $('.dayOption').each(function () {
+            $(this).css('display', 'none');
+        })
+        $('.OptionPhase' + selectedPhase + 'Week' + selectedWeek).each(function () {
+            option = $(this)
+            option.css("display", "block");
+            id = option.attr('id');
+            option.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+            if (id !== 'button') {
                 dayOptions.add(id);
             }
+        })
+        if (dayOptions.size === 0) {
+            $('.multiselect').css('display', 'none');
+        }
+        else {
+            $('.multiselect').css('display', 'inline-block');
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+    // phase/week button clicked
+
+    function phaseClicked() {
+        if (!phaseStatus) {
+            // change the button color
+            $('.selectPhaseButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('.selectWeekButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            phaseStatus = true;
+            // change from weeks to phases
+            $('.weekSelectorWrapper').css("display", "none");
+            $('.phaseSelectorWrapper').css("display", "inline-block");
+
+        }
+
+    }
+    function weekClicked() {
+        if (phaseStatus) {
+            //set the last week to be active
+
+            // change the button color
+            $('.selectPhaseButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            $('.selectWeekButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            phaseStatus = false;
+            // change from phase to weeks
+            $('.phaseSelectorWrapper').css("display", "none");
+            $('#' + selectedPhase + '.weekSelectorWrapper').css("display", "inline-block");
+
+        }
+    }
+    // ---------------------------------------------------------------------------------------------------------------------
+
+    // selecting phase
+    function phaseSelected(id) {
+        if (id != selectedPhase) {
+            $('#' + id + '.phaseButton').css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('#' + selectedPhase + '.phaseButton').css({ "background-color": "#9C9C9C", 'color': 'black' });
+            selectedPhase = id;
+            setLastWeek();
+            setContentTitle();
+            getDayOptions();
             displayTable();
         }
+        weekClicked();
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // selecting week
+    function weekSelected(id) {
+        if (id != selectedWeek) {
+            $('#' + id + '.weekButton' + selectedPhase).css({ "background-color": "#787878", 'color': '#f4eb49' });
+            $('#' + selectedWeek + '.weekButton' + selectedPhase).css({ "background-color": "#9C9C9C", 'color': 'black' });
+
+            selectedWeek = id;
+            setContentTitle();
+            getDayOptions();
+            displayTable();
+
+        }
+    }
+
+    // ---------------------------------------------------------------------------------------------------------------------
+    // day select box
+    var expanded = false;
+
+    function showCheckboxes() {
+        var checkboxes = document.getElementById("checkboxes");
+        if (!expanded) {
+            checkboxes.style.display = "block";
+            expanded = true;
+            $('.innerSelectBox').css({ 'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px' });
+        } else {
+            checkboxes.style.display = "none";
+            expanded = false;
+            $('.innerSelectBox').css("border-radius", "5px");
+        }
+    }
+
+    function dayClicked(elem) {
+        dayOption = $(elem);
+        if (dayOptions.length !== 0) {
+            id = dayOption.attr('id');
+            if (dayOptions.has(id)) {
+                dayOptions.delete(id);
+                dayOption.css({ 'background-color': '#888888', 'color': 'black' });
+            }
+            else {
+                dayOption.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+                dayOptions.add(id);
+            }
+        }
+        else {
+            dayOption.css({ 'background-color': '#787878', 'color': '#f4eb49' });
+            dayOptions.add(id);
+        }
+        displayTable();
+    }
 // ---------------------------------------------------------------------------------------------------------------------
 
-    </script>
-    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+</script>
+
 {% endblock content%}

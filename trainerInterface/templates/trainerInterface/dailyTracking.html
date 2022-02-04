@@ -1,51 +1,54 @@
-{% extends "trainerInterface/nav.html" %}
-{% load static %}
-{% load my_filters %}
-
 {% block nav-dataTracking-prog %}
-    <a class="nav-link" href="{% url 'dailyTracking' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
-        <div class="iconWrapper">
-            <i class="fas fa-clipboard-list sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
-        </div>
-        <div class="textWrap" style="color:  #f4eb49">
-            Data Tracking
-        </div>
-    </a>
+<!-- <a class="nav-link" href="{% url 'dailyTracking' %}"
+    style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
+    <div class="iconWrapper">
+        <i class="fas fa-clipboard-list sidebarIcon" aria-hidden="true" style="color:  #f4eb49"></i>
+    </div>
+    <div class="textWrap" style="color:  #f4eb49">
+        Data Tracking
+    </div>
+</a> -->
 {% endblock %}
-
+{% load my_filters %}
+{% load static %}
 {% block content %}
 
 <style>
-    .content{
+    .content {
         /*position: relative;*/
         padding-top: 0 !important;
         /*height: 0;*/
     }
+
     /*--------------------------------------------------------------------------*/
     /* Date Bar */
     /*--------------------------------------------------------------------------*/
-    .dateHeader{
+    .dateHeader {
 
-        position:relative;
+        position: relative;
         margin-left: auto;
         margin-right: auto;
-        width:90%;
+        width: 90%;
         height: 30px;
-        top:0;
-        justify-content: center;     /* added for centered text */
+        top: 0;
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
     }
-    .dateSelectTable{
+
+    .dateSelectTable {
         margin-top: 7px;
         margin-bottom: 7px;
         margin-right: auto;
         margin-left: auto;
     }
-    .date{
+
+    .date {
         padding-left: 1vw;
         padding-right: 1vw;
         font-size: 18px;
     }
+
     /*--------------------------------------------------------------------------*/
     /* group boxs */
     /*--------------------------------------------------------------------------*/
@@ -54,10 +57,12 @@
         grid-template-columns: repeat(auto-fill, minmax(19%, 1fr));
         grid-gap: 1rem;
         width: calc(70vw);
-        border-spacing: 15px; /*Optional*/
+        border-spacing: 15px;
+        /*Optional*/
         padding-bottom: calc(5vh);
 
     }
+
     .groupBox {
         padding-top: 1%;
         padding-bottom: 1vw;
@@ -71,7 +76,8 @@
         padding-bottom: 100%;
 
         background-color: #ababab;
-        justify-content: center;     /* added for centered text */
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
 
         /*makes the container scroll in y direction*/
@@ -79,12 +85,14 @@
         overflow-y: scroll;
         overflow-x: hidden;
     }
+
     .groupBox::-webkit-scrollbar {
         width: 0.8vw;
         background-color: rgba(0, 0, 0, 0);
         border-bottom-right-radius: 5px;
         border-top-right-radius: 5px;
     }
+
     .groupContent {
         position: relative;
         top: 0.4vw;
@@ -93,35 +101,42 @@
         width: 95%;
         display: table-column;
         margin: auto;
-        justify-content: center;     /* added for centered text */
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
         margin-left: 0.8vw;
 
     }
+
     .groupContentTitle {
         position: relative;
         display: flex;
         margin: auto;
-        justify-content: center;     /* added for centered text */
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
         width: 100%;
         padding-bottom: 0.4vw;
     }
+
     .ContentTitle {
         position: relative;
         display: flex;
         margin: auto;
-        justify-content: center;     /* added for centered text */
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
         border-radius: 5px;
         width: 50%;
         border-color: rgba(0, 0, 0, 0.3);
         background-color: rgba(0, 0, 0, 0.3);
     }
-    .groupContentTable{
+
+    .groupContentTable {
         position: relative;
         margin: auto;
-        justify-content: center;     /* added for centered text */
+        justify-content: center;
+        /* added for centered text */
         align-items: center;
         border-radius: 5px;
         background-color: rgba(255, 255, 255, 0.4);
@@ -129,31 +144,36 @@
         margin-bottom: 0.4vw;
 
     }
-    .groupBottomSpacer{
+
+    .groupBottomSpacer {
         height: 0.5vw;
     }
-    .groupContentRow{
 
-    }
-    .groupContentCell{
+    .groupContentRow {}
+
+    .groupContentCell {
         display: table-cell;
         width: 50%;
     }
-    .groupContentName{
+
+    .groupContentName {
         padding-left: 4%;
     }
-    .groupContentVal{
+
+    .groupContentVal {
         padding-right: 4%;
         text-align: right;
     }
-    .trackingTool{
+
+    .trackingTool {
         float: right;
         font-size: 18px;
         margin-top: 10px;
         margin-right: -40px;
         color: #787878;
     }
-    .trackingTool:hover{
+
+    .trackingTool:hover {
         color: #585858;
     }
 </style>
@@ -161,7 +181,7 @@
 <div class="tableContent">
 
     <table class="dateSelectTable">
-        
+
         <a class="trackingTool" href="{% url 'dataTracking' %}">
             <i class="fas fa-tools"></i>
         </a>
@@ -178,40 +198,40 @@
         </tr>
     </table>
     <div class="groupRow">
-            {% for group in groups %}
-                <div class="groupBox">
-                    <div class="groupContent">
-                        <div class="groupContentTitle">
-                            <div class="ContentTitle">
-                                {{ group.name }}
-                            </div>
-                        </div>
-
-
-                        {% for field in group.textfields.all %}
-                            <table class = "groupContentTable">
-                                <tr class = "groupContentRow">
-                                    <td class = "groupContentCell groupContentName">
-                                        {{ field.name }}
-                                    </td>
-                                    <td class = "groupContentCell groupContentVal">
-                                        {{ field.id|id_in:trackingVals }}
-
-                                    </td>
-                                </tr>
-                            </table>
-                        {% endfor %}
-                        <div class="groupBottomSpacer">
-                        </div>
-
+        {% for group in groups %}
+        <div class="groupBox">
+            <div class="groupContent">
+                <div class="groupContentTitle">
+                    <div class="ContentTitle">
+                        {{ group.name }}
                     </div>
                 </div>
-            {% endfor %}
 
+
+                {% for field in group.textfields.all %}
+                <table class="groupContentTable">
+                    <tr class="groupContentRow">
+                        <td class="groupContentCell groupContentName">
+                            {{ field.name }}
+                        </td>
+                        <td class="groupContentCell groupContentVal">
+                            {{ field.id|id_in:trackingVals }}
+
+                        </td>
+                    </tr>
+                </table>
+                {% endfor %}
+                <div class="groupBottomSpacer">
+                </div>
+
+            </div>
         </div>
-        <div>
-            {{ trackingVals.field_id }}
-        </div>
+        {% endfor %}
+
+    </div>
+    <div>
+        {{ trackingVals.field_id }}
+    </div>
 
 
 
@@ -224,71 +244,71 @@
 
 <script type="text/javascript">
     const months = {
-      0: 'Jan',
-      1: 'Feb',
-      2: 'Mar',
-      3: 'Apr',
-      4: 'May',
-      5: 'Jun',
-      6: 'Jul',
-      7: 'Aug',
-      8: 'Sept',
-      9: 'Oct',
-      10: 'Nov',
-      11: 'Dec'
+        0: 'Jan',
+        1: 'Feb',
+        2: 'Mar',
+        3: 'Apr',
+        4: 'May',
+        5: 'Jun',
+        6: 'Jul',
+        7: 'Aug',
+        8: 'Sept',
+        9: 'Oct',
+        10: 'Nov',
+        11: 'Dec'
     };
     const days = [
-      'Sun',
-      'Mon',
-      'Tue',
-      'Wed',
-      'Thu',
-      'Fri',
-      'Sat'
+        'Sun',
+        'Mon',
+        'Tue',
+        'Wed',
+        'Thu',
+        'Fri',
+        'Sat'
     ]
 
-    var n =  new Date("{{ date }}");
+    var n = new Date("{{ date }}");
     console.log(n);
     var tomorrow = new Date();
     var yesterday = new Date();
     var today = new Date();
-    today.setHours(0,0,0,0);
-    tomorrow.setDate(today.getDate()+1);
-    tomorrow.setHours(0,0,0,0);
-    yesterday.setDate(today.getDate()-1);
-    yesterday.setHours(0,0,0,0);
+    today.setHours(0, 0, 0, 0);
+    tomorrow.setDate(today.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+    yesterday.setDate(today.getDate() - 1);
+    yesterday.setHours(0, 0, 0, 0);
 
     changeDay(0);
 
-    function changeDay(change){
+    function changeDay(change) {
         console.log(n.getTime());
-        n.setDate(n.getDate()+change);
+        n.setDate(n.getDate() + change);
         console.log(n.getTime());
         y = n.getFullYear();
-        m = n.getMonth()+1;
+        m = n.getMonth() + 1;
         month = months[n.getMonth()];
         d = n.getDate();
-        if (n.getTime()==today.getTime()){
+        if (n.getTime() == today.getTime()) {
             console.log("here");
             document.getElementById("date").innerHTML = "Today";
         }
-        else if (n.getTime()===tomorrow.getTime()){
+        else if (n.getTime() === tomorrow.getTime()) {
             document.getElementById("date").innerHTML = "Tomorrow";
         }
-        else if (n.getTime()===yesterday.getTime()){
+        else if (n.getTime() === yesterday.getTime()) {
             document.getElementById("date").innerHTML = "Yesterday";
         }
-        else{
+        else {
 
             day = days[n.getDay()];
 
-            document.getElementById("date").innerHTML =day+ ", " + d+" "+month  ;
+            document.getElementById("date").innerHTML = day + ", " + d + " " + month;
         }
         if (change != 0) {
             date = y + "-" + pad(m) + "-" + pad(d);
             console.log(date);
 
-            date = JSON.stringify({date});
+            date = JSON.stringify({ date });
             console.log(date);
 
             $.ajax({
@@ -314,7 +334,4 @@
     }
 </script>
 
-<script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-<script>feather.replace()</script>
 {% endblock content%}

@@ -42,11 +42,11 @@ def getUserform(request):
 
 
 def home(request):
-    context = {
+    if request.method == "POST":
+        processForm(request)
 
-
-    }
-    return render(request, 'trainerInterface/home.html', context=context)
+    form = getUserform(request)
+    return render(request, 'trainerInterface/home.html', {'form': form})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -67,47 +67,6 @@ def clients(request):
     trainer = Trainer.objects.get(trainer=request.user)
 
     return render(request, 'trainerInterface/clients.html', {'form': form, 'clients': trainer.clients.all()})
-
-
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def trainprog(request):
-    if request.method == "POST":
-        processForm(request)
-
-    if "selected_client" in request.session:
-        phases = Phase.objects.filter(user=User.objects.get(
-            email=request.session['selected_client']))
-    else:
-        phases = None
-    form = getUserform(request)
-
-    # TrackingGroup.objects.all().delete()
-    return render(request, 'trainerInterface/trainProg.html', {'form': form, 'phases': phases})
-
-
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def trainplan(request):
-    if request.method == "POST":
-        processForm(request)
-
-    if "selected_client" in request.session:
-        phases = Phase.objects.filter(user=User.objects.get(
-            email=request.session['selected_client']))
-    else:
-        phases = None
-    form = getUserform(request)
-    addform = AddTrainingEntry()
-    exercises = ExerciseType.objects.order_by('name')
-
-    # when the add week button is pressed this results in the page reloading with weeks menu open rather than phase open
-    weekOpen = False
-    if "weekOpen" in request.session:
-        if request.session["weekOpen"] == True:
-            request.session["weekOpen"] = False
-            weekOpen = True
-
-    return render(request, 'trainerInterface/trainPlan.html',
-                  {'form': form, 'phases': phases, 'addform': addform, 'exercises': exercises, 'weekOpen': weekOpen})
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
@@ -373,35 +332,6 @@ def dataTracking(request):
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'form': form, 'groups': groups, 'addGroupForm':
                                                                   addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
-
-
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def dailyTracking(request):
-    if request.method == "POST":
-        processForm(request)
-        if request.is_ajax():
-            processDate(request)
-
-    if "selected_client" in request.session:
-        currUserID = request.user.id
-        groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
-        if 'date' in request.session:
-            newdate = date(
-                *map(int, json.loads(request.session['date']).split('-')))
-
-        else:
-            newdate = date.today()
-        trackingVals = TrackingTextValue.objects.filter(client=User.objects.get(
-            email=request.session['selected_client']), date=newdate)
-    else:
-        groups = None
-        trackingVals = None
-
-    form = getUserform(request)
-
-    return render(request, 'trainerInterface/dailyTracking.html',
-                  {'form': form, 'groups': groups, 'selected_client': request.session['selected_client'],
-                   'trackingVals': trackingVals, 'date': newdate})
 
 
 def editGroup(request):
