@@ -1,19 +1,13 @@
 {% extends "trainerInterface/nav.html" %}
 
-{% block nav-dashboard %}
-    <a class="nav-link" href="{% url 'dashboard' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
-        <div class="iconWrapper">
-            <i class="fas fa-home sidebarIcon"  aria-hidden="true" style="color:  #f4eb49"></i>
-        </div>
-        <div class="textWrap" style="color:  #f4eb49">
-            Dashboard
-        </div>
-    </a>
-{% endblock %}
 {% block content %}
 
 <div>
-
-Dashboard
+    Dashboard
 </div>
+<script src="/static/assets/js/jquery.min.js"></script>
+<script>
+    nav_link = $('.nav-link').first();
+    nav_link.addClass('nav-link-selected');
+</script>
 {% endblock %}

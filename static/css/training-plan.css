@@ -1,0 +1,707 @@
+.content {
+    padding-top: 5px !important;
+    padding-right: 0 !important;
+    padding-left: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Top Bar */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.topBarPhaseSelector {
+    width: 100%;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Phase or Week selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.phaseOrWeek {
+    display: inline;
+    float: right;
+}
+
+.phaseOrWeekButton {
+    border-radius: 4px;
+    width: 80px;
+    background-color: #9C9C9C;
+    border: none;
+
+}
+
+.selectPhaseButton {
+    background-color: #787878;
+    color: #f4eb49;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Phase selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.phaseButton {
+    display: inline;
+    width: 110px;
+    position: relative;
+    border-radius: 5px;
+    border: none;
+    background-color: #9C9C9C;
+}
+
+.phaseAddButton {
+    width: 35px;
+}
+
+.phaseSelectorWrapper {
+    display: inline-block;
+}
+
+.addForm {
+    display: inline-block;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Week selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.weekSelectorWrapper {
+    display: none;
+}
+
+.weekButton {
+    display: inline;
+    width: 110px;
+    position: relative;
+    border-radius: 5px;
+    border: none;
+    background-color: #9C9C9C;
+}
+
+.weekAddButton {
+    width: 35px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Phase/Week content */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.phaseContent {
+    display: flex;
+    width: 100%;
+    height: 94.8%;
+
+    position: relative;
+    flex-direction: column;
+    background-color: #9C9C9C;
+    border-radius: 5px;
+
+}
+
+.phaseContentWrapper {
+    position: relative;
+    display: block;
+    background-color: #9C9C9C;
+    border-radius: 5px;
+    padding-bottom: 16px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* day selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.daySelectorBar {
+    width: 100%;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.daySelector {
+    width: 120px;
+    height: 25px;
+    float: right;
+    background-color: whitesmoke;
+    border-radius: 4px;
+    border: none;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* content Title */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.contentTitle {
+    height: 25px;
+    line-height: 25px;
+    width: 30%;
+    display: inline-block;
+    margin-top: 5px;
+    margin-left: 7%;
+    /* Centers Title */
+    background-color: #787878;
+    border-radius: 5px;
+    color: black;
+    text-align: center;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* table */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.tableWrapper {
+    width: 100%;
+
+}
+
+.dayTable {
+    
+    border-radius: 5px;
+    box-shadow: 0 0 0 1pt #787878;
+    margin-left: 25px;
+    margin-right: 25px;
+    margin-top: 20px;
+}
+.dayTable table{
+    border-collapse: collapse !important;
+}
+table{
+    border-collapse: collapse !important;
+}
+.addEntryButton {
+    cursor: pointer;
+    border: none;
+    background-color: #787878;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1pt #5c5c5c;
+    margin-bottom: 2px;
+}
+.addEntryButton:hover {
+    border: none;
+    background-color: #919191;
+    color: #f4eb49;
+    border-radius: 5px;
+    box-shadow: 0 0 0 1pt #5c5c5c;
+    margin-bottom: 2px;
+}
+
+.addEntryButtonWrapper {
+    text-align: center;
+}
+
+.exerciseCell {
+    cursor: grabbing !important;
+    text-align: left;
+    padding-left: 5px;
+}
+.editCell {
+    cursor: pointer;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* adding entry window */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.bg-modal {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: -16px;
+    width: 100%;
+    height: calc(100vh - 45px);
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.modal-content {
+    width: 35%;
+    height: 45%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 1%;
+    /*height: 300px;*/
+    background-color: #ababab;
+    border-radius: 5px;
+    position: relative;
+    align-items: center;
+    /*justify-content: center;*/
+}
+
+.close_addentry {
+    cursor: pointer;
+    position: relative;
+    line-height: 20px;
+    font-size: 32px;
+    rotate: 45;
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -webkit-transform: rotate(45deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+    display: inline-block;
+    float: right;
+    margin-right: -1%;
+    margin-top: 0;
+}
+
+.trainContent {
+    justify-content: center;
+    width: calc(80vw);
+}
+
+.AddEntryTitleContainer {
+    width: 50%;
+    margin-left: 25%;
+    position: relative;
+    display: inline-block;
+    background-color: #787878;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: black;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+
+.addEntryTable tbody tr{
+    height: 30px;
+}
+
+#exercisefield {
+
+    padding: 0;
+    margin: 0;
+    display: table-cell;
+}
+
+.add-entry-form {
+    display: table-cell;
+    position: relative;
+    top: 0;
+    padding: 0;
+    margin: 0;
+}
+
+.label {
+    display: table-cell;
+    width: 50%;
+    padding-left: 8px;
+}
+
+.addEntryCell {
+    display: table-cell;
+    width: 50%;
+}
+
+.addEntryInput {
+    text-align: center;
+    position: relative;
+    height: 30px;
+    width: 100%;
+    border-radius: 7px;
+    border: none;
+    background-color: #787878;
+}
+
+.addEntryTable {
+    position: relative;
+    display: table;
+    width: 100%;
+    border-radius: 7px;
+    box-shadow: 0 0 0 1pt grey;
+    margin-top: 5px;
+    margin-bottom: 7px;
+}
+.EntrySubmitWrapper{
+    width: 100%;
+    text-align: center;
+}
+.submitAddEntry {
+    border-radius: 7px;
+    background-color: #787878;
+    border: none;
+    box-shadow: 0 0 0 1pt #404040;
+    margin-bottom: 5px;
+    width: 25%;
+    height: 25px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* day selector */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.multiselect {
+    border-radius: 5px;
+    margin-top: 5px;
+    margin-right: 5px;
+    display: inline-block;
+    width: 120px;
+    float: right;
+    background-color: transparent;
+}
+
+.selectBox {
+    border-radius: 5px;
+    position: relative;
+    background-color: transparent;
+}
+
+.innerSelectBox {
+    height: 25px;
+    border-radius: 5px;
+    position: relative;
+    background-color: #787878;
+}
+
+.innerSelectBox:hover {
+    background-color: #5e5e5e;
+}
+
+.selectBox select {
+    text-align: center;
+    width: 100%;
+}
+
+.overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+}
+
+#checkboxes {
+    width: 120px;
+    position: absolute;
+    display: none;
+    border: none;
+    background-color: #787878;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    color: black;
+    z-index: 2;
+}
+
+.dayOption {
+    display: none;
+    background-color: #787878;
+}
+
+.dayOption:hover {
+    background-color: #888888;
+}
+
+.dayAdd {
+    font-weight: bold;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+
+    border: none;
+    background-color: #787878;
+}
+
+.dayAddButton {
+    border: none;
+    background-color: #787878;
+    width: 120px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.dayAddButton:hover {
+    background-color: #888888;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* delete Entry button */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.deleteEntryButtonWrapper {
+    border: none;
+    background-color: #78787800;
+    cursor: pointer;
+    /* border-radius: 5px;
+    box-shadow: 0 0 0 1pt #5c5c5c; */
+}
+
+.deleteEntryButton {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 17px;
+    color: #724646;
+    transform: rotate(45deg);
+    width: 10px;
+    position: relative;
+}
+.deleteEntryButton:hover{
+    color: #c0ce00;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* Active Toggle */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.toggleActive {
+    display: inline-block;
+    float: left;
+    height: 25px;
+    line-height: 25px;
+    margin-left: 25px;
+    margin-top: 5px;
+
+}
+
+.toggleOn {
+    color: #228124;
+    font-size: 25px;
+}
+
+.toggleOff {
+    color: #7E3535;
+    font-size: 25px;
+}
+
+.toggleConfirmationMessage {
+    position: relative;
+    display: inline-block;
+    background-color: #787878;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    margin: 5px;
+    margin: 5px;
+    color: black;
+    font-weight: normal;
+}
+
+.toggleConfirmationSubMessage {
+    font-weight: lighter;
+    font-size: 12px;
+    border-radius: 8px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* clone */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.cloneWeek {
+    line-height: 25px;
+    height: 25px;
+    width: 25px;
+    float: right;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-top: 5px;
+    margin-right: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.cloneWeekIcon {
+    color: #5E5E5E;
+}
+
+.cloneWeekIcon:hover {
+    color: #3E3E3E;
+}
+
+.cloneOptionsWrapper {
+    position: absolute;
+    display: none;
+    width: 140px;
+    height: 180px;
+    flex-direction: column;
+    overflow-y: scroll;
+    background-color: #D6D6D6;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    z-index: 2;
+
+}
+
+.cloneOption:hover {
+    background-color: #B0B0B0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cloneTitle {
+    position: relative;
+    display: block;
+    background-color: #787878;
+    align-items: center;
+    text-align: center;
+    border-radius: 5px;
+    margin: 5px;
+    margin-left: 25%;
+    color: black;
+    font-weight: bold;
+    width: 50%;
+
+}
+
+.clonePhaseBackground {
+    position: relative;
+    display: inline-block;
+    background-color: #919191;
+    align-items: center;
+    text-align: center;
+    border-radius: 8px;
+    margin: 5px;
+    color: black;
+    font-weight: normal;
+    padding-right: 7px;
+}
+
+.clonePhaseContainer {
+    line-height: 25px;
+    padding-left: 7px;
+    padding-right: 7px;
+    display: inline-block;
+    border-radius: 5px;
+    background-color: #787878;
+    margin-right: 5px;
+}
+
+.cloneArrow {
+    display: inline-block;
+}
+
+.cloneWeekContainer {
+    display: inline-block;
+}
+
+.submitClone {
+    border-radius: 7px;
+    background-color: #787878;
+    border: none;
+    box-shadow: 0 0 0 1pt #404040;
+    margin-bottom: 5px;
+    margin-top: 7px;
+}
+
+.dayTitle {
+    background-color: #787878;
+    border-radius: 5px;
+    color: #f4eb49;
+}
+
+/* .exerciseCell {
+    cursor: pointer;
+} */
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/* custom dropdown */
+/*--------------------------------------------------------------------------------------------------------------------*/
+.custom-select{
+    height : 34px;
+    width: 160px;
+    border-radius: 17px;
+    background-color: rgb(109, 109, 109);
+    color: #f4eb49;
+    position: relative;
+    /* display: inline-block; */
+    float: right;
+    border: none;
+    outline: none;
+    vertical-align: middle;
+    padding: 0!important;
+    margin-right: 5px;
+}
+.custom-select:after{
+    content: '\f078';
+    font: normal normal normal 17px/1 FontAwesome;
+    color: #bdbdbd;
+    right: 10px;
+    top: 0px;
+    height: 34px;
+    padding: 9px 0px 0px 8px;
+    border-left: 1px solid #bdbdbd;
+    position: absolute;
+    pointer-events: none;
+}
+.custom-select:hover{
+    background-color: rgb(117, 117, 117);
+  } 
+.custom-select select {
+display: none; /*hide original SELECT element: */
+}
+
+.select-selected {
+    padding-top: 1px;
+    line-height: 34px;
+    vertical-align: middle;
+    padding-left: 10px;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+
+
+/* style the items (options), including the selected item: */
+.select-items div {
+color: #dfdfdf;
+height:34px;
+line-height: 34px;
+vertical-align: middle;
+text-align: center;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+position: absolute;
+background-color: rgb(117, 117, 117);
+top:40px;
+left: 0;
+right: 0;
+z-index: 99;
+border-radius: 5px;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+display: none;
+}
+
+.select-items div:hover{
+background-color: rgb(125, 125, 125);
+color: #f4eb49;
+}
+.same-as-selected {
+    background-color: rgb(125, 125, 125);
+    color: #f4eb49;
+}
+
+/* Day selector */
+.day-selector-wrapper{
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.day-tile{
+    display: inline-block;
+    height: 30px;
+    width: 100px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 15px;
+    
+}
+.selected-day{
+    color: #f4eb49;
+    background-color: rgb(117, 117, 117);
+}
+.unselected-day{
+    background-color: rgb(109, 109, 109);
+    color: #cccccc;
+}
+.day-tile-word{
+    display: inline-block;
+    line-height: 30px;
+}
+.day-tile-num{
+    display: inline-block;
+    line-height: 30px;
+}

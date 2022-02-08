@@ -1,0 +1,20 @@
+<tr class="entryRow" id="{{ entry.id }}" style="text-align: center">
+    <td class="exerciseCell">{{ entry.exercise.name }}</td>
+    <td
+        onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+        {{ entry.reps }}</td>
+    <td
+        onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+        {{ entry.weight }}</td>
+    <td
+        onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+        {{ entry.sets }}</td>
+    <td
+        onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+        {{ entry.comment }}</td>
+    <td style="width: 50px">
+        <button class="deleteEntryButtonWrapper" type="button" name="button" onclick="deleteEntry({{ entry.id }})">
+            <div class="deleteEntryButton">+</div>
+        </button>
+    </td>
+</tr>

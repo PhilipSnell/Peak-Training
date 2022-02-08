@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 from api.models import ExerciseType
 from .form import *
-import openpyxl
+
 import json
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
@@ -55,8 +55,10 @@ def dashboard(request):
         processForm(request)
 
     form = getUserform(request)
-
-    return render(request, 'trainerInterface/dashboard.html', {'form': form})
+    if request.is_ajax():
+        return render(request, 'trainerInterface/dashboard-ajax.html', {'form': form})
+    else:
+        return render(request, 'trainerInterface/dashboard.html', {'form': form})
 
 
 def clients(request):
@@ -70,13 +72,6 @@ def clients(request):
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def deleteExercise(request, id=None):
-    object = ExerciseType.objects.get(id=id)
-    object.delete()
-
-    return redirect('exercises')
-
-
 def addPhase(request):
     objects = Phase.objects.filter(user=User.objects.get(
         email=request.session['selected_client']))
@@ -128,62 +123,6 @@ def addDay(request, phaseID=None, weekID=None):
                  user=user)
     newDay.save()
     week_selected.days.add(newDay)
-
-    return redirect('trainplan')
-
-
-def addEntry(request):
-    user = User.objects.get(email=request.session['selected_client'])
-    if request.is_ajax():
-        phase = request.POST.get('phase', None)
-        week = request.POST.get('week', None)
-        day = request.POST.get('day', None)
-        exercise = request.POST.get('exercise', None)
-        reps = request.POST.get('reps', None)
-        weight = request.POST.get('weight', None)
-        sets = request.POST.get('sets', None)
-        comment = request.POST.get('comment', None)
-        print(exercise)
-        try:
-            train_entry = TrainingEntry(
-                user=user,
-                phase=phase,
-                week=week,
-                day=day,
-                exercise=ExerciseType.objects.get(name=exercise),
-                reps=reps,
-                weight=weight,
-                sets=sets,
-                comment=comment,
-            )
-            train_entry.save()
-            print("saved")
-            response = {
-                'msg': 'Your form has been submitted successfully'  # response message
-            }
-            day = Day.objects.get(phase=phase, week=week, day=day, user=user)
-            day.entrys.add(train_entry)
-
-        except:
-            print("not saved")
-            response = {
-                'msg': 'Your form has not been saved'  # response message
-            }
-    return redirect('trainplan')
-
-
-def changeOrder(request):
-    if request.is_ajax():
-        idOrder = json.loads(request.POST.get('idOrder', None))['idOrder']
-        order = 1
-        for id in idOrder:
-            print(id)
-            exercise = TrainingEntry.objects.get(id=id)
-            exercise.order = order
-            exercise.save()
-            order += 1
-
-        print(idOrder)
 
     return redirect('trainplan')
 
@@ -268,51 +207,6 @@ def toggleActiveWeek(request):
 
         except:
             print("changing active week didnt work")
-    return redirect('trainplan')
-
-
-def editEntry(request):
-
-    if request.is_ajax():
-        id = request.POST.get('id', None)
-        exerciseName = request.POST.get('exercise', None)
-        reps = request.POST.get('reps', None)
-        weight = request.POST.get('weight', None)
-        sets = request.POST.get('sets', None)
-        comment = request.POST.get('comment', None)
-
-        try:
-            train_entry = TrainingEntry.objects.get(id=id)
-            train_entry.exercise = ExerciseType.objects.get(name=exerciseName)
-            train_entry.reps = reps
-            train_entry.weight = weight
-            train_entry.sets = sets
-            train_entry.comment = comment
-            train_entry.save()
-            print("entry updated")
-
-        except:
-            print("entry not edited")
-            response = {
-                'msg': 'not edited'  # response message
-            }
-    return redirect('trainplan')
-
-
-def deleteEntry(request):
-
-    if request.is_ajax():
-        id = request.POST.get('id', None)
-
-        try:
-            train_entry = TrainingEntry.objects.get(id=id)
-            train_entry.delete()
-
-        except:
-            print("entry not deleted")
-            response = {
-                'msg': 'not deleted'  # response message
-            }
     return redirect('trainplan')
 
 
@@ -452,67 +346,3 @@ def addGroup(request):
                 'msg': 'Your form has not been saved'  # response message
             }
     return redirect('dataTracking')
-
-
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def exercises(request):
-    exerciseForm = AddExercise()
-    exercises = ExerciseType.objects.all().order_by('name')
-
-    if request.method == "POST":
-        processForm(request)
-
-        if 'uploadFile' in request.POST:
-            excel_file = request.FILES["excel_file"]
-
-            # you may put validations here to check extension or file size
-            wb = openpyxl.load_workbook(excel_file.temporary_file_path())
-
-            # getting a particular sheet by name out of many sheets
-            worksheet = wb["Sheet1"]
-            print(worksheet)
-
-            worksheet.delete_rows(0)
-            for row in worksheet.iter_rows():
-                if not ExerciseType.objects.filter(name=row[0].value).exists():
-                    exercise = ExerciseType(
-                        name=row[0].value,
-                        description=row[1].value,
-                        video=row[2].value,
-                    )
-                    exercise.save()
-                    print("exercise " + exercise.name + " saved")
-                else:
-                    exercise = ExerciseType.objects.get(name=row[0].value)
-                    exercise.description = row[1].value
-                    exercise.video = row[2].value
-                    exercise.save()
-                    print("exercise " + row[0].value + " updated")
-        if 'addExercise' in request.POST:
-
-            addedExercise = AddExercise(request.POST, request.FILES)
-            if addedExercise.is_valid():
-                name = addedExercise.cleaned_data.get("name")
-                description = addedExercise.cleaned_data.get("description")
-                image = addedExercise.cleaned_data.get("image")
-                video = addedExercise.cleaned_data.get("video")
-                if not ExerciseType.objects.filter(name=name).exists():
-                    exercise = ExerciseType(
-                        name=name,
-                        description=description,
-                        image=image,
-                        video=video,
-                    )
-                    exercise.save()
-                    print("exercise " + name + " saved")
-                else:
-                    exercise = ExerciseType.objects.get(name=name)
-                    exercise.description = description
-                    exercise.image = image
-                    exercise.video = video
-                    exercise.save()
-                    print("exercise " + name + " updated")
-
-    form = getUserform(request)
-
-    return render(request, 'trainerInterface/exercises.html', {'form': form, 'exercises': exercises, 'exerciseForm': exerciseForm})

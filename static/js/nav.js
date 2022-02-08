@@ -13,7 +13,11 @@ $(document).ready(function () {
             nav_link.addClass('nav-link-selected');
             console.log(nav_link.attr('title'));
             $(".content-title").html(nav_link.attr('title'));
+            $(".custom-select").each(function () {
+                $(this).remove();
+                console.log('removed')
 
+            });
             // requests the new html segment
             $.ajax({
                 type: "GET",
@@ -23,6 +27,8 @@ $(document).ready(function () {
                     $(".content-backing").html(data)
                 }
             })
+
         }
+
     });
 })
