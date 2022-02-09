@@ -1,0 +1,51 @@
+{% for day in days %}
+<div class="dayTable" id="Day{{ day.day }}">
+    <table id="table{{ day.day }}" class="table-striped" style="width: 100%">
+        <thead>
+            <tr>
+                <td class="addEntryButtonWrapper" colspan="6">
+                    <div class="dayTitle"> Day {{ day.day }} </div>
+                </td>
+            </tr>
+            <tr style="text-align: center">
+                <th class="exerciseCell">Exercise</th>
+                <th>Reps</th>
+                <th>Weight</th>
+                <th>Sets</th>
+                <th>Comment</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in day.entrys.all|dictsort:"order" %}
+            <tr class="entryRow" id="{{ entry.id }}" style="text-align: center">
+                <td class="exerciseCell exerciseCellName">{{ entry.exercise.name }}</td>
+                <td class="editCell"
+                    onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                    {{ entry.reps }}</td>
+                <td class="editCell"
+                    onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                    {{ entry.weight }}</td>
+                <td class="editCell"
+                    onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                    {{ entry.sets }}</td>
+                <td class="editCell"
+                    onclick='editEntry("{{ entry.exercise.name }}", "{{ entry.reps }}", "{{ entry.weight }}","{{ entry.sets }}", "{{ entry.comment }}", "{{ entry.id }}")'>
+                    {{ entry.comment }}</td>
+                <td style="width: 50px"><button class="deleteEntryButtonWrapper" type="button" name="button"
+                        onclick="deleteEntry({{ entry.id }})">
+                        <div class="deleteEntryButton">+</div>
+                    </button></td>
+            </tr>
+            {% endfor %}
+
+            <tr class="addEntryButtonWrapper{{ day.day }}">
+                <td id="addentry" class="addEntryButtonWrapper " colspan="6">
+                    <button id="add-entry" class="addEntryButton" type="button" name="button"
+                        onclick="toggleAddEntry(selectedPhase, selectedWeek, {{ day.day }})">+</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endfor %}

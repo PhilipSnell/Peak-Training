@@ -108,7 +108,8 @@
 /*--------------------------------------------------------------------------------------------------------------------*/
 .daySelectorBar {
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 0;
+    height: 25px;
     text-align: center;
 }
 
@@ -131,8 +132,9 @@
     line-height: 25px;
     width: 30%;
     display: inline-block;
+    float:left;
     margin-top: 5px;
-    margin-left: 7%;
+    margin-left: 35%;
     /* Centers Title */
     background-color: #787878;
     border-radius: 5px;
@@ -185,6 +187,7 @@ table{
 
 .exerciseCell {
     cursor: grabbing !important;
+    width: 40%;
     text-align: left;
     padding-left: 5px;
 }
@@ -440,10 +443,10 @@ table{
 /*--------------------------------------------------------------------------------------------------------------------*/
 .toggleActive {
     display: inline-block;
-    float: left;
+    float: right;
     height: 25px;
     line-height: 25px;
-    margin-left: 25px;
+    margin-right: 15px;
     margin-top: 5px;
 
 }
@@ -626,6 +629,7 @@ display: none; /*hide original SELECT element: */
 
 .select-selected {
     padding-top: 1px;
+    height: 34px;
     line-height: 34px;
     vertical-align: middle;
     padding-left: 10px;
@@ -680,18 +684,28 @@ color: #f4eb49;
     text-align: center;
     margin-bottom: 10px;
 }
+.addDayButton:hover{
+    color: rgb(190, 190, 190);
+    background-color: rgb(128, 128, 128);
+}
 .day-tile{
+    cursor: pointer;
     display: inline-block;
     height: 30px;
     width: 100px;
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 15px;
-    
+    color:#444444;
+    background-color: rgb(105, 105, 105);
 }
 .selected-day{
     color: #f4eb49;
     background-color: rgb(117, 117, 117);
+}
+.selected-day:hover{
+    color: #f4eb49;
+    background-color: rgb(105, 105, 105);
 }
 .unselected-day{
     background-color: rgb(109, 109, 109);
@@ -704,4 +718,91 @@ color: #f4eb49;
 .day-tile-num{
     display: inline-block;
     line-height: 30px;
+}
+
+/* alerts */
+.alertPopupError{
+    width: 20%;
+    margin-left: 47.5%;
+    height: 25px;
+    position:absolute;
+    background-color:rgb(161, 86, 86);
+    top: 50;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 25px;
+  }
+
+.alertPopupSuccess{
+    width: 20%;
+    margin-left: 47.5%;
+    height: 25px;
+    position:absolute;
+    background-color:rgb(63, 109, 77);
+    color:#bebebe;
+    top: 50;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 25px;
+  }
+
+.alertPopupAccept{
+    width: 20%;
+    margin-left: 47.5%;
+    height: 55px;
+    position:absolute;
+    background-color:rgb(134, 134, 134);
+    /* border-bottom: 3px solid #3E3E3E;
+    border-left: 3px solid #3E3E3E;
+    border-right: 3px solid #3E3E3E; */
+    box-shadow: #000000 0px 0px 6px 0px;
+    color:#252525;
+    top: 50;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 25px;
+    animation: slideB 1s;
+}
+.toggleButton{
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    width: 30%;
+    background-color: #686868;
+    color:rgb(197, 197, 197);
+}
+.toggleButton:hover{
+    background-color: #747474;
+    color:#cbee04;
+    box-shadow: #000000 0px 0px 6px 0px;
+}
+.cancelToggle{
+    margin-right: 10%;
+}
+.optionWrapper{
+    width: 100%;
+    height: 30px;
+    text-align: center;
+}
+
+.slideAnim {
+    animation: slideA 2s 2;
+    animation-direction: alternate;
+  }
+  
+@keyframes slideA {
+    0% {top: 25px;}
+    50% {top: 50px;}
+    100% {top: 50px;}
+}
+@keyframes slideB {
+    from {top: -5px;}
+    to {top: 50px;}
+}
+@keyframes slideC {
+    from {top: 50px;}
+    to {top: -5px;}
 }

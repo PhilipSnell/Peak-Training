@@ -50,20 +50,20 @@
     </div>
 </div> -->
 <div class="day-selector-wrapper">
-
+    <div class="day-tile addDayButton">
+        <div class="day-tile-word">Add Day</div>
+    </div>
 </div>
 <div class="phaseContent">
     <div class="phaseContentWrapper">
         <div class="daySelectorBar">
-            <div class="toggleActive">
-                <i class="fas fa-toggle-off toggleActiveIcon toggleOff" aria-hidden="true"
-                    onclick="toggleConfirmation()"></i>
-            </div>
             <div class="contentTitle">
                 Phase {{ days.0.phase }} Week {{ days.0.week }}
             </div>
 
-            <div class="cloneWeek">
+
+
+            <div class="cloneWeek" title="Clone a week">
                 <i class="fas fa-clone cloneWeekIcon" aria-hidden="true" onclick="showCloneOptions()"></i>
                 <div class="cloneOptionsWrapper" id="cloneOptionsWrapper">
                     <div class="cloneOptions">
@@ -78,6 +78,9 @@
 
                     </div>
                 </div>
+            </div>
+            <div class="toggleActive" title="Activate Week">
+                <i class="fas fa-toggle-off toggleActiveIcon toggleOff" aria-hidden="true"></i>
             </div>
 
         </div>

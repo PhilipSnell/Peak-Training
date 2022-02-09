@@ -323,38 +323,3 @@ a{
   text-decoration: none;
   cursor: pointer;
 }
-.alertPopupError{
-  width: 20%;
-  margin-left: 47.5%;
-  height: 25px;
-  position:absolute;
-  background-color:rgb(161, 86, 86);
-  top: 50;
-  text-align: center;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  line-height: 25px;
-}
-.alertPopupSuccess{
-  width: 20%;
-  margin-left: 47.5%;
-  height: 25px;
-  position:absolute;
-  background-color:rgb(63, 109, 77);
-  color:#bebebe;
-  top: 50;
-  text-align: center;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  line-height: 25px;
-}
-.slideAnim {
-  animation: slideA 2s 2;
-  animation-direction: alternate;
-}
-
-@keyframes slideA {
-  0% {top: 25px;}
-  50% {top: 50px;}
-  100% {top: 50px;}
-}

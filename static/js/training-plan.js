@@ -14,6 +14,61 @@ function tempAlert(msg, duration, type) {
     }, duration);
     document.body.appendChild(el);
 }
+// Alert accept popup
+function tempAcceptAlert(msg) {
+    var el = document.createElement("div");
+    el.setAttribute("class", "alertPopupAccept");
+    el.innerHTML = msg;
+    var optionWrapper = document.createElement("div");
+    optionWrapper.setAttribute('class', 'optionWrapper');
+    var cancel = document.createElement('button');
+    cancel.setAttribute('class', 'cancelToggle toggleButton');
+    cancel.innerHTML = 'Cancel';
+    var contin = document.createElement('button');
+    contin.setAttribute('class', 'continueToggle toggleButton');
+    contin.innerHTML = 'Continue';
+    optionWrapper.append(cancel);
+    optionWrapper.append(contin);
+    el.append(optionWrapper);
+
+
+    document.body.appendChild(el);
+    $(".continueToggle").on('click', function (e) {
+
+        $(".alertPopupAccept").css('animation', 'slideC 1s');
+        $('.toggleActiveIcon').attr('class', 'fas fa-toggle-on  toggleOn toggleActiveIcon')
+        setTimeout(function () {
+            $(".alertPopupAccept").remove();
+        }, 1000);
+
+        $.ajax({
+            type: "POST",
+            url: "dashboard/toggleWeek/",
+            data: {
+                phase: selectedPhase,
+                week: selectedWeek,
+                csrfmiddlewaretoken: csrf_token,
+                dataType: "json",
+            },
+            success: function (data) {
+                if (data['success']) {
+
+                    tempAlert(data['success'], 4000, 1);
+                } else {
+                    tempAlert(data['error'], 4000, 0);
+                    $('.toggleActiveIcon').attr('class', 'fas fa-toggle-off toggleOff toggleActiveIcon')
+                }
+
+            },
+            failure: function () {
+                tempAlert('Error deleting entry', 4000, 0);
+                $('.toggleActiveIcon').attr('class', 'fas fa-toggle-off toggleOff toggleActiveIcon')
+            }
+        });
+
+    });
+};
+
 // ////////////////////////////////////////////////////////////
 // Delete Entry
 
@@ -38,7 +93,7 @@ function deleteEntry(id, e) {
             x.style.display = "none";
             if (data['success']) {
                 $('#' + id).remove();
-                tempAlert("successfully deleted entry", 4000, 1);
+                tempAlert(data['success'], 4000, 1);
             } else {
                 tempAlert(data['error'], 4000, 0);
                 var target = ".addEntryButtonWrapper" + day;
@@ -54,66 +109,24 @@ function deleteEntry(id, e) {
 }
 
 // Style on hover
-$(".exerciseCellName").mouseover(function () {
-    $(this).parent().css("border-radius", "2px");
-    $(this).parent().css("border", "2px solid #787878");
-}).mouseout(function () {
-    $(this).parent().css("border", "none");
-    $(this).parent().css("border-radius", "0");
-});
-
-$(".deleteEntryButtonWrapper").mouseover(function () {
-    $(this).parent().parent().css("border-bottom", "1px solid #787878");
-}).mouseout(function () {
-    $(this).parent().parent().css("border-bottom", "none");
-});
-
-// //////////////////////////////////////////////////////////////
-// Editing an entry 
-
-function editEntry(name, reps, weight, sets, comment, id) {
-    event.stopPropagation();
-    var y = document.getElementById("edit-entry-modal");
-    $('#editExerciseField').val(name);
-    $('#editRepField').val(reps);
-    $('#editWeightField').val(weight);
-    $('#editSetField').val(sets);
-    $('#editCommentField').val(comment);
-    $('#idField').val(id);
-    y.style.display = "flex";
-}
-// submit edit entry
-$('#editEntryForm').on('submit', function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "dashboard/editentry/",
-        data: {
-            id: $('#idField').val(),
-            exercise: $('#editExerciseField').val(),
-            reps: $('#editRepField').val(),
-            weight: $('#editWeightField').val(),
-            sets: $('#editSetField').val(),
-            comment: $('#editCommentField').val(),
-            csrfmiddlewaretoken: csrf_token,
-            dataType: "json",
-        },
-        success: function (data) {
-            if (data['success']) {
-                tempAlert(data['success'], 4000, 1);
-            } else {
-                tempAlert(data['error'], 4000, 0);
-            }
-
-        },
-        failure: function () {
-            tempAlert('Error deleting entry', 4000, 0);
-        }
+function startStyleHover() {
+    $(".exerciseCellName").mouseover(function () {
+        $(this).parent().css("border-radius", "2px");
+        $(this).parent().css("border", "2px solid #787878");
+    }).mouseout(function () {
+        $(this).parent().css("border", "none");
+        $(this).parent().css("border-radius", "0");
     });
 
-    var x = document.getElementById("edit-entry-modal");
-    x.style.display = "none";
-});
+    $(".deleteEntryButtonWrapper").mouseover(function () {
+        $(this).parent().parent().css("border-bottom", "1px solid #787878");
+    }).mouseout(function () {
+        $(this).parent().parent().css("border-bottom", "none");
+    });
+}
+startStyleHover();
+
+
 // submit add entry
 $('#addEntryForm').on('submit', function (e) {
     e.preventDefault();
@@ -172,18 +185,19 @@ $('.close_addentry').on('click', function (e) {
     x.style.display = "none";
     y.style.display = "none";
 });
-$(document).ready(function () {
 
-    ///////////////////////////////////////////////////////////////////////
-    // Custom Dropdown
 
-    // $('.navbar').append('<div class="custom-select" style="width:200px;"><select><option value="0">Select car:</option><option value="1">Audi</option><option value="2">BMW</option></select></div>')
-    if ($('.navbar').find('.custom-select-phase').length != 0) {
-        $('.custom-select-phase').html('')
-    } else {
-        $('.navbar').append('<div class="custom-select custom-select-phase"><select><option value="0" title="add phase">+</option></select></div>')
-    }
+///////////////////////////////////////////////////////////////////////
+// Custom Dropdown
 
+// $('.navbar').append('<div class="custom-select" style="width:200px;"><select><option value="0">Select car:</option><option value="1">Audi</option><option value="2">BMW</option></select></div>')
+if ($('.navbar').find('.custom-select-phase').length != 0) {
+    $('.custom-select-phase').html('')
+} else {
+    $('.navbar').append('<div class="custom-select custom-select-phase"><select><option value="0" title="add phase">+</option></select></div>')
+}
+
+function getPhaseDropdown() {
     $.ajax({
         type: "GET",
         url: '/dashboard/phaseDropdown/',
@@ -193,72 +207,121 @@ $(document).ready(function () {
             handleDropdown('custom-select-phase');
             getWeekDropdown();
         }
+    })
+};
+getPhaseDropdown();
+
+if ($('.navbar').find('.custom-select-week').length != 0) {
+    $('.custom-select-week').html('')
+} else {
+    $('.navbar').append('<div class="custom-select custom-select-week"><select><option value="0" title="add week">+</option></select></div>')
+}
+function getWeekDropdown() {
+
+    $.ajax({
+        type: "GET",
+        url: '/dashboard/weekDropdown/',
+        data: {
+            phase: selectedPhase
+        },
+        success: function (data) {
+            $('.custom-select-week').html(data)
+            handleDropdown('custom-select-week');
+            getDays();
+            getDayData();
+
+
+        }
+
 
     })
-    if ($('.navbar').find('.custom-select-week').length != 0) {
-        $('.custom-select-week').html('')
-    } else {
-        $('.navbar').append('<div class="custom-select custom-select-week"><select><option value="0" title="add week">+</option></select></div>')
-    }
-    function getWeekDropdown() {
-
-        $.ajax({
-            type: "GET",
-            url: '/dashboard/weekDropdown/',
-            data: {
-                phase: selectedPhase
-            },
-            success: function (data) {
-                $('.custom-select-week').html(data)
-                handleDropdown('custom-select-week');
-                getDays();
-
-
-            }
-
-
-        })
-    }
-    function handleDropdown(target) {
-        var dropdown, options, option, numberOfOptions, selectedOption, selectedElement, optionMenu, index
-        dropdown = document.getElementsByClassName(target)[0];
-        options = dropdown.getElementsByTagName("select")[0].options;
-        numberOfOptions = dropdown.getElementsByTagName("select")[0].length;
-        if (numberOfOptions > 1) {
-            selectedOption = options[1]
-            if (target == 'custom-select-week') {
-                selectedWeek = options[1].value;
-            } else if (target == 'custom-select-phase') {
-                selectedPhase = options[1].value;
-            }
+}
+function handleDropdown(target) {
+    var dropdown, options, option, numberOfOptions, selectedOption, selectedElement, optionMenu, index
+    dropdown = document.getElementsByClassName(target)[0];
+    options = dropdown.getElementsByTagName("select")[0].options;
+    numberOfOptions = dropdown.getElementsByTagName("select")[0].length;
+    selectedElement = document.createElement("div");
+    selectedElement.setAttribute('class', 'select-selected');
+    if (numberOfOptions > 1) {
+        selectedOption = options[1]
+        if (target == 'custom-select-week') {
+            selectedWeek = options[1].value;
+        } else if (target == 'custom-select-phase') {
+            selectedPhase = options[1].value;
         }
-        else { selectedWeek = 0 }
-        selectedElement = document.createElement("div");
-        selectedElement.setAttribute('class', 'select-selected');
         selectedElement.innerHTML = selectedOption.innerHTML;
-        dropdown.appendChild(selectedElement);
-        optionMenu = document.createElement('div');
-        optionMenu.setAttribute('class', 'select-items select-hide');
-        for (index = 0; index < numberOfOptions; index++) {
-            option = document.createElement('div');
-            option.innerHTML = options[index].innerHTML;
-            if (index == 0) {
-                if (target == 'custom-select-week') {
-                    option.setAttribute('title', 'add week');
-                } else if (target == 'custom-select-phase') {
-                    option.setAttribute('title', 'add phase');
-                }
+    }
+    else { selectedWeek = 0 }
 
+    dropdown.appendChild(selectedElement);
+    optionMenu = document.createElement('div');
+    optionMenu.setAttribute('class', 'select-items select-hide');
+    for (index = 0; index < numberOfOptions; index++) {
+        option = document.createElement('div');
+        option.innerHTML = options[index].innerHTML;
+        if (index == 0) {
+            if (target == 'custom-select-week') {
+                option.setAttribute('title', 'add week');
+            } else if (target == 'custom-select-phase') {
+                option.setAttribute('title', 'add phase');
             }
-            option.setAttribute('value', options[index].value);
-            option.addEventListener('click', function () {
-                var y, i, k, h, yl;
-                var selectElement = dropdown.getElementsByTagName("select")[0];
-                h = this.parentNode.previousSibling;
-                for (i = 0; i < numberOfOptions; i++) {
-                    if (options[i].innerHTML == this.innerHTML) {
-                        console.log(selectElement.selectedIndex);
-                        console.log(i);
+
+        }
+        option.setAttribute('value', options[index].value);
+        option.addEventListener('click', function () {
+            var y, i, k, h, yl;
+            var selectElement = dropdown.getElementsByTagName("select")[0];
+            h = this.parentNode.previousSibling;
+            for (i = 0; i < numberOfOptions; i++) {
+
+                if (options[i].innerHTML == this.innerHTML) {
+                    if (i == 0 && target == 'custom-select-phase') {
+                        $.ajax({
+                            type: "POST",
+                            url: "/dashboard/addPhase/",
+                            data: {
+                                csrfmiddlewaretoken: csrf_token,
+                                dataType: "json",
+                            },
+                            success: function (data) {
+
+                                if (data['success']) {
+                                    tempAlert(data['success'], 4000, 1);
+                                    getPhaseDropdown();
+                                } else {
+                                    tempAlert(data['error'], 4000, 0);
+                                }
+
+                            },
+                            failure: function () {
+                                tempAlert('Error adding phase', 4000, 0);
+                            }
+                        });
+                    } else if (i == 0 && target == 'custom-select-week') {
+                        $.ajax({
+                            type: "POST",
+                            url: "dashboard/addWeek/",
+                            data: {
+                                phase: selectedPhase,
+                                csrfmiddlewaretoken: csrf_token,
+                                dataType: "json",
+                            },
+                            success: function (data) {
+
+                                if (data['success']) {
+                                    tempAlert(data['success'], 4000, 1);
+                                    getWeekDropdown();
+                                } else {
+                                    tempAlert(data['error'], 4000, 0);
+                                }
+
+                            },
+                            failure: function () {
+                                tempAlert('Error adding phase', 4000, 0);
+                            }
+                        });
+                    } else {
                         selectElement.selectedIndex = i;
                         h.innerHTML = this.innerHTML;
                         y = this.parentNode.getElementsByClassName("same-as-selected");
@@ -270,6 +333,7 @@ $(document).ready(function () {
                         if (target == 'custom-select-week') {
                             selectedWeek = selectElement.options[i].value;
                             getDays();
+                            getDayData();
                         } else if (target == 'custom-select-phase') {
                             selectedPhase = selectElement.options[i].value;
                             getWeekDropdown();
@@ -277,108 +341,415 @@ $(document).ready(function () {
 
                         break;
                     }
-
                 }
-                h.click();
-            });
-            optionMenu.appendChild(option);
-        }
-        dropdown.appendChild(optionMenu);
-        selectedElement.addEventListener('click', function (e) {
-            e.stopPropagation();
-            closeAllSelect(this);
-            this.nextSibling.classList.toggle("select-hide");
-            this.classList.toggle("select-arrow-active");
-        })
 
-
+            }
+            h.click();
+        });
+        optionMenu.appendChild(option);
     }
-    function getDays() {
+    dropdown.appendChild(optionMenu);
+    selectedElement.addEventListener('click', function (e) {
+        e.stopPropagation();
+        closeAllSelect(this);
+        this.nextSibling.classList.toggle("select-hide");
+        this.classList.toggle("select-arrow-active");
+    })
 
+
+}
+function getDays() {
+
+    $.ajax({
+        type: "GET",
+        url: '/dashboard/getDays/',
+        data: {
+            phase: selectedPhase,
+            week: selectedWeek
+        },
+        success: function (data) {
+            $('.day-selector-wrapper').html(data);
+            monitorAddDay();
+
+        }
+
+    })
+}
+function getDayData() {
+    $.ajax({
+        type: "POST",
+        url: '/dashboard/getDayData/',
+        data: {
+            phase: selectedPhase,
+            week: selectedWeek,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+            if (data['error']) {
+                tempAlert(data['error'], 4000, 0);
+            } else {
+                $('.tableWrapper').html(data);
+            }
+
+
+        },
+        failure: function () {
+            tempAlert('Could not load days!', 4000, 0);
+        }
+
+    })
+};
+function monitorAddDay() {
+    $(".addDayButton").on('click', function () {
         $.ajax({
-            type: "GET",
-            url: '/dashboard/getDays/',
+            type: "POST",
+            url: "/dashboard/addDay/",
             data: {
                 phase: selectedPhase,
-                week: selectedWeek
+                week: selectedWeek,
+                csrfmiddlewaretoken: csrf_token,
+                dataType: "json",
             },
             success: function (data) {
-                $('.day-selector-wrapper').html(data)
 
-            }
+                if (data['success']) {
+                    tempAlert(data['success'], 4000, 1);
+                    getDays();
+                    getDayData();
+                } else {
+                    tempAlert(data['error'], 4000, 0);
+                }
 
-        })
-    }
-    function closeAllSelect(elmnt) {
-        /* A function that will close all select boxes in the document,
-        except the current select box: */
-        var dropdown, y, i, xl, yl, arrNo = [];
-        dropdown = document.getElementsByClassName("select-items");
-        y = document.getElementsByClassName("select-selected");
-        xl = dropdown.length;
-        yl = y.length;
-        for (i = 0; i < yl; i++) {
-            if (elmnt == y[i]) {
-                arrNo.push(i)
-            } else {
-                y[i].classList.remove("select-arrow-active");
+            },
+            failure: function () {
+                tempAlert('Error adding day', 4000, 0);
             }
-        }
-        for (i = 0; i < xl; i++) {
-            if (arrNo.indexOf(i)) {
-                dropdown[i].classList.add("select-hide");
-            }
-        }
-    }
-    $('.bg-modal').on('click', function (e) {
-        if (e.target !== this)
-            return;
-        var clone = document.getElementById("clone-modal");
-        var x = document.getElementById("add-entry-modal");
-        var y = document.getElementById("edit-entry-modal");
-        x.style.display = "none";
-        y.style.display = "none";
-        clone.style.display = 'none';
+        });
     });
+}
 
-    /* If the user clicks anywhere outside the select box,
-    then close all select boxes: */
-    document.addEventListener("click", closeAllSelect);
+function closeAllSelect(elmnt) {
+    /* A function that will close all select boxes in the document,
+    except the current select box: */
+    var dropdown, y, i, xl, yl, arrNo = [];
+    dropdown = document.getElementsByClassName("select-items");
+    y = document.getElementsByClassName("select-selected");
+    xl = dropdown.length;
+    yl = y.length;
+    for (i = 0; i < yl; i++) {
+        if (elmnt == y[i]) {
+            arrNo.push(i)
+        } else {
+            y[i].classList.remove("select-arrow-active");
+        }
+    }
+    for (i = 0; i < xl; i++) {
+        if (arrNo.indexOf(i)) {
+            dropdown[i].classList.add("select-hide");
+        }
+    }
+}
+$('.bg-modal').on('click', function (e) {
+    if (e.target !== this)
+        return;
+    var clone = document.getElementById("clone-modal");
+    var x = document.getElementById("add-entry-modal");
+    var y = document.getElementById("edit-entry-modal");
+    x.style.display = "none";
+    y.style.display = "none";
+    clone.style.display = 'none';
+});
+
+/* If the user clicks anywhere outside the select box,
+then close all select boxes: */
+document.addEventListener("click", closeAllSelect);
 
 
-    // var phase = 0;
-    // var week = 0;
-    // var day = 0;
-    // function loadState(id) {
-    //     var value = localStorage.getItem(id);
-    //     var x = document.getElementById(id);
-    //     x.style.display = value;
-    // }
-    // function hideItem(id) {
+// var phase = 0;
+// var week = 0;
+// var day = 0;
+// function loadState(id) {
+//     var value = localStorage.getItem(id);
+//     var x = document.getElementById(id);
+//     x.style.display = value;
+// }
+// function hideItem(id) {
 
-    //     var x = document.getElementById(id);
-    //     var value
+//     var x = document.getElementById(id);
+//     var value
 
-    //     if (x.style.display === "none" || x.style.display === "") {
-    //         value = "block";
-    //     } else {
-    //         value = "none";
-    //     }
-    //     x.style.display = value;
-    //     localStorage.setItem(id, value)
-    // }
-    // function hideTable(id) {
-    //     var x = document.getElementById(id);
-    //     if (x.style.display === "none" || x.style.display) {
-    //         x.style.display = "table";
-    //     } else {
-    //         x.style.display = "none";
-    //     }
-    // }
+//     if (x.style.display === "none" || x.style.display === "") {
+//         value = "block";
+//     } else {
+//         value = "none";
+//     }
+//     x.style.display = value;
+//     localStorage.setItem(id, value)
+// }
+// function hideTable(id) {
+//     var x = document.getElementById(id);
+//     if (x.style.display === "none" || x.style.display) {
+//         x.style.display = "table";
+//     } else {
+//         x.style.display = "none";
+//     }
+// }
 
 
-    // // reorder table
-    var table;
+// // reorder table
+var table;
+
+
+var draggingEle;
+var draggingRowIndex;
+var placeholder;
+var list;
+var isDraggingStarted = false;
+
+// The current position of mouse relative to the dragging element
+var x = 0;
+var y = 0;
+
+// Swap two nodes
+swap = function (nodeA, nodeB) {
+    const parentA = nodeA.parentNode;
+    const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+
+    // Move `nodeA` to before the `nodeB`
+    nodeB.parentNode.insertBefore(nodeA, nodeB);
+
+    // Move `nodeB` to before the sibling of `nodeA`
+    parentA.insertBefore(nodeB, siblingA);
+};
+
+// Check if `nodeA` is above `nodeB`
+isAbove = function (nodeA, nodeB) {
+    // Get the bounding rectangle of nodes
+    const rectA = nodeA.getBoundingClientRect();
+    const rectB = nodeB.getBoundingClientRect();
+
+    return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
+};
+
+cloneTable = function () {
+    const rect = table.getBoundingClientRect();
+    const width = parseInt(window.getComputedStyle(table).width);
+
+    list = document.createElement('div');
+    list.classList.add('clone-list');
+    list.style.position = 'relative';
+    // list.style.left = `${ rect.left } px`;
+    // list.style.top = `${ rect.top } px`;
+    table.parentNode.insertBefore(list, table);
+
+    // Hide the original table
+    table.style.display = 'none';
+
+    table.querySelectorAll('tr').forEach(function (row) {
+        // Create a new table from given row
+        const item = document.createElement('div');
+        item.classList.add('draggable');
+
+        const newTable = document.createElement('table');
+        newTable.setAttribute('class', 'clone-table');
+        newTable.style.width = `${width}px`;
+
+        const newRow = document.createElement('tr');
+        const cells = [].slice.call(row.children);
+        cells.forEach(function (cell) {
+            const newCell = cell.cloneNode(true);
+            newCell.style.width = cell.style.width;
+            newRow.appendChild(newCell);
+        });
+
+        newTable.appendChild(newRow);
+        item.appendChild(newTable);
+        list.appendChild(item);
+    });
+};
+mouseDownHandlerJ = function (e) {
+    // Get the original row
+    event.stopPropagation();
+    const originalRow = e.parentNode;
+    draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
+    console.log(draggingRowIndex)
+    // Determine the mouse position
+    if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
+        x = e.clientX;
+        y = e.clientY;
+
+        // Attach the listeners to `document`
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+
+    }
+};
+mouseDownHandler = function (e) {
+    // Get the original row
+    event.stopPropagation();
+    const originalRow = e.target.parentNode;
+    draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
+    console.log(draggingRowIndex)
+    // Determine the mouse position
+    if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
+        x = e.clientX;
+        y = e.clientY;
+
+        // Attach the listeners to `document`
+        var editwindow = document.getElementById("edit-entry-modal");
+        console.log(editwindow.style.display);
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+
+    }
+};
+
+
+function mouseMoveHandler(e) {
+    if (!isDraggingStarted) {
+        isDraggingStarted = true;
+
+        cloneTable();
+
+        draggingEle = [].slice.call(list.children)[draggingRowIndex];
+        draggingEle.classList.add('dragging');
+
+        // Let the placeholder take the height of dragging element
+        // So the next element won't move up
+        placeholder = document.createElement('div');
+        placeholder.classList.add('placeholder');
+        draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
+        placeholder.style.height = `${draggingEle.offsetHeight}px`;
+    }
+
+    // Set position for dragging element
+    draggingEle.style.position = 'absolute';
+    draggingEle.style.top = `${draggingEle.offsetTop + e.clientY - y}px`;
+    draggingEle.style.left = `${draggingEle.offsetLeft + e.clientX - x}px`;
+
+    // Reassign the position of mouse
+    x = e.clientX;
+    y = e.clientY;
+
+    // The current order
+    // prevEle
+    // draggingEle
+    // placeholder
+    // nextEle
+    const prevEle = draggingEle.previousElementSibling;
+    const nextEle = placeholder.nextElementSibling;
+
+    // The dragging element is above the previous element
+    // User moves the dragging element to the top
+    // We don't allow to drop above the header
+    // (which doesn't have `previousElementSibling`)
+    if (prevEle && prevEle.previousElementSibling && prevEle.previousElementSibling.previousElementSibling && isAbove(draggingEle, prevEle)) {
+        // The current order    -> The new order
+        // prevEle              -> placeholder
+        // draggingEle          -> draggingEle
+        // placeholder          -> prevEle
+        swap(placeholder, draggingEle);
+        swap(placeholder, prevEle);
+        return;
+    }
+
+    // The dragging element is below the next element
+    // User moves the dragging element to the bottom
+    if (nextEle && nextEle.nextElementSibling && isAbove(nextEle, draggingEle)) {
+        // The current order    -> The new order
+        // draggingEle          -> nextEle
+        // placeholder          -> placeholder
+        // nextEle              -> draggingEle
+        swap(nextEle, placeholder);
+        swap(nextEle, draggingEle);
+    }
+};
+
+function mouseUpHandler() {
+    // Remove the placeholder
+    placeholder && placeholder.parentNode.removeChild(placeholder);
+
+    draggingEle.classList.remove('dragging');
+    draggingEle.style.removeProperty('top');
+    draggingEle.style.removeProperty('left');
+    draggingEle.style.removeProperty('position');
+
+    // Get the end index
+    const endRowIndex = [].slice.call(list.children).indexOf(draggingEle);
+
+    isDraggingStarted = false;
+
+    // Remove the `list` element
+    list.parentNode.removeChild(list);
+
+    // Move the dragged row to `endRowIndex`
+    let rows = [].slice.call(table.querySelectorAll('tr'));
+    draggingRowIndex > endRowIndex
+        ? rows[endRowIndex].parentNode.insertBefore(rows[draggingRowIndex], rows[endRowIndex])
+        : rows[endRowIndex].parentNode.insertBefore(
+            rows[draggingRowIndex],
+            rows[endRowIndex].nextSibling
+        );
+
+    // Bring back the table
+    table.style.display = "table";
+
+    // Remove the handlers of `mousemove` and `mouseup`
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+    var idOrder = [];
+    table.querySelectorAll('tr.entryRow').forEach(function (row) {
+        idOrder.push(row.id);
+    });
+    idOrder = JSON.stringify({ idOrder });
+    $.ajax({
+        type: "POST",
+        url: "dashboard/changeOrder/",
+        data: {
+            idOrder: idOrder,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+
+            if (data['success']) {
+                tempAlert(data['success'], 4000, 1);
+            } else {
+                tempAlert("order not updated - refresh", 4000, 0);
+
+            }
+
+        },
+        failure: function () {
+            tempAlert('Error deleting entry', 4000, 0);
+        }
+    });
+    console.log(idOrder);
+
+};
+function getRows() {
+    table.querySelectorAll('tr').forEach(function (row, index) {
+        // Ignore the header
+        // We don't want user to change the order of header
+
+        if (index === 0) {
+
+        }
+        else if (row.firstElementChild.id === "addentry") {
+
+
+        }
+        else {
+
+            const firstCell = row.firstElementChild;
+            firstCell.classList.add('draggable');
+            firstCell.addEventListener('mousedown', mouseDownHandler);
+        }
+    });
+};
+function monitorRowDrag() {
     $('td.exerciseCell').mousedown(function () {
         event.stopPropagation();
         var tableId = $(this).parents("table").attr("id");
@@ -387,316 +758,126 @@ $(document).ready(function () {
         getRows();
         var cell = $(this).children("td").get(0);
         console.log(cell)
-        if (typeof cell !== "undefined" && cell.id !== "addentry") {
-            mouseDownHandlerJ($(this).get(0));
+        mouseDownHandlerJ($(this).get(0));
+    });
+}
+monitorRowDrag();
+// //////////////////////////////////////////////////////////////
+// Editing an entry 
+
+function editEntry(name, reps, weight, sets, comment, id) {
+    event.stopPropagation();
+    var y = document.getElementById("edit-entry-modal");
+    $('#editExerciseField').val(name);
+    $('#editRepField').val(reps);
+    $('#editWeightField').val(weight);
+    $('#editSetField').val(sets);
+    $('#editCommentField').val(comment);
+    $('#idField').val(id);
+    y.style.display = "flex";
+}
+// submit edit entry
+$('#editEntryForm').on('submit', function (e) {
+    e.preventDefault();
+    var id = $('#idField').val();
+    var exercise = $('#editExerciseField').val();
+    var reps = $('#editRepField').val();
+    var weight = $('#editWeightField').val()
+    var sets = $('#editSetField').val();
+    var comment = $('#editCommentField').val();
+    $.ajax({
+        type: "POST",
+        url: "dashboard/editentry/",
+        data: {
+            id: id,
+            exercise: exercise,
+            reps: reps,
+            weight: weight,
+            sets: sets,
+            comment: comment,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+            if (data['success']) {
+                tempAlert(data['success'], 4000, 1);
+                htmlContents = `<td class='exerciseCell exerciseCellName draggable'>${exercise}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${reps}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${weight}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${sets}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${comment}</td><td style='width: 50px'><button class='deleteEntryButtonWrapper' type='button' name='button' onclick='deleteEntry(${id})'><div class='deleteEntryButton'>+</div></button></td>`;
+                $(`#${id}.entryRow`).html(htmlContents);
+            } else {
+                tempAlert(data['error'], 4000, 0);
+            }
+            monitorRowDrag();
+            startStyleHover();
+
+        },
+        failure: function () {
+            tempAlert('Error deleting entry', 4000, 0);
         }
     });
 
+    var x = document.getElementById("edit-entry-modal");
+    x.style.display = "none";
+});
 
-    let draggingEle;
-    let draggingRowIndex;
-    let placeholder;
-    let list;
-    let isDraggingStarted = false;
+// toggle confirmation
+$('.toggleOff').on('click', function () {
+    tempAcceptAlert('Make this the active week?');
+});
+// // ---------------------------------------------------------------------------------------------------------------------
+// clone week dropdown
+var cloneExpanded = false;
 
-    // The current position of mouse relative to the dragging element
-    let x = 0;
-    let y = 0;
+function showCloneOptions() {
+    var cloneOptions = document.getElementById("cloneOptionsWrapper");
+    if (!cloneExpanded) {
+        cloneOptions.style.display = "block";
+        cloneExpanded = true;
+        $('.innerCloneBox').css({ 'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px' });
+        $('.cloneWeek').css('background-color', '#D6D6D6')
+    } else {
+        cloneOptions.style.display = "none";
+        cloneExpanded = false;
+        $('.cloneWeek').css('background-color', 'transparent')
+    }
+}
+// ---------------------------------------------------------------------------------------------------------------------
+// clone confirmation
 
-    // Swap two nodes
-    const swap = function (nodeA, nodeB) {
-        const parentA = nodeA.parentNode;
-        const siblingA = nodeA.nextSibling === nodeB ? nodeA : nodeA.nextSibling;
+function cloneConfirmation(phase, week) {
+    var y = document.getElementById("clone-modal");
+    y.style.display = "flex";
 
-        // Move `nodeA` to before the `nodeB`
-        nodeB.parentNode.insertBefore(nodeA, nodeB);
-
-        // Move `nodeB` to before the sibling of `nodeA`
-        parentA.insertBefore(nodeB, siblingA);
-    };
-
-    // Check if `nodeA` is above `nodeB`
-    const isAbove = function (nodeA, nodeB) {
-        // Get the bounding rectangle of nodes
-        const rectA = nodeA.getBoundingClientRect();
-        const rectB = nodeB.getBoundingClientRect();
-
-        return rectA.top + rectA.height / 2 < rectB.top + rectB.height / 2;
-    };
-
-    const cloneTable = function () {
-        const rect = table.getBoundingClientRect();
-        const width = parseInt(window.getComputedStyle(table).width);
-
-        list = document.createElement('div');
-        list.classList.add('clone-list');
-        list.style.position = 'relative';
-        // list.style.left = `${rect.left}px`;
-        // list.style.top = `${rect.top}px`;
-        table.parentNode.insertBefore(list, table);
-
-        // Hide the original table
-        table.style.display = 'none';
-
-        table.querySelectorAll('tr').forEach(function (row) {
-            // Create a new table from given row
-            const item = document.createElement('div');
-            item.classList.add('draggable');
-
-            const newTable = document.createElement('table');
-            newTable.setAttribute('class', 'clone-table');
-            newTable.style.width = `${width}px`;
-
-            const newRow = document.createElement('tr');
-            const cells = [].slice.call(row.children);
-            cells.forEach(function (cell) {
-                const newCell = cell.cloneNode(true);
-                newCell.style.width = '${parseInt(window.getComputedStyle(cell).width)}px';
-                newRow.appendChild(newCell);
-            });
-
-            newTable.appendChild(newRow);
-            item.appendChild(newTable);
-            list.appendChild(item);
-        });
-    };
-    const mouseDownHandlerJ = function (e) {
-        // Get the original row
-        event.stopPropagation();
-        const originalRow = e.parentNode;
-        draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
-        console.log(draggingRowIndex)
-        // Determine the mouse position
-        if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
-            x = e.clientX;
-            y = e.clientY;
-
-            // Attach the listeners to `document`
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseup', mouseUpHandler);
+    $('#cloneFromWeek').html('Week ' + week);
+    $('#cloneFromPhase').html('Phase ' + phase);
+    $('#cloneFromWeek').attr('name', week);
+    $('#cloneFromPhase').attr('name', phase);
+    $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
+    $('#cloneToPhase').html('Phase ' + selectedPhase);
+};
+$('#cloneForm').on('submit', function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: "POST",
+        url: "{% url 'clone_week' %}",
+        data: {
+            phaseTo: selectedPhase,
+            weekTo: selectedWeek[parseInt(selectedPhase) - 1],
+            phaseFrom: $('#cloneFromPhase').attr('name'),
+            weekFrom: $('#cloneFromWeek').attr('name'),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            dataType: "json",
+        },
+        success: function (data) {
+            window.location.reload();
+        },
+        failure: function () {
 
         }
-    };
-    const mouseDownHandler = function (e) {
-        // Get the original row
-        event.stopPropagation();
-        const originalRow = e.target.parentNode;
-        draggingRowIndex = [].slice.call(table.querySelectorAll('tr')).indexOf(originalRow);
-        console.log(draggingRowIndex)
-        // Determine the mouse position
-        if (draggingRowIndex !== 0 && draggingRowIndex !== 1) {
-            x = e.clientX;
-            y = e.clientY;
+    });
 
-            // Attach the listeners to `document`
-            var editwindow = document.getElementById("edit-entry-modal");
-            console.log(editwindow.style.display);
-
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseup', mouseUpHandler);
-
-        }
-    };
-
-
-    function mouseMoveHandler(e) {
-        if (!isDraggingStarted) {
-            isDraggingStarted = true;
-
-            cloneTable();
-
-            draggingEle = [].slice.call(list.children)[draggingRowIndex];
-            draggingEle.classList.add('dragging');
-
-            // Let the placeholder take the height of dragging element
-            // So the next element won't move up
-            placeholder = document.createElement('div');
-            placeholder.classList.add('placeholder');
-            draggingEle.parentNode.insertBefore(placeholder, draggingEle.nextSibling);
-            placeholder.style.height = `${draggingEle.offsetHeight}px`;
-        }
-
-        // Set position for dragging element
-        draggingEle.style.position = 'absolute';
-        draggingEle.style.top = `${draggingEle.offsetTop + e.clientY - y}px`;
-        draggingEle.style.left = `${draggingEle.offsetLeft + e.clientX - x}px`;
-
-        // Reassign the position of mouse
-        x = e.clientX;
-        y = e.clientY;
-
-        // The current order
-        // prevEle
-        // draggingEle
-        // placeholder
-        // nextEle
-        const prevEle = draggingEle.previousElementSibling;
-        const nextEle = placeholder.nextElementSibling;
-
-        // The dragging element is above the previous element
-        // User moves the dragging element to the top
-        // We don't allow to drop above the header
-        // (which doesn't have `previousElementSibling`)
-        if (prevEle && prevEle.previousElementSibling && prevEle.previousElementSibling.previousElementSibling && isAbove(draggingEle, prevEle)) {
-            // The current order    -> The new order
-            // prevEle              -> placeholder
-            // draggingEle          -> draggingEle
-            // placeholder          -> prevEle
-            swap(placeholder, draggingEle);
-            swap(placeholder, prevEle);
-            return;
-        }
-
-        // The dragging element is below the next element
-        // User moves the dragging element to the bottom
-        if (nextEle && nextEle.nextElementSibling && isAbove(nextEle, draggingEle)) {
-            // The current order    -> The new order
-            // draggingEle          -> nextEle
-            // placeholder          -> placeholder
-            // nextEle              -> draggingEle
-            swap(nextEle, placeholder);
-            swap(nextEle, draggingEle);
-        }
-    };
-
-    function mouseUpHandler() {
-        // Remove the placeholder
-        placeholder && placeholder.parentNode.removeChild(placeholder);
-
-        draggingEle.classList.remove('dragging');
-        draggingEle.style.removeProperty('top');
-        draggingEle.style.removeProperty('left');
-        draggingEle.style.removeProperty('position');
-
-        // Get the end index
-        const endRowIndex = [].slice.call(list.children).indexOf(draggingEle);
-
-        isDraggingStarted = false;
-
-        // Remove the `list` element
-        list.parentNode.removeChild(list);
-
-        // Move the dragged row to `endRowIndex`
-        let rows = [].slice.call(table.querySelectorAll('tr'));
-        draggingRowIndex > endRowIndex
-            ? rows[endRowIndex].parentNode.insertBefore(rows[draggingRowIndex], rows[endRowIndex])
-            : rows[endRowIndex].parentNode.insertBefore(
-                rows[draggingRowIndex],
-                rows[endRowIndex].nextSibling
-            );
-
-        // Bring back the table
-        table.style.display = "table";
-
-        // Remove the handlers of `mousemove` and `mouseup`
-        document.removeEventListener('mousemove', mouseMoveHandler);
-        document.removeEventListener('mouseup', mouseUpHandler);
-        var idOrder = [];
-        table.querySelectorAll('tr.entryRow').forEach(function (row) {
-            idOrder.push(row.id);
-        });
-        idOrder = JSON.stringify({ idOrder });
-        $.ajax({
-            type: "POST",
-            url: "dashboard/changeOrder/",
-            data: {
-                idOrder: idOrder,
-                csrfmiddlewaretoken: csrf_token,
-                dataType: "json",
-            },
-            success: function (data) {
-
-                if (data['success']) {
-                    tempAlert(data['success'], 4000, 1);
-                } else {
-                    tempAlert("order not updated - refresh", 4000, 0);
-
-                }
-
-            },
-            failure: function () {
-                tempAlert('Error deleting entry', 4000, 0);
-            }
-        });
-        console.log(idOrder);
-
-    };
-    function getRows() {
-        table.querySelectorAll('tr').forEach(function (row, index) {
-            // Ignore the header
-            // We don't want user to change the order of header
-
-            if (index === 0) {
-
-            }
-            else if (row.firstElementChild.id === "addentry") {
-
-
-            }
-            else {
-
-                const firstCell = row.firstElementChild;
-                firstCell.classList.add('draggable');
-                firstCell.addEventListener('mousedown', mouseDownHandler);
-            }
-        });
-    };
-
-    // // ---------------------------------------------------------------------------------------------------------------------
-    // // clone week dropdown
-    // var cloneExpanded = false;
-
-    // function showCloneOptions() {
-    //     var cloneOptions = document.getElementById("cloneOptionsWrapper");
-    //     if (!cloneExpanded) {
-    //         cloneOptions.style.display = "block";
-    //         cloneExpanded = true;
-    //         $('.innerCloneBox').css({ 'border-bottom-left-radius': '0px', 'border-bottom-right-radius': '0px' });
-    //         $('.cloneWeek').css('background-color', '#D6D6D6')
-    //     } else {
-    //         cloneOptions.style.display = "none";
-    //         cloneExpanded = false;
-    //         $('.cloneWeek').css('background-color', 'transparent')
-    //     }
-    // }
-    // // ---------------------------------------------------------------------------------------------------------------------
-    // // clone confirmation
-
-    // function cloneConfirmation(phase, week) {
-    //     var y = document.getElementById("clone-modal");
-    //     y.style.display = "flex";
-
-    //     $('#cloneFromWeek').html('Week ' + week);
-    //     $('#cloneFromPhase').html('Phase ' + phase);
-    //     $('#cloneFromWeek').attr('name', week);
-    //     $('#cloneFromPhase').attr('name', phase);
-    //     $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
-    //     $('#cloneToPhase').html('Phase ' + selectedPhase);
-    // };
-    // $('#cloneForm').on('submit', function (e) {
-    //     e.preventDefault();
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "{% url 'clone_week' %}",
-    //         data: {
-    //             phaseTo: selectedPhase,
-    //             weekTo: selectedWeek[parseInt(selectedPhase) - 1],
-    //             phaseFrom: $('#cloneFromPhase').attr('name'),
-    //             weekFrom: $('#cloneFromWeek').attr('name'),
-    //             csrfmiddlewaretoken: '{{ csrf_token }}',
-    //             dataType: "json",
-    //         },
-    //         success: function (data) {
-    //             window.location.reload();
-    //         },
-    //         failure: function () {
-
-    //         }
-    //     });
-
-    //     var x = document.getElementById("toggle-modal");
-    //     x.style.display = "none";
-    // });
+    var x = document.getElementById("toggle-modal");
+    x.style.display = "none";
+});
 
 
 
@@ -855,11 +1036,7 @@ $(document).ready(function () {
     // function toggleActive() {
 
     //     if ($('#' + selectedWeek[parseInt(selectedPhase) - 1] + '.weekButton' + selectedPhase).attr('name') === 'True') {
-    //         $('.toggleActiveIcon').removeClass('toggleOff');
-    //         $('.toggleActiveIcon').removeClass('fa-toggle-off');
 
-    //         $('.toggleActiveIcon').addClass('toggleOn');
-    //         $('.toggleActiveIcon').addClass('fa-toggle-on');
 
     //     }
     //     else {
@@ -918,38 +1095,13 @@ $(document).ready(function () {
     // // ---------------------------------------------------------------------------------------------------------------------
 
     // // ---------------------------------------------------------------------------------------------------------------------
-    // // toggle confirmation
-    // function toggleConfirmation() {
-    //     if ($('#' + selectedWeek[parseInt(selectedPhase) - 1] + '.weekButton' + selectedPhase).attr('name') !== 'True') {
-    //         var y = document.getElementById("toggle-modal");
-    //         y.style.display = "flex";
-    //     }
+
 
 
     // $('#toggleWeekForm').on('submit', function (e) {
     //     e.preventDefault();
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "{% url 'toggle_active_week' %}",
-    //         data: {
-    //             phase: selectedPhase,
-    //             week: selectedWeek[parseInt(selectedPhase) - 1],
 
-    //             csrfmiddlewaretoken: '{{ csrf_token }}',
-    //             dataType: "json",
-    //         },
-    //         success: function (data) {
-    //             window.location.reload();
-    //         },
-    //         failure: function () {
-
-    //         }
-    //     });
 
     //     var x = document.getElementById("toggle-modal");
     //     x.style.display = "none";
     // });
-
-
-})
-

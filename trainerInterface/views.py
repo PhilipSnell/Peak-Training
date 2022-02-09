@@ -71,62 +71,6 @@ def clients(request):
     return render(request, 'trainerInterface/clients.html', {'form': form, 'clients': trainer.clients.all()})
 
 
-@user_passes_test(lambda user: user.is_trainer, login_url='/login/')
-def addPhase(request):
-    objects = Phase.objects.filter(user=User.objects.get(
-        email=request.session['selected_client']))
-    currPhase = 0
-    for phase in objects:
-        if currPhase < phase.phase:
-            currPhase = phase.phase
-
-    newPhase = Phase(phase=currPhase+1,
-                     user=User.objects.get(email=request.session['selected_client']))
-    newPhase.save()
-
-    return redirect('trainplan')
-
-
-def addWeek(request, phaseID=None):
-    phase_selected = Phase.objects.get(id=phaseID)
-    user = User.objects.get(email=request.session['selected_client'])
-    objects = Week.objects.filter(phase=phase_selected.phase, user=user)
-    currWeek = 0
-    for week in objects:
-        if currWeek < week.week:
-            currWeek = week.week
-
-    newWeek = Week(week=currWeek+1,
-                   phase=phase_selected.phase,
-                   user=user)
-    newWeek.save()
-    phase_selected.weeks.add(newWeek)
-    request.session['weekOpen'] = True
-    request.session['selectedPhase'] = phase_selected.phase
-    return redirect('trainplan')
-
-
-def addDay(request, phaseID=None, weekID=None):
-    phase_selected = Phase.objects.get(id=phaseID)
-    week_selected = Week.objects.get(id=weekID)
-    user = User.objects.get(email=request.session['selected_client'])
-    objects = Day.objects.filter(
-        phase=phase_selected.phase, week=week_selected.week, user=user)
-    currDay = 0
-    for day in objects:
-        if currDay < day.day:
-            currDay = day.day
-
-    newDay = Day(day=currDay+1,
-                 phase=phase_selected.phase,
-                 week=week_selected.week,
-                 user=user)
-    newDay.save()
-    week_selected.days.add(newDay)
-
-    return redirect('trainplan')
-
-
 def cloneWeek(request):
     user = User.objects.get(email=request.session['selected_client'])
     if request.is_ajax():
@@ -180,33 +124,6 @@ def cloneWeek(request):
         weekTo.save()
         # except:
 
-    return redirect('trainplan')
-
-
-def toggleActiveWeek(request):
-    if request.is_ajax():
-        phaseNum = request.POST.get('phase', None)
-        weekNum = request.POST.get('week', None)
-        try:
-            allPhases = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']))
-            for phase in allPhases:
-                try:
-                    activeWeek = phase.weeks.get(isActive=True)
-                    activeWeek.isActive = False
-                    activeWeek.save()
-                    print("found active week" + activeWeek.week)
-                except:
-                    print("active week not found")
-
-            phase = Phase.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phaseNum)
-            week = phase.weeks.get(week=weekNum)
-            week.isActive = True
-            week.save()
-
-        except:
-            print("changing active week didnt work")
     return redirect('trainplan')
 
 

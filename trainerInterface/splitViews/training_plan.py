@@ -1,3 +1,4 @@
+from urllib import response
 from trainerInterface.views import processForm, processDate, getUserform
 from api.models import *
 from trainerInterface.form import *
@@ -57,7 +58,8 @@ def getDays(request):
                 html_response = html_response + \
                     '<div class="day-tile selected-day"><div class="day-tile-word">Day</div><div class="day-tile-num">' + \
                     str(day.day)+'</div></div>'
-
+            html_response = html_response + \
+                '<div class="day-tile addDayButton"><div class="day-tile-word">Add Day</div></div>'
         return HttpResponse(html_response)
 
 
@@ -198,3 +200,145 @@ def editEntry(request):
                 'error': 'failed to update the exercise!'  # response message
             }
         return JsonResponse(response)
+
+
+def toggleActiveWeek(request):
+    if request.is_ajax():
+        phaseNum = request.POST.get('phase', None)
+        weekNum = request.POST.get('week', None)
+        try:
+            allPhases = Phase.objects.filter(user=User.objects.get(
+                email=request.session['selected_client']))
+            for phase in allPhases:
+                try:
+                    weeks = phase.weeks.all()
+                    activeWeek = weeks.get(isActive=True)
+                    activeWeek.isActive = False
+                    activeWeek.save()
+                    print("found active week" + str(activeWeek.week))
+                except:
+                    print("active week not found")
+
+            phase = Phase.objects.get(user=User.objects.get(
+                email=request.session['selected_client']), phase=phaseNum)
+            week = phase.weeks.get(week=weekNum)
+            week.isActive = True
+            week.save()
+            response = {
+                'success': 'This week is now active!'
+            }
+
+        except:
+            print("entry not edited")
+            response = {
+                'error': 'failed to activate week'  # response message
+            }
+        return JsonResponse(response)
+    return redirect('home')
+
+
+def addPhase(request):
+    if request.is_ajax():
+        try:
+            objects = Phase.objects.filter(user=User.objects.get(
+                email=request.session['selected_client']))
+            currPhase = 0
+            for phase in objects:
+                if currPhase < phase.phase:
+                    currPhase = phase.phase
+
+            newPhase = Phase(phase=currPhase+1,
+                             user=User.objects.get(email=request.session['selected_client']))
+            newPhase.save()
+            response = {
+                'success': 'Phase added succesfully!'
+            }
+        except:
+            response = {
+                'error': 'Could not add phase!'
+            }
+        return JsonResponse(response)
+
+    return redirect('home')
+
+
+def addWeek(request):
+    if request.is_ajax():
+
+        try:
+            phase = request.POST.get('phase', None)
+            user = User.objects.get(email=request.session['selected_client'])
+            selected_phase = Phase.objects.get(phase=phase, user=user)
+            objects = Week.objects.filter(phase=phase, user=user)
+            currWeek = 0
+            for week in objects:
+                if currWeek < week.week:
+                    currWeek = week.week
+
+            newWeek = Week(week=currWeek+1,
+                           phase=phase,
+                           user=user)
+            newWeek.save()
+            selected_phase.weeks.add(newWeek)
+            # request.session['weekOpen'] = True
+            # request.session['selectedPhase'] = phase
+            response = {
+                'success': 'Week added succesfully!'
+            }
+
+        except:
+            response = {
+                'error': 'Could not add week!'
+            }
+        return JsonResponse(response)
+    return redirect('trainplan')
+
+
+def addDay(request):
+    if request.is_ajax():
+        # try:
+        phase = request.POST.get('phase', None)
+        week = request.POST.get('week', None)
+        user = User.objects.get(email=request.session['selected_client'])
+        week_selected = Week.objects.get(user=user, phase=phase, week=week)
+        objects = Day.objects.filter(phase=phase, week=week, user=user)
+
+        currDay = 0
+        for day in objects:
+            if currDay < day.day:
+                currDay = day.day
+
+        newDay = Day(day=currDay+1,
+                     phase=phase,
+                     week=week,
+                     user=user)
+        newDay.save()
+        week_selected.days.add(newDay)
+        response = {
+            'success': 'Day added succesfully!'
+        }
+        # except:
+        #     response = {
+        #         'error': 'Could not add day!'
+        #     }
+        return JsonResponse(response)
+    return redirect('trainplan')
+
+
+def getDayTableData(request):
+
+    if request.is_ajax():
+        phase = request.POST.get('phase', None)
+        week = request.POST.get('week', None)
+        if "selected_client" in request.session:
+            week = Week.objects.get(user=User.objects.get(
+                email=request.session['selected_client']), phase=phase, week=week)
+            days = week.days.all()
+        else:
+            days = None
+            response = {
+                'error': 'Could not load days!'
+            }
+            return JsonResponse(response)
+
+        return render(request, 'trainerInterface/segments/dayTableData.html', {'days': days})
