@@ -48,7 +48,7 @@ def getDays(request):
                 phase = Phase.objects.get(user=User.objects.get(
                     email=request.session['selected_client']), phase=phase)
                 week = phase.weeks.get(week=week)
-                days = week.days.all()
+                days = week.days.all().order_by('day')
             except:
                 days = []
 
@@ -82,7 +82,7 @@ def trainplan(request):
         exercises = ExerciseType.objects.order_by('name')
         request.session["href"] = '/dashboard/trainplan/'
         return render(request, 'trainerInterface/trainPlan.html',
-                      {'days': days, 'addform': addform, 'exercises': exercises, 'phases': phases,
+                      {'days': days.order_by('day'), 'addform': addform, 'exercises': exercises, 'phases': phases,
                        'clients': Trainer.objects.get(trainer=request.user).clients.all()})
 
 
