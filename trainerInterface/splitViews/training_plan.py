@@ -328,7 +328,7 @@ def getDayTableData(request):
             client = client.split()
             week = Week.objects.get(user=User.objects.get(
                 first_name=client[0], last_name=client[1]), phase=phase, week=week)
-            days = week.days.all()
+            days = week.days.all().order_by('day')
         else:
             days = None
             response = {
