@@ -97,7 +97,7 @@ def addEntry(request):
         weight = request.GET.get('weight', None)
         sets = request.GET.get('sets', None)
         comment = request.GET.get('comment', None)
-        print(exercise)
+
         try:
             train_entry = TrainingEntry(
                 user=user,
@@ -111,14 +111,12 @@ def addEntry(request):
                 comment=comment,
             )
             train_entry.save()
-            print("saved")
             day = Day.objects.get(phase=phase, week=week, day=day, user=user)
             day.entrys.add(train_entry)
             return render(request, 'trainerInterface/segments/addTrainingEntrySegment.html',
                           {'entry': train_entry})
 
         except:
-            print("not saved")
             response = {
                 'error': 'Error adding entry'  # response message
             }
@@ -149,10 +147,8 @@ def changeOrder(request):
     if request.is_ajax():
         try:
             idOrder = json.loads(request.POST.get('idOrder', None))['idOrder']
-            print(idOrder)
             order = 1
             for id in idOrder:
-                print(id)
                 exercise = TrainingEntry.objects.get(id=id)
                 exercise.order = order
                 exercise.save()
@@ -186,13 +182,11 @@ def editEntry(request):
             train_entry.sets = sets
             train_entry.comment = comment
             train_entry.save()
-            print("entry updated")
             response = {
                 'success': 'Exercise updated!'
             }
 
         except:
-            print("entry not edited")
             response = {
                 'error': 'failed to update the exercise!'  # response message
             }
@@ -212,7 +206,6 @@ def toggleActiveWeek(request):
                     activeWeek = weeks.get(isActive=True)
                     activeWeek.isActive = False
                     activeWeek.save()
-                    print("found active week" + str(activeWeek.week))
                 except:
                     print("active week not found")
 
@@ -226,7 +219,6 @@ def toggleActiveWeek(request):
             }
 
         except:
-            print("entry not edited")
             response = {
                 'error': 'failed to activate week'  # response message
             }

@@ -19,7 +19,7 @@ def trainprog(request):
             week = Week.objects.get(user=User.objects.get(
                 email=request.session['selected_client']), phase=phase, week=week)
 
-        return render(request, 'trainerInterface/trainProg.html', {'days': week.days.all()})
+        return render(request, 'trainerInterface/trainProg.html', {'days': week.days.all().order_by('day')})
 
 
 def getDayTableDataProg(request):
@@ -44,4 +44,4 @@ def getDayTableDataProg(request):
             }
             return JsonResponse(response)
 
-        return render(request, 'trainerInterface/segments/dayTableDataProg.html', {'days': days})
+        return render(request, 'trainerInterface/segments/dayTableDataProg.html', {'days': days.order_by('day')})
