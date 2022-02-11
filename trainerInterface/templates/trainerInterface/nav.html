@@ -1,7 +1,9 @@
 <!DOCTYPE html>
-{% load bootstrap4 %}
+{% load static %}
+{% load my_filters %}
 <html lang="en">
 {% block title%}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,219 +11,160 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Bootstrap core CSS -->
-    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
-    <link href="/static/css/nav.css" rel="stylesheet">
-    <title>Nav</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Syncopate">
+    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
+    <link rel="shortcut icon" href="/media/images/logoSmall.png" />
+    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+
+    <script>
+        previousHref = "{{ request.session.href }}";
+        var csrf_token = "{{ csrf_token }}";
+    </script>
+
+
 </head>
 {% endblock %}
 
 {% block navbar %}
+<title>Peak</title>
 
-    <body>
-        <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-            <a class="navbar-brand col-sm-2 col-md-2 mr-2" href="#">PT App</a>
+<body>
+    <nav class="navbar">
 
-            <form class = "dropdown-form" action="" method="post" >
-                {% csrf_token %}
+        <div class="content-title">
+
+        </div>
+        <form class="dropdown-form" action="" method="post">
+            {% csrf_token %}
+            <div class="select-div">
                 {{ form }}
-                <input type="submit" name="change_client">
-            </form>
+            </div>
+            <input type="submit" name="change_client">
+        </form>
 
 
-        </nav>
-        <div class="container">
+    </nav>
+    <div class="container">
 
-            <div class="row">
-                <nav class="col-md-2 bg-light d-md-block d-none sidebar">
-                    <div class="sidebar-sticky">
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                {% block nav-dashboard %}
-                                <a class="nav-link" href="{% url 'dashboard' %}">
-                                    <div class="iconWrapper">
-                                        <i class="fas fa-home sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Dashboard
-                                    </div>
-                                </a>
-                                {% endblock %}
-                            </li>
-                            <li class="nav-item">
-                                {% block nav-train-plan %}
-                                <a class="nav-link" href="{% url 'trainplan' %}">
-                                    <div class="iconWrapper">
-                                        <i class="far fa-calendar-alt sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Training Plan
-                                    </div>
-                                </a>
-                                {% endblock %}
+        <div class="row">
+            <nav class="sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <div class="sidebar-header">
+                            <img class="logo-image" src="/media/images/logoSmall.png">
+                            <div class="company-title">PEAK</div>
+                        </div>
+                        <li class="nav-item">
+                            <div class="sectionTitle">
+                                Client
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-dashboard %}
+                            <div class="nav-link" href="{% url 'dashboard' %}" title="Dashboard">
+                                <div class="iconWrapper">
+                                    <i class="fas fa-home sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Dashboard</div>
+                            </div>
+                            {% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-train-plan %}
+                            <div class="nav-link" href="{% url 'trainplan' %}" title="Training Plan">
+                                <div class="iconWrapper">
+                                    <i class="far fa-calendar-alt sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Training Plan</div>
+                            </div>
+                            {% endblock %}
 
-                            </li>
-                            <li class="nav-item">
-                                {% block nav-train-prog %}
-                                <a class="nav-link" href="{% url 'trainprog' %}">
-                                    <div class="iconWrapper">
-                                        <i class="far fa-calendar-check sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Training Progress
-                                    </div>
-                                </a>
-                                {% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-train-prog %}
+                            <div class="nav-link" href="{% url 'trainprog' %}" title="Training Progress">
+                                <div class="iconWrapper">
+                                    <i class="far fa-calendar-check sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Training Progress</div>
+                            </div>
+                            {% endblock %}
 
-                            </li>
-                            <li class="nav-item">
-                                {% block nav-dataTracking-prog %}
-                                <a class="nav-link" href="{% url 'dailyTracking' %}">
-                                    <div class="iconWrapper">
-                                        <i class="fas fa-clipboard-list sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Data Tracking
-                                    </div>
-                                </a>
-                                {% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-dataTracking-prog %}
+                            <div class="nav-link" href="{% url 'dailyTracking' %}" title="Daily Tracking">
+                                <div class="iconWrapper">
+                                    <i class="fas fa-clipboard-list sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Data Tracking</div>
+                            </div>
+                            {% endblock %}
 
-                            </li>
-                            <li class="nav-item">
-                                {% block nav-chat %}
-                                <a class="nav-link" href="#">
-                                    <div class="iconWrapper">
-                                        <i class="far fa-comment-alt sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Chat
-                                    </div>
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-chat %}
+                            <div class="nav-link" href="#" title="Chat">
+                                <div class="iconWrapper">
+                                    <i class="far fa-comment-alt sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Chat</div>
 
-                                </a>
-                                {% endblock %}
-                            </li>
-<!--                            <li class="nav-item">-->
-<!--                                {% block nav-reports %}-->
-<!--                                <a class="nav-link" href="#">-->
-<!--                                    <i class="fas fa-dumbbell sidebarIcon"  aria-hidden="true"></i>-->
-<!--                                Reports </a>-->
-<!--                                {% endblock %}-->
-<!--                            </li>-->
-                            <li class="nav-item">
-                                {% block nav-exercises %}
-                                <a class="nav-link" href="{% url 'exercises' %}">
-                                    <div class="iconWrapper">
-                                        <i class="fas fa-dumbbell sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Exercises
-                                    </div>
-                                </a>
+                            </div>
+                            {% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            <div class="sectionTitle">General</div>
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-exercises %}
+                            <div class="nav-link" href="{% url 'exercises' %}" title="Exercises">
+                                <div class="iconWrapper">
+                                    <i class="fas fa-dumbbell sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Exercises</div>
+                            </div>
 
-                                {% endblock %}
-                            </li>
-                            <li class="nav-item">
-                                {% block nav-clients %}
-                                <a class="nav-link" href="{% url 'clients' %}">
-                                    <div class="iconWrapper">
-                                        <i class="fas fa-users sidebarIcon"  aria-hidden="true"></i>
-                                    </div>
-                                    <div class="textWrap">
-                                        Clients
-                                    </div>
-                                </a>
+                            {% endblock %}
+                        </li>
+                        <li class="nav-item">
+                            {% block nav-clients %}
+                            <div class="nav-link" href="{% url 'clients' %}" title="Clients">
+                                <div class="iconWrapper">
+                                    <i class="fas fa-users sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Clients</div>
+                            </div>
 
-                                {% endblock %}
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                <div class="col-auto align-self-end content-backing">
-
-                    <div class="content">
-                    {% block content %}
-                        <div>Nav</div>
-                    {% endblock %}
-                    </div>
-
+                            {% endblock %}
+                        </li>
+                    </ul>
                 </div>
+            </nav>
+            <div class="content-backing">
+
+
+                {% block content %}
+
+                {% endblock %}
+
+
             </div>
         </div>
-        <!-- Bootstrap core JavaScript
+    </div>
+    <!-- Bootstrap core JavaScript
     ================================================== -->
-        <!-- Placed at the end of the document so the pages load faster -->
-        <style>
-            .nav-link{
-                padding: 0;
-                margin: 0;
-                height: 30px;
-                line-height: 30px;
-            }
-            .textWrap{
-                display: inline-block;
-            }
-            .iconWrapper{
-                display: inline-block;
-                width: 30px;
-                text-align: center;
-            }
-            .sidebarIcon{
-                color: #979797;
-            }
-            ::-webkit-scrollbar-thumb {
-              background-color: rgba(0, 0, 0, 0.2);
-              border: 4px solid transparent;
-              border-radius: 8px;
-              background-clip: padding-box;
-            }
+    <!-- Placed at the end of the document so the pages load faster -->
 
-            ::-webkit-scrollbar {
-                width: 16px;
-                background-color: whitesmoke;
-                border-bottom-right-radius: 5px;
-                border-top-right-radius: 5px;
-            }
-            .content {
-                display: flex;
-                flex-direction: column;
-                overflow-y: scroll;
-                padding: 20px;
-                min-height: calc(100vh - 65px);
-                height: calc(80vh)  ;
-                background: whitesmoke;
-                border-radius: 5px;
-                align-items: center;
-            }
-            .content-backing {
-                display:flex;
-                flex-direction: column;
-                overflow: hidden;
-                padding: calc(1vw);
-                padding-bottom: 2%;
-                top: 45px; /* Space for fixed navbar */
-                position: fixed;
-                right: 0;
-                left: calc(16.7vw);
-                background: lightgrey;
-                /*height:  calc(100vh - 45px);*/
-            }
-            @media (max-width:768px) {
-                [role="main"] {
-                  left: 0;
+    <script src="/static/assets/js/jquery.min.js"></script>
+    <script src="/static/assets/js/popper.js"></script>
+    <script src="{% static 'js/nav.js' %}"></script>
+    <!-- <script src="/static/bootstrap/js/bootstrap.min.js"></script> -->
 
-                }
-            }
-        </style>
-        <script src="/static/assets/js/jquery.min.js"></script>
-        <script src="/static/assets/js/popper.js"></script>
-        <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-        <!-- Icons -->
-        <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
-        <script>feather.replace()</script>
 
-        <!-- Graphs -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
-        <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
-    </body>
+</body>
+
 </html>
 {% endblock %}

@@ -1,0 +1,7 @@
+{% for phase in phases reversed %}
+{% for week in phase.weeks.all reversed%}
+<div class="cloneOption" onclick="cloneConfirmation({{ phase.phase }}, {{ week.week }})">
+    Phase {{ phase.phase }} Week {{ week.week }}
+</div>
+{% endfor %}
+{% endfor %}

@@ -1,13 +1,6 @@
-{% extends "trainerInterface/nav.html" %} {% load my_filters %} {% load static %} {% block nav-clients %}
-<a class="nav-link" href="{% url 'clients' %}" style="background-color: #777777; color:  #f4eb49; border-radius: 5px">
-    <div class="iconWrapper">
-        <i class="fas fa-users sidebarIcon" aria-hidden="true" style="color:  #f4eb49"></i>
-    </div>
-    <div class="textWrap" style="color:  #f4eb49">
-        Clients
-    </div>
-</a>
-{% endblock %} {% block content %}
+{% load my_filters %}
+{% load static %}
+{% block content %}
 <style>
     .content {
         padding-top: 16px !important;
@@ -15,7 +8,7 @@
         padding-left: 16px !important;
         padding-bottom: 16px !important;
     }
-    
+
     .userTable {
         display: flex;
         width: 100%;
@@ -27,51 +20,51 @@
         background-color: #D6D6D6;
         border-radius: 5px;
     }
-    
+
     .userTableHeader {
         position: relative;
         background-color: #777777;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
     }
-    
+
     .headerCell {
         display: inline-block;
         text-align: center;
     }
-    
+
     .contentCell {
         display: inline-block;
     }
-    
+
     .client {
         width: 30%;
     }
-    
+
     .email {
         width: 25%;
     }
-    
+
     .phase {
         width: 7.5%;
         text-align: center;
     }
-    
+
     .week {
         width: 7.5%;
         text-align: center;
     }
-    
+
     .lastSeen {
         width: 27%;
         text-align: center;
     }
-    
+
     .userImage {
         margin-left: 5px;
         margin-right: 5px;
     }
-    
+
     .addEntryButton {
         border: none;
         background-color: #787878;
@@ -82,10 +75,11 @@
         margin-left: auto;
         margin-right: auto;
     }
+
     /*--------------------------------------------------------------------------------------------------------------------*/
     /* adding entry window */
     /*--------------------------------------------------------------------------------------------------------------------*/
-    
+
     .bg-modal {
         left: 0;
         top: 0;
@@ -98,7 +92,7 @@
         align-items: center;
         justify-content: center;
     }
-    
+
     .modal-content {
         width: 300px;
         /*height: 300px;*/
@@ -108,7 +102,7 @@
         align-items: center;
         /*justify-content: center;*/
     }
-    
+
     .close_addClient {
         cursor: pointer;
         position: relative;
@@ -125,7 +119,7 @@
         margin-right: 5px;
         margin-top: 5px;
     }
-    
+
     .AddClientTitleContainer {
         width: 70%;
         margin-left: 15%;
@@ -139,7 +133,7 @@
         margin-bottom: 15px;
         color: black;
     }
-    
+
     .add-client-form {
         display: table-cell;
         position: relative;
@@ -147,7 +141,7 @@
         padding: 0;
         margin: 0;
     }
-    
+
     .submitAddClient {
         border-radius: 7px;
         background-color: #787878;
@@ -155,7 +149,7 @@
         box-shadow: 0 0 0 1pt #404040;
         margin-bottom: 5px;
     }
-    
+
     .trainerLink div {
         display: inline-block;
         border-radius: 4px;
@@ -165,31 +159,31 @@
         text-align: center;
         background: #686868;
     }
-    
+
     .trainerLink {
         width: 80%;
         padding-bottom: 20px;
     }
-    
+
     .t-link {
         width: 25px;
         font-size: 12px;
         width: calc(100% - 29px);
     }
-    
+
     .t-copy {
         font-size: 18px;
         width: 25px;
     }
-    
+
     .fa-copy:hover {
         color: #484848;
     }
-    
+
     .fa-copy:active {
         color: white;
     }
-    
+
     .popup {
         position: absolute;
         width: 100px;
@@ -198,16 +192,17 @@
         background-color: #5DB679;
         text-align: center;
     }
-    
+
     .slideAnim {
         animation: slideA 1.5s 2;
         animation-direction: alternate;
     }
-    
+
     @keyframes slideA {
         from {
             top: 0
         }
+
         to {
             top: 8%
         }
@@ -224,7 +219,8 @@
     {% for client in clients %}
     <div class="userTableContent">
         {% with week=client|getActiveWeek %}
-        <div class="contentCell client"><i class="fas fa-user userImage" aria-hidden="true"></i>{{client.first_name}} {{client.last_name}}
+        <div class="contentCell client"><i class="fas fa-user userImage" aria-hidden="true"></i>{{client.first_name}}
+            {{client.last_name}}
         </div>
         <div class="contentCell email">{{client.email}}</div>
         {% if week %}
@@ -254,16 +250,13 @@
         </div>
     </div>
 </div>
-<script src="{% static '/assets/js/jquery.min.js' %}"></script>
-<script src="/static/assets/js/popper.js"></script>
-<script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
-<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+
 <script>
     function tempAlert(msg, duration) {
         var el = document.createElement("div");
         el.setAttribute("class", "popup slideAnim");
         el.innerHTML = msg;
-        setTimeout(function() {
+        setTimeout(function () {
             el.parentNode.removeChild(el);
         }, duration);
         document.body.appendChild(el);
@@ -285,12 +278,12 @@
             x.style.display = "none";
         }
     };
-    $('.close_addClient').on('click', function(e) {
+    $('.close_addClient').on('click', function (e) {
         var x = document.getElementById("add-client-modal");
         x.style.display = "none";
     });
 
-    $('.bg-modal').on('click', function(e) {
+    $('.bg-modal').on('click', function (e) {
         if (e.target !== this)
             return;
         var x = document.getElementById("add-client-modal");
