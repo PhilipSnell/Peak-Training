@@ -1,0 +1,89 @@
+{% load trainPlan_extras %}
+{% load static %}
+{% load my_filters %}
+
+{% for day in days.all %}
+<div class="dayTable" id="Phase{{ phase.phase }}Week{{ week.week }}Day{{ day.day }}">
+    <div class="dayTitle"> Day {{ day.day }} </div>
+    {% for entry in day.entrys.all|dictsort:"id"%}
+    <div class="exerciseCard">
+        <div class="imageBox">
+            <img class="cropImage" height="110" src="https://img.youtube.com/vi/{{ entry.exercise.video|sliceVideo }}">
+        </div>
+        <div class="exerciseBox">
+            <div class="exerciseBoxInner">
+                {{ entry.exercise.name }}
+            </div>
+        </div>
+        <div class="exerciseContent">
+            <div class="exerciseContentUpper">
+                <div class="exerciseContentLabel">
+                    <div class="itemLabel">reps</div>
+                </div>
+                <div class="exerciseContentItem">
+                    <div class="itemValue">{{ entry.reps }}</div>
+                </div>
+                <div class="exerciseContentLabel">
+                    <div class="itemLabel">weight</div>
+                </div>
+                <div class="exerciseContentItem">
+                    <div class="itemValue">{{ entry.weight }}</div>
+                </div>
+                <div class="exerciseContentLabel">
+                    <div class="itemLabel">sets</div>
+                </div>
+                <div class="exerciseContentItem">
+                    <div class="itemValue">{{ entry.sets }}</div>
+                </div>
+            </div>
+            <div class="exerciseContentLower">
+                <div class="commentBox">
+                    {{ entry.comment }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table-striped">
+        {% with feedback=entry.id|get_feedback %}
+        {% if feedback %}
+        <tr style="height: 28px">
+
+            <td class="difficulty" colspan="1">
+                <div class="difficultyLabel">Difficulty</div>
+                <div class="difficultyValue">{{ feedback.difficulty }}</div>
+            </td>
+            <td class="feedback" colspan="4">
+                <div class="feedbackLabel">Feedback</div>
+                <div class="feedbackValue">{{ feedback.comment }}</div>
+            </td>
+
+        </tr>
+        {% else %}
+
+        {% endif %}
+        {% endwith %}
+        {% with sets=entry|get_sets %}
+        {% for set in sets %}
+        <tr>
+            <td class="setNameCell">
+                <div class="setNameCellInner">Set {{ set.set }}</div>
+            </td>
+            <td class="setCell">
+                <div class="setCellLabel">reps</div>
+            </td>
+            <td class="setCell">
+                <div class="setCellValue">{{ set.reps }}</div>
+            </td>
+            <td class="setCell">
+                <div class="setCellLabel">weight</div>
+            </td>
+            <td class="setCell">
+                <div class="setCellValue">{{ set.weights }}</div>
+            </td>
+        </tr>
+        {% endfor %}
+        {% endwith %}
+    </table>
+    {% endfor %}
+</div>
+{% endfor %}

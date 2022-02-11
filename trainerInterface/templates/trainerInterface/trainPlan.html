@@ -2,13 +2,29 @@
 {% load static %}
 
 {% block content %}
-<script>
-    var csrf_token = "{{ csrf_token }}";
-</script>
+
 <script src="{% static 'js/training-plan.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/training-plan.css' %}">
 
 <script>
+    var clients = [];
+    {% for client in clients %}
+    clients.push("{{ client }}");
+    {% endfor %}
+    cloneClientHtml = "";
+    for (index in clients) {
+        console.log("{{ request.session.clone_client }}");
+        if (clients[index] == "{{ request.session.clone_client }}") {
+            cloneClientHtml = cloneClientHtml + `<div class="cloneOption clientCloneOption selectedOption">${clients[index]}</div>`
+        } else {
+            cloneClientHtml = cloneClientHtml + `<div class="cloneOption clientCloneOption">${clients[index]}</div>`;
+        }
+    };
+    selected_client = "{{ request.session.clone_client }}";
+    phaseOptionsHtml = $('.cloneOptions').html();
+
+
+
     var selectedPhase;
     var selectedWeek;
     var phaseStatus = true;
@@ -20,35 +36,7 @@
 
 </script>
 
-<!-- <div class="topBarPhaseSelector">
-    <div class="phaseSelectorWrapper">
-        {% for phase in phases %}
-        <input class="phaseButton" type="button" value="Phase {{ phase.phase }}" id="{{ phase.phase }}"
-            onclick="phaseSelected('{{ phase.phase }}')">
-        {% endfor %}
-        <form class="addForm" action="{% url 'add_phase' %}" method="get">
-            <input class="phaseButton phaseAddButton" type="submit" value="+">
-        </form>
 
-    </div>
-    {% for phase in phases %}
-    <div class="weekSelectorWrapper" id="{{ phase.phase }}" style="display: none">
-        {% for week in phase.weeks.all %}
-        <input class="weekButton weekButton{{ phase.phase }}" name="{{ week.isActive }}" type="button"
-            value="Week {{ week.week }}" id="{{ week.week }}" onclick="weekSelected('{{ week.week }}')">
-        {% endfor %}
-        <form class="addForm" action="{% url 'add_week' phase.id%}" method="get">
-            <input class="weekButton weekAddButton" type="submit" value="+">
-        </form>
-
-    </div>
-    {% endfor %}
-
-    <div class="phaseOrWeek">
-        <input class="phaseOrWeekButton selectPhaseButton" type="button" value="Phase" onclick="phaseClicked()">
-        <input class="phaseOrWeekButton selectWeekButton" type="button" value="Week" onclick="weekClicked()">
-    </div>
-</div> -->
 <div class="day-selector-wrapper">
     <div class="day-tile addDayButton">
         <div class="day-tile-word">Add Day</div>
@@ -64,8 +52,15 @@
 
 
             <div class="cloneWeek" title="Clone a week">
-                <i class="fas fa-clone cloneWeekIcon" aria-hidden="true" onclick="showCloneOptions()"></i>
+                <i class="fas fa-clone cloneWeekIcon" aria-hidden="true"></i>
                 <div class="cloneOptionsWrapper" id="cloneOptionsWrapper">
+                    <div class="optionHeader">
+                        <div class="selectHeaderIconWrapper selected-clone-icon"><i class="fas fa-list selectHeaderIcon"
+                                aria-hidden="true"></i></div>
+                        <div class="selectHeaderIconWrapper"><i class="fas fa-user selectHeaderIcon"
+                                aria-hidden="true"></i></div>
+                    </div>
+
                     <div class="cloneOptions">
                         {% for phase in phases reversed %}
                         {% for week in phase.weeks.all reversed%}
@@ -281,6 +276,7 @@
     </div>
 </div>
 
+
 <div class="bg-modal" id="toggle-modal" style="display: none;">
     <div class="modal-content">
         <div style="width:100%">
@@ -293,37 +289,6 @@
         <form id="toggleWeekForm">
 
             <input class="submitAddEntry" type="submit" name="submit" value="Activate">
-        </form>
-    </div>
-</div>
-
-<div class="bg-modal" id="clone-modal" style="display: none;">
-    <div class="modal-content">
-        <div style="width:100%">
-            <div class="cloneTitle"> Cloning </div>
-            <div class="clonePhaseBackground">
-                <div class="clonePhaseContainer" id="cloneFromPhase">
-                    Phase 1
-                </div>
-                <div class="cloneWeekContainer" id="cloneFromWeek">
-                    Week 1
-                </div>
-            </div>
-            <i class="fas fa-arrow-right cloneArrow" aria-hidden="true"></i>
-            <div class="clonePhaseBackground">
-                <div class="clonePhaseContainer" id="cloneToPhase">
-                    Phase 1
-                </div>
-                <div class="cloneWeekContainer" id="cloneToWeek">
-                    Week 1
-                </div>
-            </div>
-            <div class="toggleConfirmationSubMessage" style="text-align: center">
-                Note: This we erase all current exercises in this set
-            </div>
-        </div>
-        <form id="cloneForm">
-            <input class="submitClone" type="submit" name="submit" value="Confirm Clone">
         </form>
     </div>
 </div>

@@ -28,7 +28,10 @@ def processForm(request):
     if ClientSelect.is_valid():
         selected_client = ClientSelect.cleaned_data["selected_client"]
         print(selected_client.email)
+        client = User.objects.get(email=selected_client.email)
         request.session["selected_client"] = selected_client.email
+        request.session["clone_client"] = client.first_name + \
+            " "+client.last_name
 
 
 def getUserform(request):
@@ -51,6 +54,8 @@ def home(request):
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')
 def dashboard(request):
+    if request.session["href"] is None:
+        request.session["href"] = '/dashboard/'
     if request.method == "POST":
         processForm(request)
 
@@ -69,62 +74,6 @@ def clients(request):
     trainer = Trainer.objects.get(trainer=request.user)
 
     return render(request, 'trainerInterface/clients.html', {'form': form, 'clients': trainer.clients.all()})
-
-
-def cloneWeek(request):
-    user = User.objects.get(email=request.session['selected_client'])
-    if request.is_ajax():
-        phaseFromNum = request.POST.get('phaseFrom', None)
-        weekFromNum = request.POST.get('weekFrom', None)
-        phaseToNum = request.POST.get('phaseTo', None)
-        weekToNum = request.POST.get('weekTo', None)
-        # try:
-        phaseFrom = Phase.objects.get(user=user,
-                                      phase=phaseFromNum)
-        weekFrom = phaseFrom.weeks.get(week=weekFromNum, user=user)
-
-        phaseTo = Phase.objects.get(user=User.objects.get(email=request.session['selected_client']),
-                                    phase=phaseToNum)
-        weekTo = phaseTo.weeks.get(week=weekToNum, user=user)
-
-        # Clear all current days
-        for day in weekTo.days.all():
-            for entry in day.entrys.all():
-                entry.delete()
-            day.delete()
-        copiedDays = []
-        for day in weekFrom.days.all():
-            copiedEntrys = []
-            for entry in day.entrys.all():
-                copiedEntry = TrainingEntry(
-                    user=User.objects.get(
-                        email=request.session['selected_client']),
-                    phase=weekTo.phase,
-                    week=weekTo.week,
-                    day=day.day,
-                    reps=entry.reps,
-                    weight=entry.weight,
-                    sets=entry.sets,
-                    comment=entry.comment,
-                    exercise=entry.exercise
-                )
-                copiedEntry.save()
-                copiedEntrys.append(copiedEntry)
-            copiedDay = Day(
-                phase=weekTo.phase,
-                week=weekTo.week,
-                day=day.day,
-                user=user
-            )
-            copiedDay.save()
-            copiedDay.entrys.add(*copiedEntrys)
-            copiedDay.save()
-            copiedDays.append(copiedDay)
-        weekTo.days.add(*copiedDays)
-        weekTo.save()
-        # except:
-
-    return redirect('trainplan')
 
 
 @user_passes_test(lambda user: user.is_trainer, login_url='/login/')

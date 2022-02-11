@@ -86,13 +86,13 @@
 .phaseContent {
     display: flex;
     width: 100%;
-    height: 94.8%;
-
+    height: 93%;
+    margin-bottom: 16px;
     position: relative;
     flex-direction: column;
     background-color: #9C9C9C;
     border-radius: 5px;
-
+    top: 35px;
 }
 
 .phaseContentWrapper {
@@ -205,6 +205,20 @@ table{
     width: 100%;
     height: calc(100vh - 45px);
     background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.bg-modal2 {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: calc(100vh - 45px);
+    background: rgba(0, 0, 0, 0.336);
     position: absolute;
     display: flex;
     align-items: center;
@@ -507,24 +521,42 @@ table{
 .cloneOptionsWrapper {
     position: absolute;
     display: none;
-    width: 140px;
-    height: 180px;
-    flex-direction: column;
-    overflow-y: scroll;
+    right: 10px;
+    padding-top: 5px;
+    padding-left: 16px;
     background-color: #D6D6D6;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    border-radius: 5px;
+    border-top-right-radius: 0;
     z-index: 2;
 
 }
-
+.cloneOptions::-webkit-scrollbar {
+    width: 16px;
+    background-color: #D6D6D6;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+.cloneOptions{
+    flex-direction: column;
+    overflow-y: scroll;
+    padding-right:0 !important;
+    padding-bottom: 5px;
+}
+.cloneOption{
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-top:5px;
+}
 .cloneOption:hover {
     background-color: #B0B0B0;
     border-radius: 5px;
     cursor: pointer;
 }
-
+.selectedOption{
+    border-radius: 5px;
+    background-color: #7a7a7a;
+    color: #e7e7e7;
+}
 .cloneTitle {
     position: relative;
     display: block;
@@ -563,6 +595,23 @@ table{
     margin-right: 5px;
 }
 
+.selectHeaderIconWrapper{
+    position: relative;
+    padding: 0;
+    color: #555555;
+    width: 45%;
+    display: inline-block;
+    background-color: #999999;
+    text-align: center;
+    border-radius: 2px;
+}
+.selected-clone-icon{
+    color: #c0ce00;
+    background-color: #868686;
+}
+.optionHeader{
+    padding-right: 16px;
+}
 .cloneArrow {
     display: inline-block;
 }
@@ -678,11 +727,19 @@ color: #f4eb49;
 /* Day selector */
 .day-selector-wrapper{
     position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    flex-direction: row;
+    white-space: nowrap;
     display: block;
-    width: 100%;
-    height: 30px;
+    width: 100% !important;
+    height: 30px !important;
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: -25px;
+
+}
+.day-selector-wrapper::-webkit-scrollbar {
+    display: none;
 }
 .addDayButton:hover{
     color: rgb(190, 190, 190);

@@ -58,8 +58,9 @@ def getDays(request):
                 html_response = html_response + \
                     '<div class="day-tile selected-day"><div class="day-tile-word">Day</div><div class="day-tile-num">' + \
                     str(day.day)+'</div></div>'
-            html_response = html_response + \
-                '<div class="day-tile addDayButton"><div class="day-tile-word">Add Day</div></div>'
+            if request.GET.get('progress', None) == None:
+                html_response = html_response + \
+                    '<div class="day-tile addDayButton"><div class="day-tile-word">Add Day</div></div>'
         return HttpResponse(html_response)
 
 
@@ -67,26 +68,22 @@ def trainplan(request):
 
     if request.is_ajax():
         if "selected_client" in request.session:
-            phase = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client'])).order_by('-phase')[0]
+            phases = Phase.objects.filter(user=User.objects.get(
+                email=request.session['selected_client']))
+            phase = phases.order_by('-phase')[0]
             week = Week.objects.filter(user=User.objects.get(
                 email=request.session['selected_client']), phase=phase.phase).order_by('-week')[0]
             days = week.days.all()
         else:
+            phases = None
             days = None
 
         addform = AddTrainingEntry()
         exercises = ExerciseType.objects.order_by('name')
-
-        # when the add week button is pressed this results in the page reloading with weeks menu open rather than phase open
-        weekOpen = False
-        if "weekOpen" in request.session:
-            if request.session["weekOpen"] == True:
-                request.session["weekOpen"] = False
-                weekOpen = True
-
+        request.session["href"] = '/dashboard/trainplan/'
         return render(request, 'trainerInterface/trainPlan.html',
-                      {'days': days, 'addform': addform, 'exercises': exercises, 'weekOpen': weekOpen})
+                      {'days': days, 'addform': addform, 'exercises': exercises, 'phases': phases,
+                       'clients': Trainer.objects.get(trainer=request.user).clients.all()})
 
 
 def addEntry(request):
@@ -330,9 +327,15 @@ def getDayTableData(request):
     if request.is_ajax():
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
-        if "selected_client" in request.session:
+        client = request.POST.get('client', None)
+        if "selected_client" in request.session and client == None:
             week = Week.objects.get(user=User.objects.get(
                 email=request.session['selected_client']), phase=phase, week=week)
+            days = week.days.all()
+        elif client != None:
+            client = client.split()
+            week = Week.objects.get(user=User.objects.get(
+                first_name=client[0], last_name=client[1]), phase=phase, week=week)
             days = week.days.all()
         else:
             days = None
@@ -342,3 +345,98 @@ def getDayTableData(request):
             return JsonResponse(response)
 
         return render(request, 'trainerInterface/segments/dayTableData.html', {'days': days})
+
+
+def getClonePhases(request):
+    if request.is_ajax():
+        try:
+            selected_client = request.POST.get('selected_client', None).split()
+            first_name = selected_client[0]
+            last_name = selected_client[1]
+            selected_client = User.objects.get(
+                first_name=first_name, last_name=last_name)
+            phases = Phase.objects.filter(user=selected_client)
+
+            return render(request, 'trainerInterface/segments/getClonePhases.html', {'phases': phases})
+        except:
+            response = {
+                'error': 'could not get clients phases'
+            }
+            return JsonResponse(response)
+
+
+def cloneWeek(request):
+    user = User.objects.get(email=request.session['selected_client'])
+
+    if request.is_ajax():
+        client_from = request.POST.get('selected_client', None).split()
+        client = User.objects.get(
+            first_name=client_from[0], last_name=client_from[1])
+        phaseFromNum = request.POST.get('phaseFrom', None)
+        weekFromNum = request.POST.get('weekFrom', None)
+        phaseToNum = request.POST.get('phaseTo', None)
+        weekToNum = request.POST.get('weekTo', None)
+        # try:
+        phaseFrom = Phase.objects.get(user=client,
+                                      phase=phaseFromNum)
+        weekFrom = phaseFrom.weeks.get(week=weekFromNum, user=client)
+
+        phaseTo = Phase.objects.get(user=user,
+                                    phase=phaseToNum)
+        weekTo = phaseTo.weeks.get(week=weekToNum, user=user)
+
+        # Clear all current days
+        for day in weekTo.days.all():
+            for entry in day.entrys.all():
+                entry.delete()
+            day.delete()
+        copiedDays = []
+        for day in weekFrom.days.all():
+            copiedEntrys = []
+            for entry in day.entrys.all():
+                copiedEntry = TrainingEntry(
+                    user=user,
+                    phase=weekTo.phase,
+                    week=weekTo.week,
+                    day=day.day,
+                    reps=entry.reps,
+                    weight=entry.weight,
+                    sets=entry.sets,
+                    comment=entry.comment,
+                    exercise=entry.exercise
+                )
+                copiedEntry.save()
+                copiedEntrys.append(copiedEntry)
+            copiedDay = Day(
+                phase=weekTo.phase,
+                week=weekTo.week,
+                day=day.day,
+                user=user
+            )
+            copiedDay.save()
+            copiedDay.entrys.add(*copiedEntrys)
+            copiedDay.save()
+            copiedDays.append(copiedDay)
+        weekTo.days.add(*copiedDays)
+        weekTo.save()
+        # except:
+
+    return render(request, 'trainerInterface/segments/dayTableData.html', {'days': weekTo.days.all()})
+
+
+def checkActiveWeek(request):
+    response = {
+        'false': 'false'
+    }
+    if request.is_ajax():
+        phase = request.POST.get('phase', None)
+        week = request.POST.get('week', None)
+
+        week = Week.objects.get(user=User.objects.get(
+            email=request.session['selected_client']), week=week, phase=phase)
+
+        if (week.isActive):
+            response = {
+                'true': 'true'
+            }
+    return JsonResponse(response)

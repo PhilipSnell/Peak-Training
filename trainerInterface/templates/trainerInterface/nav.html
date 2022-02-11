@@ -18,7 +18,10 @@
     <link rel="shortcut icon" href="/media/images/logoSmall.png" />
     <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
 
-
+    <script>
+        previousHref = "{{ request.session.href }}";
+        var csrf_token = "{{ csrf_token }}";
+    </script>
 
 
 </head>
@@ -31,7 +34,7 @@
     <nav class="navbar">
 
         <div class="content-title">
-            Dashboard
+
         </div>
         <form class="dropdown-form" action="" method="post">
             {% csrf_token %}
@@ -144,7 +147,7 @@
 
 
                 {% block content %}
-                <div>Nav</div>
+
                 {% endblock %}
 
 

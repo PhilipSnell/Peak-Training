@@ -1,3 +1,31 @@
+$.fn.hScroll = function (options) {
+    function scroll(obj, e) {
+        var evt = e.originalEvent;
+        var scale = 15;
+        var direction = evt.detail ? evt.detail * (-scale) : evt.wheelDelta;
+
+        if (direction > 0) {
+            direction = $(obj).scrollLeft() - scale;
+        }
+        else {
+            direction = $(obj).scrollLeft() + scale;
+        }
+
+        $(obj).scrollLeft(direction);
+
+        e.preventDefault();
+    }
+
+    $(this).width($(this).find('div').width());
+
+    $(this).bind('DOMMouseScroll mousewheel', function (e) {
+        scroll(this, e);
+    });
+}
+$(document).ready(function () {
+    $('.day-selector-wrapper').hScroll();
+});
+
 // Alert popup
 function tempAlert(msg, duration, type) {
     var el = document.createElement("div");
@@ -54,18 +82,30 @@ function tempAcceptAlert(msg) {
                 if (data['success']) {
 
                     tempAlert(data['success'], 4000, 1);
+                    $('.toggleOff').on('click', function () {
+                        tempAcceptAlert('Make this the active week?');
+                    });
                 } else {
                     tempAlert(data['error'], 4000, 0);
                     $('.toggleActiveIcon').attr('class', 'fas fa-toggle-off toggleOff toggleActiveIcon')
+                    $('.toggleOff').on('click', function () {
+                        tempAcceptAlert('Make this the active week?');
+                    });
                 }
 
             },
             failure: function () {
-                tempAlert('Error deleting entry', 4000, 0);
+                tempAlert('Couldnt Activate Week', 4000, 0);
                 $('.toggleActiveIcon').attr('class', 'fas fa-toggle-off toggleOff toggleActiveIcon')
             }
         });
 
+    });
+    $(".cancelToggle").on('click', function (e) {
+        $(".alertPopupAccept").css('animation', 'slideC 1s');
+        setTimeout(function () {
+            $(".alertPopupAccept").remove();
+        }, 1000);
     });
 };
 
@@ -216,6 +256,37 @@ if ($('.navbar').find('.custom-select-week').length != 0) {
 } else {
     $('.navbar').append('<div class="custom-select custom-select-week"><select><option value="0" title="add week">+</option></select></div>')
 }
+function updateTableTitle() {
+    $('.contentTitle').html(`Phase ${selectedPhase} Week ${selectedWeek}`);
+    $.ajax({
+        type: "POST",
+        url: '/dashboard/checkActiveWeek/',
+        data: {
+            phase: selectedPhase,
+            week: selectedWeek,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+            if (data['true']) {
+                $('.toggleActiveIcon').attr('class', 'fas fa-toggle-on  toggleOn toggleActiveIcon')
+                $('.toggleOff').on('click', function () {
+                    tempAcceptAlert('Make this the active week?');
+                });
+            } else {
+                $('.toggleActiveIcon').attr('class', 'fas fa-toggle-off toggleOff toggleActiveIcon')
+                $('.toggleOff').on('click', function () {
+                    tempAcceptAlert('Make this the active week?');
+                });
+            }
+        }
+
+
+
+    });
+
+}
+
 function getWeekDropdown() {
 
     $.ajax({
@@ -227,6 +298,7 @@ function getWeekDropdown() {
         success: function (data) {
             $('.custom-select-week').html(data)
             handleDropdown('custom-select-week');
+            updateTableTitle();
             getDays();
             getDayData();
 
@@ -301,7 +373,7 @@ function handleDropdown(target) {
                     } else if (i == 0 && target == 'custom-select-week') {
                         $.ajax({
                             type: "POST",
-                            url: "dashboard/addWeek/",
+                            url: "/dashboard/addWeek/",
                             data: {
                                 phase: selectedPhase,
                                 csrfmiddlewaretoken: csrf_token,
@@ -334,6 +406,7 @@ function handleDropdown(target) {
                             selectedWeek = selectElement.options[i].value;
                             getDays();
                             getDayData();
+                            updateTableTitle();
                         } else if (target == 'custom-select-phase') {
                             selectedPhase = selectElement.options[i].value;
                             getWeekDropdown();
@@ -428,7 +501,7 @@ function monitorAddDay() {
         });
     });
 }
-
+var cloneExpanded = false;
 function closeAllSelect(elmnt) {
     /* A function that will close all select boxes in the document,
     except the current select box: */
@@ -450,6 +523,7 @@ function closeAllSelect(elmnt) {
         }
     }
 }
+
 $('.bg-modal').on('click', function (e) {
     if (e.target !== this)
         return;
@@ -820,14 +894,55 @@ $('#editEntryForm').on('submit', function (e) {
 });
 
 // toggle confirmation
-$('.toggleOff').on('click', function () {
-    tempAcceptAlert('Make this the active week?');
-});
+
 // // ---------------------------------------------------------------------------------------------------------------------
 // clone week dropdown
-var cloneExpanded = false;
+function monitorClientClick() {
+    $(".clientCloneOption").on('click', function (e) {
+        clicked_client = $(this);
+        console.log(clicked_client);
+        if (clicked_client.hasClass('selectedOption')) {
+            $('.cloneOptions').html(phaseOptionsHtml);
+            $('.fa-user').parent().removeClass('selected-clone-icon');
+            $('.fa-list').parent().addClass('selected-clone-icon');
+            return
+        } else {
+            $('.clientCloneOption').each(function () {
+                $(this).removeClass('selectedOption');
+            });
+            clicked_client.addClass('selectedOption');
+            cloneClientHtml = $('.cloneOptions').html();
+            selected_client = clicked_client.html()
+            $.ajax({
+                type: "POST",
+                url: "/dashboard/getClonePhases/",
+                data: {
+                    selected_client: selected_client,
+                    csrfmiddlewaretoken: csrf_token,
+                    dataType: "json",
+                },
+                success: function (data) {
 
-function showCloneOptions() {
+                    if (data['error']) {
+                        tempAlert(data['error'], 4000, 0);
+                    } else {
+
+                        $('.cloneOptions').html(data);
+                        phaseOptionsHtml = data;
+                        $('.fa-user').parent().removeClass('selected-clone-icon');
+                        $('.fa-list').parent().addClass('selected-clone-icon');
+                    }
+
+                },
+                failure: function () {
+                    tempAlert('Error deleting entry', 4000, 0);
+                }
+            });
+        }
+    });
+}
+$('.cloneWeekIcon').on('click', function (e) {
+    e.preventDefault();
     var cloneOptions = document.getElementById("cloneOptionsWrapper");
     if (!cloneExpanded) {
         cloneOptions.style.display = "block";
@@ -839,45 +954,152 @@ function showCloneOptions() {
         cloneExpanded = false;
         $('.cloneWeek').css('background-color', 'transparent')
     }
-}
+});
+// close clone dropdown
+$(document).mouseup(function (e) {
+    var container = $(".cloneWeek");
+
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0 && cloneExpanded) {
+        $('.cloneOptionsWrapper').css('display', 'none');
+        container.css('background-color', 'transparent');
+        cloneExpanded = false;
+    }
+});
+$('.selectHeaderIconWrapper').on('click', function (e) {
+    var clickedIcon = $(this)
+    if (clickedIcon.hasClass('selected-clone-icon')) {
+        return;
+    } else {
+        clickedIcon.addClass('selected-clone-icon');
+        // console.log($('.fa-list:first-child').parent());
+        if (clickedIcon.children(":first").hasClass('fa-user')) {
+
+            $('.fa-list').parent().removeClass('selected-clone-icon');
+            $('.cloneOptions').html(cloneClientHtml);
+            monitorClientClick();
+        } else {
+            $('.fa-user').parent().removeClass('selected-clone-icon');
+            $('.cloneOptions').html(phaseOptionsHtml);
+        }
+    }
+})
+
+function getDayPreview(phase, week) {
+    $.ajax({
+        type: "POST",
+        url: '/dashboard/getDayData/',
+        data: {
+            phase: phase,
+            week: week,
+            client: selected_client,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+            if (data['error']) {
+                $('.alertPopupAccept').remove();
+                tempAlert(data['error'], 4000, 0);
+            } else {
+                var preview = document.createElement('div')
+                preview.setAttribute('class', 'bg-modal2')
+                preview.style.zIndex = '0';
+                document.body.appendChild(preview)
+                $('.tableWrapper').html(data);
+            }
+
+
+        },
+        failure: function () {
+            $('.alertPopupAccept').remove();
+            tempAlert('Could not load days!', 4000, 0);
+        }
+
+    })
+};
 // ---------------------------------------------------------------------------------------------------------------------
 // clone confirmation
 
 function cloneConfirmation(phase, week) {
-    var y = document.getElementById("clone-modal");
-    y.style.display = "flex";
+    $('.cloneOptionsWrapper').css('display', 'none');
+    $(".cloneWeek").css('background-color', 'transparent');
+    cloneExpanded = false;
+    getDayPreview(phase, week);
+    var el = document.createElement("div");
+    el.setAttribute("class", "alertPopupAccept");
+    el.innerHTML = 'Accept the week clone as below?';
+    el.style.zIndex = '1';
+    el.style.width = '30%';
+    el.style.marginLeft = '42.5%'
+    var optionWrapper = document.createElement("div");
+    optionWrapper.setAttribute('class', 'optionWrapper');
+    var cancel = document.createElement('button');
+    cancel.setAttribute('class', 'cancelToggle toggleButton');
+    cancel.innerHTML = 'Cancel';
+    var contin = document.createElement('button');
+    contin.setAttribute('class', 'continueToggle toggleButton');
+    contin.innerHTML = 'Continue';
+    optionWrapper.append(cancel);
+    optionWrapper.append(contin);
+    el.append(optionWrapper);
+    document.body.appendChild(el);
+    $(".continueToggle").on('click', function (e) {
+        $('.bg-modal2').remove();
+        $(".alertPopupAccept").css('animation', 'slideC 1s');
+        setTimeout(function () {
+            $(".alertPopupAccept").remove();
+        }, 1000);
 
-    $('#cloneFromWeek').html('Week ' + week);
-    $('#cloneFromPhase').html('Phase ' + phase);
-    $('#cloneFromWeek').attr('name', week);
-    $('#cloneFromPhase').attr('name', phase);
-    $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
-    $('#cloneToPhase').html('Phase ' + selectedPhase);
-};
-$('#cloneForm').on('submit', function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: "POST",
-        url: "{% url 'clone_week' %}",
-        data: {
-            phaseTo: selectedPhase,
-            weekTo: selectedWeek[parseInt(selectedPhase) - 1],
-            phaseFrom: $('#cloneFromPhase').attr('name'),
-            weekFrom: $('#cloneFromWeek').attr('name'),
-            csrfmiddlewaretoken: '{{ csrf_token }}',
-            dataType: "json",
-        },
-        success: function (data) {
-            window.location.reload();
-        },
-        failure: function () {
+        $.ajax({
+            type: "POST",
+            url: "/dashboard/cloneWeek/",
+            data: {
+                phaseTo: selectedPhase,
+                weekTo: selectedWeek,
+                phaseFrom: phase,
+                weekFrom: week,
+                selected_client: selected_client,
+                csrfmiddlewaretoken: csrf_token,
+                dataType: "json",
+            },
+            success: function (data) {
+                if (data['error']) {
+                    tempAlert(data['error'], 4000, 0);
+                    getDayData();
 
-        }
+                } else {
+                    $('.tableWrapper').html(data);
+                    tempAlert('successfully cloned week!', 4000, 1);
+                }
+
+            },
+            failure: function () {
+                tempAlert('Error cloning week!', 4000, 0);
+                getDayData
+
+            }
+        });
+
     });
+    $(".cancelToggle").on('click', function (e) {
+        $('.bg-modal2').remove();
+        $(".alertPopupAccept").css('animation', 'slideC 1s');
+        setTimeout(function () {
+            $(".alertPopupAccept").remove();
+        }, 1000);
+        getDayData();
+    });
+    // var y = document.getElementById("clone-modal");
+    // y.style.display = "flex";
 
-    var x = document.getElementById("toggle-modal");
-    x.style.display = "none";
-});
+    // $('#cloneFromWeek').html('Week ' + week);
+    // $('#cloneFromPhase').html('Phase ' + phase);
+    // $('#cloneFromWeek').attr('name', week);
+    // $('#cloneFromPhase').attr('name', phase);
+    // $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
+    // $('#cloneToPhase').html('Phase ' + selectedPhase);
+};
+
 
 
 
