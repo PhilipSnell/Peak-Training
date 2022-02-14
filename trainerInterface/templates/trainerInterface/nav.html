@@ -14,9 +14,10 @@
     <!-- <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet"> -->
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Syncopate">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Orbitron">
     <link rel="stylesheet" href="{% static 'css/nav.css' %}">
     <link rel="shortcut icon" href="/media/images/logoSmall.png" />
-    <script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/b70856ef37.js" crossorigin="anonymous"></script>
 
     <script>
         previousHref = "{{ request.session.href }}";
@@ -65,7 +66,7 @@
                             {% block nav-dashboard %}
                             <div class="nav-link" href="{% url 'dashboard' %}" title="Dashboard">
                                 <div class="iconWrapper">
-                                    <i class="fas fa-home sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-house sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Dashboard</div>
                             </div>
@@ -75,7 +76,7 @@
                             {% block nav-train-plan %}
                             <div class="nav-link" href="{% url 'trainplan' %}" title="Training Plan">
                                 <div class="iconWrapper">
-                                    <i class="far fa-calendar-alt sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-calendar-plus"></i>
                                 </div>
                                 <div class="textWrap">Training Plan</div>
                             </div>
@@ -86,7 +87,7 @@
                             {% block nav-train-prog %}
                             <div class="nav-link" href="{% url 'trainprog' %}" title="Training Progress">
                                 <div class="iconWrapper">
-                                    <i class="far fa-calendar-check sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-regular fa-calendar-check sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Training Progress</div>
                             </div>
@@ -97,7 +98,7 @@
                             {% block nav-dataTracking-prog %}
                             <div class="nav-link" href="{% url 'dailyTracking' %}" title="Daily Tracking">
                                 <div class="iconWrapper">
-                                    <i class="fas fa-clipboard-list sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-clipboard-list sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Data Tracking</div>
                             </div>
@@ -108,7 +109,7 @@
                             {% block nav-chat %}
                             <div class="nav-link" href="#" title="Chat">
                                 <div class="iconWrapper">
-                                    <i class="far fa-comment-alt sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-regular fa-comment-alt sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Chat</div>
 
@@ -122,7 +123,7 @@
                             {% block nav-exercises %}
                             <div class="nav-link" href="{% url 'exercises' %}" title="Exercises">
                                 <div class="iconWrapper">
-                                    <i class="fas fa-dumbbell sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-dumbbell sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Exercises</div>
                             </div>
@@ -133,7 +134,7 @@
                             {% block nav-clients %}
                             <div class="nav-link" href="{% url 'clients' %}" title="Clients">
                                 <div class="iconWrapper">
-                                    <i class="fas fa-users sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-users sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Clients</div>
                             </div>

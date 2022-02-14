@@ -35,8 +35,6 @@ def get_sets(entry):
     entryId = entry.id
     exerciseId = entry.exercise.id
     sets = []
-    print(entryId)
-    print(exerciseId)
     # try:
     set_entry = Set_Entry.objects.filter(t_id=entryId, e_id=exerciseId)
     if set_entry.count() > 0:
@@ -59,8 +57,8 @@ def get_sets(entry):
 
 
 def sliceVideo(video):
-    print(video[-11:])
-    return video[-11:]+"/1.jpg"
+
+    return video[-11:]+"/0.jpg"
 
 
 def get_feedback(id):
@@ -75,7 +73,6 @@ def get_feedback(id):
 
 def getActiveWeek(client):
     week = Week.objects.filter(user=client, isActive=True)
-    print(week)
     if week:
         return week[0]
     return
