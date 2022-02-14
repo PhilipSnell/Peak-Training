@@ -42,5 +42,6 @@ urlpatterns = [
     path('dashboard/cloneWeek/', cloneWeek, name='clone_week'),
     path('dashboard/getClonePhases/', getClonePhases, name='get_clone_phases'),
     path('dashboard/changeOrder/', changeOrder, name='change_order'),
-    path('dashboard/graph/', graphTracking, name='graph')
+    path('dashboard/graph/', graphTracking, name='graph'),
+    path('dashboard/editexercise/', editExercise, name='edit_exercise'),
 ]

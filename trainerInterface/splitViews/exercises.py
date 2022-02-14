@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from trainerInterface.views import processForm, processDate, getUserform
 from api.models import *
 from trainerInterface.form import *
@@ -76,3 +77,29 @@ def deleteExercise(request, id=None):
     object.delete()
 
     return redirect('exercises')
+
+
+def editExercise(request):
+
+    if request.is_ajax():
+        id = request.POST.get('id', None)
+        title = request.POST.get('title', None)
+        try:
+            if title != None:
+                exercise = ExerciseType.objects.get(id=id)
+                exercise.name = title
+                exercise.save()
+
+                response = {
+                    'success': 'Exercise updated!'
+                }
+            else:
+                response = {
+                    'error': 'No new title'
+                }
+
+        except:
+            response = {
+                'error': 'failed to update the exercise!'  # response message
+            }
+        return JsonResponse(response)

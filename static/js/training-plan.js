@@ -26,22 +26,7 @@ $(document).ready(function () {
     $('.day-selector-wrapper').hScroll();
 });
 
-// Alert popup
-function tempAlert(msg, duration, type) {
-    var el = document.createElement("div");
-    if (type == 0) {
-        el.setAttribute("class", "alertPopupError slideAnim");
-    }
-    else if (type == 1) {
-        el.setAttribute("class", "alertPopupSuccess slideAnim");
-    }
 
-    el.innerHTML = msg;
-    setTimeout(function () {
-        el.parentNode.removeChild(el);
-    }, duration);
-    document.body.appendChild(el);
-}
 // Alert accept popup
 function tempAcceptAlert(msg) {
     var el = document.createElement("div");
@@ -1065,6 +1050,7 @@ function cloneConfirmation(phase, week) {
             success: function (data) {
                 if (data['error']) {
                     tempAlert(data['error'], 4000, 0);
+                    getDays();
                     getDayData();
 
                 } else {
@@ -1075,7 +1061,7 @@ function cloneConfirmation(phase, week) {
             },
             failure: function () {
                 tempAlert('Error cloning week!', 4000, 0);
-                getDayData
+                getDayData();
 
             }
         });

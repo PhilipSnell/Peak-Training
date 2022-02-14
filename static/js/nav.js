@@ -61,3 +61,19 @@ $(document).ready(function () {
 
     });
 })
+// Alert popup
+function tempAlert(msg, duration, type) {
+    var el = document.createElement("div");
+    if (type == 0) {
+        el.setAttribute("class", "alertPopupError slideAnim");
+    }
+    else if (type == 1) {
+        el.setAttribute("class", "alertPopupSuccess slideAnim");
+    }
+
+    el.innerHTML = msg;
+    setTimeout(function () {
+        el.parentNode.removeChild(el);
+    }, duration);
+    document.body.appendChild(el);
+}

@@ -323,7 +323,7 @@ def getDayTableData(request):
         if "selected_client" in request.session and client == None:
             week = Week.objects.get(user=User.objects.get(
                 email=request.session['selected_client']), phase=phase, week=week)
-            days = week.days.all()
+            days = week.days.all().order_by('day')
         elif client != None:
             client = client.split()
             week = Week.objects.get(user=User.objects.get(
@@ -413,7 +413,7 @@ def cloneWeek(request):
         weekTo.save()
         # except:
 
-    return render(request, 'trainerInterface/segments/dayTableData.html', {'days': weekTo.days.all()})
+    return render(request, 'trainerInterface/segments/dayTableData.html', {'days': weekTo.days.all().order_by('day')})
 
 
 def checkActiveWeek(request):

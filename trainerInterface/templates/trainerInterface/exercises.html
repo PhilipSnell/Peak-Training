@@ -1,9 +1,10 @@
 {% load static %}
 {% load my_filters %}
+
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/exercises.css' %}">
-<script src="https://kit.fontawesome.com/d4150a90f9.js" crossorigin="anonymous"></script>
+<script src="{% static 'js/exercises.js' %}"></script>
+
 
 <div class="table-wrapper">
     {% for item in exercises %}
@@ -12,15 +13,20 @@
             <div class="exercise-image">
                 <img class="cropImage" height="150" src="https://img.youtube.com/vi/{{ item.video|sliceVideo }}">
             </div>
-            <div class="exercise-title-wrapper">
-                <div class="exercise-title">{{ item.name }}</div>
+            <div class="exercise-title-wrapper editable" id="{{ item.id }}">
+                <div class="exercise-title ">{{ item.name }}</div>
             </div>
             <div class="exercise-right">
                 <div class="exercise-options">
-                    <div class="exercise-thumbnail"></div>
+                    <div class="exercise-thumbnail">
+                        <div class="exercise-thumbnail-text"> Use Video Thumbnail</div>
+                        <div class="exercise-thumbnail-toggle"><i class="fas fa-toggle-off toggleActiveIcon toggleOff"
+                                aria-hidden="true"></i></div>
+                    </div>
                     <div class="exercise-public">
                         <div class="exercise-public-text"> Public</div>
-                        <div></div>
+                        <div class="exercise-public-toggle"><i class="fas fa-toggle-off toggleActiveIcon toggleOff"
+                                aria-hidden="true"></i></div>
                     </div>
                     <div class="exercise-remove-wrapper">
                         <div class="exercise-remove">+</div>
@@ -29,7 +35,7 @@
                 <div class="exercise-url">
                     <div class="exercise-url-text">{{ item.video }}</div>
                     <div class="exercise-open-url">
-                        <a href="{{ item.video }}"><i class="fa-solid fa-up-right-from-square"></i></a>
+                        <a href="{{ item.video }}" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
 
                     </div>
                 </div>

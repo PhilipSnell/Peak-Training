@@ -66,3 +66,67 @@ function uploadFileAlert(msg) {
         }, 1000);
     });
 };
+
+
+// edit in line
+
+$('.editable').click(function () {
+    var wrapper = $(this);
+    var title = wrapper.find(">:first-child");
+    var name = title.text();
+    console.log(wrapper.children().length)
+    if (wrapper.children().length < 2) {
+        title.attr('style', 'display: None');
+        $('<textarea></textarea>')
+            .attr({
+                'type': 'text',
+                'class': 'exercise-title-edit',
+                'id': 'edit-exercise-title',
+                'value': name,
+                'spellcheck': 'false'
+            })
+            .appendTo(this);
+
+        $('#edit-exercise-title').val(name);
+        $('#edit-exercise-title').focus();
+    }
+    $('#edit-exercise-title').on('blur', function () {
+        var input = $(this);
+        var name = input.val();
+        input.remove();
+        temp = title.text();
+
+        title.attr('style', 'display: block');
+        if (temp !== name) {
+            title.text(name);
+            wrapper.on('click.editable');
+            $.ajax({
+                type: 'POST',
+                url: '/dashboard/editexercise/',
+                data: {
+                    id: wrapper.attr('id'),
+                    title: name,
+                    csrfmiddlewaretoken: csrf_token,
+                    dataType: "json",
+                },
+                success: function (data) {
+                    if (data['error']) {
+                        title.text(temp);
+                        tempAlert(data['error'], 4000, 0);
+
+                    } else {
+                        tempAlert(data['success'], 4000, 1);
+                    }
+
+                },
+                failure: function () {
+                    title.text(temp);
+                    tempAlert('Error updating title', 4000, 0);
+
+                }
+            });
+        }
+    })
+
+});
+
