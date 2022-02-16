@@ -129,6 +129,29 @@
     white-space: nowrap;
     overflow-x: scroll;
 }
+.exercise-url-text-edit{
+    width: calc(100% - 40px);
+    font-family: 'Orbitron';
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 40px;
+    font-size: 16px;
+    position: relative;
+    border:none;
+    outline: none;
+    line-height: 35px;
+    background-color: rgb(201, 201, 201);
+    resize: none;
+    overflow-x: scroll;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: scroll;
+    border-radius: 10px;
+}
+.exercise-url-text-edit::-webkit-scrollbar{
+    display: none;
+    background-color: transparent;
+}
 .exercise-url-text::-webkit-scrollbar{
     display: none;
     background-color: transparent;
@@ -250,8 +273,39 @@
     font-weight: 400;
     
     cursor: pointer;
-    color: #afafaf;
+    color: #afafaf !important;
 }
 .exercise-remove:hover{
-    color:#f4eb49;
+    color:#f4eb49 !important;
+}
+
+.exercise-card-description{
+    text-align: center;
+}
+.exercise-description-icon{
+    color:#b3b2b2;
+    font-size: 22px;
+}
+.exercise-description-icon:hover{
+    color:#dddbdb;
+}
+.exercise-description-text{
+    color:#c2c2c2;
+    font-size: 16px;
+    padding-top: 5px;
+    font-family: 'Orbitron';
+}
+.editable-edit{
+    background-color: rgb(110, 110, 110);
+    font-size: 16px;
+    padding-top: 5px;
+    font-family: 'Orbitron';
+    border:none;
+    outline: none;
+    width: 100%;
+    text-align: center;
+}
+.editable-edit::-webkit-scrollbar{
+    display: none;
+    background-color: transparent;
 }

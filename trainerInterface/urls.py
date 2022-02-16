@@ -27,7 +27,7 @@ urlpatterns = [
     path('dashboard/getDayData/', getDayTableData, name='get_days'),
     path('dashboard/getDayDataProg/',
          getDayTableDataProg, name='get_days_progress'),
-    path('dashboard/delete/<int:id>/', deleteExercise, name='delete_exercise'),
+    path('dashboard/deleteexercise/', deleteExercise, name='delete_exercise'),
     path('dashboard/addPhase/', addPhase, name='add_phase'),
     path('dashboard/addWeek/', addWeek, name='add_week'),
     path('dashboard/addDay/', addDay, name='add_day'),

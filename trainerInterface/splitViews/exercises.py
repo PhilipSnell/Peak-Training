@@ -72,11 +72,21 @@ def exercises(request):
     return render(request, 'trainerInterface/exercises.html', {'form': form, 'exercises': exercises, 'exerciseForm': exerciseForm})
 
 
-def deleteExercise(request, id=None):
-    object = ExerciseType.objects.get(id=id)
-    object.delete()
+def deleteExercise(request):
+    if request.is_ajax():
+        try:
+            id = request.POST.get('id', None)
+            object = ExerciseType.objects.get(id=id)
+            object.delete()
+            response = {
+                'success': 'exercise deleted!'
+            }
+        except:
+            response = {
+                'error': 'Could not delete exercise!'
+            }
 
-    return redirect('exercises')
+        return JsonResponse(response)
 
 
 def editExercise(request):
@@ -84,19 +94,30 @@ def editExercise(request):
     if request.is_ajax():
         id = request.POST.get('id', None)
         title = request.POST.get('title', None)
+        url = request.POST.get('new_url', None)
+        description = request.POST.get('description', None)
         try:
+            exercise = ExerciseType.objects.get(id=id)
             if title != None:
-                exercise = ExerciseType.objects.get(id=id)
                 exercise.name = title
-                exercise.save()
-
                 response = {
-                    'success': 'Exercise updated!'
+                    'success': 'Exercise title updated!'
+                }
+            elif url != None:
+                exercise.video = url
+                response = {
+                    'success': 'Exercise url updated!'
+                }
+            elif description != None:
+                exercise.description = description
+                response = {
+                    'success': 'Exercise description updated!'
                 }
             else:
                 response = {
-                    'error': 'No new title'
+                    'error': 'No update received'
                 }
+            exercise.save()
 
         except:
             response = {

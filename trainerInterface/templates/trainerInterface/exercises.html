@@ -14,7 +14,7 @@
                 <img class="cropImage" height="150" src="https://img.youtube.com/vi/{{ item.video|sliceVideo }}">
             </div>
             <div class="exercise-title-wrapper editable" id="{{ item.id }}">
-                <div class="exercise-title ">{{ item.name }}</div>
+                <div class="exercise-title">{{ item.name }}</div>
             </div>
             <div class="exercise-right">
                 <div class="exercise-options">
@@ -29,10 +29,10 @@
                                 aria-hidden="true"></i></div>
                     </div>
                     <div class="exercise-remove-wrapper">
-                        <div class="exercise-remove">+</div>
+                        <div class="exercise-remove" id="{{ item.id }}">+</div>
                     </div>
                 </div>
-                <div class="exercise-url">
+                <div class="exercise-url editable" id="{{ item.id }}">
                     <div class="exercise-url-text">{{ item.video }}</div>
                     <div class="exercise-open-url">
                         <a href="{{ item.video }}" target="_blank"><i class="fa-solid fa-up-right-from-square"></i></a>
@@ -41,69 +41,16 @@
                 </div>
             </div>
         </div>
-        <div class="exercise-card-description">
-
+        <div class="exercise-card-description" id="{{ item.id }}">
+            <div class="exercise-description-text editable" style="display: none;">
+                {{ item.description }}
+            </div>
+            <div class="exercise-description-icon">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
         </div>
     </div>
     {% endfor %}
 </div>
-<!-- <div class="table-responsive">
-    <table class="table table-striped table-sm">
-        <thead>
-            <tr>
-                <th>Exercise</th>
-                <th>Description</th>
-                <th>Image</th>
-                <th>Video</th>
-                <th>button</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            {% for item in exercises %}
-            <tr>
-
-                <td>
-                    {{ item.name }}
-                </td>
-                <td>
-                    {{ item.description }}
-                </td>
-                <td id="{{ item.id }}">
-                    {% if item.image != "" %}
-                    <img src="{% url 'home' %}media/{{ item.image }}" style="width:50px;height:50px;">
-                    {% else %}
-
-                    <script>
-                        var imgt = document.createElement('img');
-                        var utubeID = "{{ item.video }}";
-                        utubeID = utubeID.slice(-11);
-
-                        var base = "http://i1.ytimg.com/vi/";
-                        var thumbnail = base.concat(utubeID, "/default.jpg");
-                        imgt.src = thumbnail;
-                        imgt.style = "width:50px;height:50px;";
-                        document.getElementById({{ item.id }}).append(imgt);
-                    </script>
-                    {% endif %}
-                </td>
-
-                <td>
-
-
-                    <a href="{{ item.video }}">{{ item.video }}
-
-
-                    </a>
-
-                </td>
-
-                <td><a href="{% url 'delete_exercise' item.id%}">delete</a></td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-    </table>
-</div> -->
 
 {% endblock content %}

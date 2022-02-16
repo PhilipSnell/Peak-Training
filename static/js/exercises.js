@@ -71,22 +71,28 @@ function uploadFileAlert(msg) {
 // edit in line
 
 $('.editable').click(function () {
+
     var wrapper = $(this);
+    if (wrapper.hasClass('exercise-description-text')) {
+        wrapper = wrapper.parent();
+
+
+    }
     var title = wrapper.find(">:first-child");
+    console.log(title.attr('class'));
     var name = title.text();
-    console.log(wrapper.children().length)
-    if (wrapper.children().length < 2) {
-        title.attr('style', 'display: None');
+    if (wrapper.children().not('div').length < 1) {
+
         $('<textarea></textarea>')
             .attr({
                 'type': 'text',
-                'class': 'exercise-title-edit',
+                'class': title.attr('class') + '-edit',
                 'id': 'edit-exercise-title',
                 'value': name,
                 'spellcheck': 'false'
             })
-            .appendTo(this);
-
+            .prependTo(wrapper);
+        title.attr('style', 'display: none');
         $('#edit-exercise-title').val(name);
         $('#edit-exercise-title').focus();
     }
@@ -96,19 +102,40 @@ $('.editable').click(function () {
         input.remove();
         temp = title.text();
 
-        title.attr('style', 'display: block');
+
         if (temp !== name) {
             title.text(name);
+            wrapper.find('a').attr('href', name)
             wrapper.on('click.editable');
-            $.ajax({
-                type: 'POST',
-                url: '/dashboard/editexercise/',
-                data: {
+            if (wrapper.hasClass('exercise-title-wrapper')) {
+                title.attr('style', 'display: block');
+                data = {
                     id: wrapper.attr('id'),
                     title: name,
                     csrfmiddlewaretoken: csrf_token,
                     dataType: "json",
-                },
+                }
+            } else if (wrapper.hasClass('exercise-url')) {
+                title.attr('style', 'display: inline-block');
+                data = {
+                    id: wrapper.attr('id'),
+                    new_url: name,
+                    csrfmiddlewaretoken: csrf_token,
+                    dataType: "json",
+                }
+            } else if (wrapper.hasClass('exercise-card-description')) {
+                title.attr('style', 'display: block');
+                data = {
+                    id: wrapper.attr('id'),
+                    description: name,
+                    csrfmiddlewaretoken: csrf_token,
+                    dataType: "json",
+                }
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/dashboard/editexercise/',
+                data: data,
                 success: function (data) {
                     if (data['error']) {
                         title.text(temp);
@@ -121,12 +148,57 @@ $('.editable').click(function () {
                 },
                 failure: function () {
                     title.text(temp);
-                    tempAlert('Error updating title', 4000, 0);
+                    tempAlert('Error updating exercise', 4000, 0);
 
                 }
             });
+        } else {
+            if (wrapper.hasClass('exercise-title-wrapper')) {
+                title.attr('style', 'display: block');
+            } else if (wrapper.hasClass('exercise-url')) {
+                title.attr('style', 'display: inline-block');
+            }
         }
     })
 
 });
 
+// delete exercise
+
+$('.exercise-remove').on('click', function () {
+    delete_button = $(this);
+    id = delete_button.attr('id');
+    console.log(delete_button.parent().parent().parent().parent().parent().attr('class'))
+    $.ajax({
+        type: 'POST',
+        url: '/dashboard/deleteexercise/',
+        data: {
+            id: id,
+            csrfmiddlewaretoken: csrf_token,
+            dataType: "json",
+        },
+        success: function (data) {
+            if (data['error']) {
+                tempAlert(data['error'], 4000, 0);
+            } else {
+                tempAlert(data['success'], 4000, 1);
+                delete_button.parent().parent().parent().parent().parent().remove();
+            }
+        },
+        failure: function () {
+            title.text(temp);
+            tempAlert('Error deleting exercise', 4000, 0);
+
+        }
+    });
+})
+
+
+// open description
+$('.fa-ellipsis').on('click', function () {
+    icon = $(this);
+    desc_container = icon.parent().parent();
+
+    description = desc_container.find('.exercise-description-text');
+    description.slideToggle();
+})
