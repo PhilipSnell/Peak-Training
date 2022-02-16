@@ -202,3 +202,17 @@ $('.fa-ellipsis').on('click', function () {
     description = desc_container.find('.exercise-description-text');
     description.slideToggle();
 })
+
+// add tools to navbar
+if ($('.navbar').find('.exercise-tools').length != 0) {
+    $('.exercise-tools').html('')
+} else {
+    $('.navbar').append('<div class="exercise-tools"><i class="fa-solid fa-arrow-up-from-bracket"></i><i class="fa-solid fa-plus"></i><div class="exercise-search-wrapper"><textarea class="exercise-search"></textarea><i class="fa-solid fa-magnifying-glass"></i></div></div>')
+}
+
+$(".exercise-search").on("keyup", function () {
+    var search = $(this).val().trim().toLowerCase();
+    $(".exercise-card").show().filter(function () {
+        return $(".exercise-title", this).text().toLowerCase().indexOf(search) < 0;
+    }).hide();
+});
