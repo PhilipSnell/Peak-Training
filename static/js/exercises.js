@@ -246,6 +246,12 @@ $(".fa-plus").on('click', function () {
             'class': 'exercise-image',
         });
         image.appendTo(content);
+        image_crop = $('<img></img>').attr({
+            'class': 'cropImage',
+            'height': '150',
+            'src': 'https://img.youtube.com/vi/1343431.jpg'
+        });
+        image_crop.appendTo(image);
         title_wrapper = $('<div></div>').attr({
             'class': 'exercise-title-wrapper',
         });
@@ -303,6 +309,13 @@ $(".fa-plus").on('click', function () {
             'placeholder': 'Enter a youtube URL . . .'
         })
         url_input.appendTo(url);
+        url_input.on('blur', function () {
+            link = url_input.val();
+            link = "https://img.youtube.com/vi/" + link.slice(-11) + "/0.jpg";
+
+            console.log(link);
+            image_crop.attr('src', link);
+        });
         description_text = $('<div></div>').attr({
             'class': 'exercise-description-text',
         });
