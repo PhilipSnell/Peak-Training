@@ -165,35 +165,36 @@ function monitorEdit() {
 }
 monitorEdit();
 // delete exercise
+function monitorRemove() {
+    $('.exercise-remove').on('click', function () {
+        delete_button = $(this);
+        id = delete_button.attr('id');
+        console.log(delete_button.parent().parent().parent().parent().parent().attr('class'))
+        $.ajax({
+            type: 'POST',
+            url: '/dashboard/deleteexercise/',
+            data: {
+                id: id,
+                csrfmiddlewaretoken: csrf_token,
+                dataType: "json",
+            },
+            success: function (data) {
+                if (data['error']) {
+                    tempAlert(data['error'], 4000, 0);
+                } else {
+                    tempAlert(data['success'], 4000, 1);
+                    delete_button.parent().parent().parent().parent().parent().remove();
+                }
+            },
+            failure: function () {
+                title.text(temp);
+                tempAlert('Error deleting exercise', 4000, 0);
 
-$('.exercise-remove').on('click', function () {
-    delete_button = $(this);
-    id = delete_button.attr('id');
-    console.log(delete_button.parent().parent().parent().parent().parent().attr('class'))
-    $.ajax({
-        type: 'POST',
-        url: '/dashboard/deleteexercise/',
-        data: {
-            id: id,
-            csrfmiddlewaretoken: csrf_token,
-            dataType: "json",
-        },
-        success: function (data) {
-            if (data['error']) {
-                tempAlert(data['error'], 4000, 0);
-            } else {
-                tempAlert(data['success'], 4000, 1);
-                delete_button.parent().parent().parent().parent().parent().remove();
             }
-        },
-        failure: function () {
-            title.text(temp);
-            tempAlert('Error deleting exercise', 4000, 0);
-
-        }
-    });
-})
-
+        });
+    })
+};
+monitorRemove();
 
 // open description
 $('.fa-ellipsis').on('click', function () {
@@ -417,6 +418,7 @@ $(".fa-plus").on('click', function () {
                     });
 
                     remove_button.appendTo(remove_wrapper);
+                    monitorRemove();
                     card.prependTo($('.table-wrapper'));
 
 

@@ -377,6 +377,7 @@
     background: rgba(0, 0, 0, 0.7);
     position: fixed;
     padding-top: 200px;
+    text-align: center;
 }
 .new-description{
     padding-bottom: 10px;
@@ -396,8 +397,8 @@
   color:#7a7a7a;
 }
 .submit-new-exercise{
-    width: 20%;
-    margin-left: 40%;
+    padding-left: 10px;
+    padding-right: 10px;
     height: 36px;
     font-family: 'Orbitron';
     font-size: 22px;

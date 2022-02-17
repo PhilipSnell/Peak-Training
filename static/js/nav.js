@@ -43,6 +43,7 @@ $(document).ready(function () {
             nav_link.addClass('nav-link-selected');
             console.log(nav_link.attr('title'));
             $(".content-title").html(nav_link.attr('title'));
+            $(".exercise-tools").remove();
             $(".custom-select").each(function () {
                 $(this).remove();
 
