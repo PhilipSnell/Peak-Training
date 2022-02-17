@@ -110,10 +110,13 @@ class Set_Entry(models.Model):
 
 
 class ExerciseType(models.Model):
-    name = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50)
     description = models.CharField(max_length=300)
     image = models.ImageField(upload_to='images/', blank=True)
-    video = models.URLField()
+    video = models.URLField(blank=True)
+    public = models.BooleanField(default=False)
+    creater = models.ForeignKey(
+        Account, on_delete=models.CASCADE, related_name='exercise_creator')
 
     def __str__(self):
         return self.name

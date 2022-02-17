@@ -367,3 +367,46 @@
     color: #bbbbbb;
     text-align: center;
 }
+.cover-content{
+    left: 15%;
+    padding-left: 16px;
+    top: 0;
+    bottom: 0;
+    width: calc(85%);
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    position: fixed;
+    padding-top: 200px;
+}
+.new-description{
+    padding-bottom: 10px;
+    border-radius: 10px;
+    color:#bbbbbb;
+    
+}
+.new-description::placeholder{
+  color:#a1a1a1;
+}
+.new-title{
+    border-radius: 10px;
+    color:#bbbbbb;
+    
+}
+.new-title::placeholder{
+  color:#7a7a7a;
+}
+.submit-new-exercise{
+    width: 20%;
+    margin-left: 40%;
+    height: 36px;
+    font-family: 'Orbitron';
+    font-size: 22px;
+    border-radius: 5px;
+    border:none;
+    outline: none;
+    background-color: #636363;
+    color:#b1b33e;
+}
+.submit-new-exercise:hover{
+    background-color: #474747;
+}

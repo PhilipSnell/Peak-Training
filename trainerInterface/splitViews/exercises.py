@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from trainerInterface.views import processForm, processDate, getUserform
 from api.models import *
@@ -8,12 +9,10 @@ import openpyxl
 
 def exercises(request):
     request.session["href"] = '/dashboard/exercises/'
-    exerciseForm = AddExercise()
     exercises = ExerciseType.objects.all().order_by('name')
 
     if request.method == "POST":
         if request.FILES['excel_file']:
-            processForm(request)
             print(request.FILES['excel_file'])
 
         # if 'uploadFile' in request.POST:
@@ -67,9 +66,7 @@ def exercises(request):
         #             exercise.save()
         #             print("exercise " + name + " updated")
 
-    form = getUserform(request)
-
-    return render(request, 'trainerInterface/exercises.html', {'form': form, 'exercises': exercises, 'exerciseForm': exerciseForm})
+    return render(request, 'trainerInterface/exercises.html', {'exercises': exercises})
 
 
 def deleteExercise(request):
@@ -122,5 +119,27 @@ def editExercise(request):
         except:
             response = {
                 'error': 'failed to update the exercise!'  # response message
+            }
+        return JsonResponse(response)
+
+
+def addExercise(request):
+
+    if request.is_ajax():
+        title = request.POST.get('title', None)
+        video = request.POST.get('video', None)
+        description = request.POST.get('description', None)
+        try:
+            exercise = ExerciseType(
+                name=title, description=description, video=video, creater=request.user)
+            exercise.save()
+
+            response = {
+                'id': exercise.id,
+                'success': 'New Exercise Created!'  # response message
+            }
+        except:
+            response = {
+                'error': 'Failed to create the exercise!'  # response message
             }
         return JsonResponse(response)
