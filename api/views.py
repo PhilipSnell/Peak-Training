@@ -262,7 +262,7 @@ class TrackingValuesUpdate(APIView):
                     if serializer.is_valid():
                         serializer.save()
                         field = TrackingTextField.objects.get(
-                            id=item.get("field_id"))
+                            id=serializer.field_id)
                         field.values.add(serializer)
                         field.save()
                         data['response'] = data['response'] + \
