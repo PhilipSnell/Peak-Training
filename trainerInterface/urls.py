@@ -45,4 +45,5 @@ urlpatterns = [
     path('dashboard/graph/', graphTracking, name='graph'),
     path('dashboard/getGraphData/', getGraphData, name='graph_data'),
     path('dashboard/editexercise/', editExercise, name='edit_exercise'),
+    path('dashboard/linkvalues/', linkValues, name='link'),
 ]

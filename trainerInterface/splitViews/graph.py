@@ -109,3 +109,12 @@ def getGraphData(request):
         #         'error': 'Could not load data'
         #     }
         return JsonResponse(response)
+
+
+def linkValues(request):
+    values = TrackingTextValue.objects.all()
+    for value in values:
+        field = TrackingTextField.objects.get(id=value.field_id)
+        field.values.add(value)
+        field.save()
+    return redirect('home')
