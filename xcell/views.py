@@ -46,7 +46,7 @@ def SignupClient(request, trainer=None):
             user = authenticate(username=email, password=raw_password)
             trainer.clients.add(user)
             # // login(request, user)
-            return redirect('home')
+            return redirect('registration/signup-client.html')
     else:
         form = AddClientForm()
 

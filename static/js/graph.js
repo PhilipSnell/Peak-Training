@@ -4,14 +4,15 @@ navbar = $('.navbar');
 week = 0;
 var today = new Date();
 today.setHours(0, 0, 0, 0);
-console.log(today);
-var week_start = new Date(today);
-week_start.setDate(week_start.getDate() - week_start.getDay() + 1)
-console.log(week_start);
-var week_end = new Date(today);
-week_end.setDate(week_end.getDate() - week_end.getDay() + 7)
-console.log(week_end);
 
+var week_start = new Date(today);
+if (week_start.getDay() === 0) {
+    week_start.setDate(week_start.getDate() - 6)
+} else {
+    week_start.setDate(week_start.getDate() - week_start.getDay() + 1)
+}
+var week_end = new Date(today);
+week_end.setDate(week_start.getDate() + 6)
 
 if (navbar.find('.exercise-tools').length != 0) {
     $('.exercise-tools').html('')
@@ -42,6 +43,7 @@ $('.fa-chevron-right').on('click', function () {
         week_start.setDate(week_start.getDate() + 7);
         week_end.setDate(week_end.getDate() + 7);
         updateWeekText();
+        getGraphData();
     }
 
 });
@@ -50,6 +52,7 @@ $('.fa-chevron-left').on('click', function () {
     week_start.setDate(week_start.getDate() - 7);
     week_end.setDate(week_end.getDate() - 7);
     updateWeekText();
+    getGraphData();
 });
 const months = {
     0: 'Jan',
@@ -93,7 +96,6 @@ function updateWeekText() {
     } else {
         week_display.text(`${start_string} - ${end_string}`);
     }
-    getGraphData()
 
 }
 
@@ -167,8 +169,6 @@ function handleDropdown(target) {
                     }
                     this.setAttribute("class", "same-as-selected");
                     getGraphData();
-
-
                 }
 
             }
@@ -188,11 +188,16 @@ function handleDropdown(target) {
 
 
 function getGraphData() {
+    console.log(week_start);
     date = week_start.getDate();
     month = week_start.getMonth() + 1;
     year = week_start.getFullYear();
     formatted = `${date}/${month}/${year}`;
     console.log(formatted);
+    console.log($(".select-selected").text());
+    $('.data-point').each(function (index) {
+        $(this).css('visibility', 'hidden');
+    })
     $.ajax({
         type: "POST",
         url: '/dashboard/getGraphData/',
@@ -206,27 +211,37 @@ function getGraphData() {
             if (data['error']) {
                 tempAlert(data['error'], 4000, 0);
             } else {
-                console.log(data['data']);
-                console.log(data['positions']);
-                $('.data-point').each(function (index) {
-                    if (data['positions'][index] == '0') {
+                console.log('here');
+                if (data['positions'] && data['data']) {
+                    $('.data-point').each(function (index) {
+                        if (data['positions'][index] == '0') {
+                            $(this).css('visibility', 'hidden');
+                        } else {
+                            // $(this).css('--yPos', '0');
+                            // $(this).css('--xPos', `${(index * 10) + 40}%`);
+                            $(this).css('--xPos', data['positions'][index]);
+                            $(this).find('.data-label').text(data['data'][index]);
+                            $(this).css('visibility', 'visible');
+                        }
+                    })
+                    $('.label-value').each(function (index) {
+                        $(this).text(data['display'][index]);
+                    })
+                    $('.data-point').on('mouseover', function () {
+                        $(this).find('.data-label').show();
+                    })
+                    $('.data-point').on('mouseout', function () {
+                        $(this).find('.data-label').hide();
+                    })
+                } else {
+                    $('.data-point').each(function (index) {
                         $(this).css('visibility', 'hidden');
-                    } else {
-                        // $(this).css('--yPos', '0');
-                        // $(this).css('--xPos', `${(index * 10) + 40}%`);
-                        $(this).css('--xPos', data['positions'][index]);
-                        $(this).find('.data-label').text(data['data'][index])
-                    }
-                })
-                $('.label-value').each(function (index) {
-                    $(this).text(data['display'][index]);
-                })
-                $('.data-point').on('mouseover', function () {
-                    $(this).find('.data-label').stop(true, true).slideToggle();
-                })
-                $('.data-point').on('mouseout', function () {
-                    $(this).find('.data-label').stop(true, true).slideToggle();
-                })
+
+                    });
+                    $('.label-value').each(function () {
+                        $(this).html("");
+                    })
+                }
             }
         },
         failure: function () {

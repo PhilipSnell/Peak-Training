@@ -81,6 +81,7 @@
     left: calc(var(--yPos) + 10px);
     bottom: calc(var(--xPos) - 30px);
     display: none;
+    
   }
 .dayLabelWrapper {
     font-family: 'Orbitron';
