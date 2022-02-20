@@ -260,10 +260,10 @@ class TrackingValuesUpdate(APIView):
                     item["client"] = User.objects.get(email=email).id
                     serializer = TrackTextValueSerializer(data=item,)
                     if serializer.is_valid():
-                        serializer.save()
+                        valueObject = serializer.save()
                         field = TrackingTextField.objects.get(
-                            id=serializer.field_id)
-                        field.values.add(serializer)
+                            id=valueObject.field_id)
+                        field.values.add(valueObject)
                         field.save()
                         data['response'] = data['response'] + \
                             "entry "+str(index) + " entered, "
