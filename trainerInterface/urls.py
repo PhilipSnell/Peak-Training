@@ -1,7 +1,7 @@
 
 from django.urls import path, include
 
-from trainerInterface.splitViews.graph import graphTracking
+from trainerInterface.splitViews.graph import *
 from trainerInterface.splitViews.daily_tracking import dailyTracking
 from trainerInterface.splitViews.training_progress import *
 from trainerInterface.splitViews.training_plan import *
@@ -20,9 +20,9 @@ urlpatterns = [
     path('dashboard/dailyTracking/', dailyTracking, name='dailyTracking'),
     path('dashboard/clients/', clients, name='clients'),
 
-
     path('dashboard/phaseDropdown/', phaseDropdown, name='phaseDropdown'),
     path('dashboard/weekDropdown/', weekDropdown, name='weekDropdown'),
+    path('dashboard/getdata/', getData, name='getData'),
     path('dashboard/getDays/', getDays, name='get_days'),
     path('dashboard/getDayData/', getDayTableData, name='get_days'),
     path('dashboard/getDayDataProg/',
@@ -43,5 +43,6 @@ urlpatterns = [
     path('dashboard/getClonePhases/', getClonePhases, name='get_clone_phases'),
     path('dashboard/changeOrder/', changeOrder, name='change_order'),
     path('dashboard/graph/', graphTracking, name='graph'),
+    path('dashboard/getGraphData/', getGraphData, name='graph_data'),
     path('dashboard/editexercise/', editExercise, name='edit_exercise'),
 ]

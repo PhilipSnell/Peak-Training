@@ -5,13 +5,8 @@
 
 @media only screen and (min-device-width: 768px) {} */
 
-.content {
-    margin-bottom: 10px;
-    padding: 18px !important;
-    padding-right: 2px!important;
-    padding-bottom: 2px !important;
-}
-.dateSelectTable{
+
+/* .dateSelectTable{
     margin-top: 7px;
     margin-bottom: 7px;
     margin-right: auto;
@@ -22,10 +17,25 @@
     padding-left: 1vw;
     padding-right: 1vw;
     font-size: 18px;
+} */
+.graph-wrapper{
+    position: relative;
+    width: 100%;
+    height: 98%;
+
+    
+}
+.y-axis{
+    display: inline-block;
+    width: 3%;
+    height: 95%;
+    color:#cfcfcf;
+    
 }
 .graphContent{
-    width: 100%;
-    height: 100%;
+    display: inline-block;
+    width: 96%;
+    height: 95%;
     position: relative;
     border-bottom: 1vh;
     border-left: 1vh;
@@ -35,11 +45,19 @@
     border-style: solid;
     border-radius: 0.5vh;
 
+
 }
 .line-chart {
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .label-value {
+    height: 25px;
+    position: absolute;
+    left: 0;
+    
+    bottom: var(--xPos);
   }
   
   /* Each point on the chart, each a 12px circle with a light border */
@@ -51,20 +69,86 @@
     position: absolute;
     width: 12px;
     left: var(--yPos);
-    top: 100%;
+    bottom: var(--xPos);
+    
+  }
+  .data-label {
+    background-color: rgb(201, 201, 201);
+    border-radius: 3px;
+    padding: 5px;
+    vertical-align: top;
+    position: absolute;
+    left: calc(var(--yPos) + 10px);
+    bottom: calc(var(--xPos) - 30px);
+    display: none;
   }
 .dayLabelWrapper {
+    font-family: 'Orbitron';
+    color:rgb(192, 192, 192);
     width: 100%;
     height: 5%;
     /* background-color: blue; */
     position: relative;
     display: block;
-    padding-left: 1vh;
+    padding-left: 5px;
+    padding-top: 10px;
 }
 .dayLabel{
     position: relative;
     display: inline-block;
     margin: 0 !important;
-    width: 14.28%;
+    width: 13.8%;
     text-align: center;
+}
+
+/* tools */
+.exercise-tools{
+    width: calc(40.5%);
+    /* background-color: #dddbdb; */
+    float: right;
+    height: 50px;
+    line-height: 35px;
+    /* overflow: hidden; */
+}
+
+.graph-week-selector{
+    background-color: #636363;
+    height: 35px;
+    width: 300px;
+    float: right;
+    /* margin-left: 170px; */
+    border-radius: 10px; 
+    text-align: center;
+    color: #a7a7a7;
+    overflow: hidden;
+}
+.fa-chevron-left{
+    cursor: pointer;
+    float: left;
+    font-size: 20px;
+    line-height: 35px;
+    padding-left: 10px;
+
+}
+.week-display{
+    display: inline-block;
+    font-family: 'Orbitron';
+
+}
+.fa-chevron-right{
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    line-height: 35px;
+    padding-right: 10px;
+}
+.fa-chevron-left:hover{
+    color:#cfcfcf;
+}
+.fa-chevron-right:hover{
+    color:#c9c9c9;
+}
+.custom-select-data{
+    float:right;
+    margin-left:20px;
 }
