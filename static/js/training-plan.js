@@ -182,6 +182,11 @@ $('#addEntryForm').on('submit', function (e) {
                 // console.log(target);
                 $(data).insertBefore(target);
                 tempAlert("successfully added entry", 4000, 1);
+                $('#exercisefield').val(''),
+                    $('#repfield').val(''),
+                    $('#weightfield').val(''),
+                    $('#setfield').val(''),
+                    $('#commentfield').val(''),
             }
 
 
@@ -841,7 +846,7 @@ $('#editEntryForm').on('submit', function (e) {
     var id = $('#idField').val();
     var exercise = $('#editExerciseField').val();
     var reps = $('#editRepField').val();
-    var weight = $('#editWeightField').val()
+    var weight = $('#editWeightField').val();
     var sets = $('#editSetField').val();
     var comment = $('#editCommentField').val();
     $.ajax({
@@ -862,6 +867,12 @@ $('#editEntryForm').on('submit', function (e) {
                 tempAlert(data['success'], 4000, 1);
                 htmlContents = `<td class='exerciseCell exerciseCellName draggable'>${exercise}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${reps}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${weight}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${sets}</td><td class='editCell' onclick='editEntry("${exercise}","${reps}","${weight}","${sets}","${comment}","${id}")'>${comment}</td><td style='width: 50px'><button class='deleteEntryButtonWrapper' type='button' name='button' onclick='deleteEntry(${id})'><div class='deleteEntryButton'>+</div></button></td>`;
                 $(`#${id}.entryRow`).html(htmlContents);
+                $('#idField').val('');
+                $('#editExerciseField').val('');
+                $('#editRepField').val('');
+                $('#editWeightField').val('');
+                $('#editSetField').val('');
+                $('#editCommentField').val('');
             } else {
                 tempAlert(data['error'], 4000, 0);
             }
