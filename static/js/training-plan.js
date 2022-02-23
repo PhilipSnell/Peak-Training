@@ -182,11 +182,11 @@ $('#addEntryForm').on('submit', function (e) {
                 // console.log(target);
                 $(data).insertBefore(target);
                 tempAlert("successfully added entry", 4000, 1);
-                $('#exercisefield').val(''),
-                    $('#repfield').val(''),
-                    $('#weightfield').val(''),
-                    $('#setfield').val(''),
-                    $('#commentfield').val(''),
+                $('#exercisefield').val('');
+                $('#repfield').val('');
+                $('#weightfield').val('');
+                $('#setfield').val('');
+                $('#commentfield').val('');
             }
 
 
