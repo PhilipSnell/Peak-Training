@@ -45,9 +45,21 @@ def SignupClient(request, trainer=None):
             raw_password = form.cleaned_data.get('password')
             user = authenticate(username=email, password=raw_password)
             trainer.clients.add(user)
+            newWeek = Week(week=1,
+                           phase=1,
+                           user=user)
+            newWeek.save()
+            newPhase = Phase(phase=1, user=user)
+            newPhase.save()
+            newPhase.weeks.add(newWeek)
             # // login(request, user)
-            return redirect('registration/signup-client.html')
+            return redirect('signup_client')
     else:
         form = AddClientForm()
 
     return render(request, 'registration/signup-client.html', {'form': form, 'username': username, 'first_name': first_name, 'last_name': last_name})
+
+
+def Success(request):
+
+    return render(request, 'registration/success.html')

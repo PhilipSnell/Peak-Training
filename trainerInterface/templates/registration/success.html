@@ -1,0 +1,43 @@
+{% load static %} {% load signup_filters %} {% block content %}
+
+<head>
+    <script src="https://kit.fontawesome.com/b70856ef37.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'css/success.css' %}">
+
+</head>
+<div id="content-container" class="container p-none">
+
+    <div class="lgn-container">
+        <img src="/media/images/logoV3.png">
+        <h1>Welcome!</h1>
+        <h2>Thank you for signing up!</h2>
+        <h2 class="download-message">Download the app</h2>
+        <div class="download-wrapper">
+            <a href="itms-apps://apps.apple.com/us/app/peak-training-platform/id1593460960">
+                <div class="ios-wrapper">
+                    <div class="icon-wrapper">
+                        <i class="fa-brands fa-app-store"></i>
+                    </div>
+                    <div class="icon-label">IOS</div>
+                </div>
+            </a>
+            <a href="https://drive.google.com/drive/folders/1yQRrbcyYBI4zMwIt5MuJ1AAl24uXdCz3?usp=sharing">
+                <div class="android-wrapper">
+                    <div class="icon-wrapper">
+                        <i class="fa-brands fa-android"></i>
+                    </div>
+                    <div class="icon-label">Android</div>
+                </div>
+            </a>
+        </div>
+        </a>
+    </div>
+</div>
+<script src="{% static '/assets/js/jquery.min.js' %}"></script>
+<script src="/static/assets/js/popper.js"></script>
+<script src="{% static '/assets/js/jquery.bootstrap.modal.forms.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.js' %}"></script>
+<script type="text/javascript">
+
+</script>
+{% endblock content %}

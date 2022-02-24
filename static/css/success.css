@@ -1,0 +1,108 @@
+/* Medium Devices, Desktops */
+
+@media only screen and (max-device-width: 768px) {
+    div.lgn-container {
+        width: 100%;
+    }
+    img {
+        margin-top: 5%;
+        margin-bottom: 5%;
+        width: 30vw;
+        height: 30vw;
+    }
+    h1 {
+        font-weight: 400;
+        font-size: 40px;
+        padding-top: 10px;
+        margin: 0;
+    }
+    h2 {
+        font-weight: 275;
+        font-size: 26px;
+        padding-top: 2px;
+        padding-bottom: 10px;
+        margin: 0;
+    }
+    .download-message{
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+
+    .fa-brands{
+        font-size: 200px;
+        padding-bottom: 20px;
+    }
+    .icon-label{
+        font-size: 30px;
+    }
+
+}
+
+@media only screen and (min-device-width: 768px) {
+    div.lgn-container {
+        width: 350px;
+        overflow-x: hidden;
+        text-align: center;
+    }
+    img {
+        width: 140px;
+        
+    }
+    h1 {
+        font-weight: 400;
+        font-size: 18px;
+        padding-top: 10px;
+        margin: 0;
+        display: block;
+    }
+    h2 {
+        font-weight: 275;
+        font-size: 14px;
+        padding-top: 2px;
+        padding-bottom: 10px;
+        margin: 0;
+        display: block;
+    }
+    .download-message{
+        margin-top: 50px;
+        margin-bottom: 10px;
+    }
+    .fa-brands{
+        font-size: 75px;
+        padding-bottom: 10px;
+    }
+
+}
+
+body {
+    background-color: #B3B3B3;
+    font-family: 'Ubuntu', sans-serif;
+    padding: 100px;
+}
+
+div.lgn-container {
+    justify-content: center;
+    background-color: #888888;
+    margin: auto;
+    padding: 10px;
+    border-radius: 25px;
+    box-shadow: #cbee04 0px 2px 8px 0px;
+    text-align: center;
+}
+/* .ios-wrapper{
+    display: inline-block;
+}
+.android-wrapper{
+    display: inline-block;
+} */
+a{
+    display: inline-block;
+    margin-left: 30px;
+    margin-right: 30px;
+    text-decoration: none;
+    color: #505050;
+    
+}
+a:hover{
+    color: #6d6d6d;
+}
