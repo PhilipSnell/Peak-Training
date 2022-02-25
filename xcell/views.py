@@ -52,6 +52,7 @@ def SignupClient(request, trainer=None):
             newPhase = Phase(phase=1, user=user)
             newPhase.save()
             newPhase.weeks.add(newWeek)
+            newPhase.save()
             # // login(request, user)
             return redirect('signup_client')
     else:
