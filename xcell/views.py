@@ -54,7 +54,7 @@ def SignupClient(request, trainer=None):
             newPhase.weeks.add(newWeek)
             newPhase.save()
             # // login(request, user)
-            return redirect('signup_client')
+            return redirect('success_client')
     else:
         form = AddClientForm()
 
