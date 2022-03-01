@@ -1,0 +1,513 @@
+.groupContainer {
+    position: relative;
+
+
+}
+
+.groupRow {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+    grid-gap: 1rem;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    border-spacing: 15px;
+    /*Optional*/
+    padding-bottom: calc(5vh);
+    font-family: 'Orbitron';
+
+}
+
+.groupBox {
+    padding-top: 1%;
+    padding-bottom: 1vw;
+    border-radius: 10px;
+
+
+    display: flex;
+    position: relative;
+    /*sets height equal to the width*/
+    height: 0;
+    padding-bottom: 100%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+
+    /*makes the container scroll in y direction*/
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.addgroupBox {
+    display: flex;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    height: 0;
+    padding-top: 47%;
+    padding-bottom: 53%;
+}
+
+.groupBox::-webkit-scrollbar {
+    width: 0.8vw;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.groupContent {
+    position: relative;
+    top: 0.4vw;
+    left: 0;
+    height: 100%;
+    width: 95%;
+    display: table-column;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    margin-left: 0.8vw;
+
+}
+
+.groupContentTitle {
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    width: 100%;
+    padding-bottom: 0.4vw;
+}
+
+.ContentTitle {
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    border-radius: 5px;
+    width: 50%;
+    background-color: rgb(73, 73, 73);
+    color: #ababab;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.groupContentTable {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(129, 129, 129);
+    width: 95%;
+    margin-bottom: 0.4vw;
+
+}
+
+.groupBottomSpacer {
+    height: 0.5vw;
+}
+
+.groupContentCell {
+    display: table-cell;
+    width: 50%;
+}
+
+.groupContentName {
+    
+    padding-left: 2%;
+
+}
+
+.groupContentToggle {
+    text-align: right;
+    padding-right: 2%;
+    font-size: 20px;
+}
+
+.addGroupButton {
+
+    display: flex;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.3);
+    position: relative;
+
+    width: calc(5vw);
+
+    padding-top: 0%;
+    border-radius: 10px;
+    font-size: 36px;
+    text-align: center;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+}
+
+.addIcon {
+    top: -5%;
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    font-size: 3.5vw;
+}
+
+.bg-modal {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: calc(100vh - 45px);
+    background: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: calc(1vw);
+    margin-left: auto;
+    margin-right: auto;
+    width: calc(21vw);
+    min-height: calc(21vw);
+    max-height: calc(25vw);
+    background-color: #ababab;
+    border-radius: 5px;
+    align-items: center;
+
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 16px;
+    background-color: #ababab;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.close_addentry {
+    background-color: rgba(0, 0, 0, 0);
+    cursor: pointer;
+    position: absolute;
+    top: -4px;
+    left: 10px;
+    font-size: 32px;
+    -ms-transform: rotate(45deg);
+    /* IE 9 */
+    -webkit-transform: rotate(45deg);
+    /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+}
+
+.submitContainer {
+    background-color: #0b2e13;
+    align-items: center;
+    display: inline;
+}
+
+.groupname {
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    border-radius: 5px;
+    margin-left: 3.5vw;
+    width: 70%;
+    text-align: center;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.groupname:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.groupname::placeholder {
+    color: lightgrey;
+}
+
+.add_field_button {
+    position: relative;
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #0e0e0e;
+    width: 2vw;
+
+}
+
+.clear_field_button {
+
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #0e0e0e;
+    width: 2vw;
+
+}
+
+.clearFieldButton {
+    border-color: darkred;
+    background-color: darkred;
+    height: 1.6vw;
+    font-size: 1.1rem;
+    padding: .1rem .4rem;
+    line-height: .5;
+    border-radius: .2rem;
+}
+
+.addGroupContent {
+    position: relative;
+    width: 18vw;
+    margin-left: 1vw;
+    margin-top: 0.4vw;
+}
+
+.addGroupTable {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    margin-bottom: 2.5%;
+    border-radius: 5px;
+    height: 0;
+    box-shadow: 0 0 0 1pt grey;
+    width: 100%;
+    height: 1vw;
+}
+
+.addGroupRow {}
+
+.addGroupCellSelect {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 30%;
+    cursor: pointer;
+
+}
+
+.addGroupCellInput {
+    position: relative;
+    display: table-cell;
+    width: 50%;
+}
+
+.addGroupCellRemove {
+    position: relative;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 8%;
+    padding-left: 1.5%;
+    cursor: pointer;
+}
+
+.selectField {
+    margin: auto;
+    text-align: center;
+    /* added for centered text */
+    align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inputField {
+
+    margin-right: 0.3vw;
+    width: 95%;
+}
+
+.fieldname {
+    position: relative;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    border-radius: 5px;
+    margin-right: 0.3vw;
+    text-align: center;
+    border: none;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.fieldname:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #787878 inset !important;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.fieldname::placeholder {
+    color: lightgrey;
+}
+
+.btn-group-xs>.btn,
+.btn-xs {
+    padding: .1rem .4rem;
+    font-size: 0.9rem;
+    line-height: .5;
+    border-radius: .2rem;
+
+}
+
+.submitGroupContent {
+    background-color: #ababab;
+    position: sticky;
+    padding-bottom: 0.2vw;
+    padding-top: 0.2vw;
+    padding-left: 1vw;
+    bottom: 0;
+    width: 100%;
+    margin-left: 2vw;
+}
+
+.submitGroupTable {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    border-radius: 5px;
+    width: 80%;
+
+}
+
+.addFieldButtonCell {
+    position: relative;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 50%;
+    padding-left: 1.5%;
+}
+
+.add_field_button {
+
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: relative;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.submit_add_form {
+    margin: auto;
+    text-align: center;
+    /* added for centered text */
+    align-items: center;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.submitFieldCell {
+    position: relative;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 50%;
+    padding-right: 1.5%;
+}
+
+/*%%%%%%%%%%%%%%%%%%%%%%%%% Edit Group Window %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%*/
+.èditGroupContent {
+    position: relative;
+    width: 18vw;
+    margin-left: 1vw;
+    margin-top: 0.4vw;
+}
+
+.editGroupTable {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    margin-bottom: 2.5%;
+    border-radius: 5px;
+    height: 0;
+    box-shadow: 0 0 0 1pt grey;
+    width: 100%;
+    height: 1vw;
+}
+
+.editFieldRow {}
+
+.editFieldSelect {
+    position: relative;
+    margin: auto;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 30%;
+    cursor: pointer;
+
+}
+
+.editFieldInput {
+    position: relative;
+    display: table-cell;
+    width: 50%;
+}
+
+.editFieldRemove {
+    position: relative;
+    justify-content: center;
+    /* added for centered text */
+    align-items: center;
+    display: table-cell;
+    width: 8%;
+    padding-left: 1.5%;
+    cursor: pointer;
+}
+
+.add_field_button1 {
+    border-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.3);
+    position: relative;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.trackingTool {
+    float: right;
+    font-size: 18px;
+    margin-top: -10px;
+    margin-right: -40px;
+    color: #787878;
+}
+
+.trackingTool:hover {
+    color: #585858;
+}

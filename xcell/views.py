@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.urls import reverse_lazy
-from django.contrib.auth.decorators import user_passes_test
+from django.urls import URLResolver, reverse_lazy
+from django.urls import include
+from django.urls import get_resolver
+
 from api.models import *
 from .forms import *
 from django.contrib.auth import get_user_model
@@ -64,3 +67,18 @@ def SignupClient(request, trainer=None):
 def Success(request):
 
     return render(request, 'registration/success.html')
+
+
+# class LoginRequiredMiddleware:
+#     def __init__(self, get_response):
+#         self.get_response = get_response
+#         self.login_url = settings.LOGIN_URL
+#         self.open_urls = [self.login_url] + \
+#             getattr(settings, 'OPEN_URLS', [])
+
+#     def __call__(self, request):
+#         if not request.user.is_authenticated \
+#                 and not request.path_info in self.open_urls:
+#             return redirect(self.login_url+'?next='+request.path)
+
+#         return self.get_response(request)

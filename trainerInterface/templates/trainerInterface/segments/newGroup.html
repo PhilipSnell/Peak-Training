@@ -1,0 +1,33 @@
+{% load my_filters %}
+<div class="groupBox" onclick="toggleEditEntry({{ length }})">
+    <div class="groupContent">
+        <div class="groupContentTitle">
+            <div class="ContentTitle">
+                {{ group.name }}
+            </div>
+        </div>
+
+
+        {% for field in group.textfields.all %}
+        <table class="groupContentTable">
+            <tr class="groupContentRow">
+                <td class="groupContentCell groupContentName">
+                    {{ field.name }}
+                </td>
+                <td class="groupContentCell groupContentToggle">
+
+                    {% if selected_client|is_in:field.clientToggle.all %}
+                    <i class="fas fa-toggle-on" style="color: green"></i>
+                    {% else %}
+                    <i class="fas fa-toggle-off" style="color: darkred"></i>
+                    {% endif%}
+
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+        <div class="groupBottomSpacer">
+        </div>
+
+    </div>
+</div>
