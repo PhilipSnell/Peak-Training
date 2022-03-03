@@ -3,31 +3,33 @@
 $(document).ready(function () {
     function loadPreviousNav() {
         prev_nav_link = $(`.nav-link[href="${previousHref}"]`);
-        if (!prev_nav_link.hasClass('nav-link-selected')) {
-            // remove higlight from previousl selected option
-            $(".nav-link").each(function () {
-                $(this).removeClass('nav-link-selected');
-            });
-            // add highlight to the clicked option
-            prev_nav_link.addClass('nav-link-selected');
-            console.log(prev_nav_link.attr('title'));
-            $(".content-title").html(prev_nav_link.attr('title'));
-            $(".exercise-tools").remove();
-            $(".custom-select").each(function () {
-                $(this).remove();
-                console.log('removed')
+        if (typeof prev_nav_link.attr('href') !== 'undefined') {
+            if (!prev_nav_link.hasClass('nav-link-selected')) {
+                // remove higlight from previousl selected option
+                $(".nav-link").each(function () {
+                    $(this).removeClass('nav-link-selected');
+                });
+                // add highlight to the clicked option
+                prev_nav_link.addClass('nav-link-selected');
+                console.log(prev_nav_link.attr('title'));
+                $(".content-title").html(prev_nav_link.attr('title'));
+                $(".exercise-tools").remove();
+                $(".custom-select").each(function () {
+                    $(this).remove();
+                    console.log('removed')
 
-            });
-            // requests the new html segment
-            $.ajax({
-                type: "GET",
-                url: prev_nav_link.attr('href'),
-                data: {},
-                success: function (data) {
-                    $(".content-backing").html(data)
-                }
-            })
+                });
+                // requests the new html segment
+                $.ajax({
+                    type: "GET",
+                    url: prev_nav_link.attr('href'),
+                    data: {},
+                    success: function (data) {
+                        $(".content-backing").html(data)
+                    }
+                })
 
+            }
         }
     }
     loadPreviousNav();

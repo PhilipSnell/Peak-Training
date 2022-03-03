@@ -67,63 +67,73 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            {% block nav-dashboard %}
+
                             <div class="nav-link" href="{% url 'dashboard' %}" title="Dashboard">
                                 <div class="iconWrapper">
                                     <i class="fa-solid fa-house sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Dashboard</div>
                             </div>
-                            {% endblock %}
+
                         </li>
                         <li class="nav-item">
-                            {% block nav-train-plan %}
+
                             <div class="nav-link" href="{% url 'trainplan' %}" title="Training Plan">
                                 <div class="iconWrapper">
                                     <i class="fa-solid fa-calendar-plus"></i>
                                 </div>
                                 <div class="textWrap">Training Plan</div>
                             </div>
-                            {% endblock %}
+
 
                         </li>
                         <li class="nav-item">
-                            {% block nav-train-prog %}
+
                             <div class="nav-link" href="{% url 'trainprog' %}" title="Training Progress">
                                 <div class="iconWrapper">
                                     <i class="fa-regular fa-calendar-check sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Training Progress</div>
                             </div>
-                            {% endblock %}
+
 
                         </li>
                         <li class="nav-item">
-                            {% block nav-dataTracking-prog %}
+
                             <div class="nav-link" href="{% url 'graph' %}" title="Weekly Tracking">
                                 <div class="iconWrapper">
-                                    <i class="fa-solid fa-clipboard-list sidebar-icon" aria-hidden="true"></i>
+                                    <i class="fa-solid fa-chart-line"></i>
                                 </div>
                                 <div class="textWrap">Weekly Tracking</div>
                             </div>
-                            {% endblock %}
 
                         </li>
                         <li class="nav-item">
-                            {% block nav-chat %}
+
+                            <div class="nav-link" href="{% url 'dataTracking' %}" title="Tracking Fields">
+                                <div class="iconWrapper">
+                                    <i class="fa-solid fa-clipboard-list sidebar-icon" aria-hidden="true"></i>
+                                </div>
+                                <div class="textWrap">Tracking Fields</div>
+                            </div>
+
+
+                        </li>
+                        <li class="nav-item">
+
                             <div class="nav-link" href="#" title="Chat">
                                 <div class="iconWrapper">
                                     <i class="fa-regular fa-comment-alt sidebar-icon" aria-hidden="true"></i>
                                 </div>
                                 <div class="textWrap">Chat</div>
                             </div>
-                            {% endblock %}
+
                         </li>
                         <li class="nav-item">
                             <div class="sectionTitle">General</div>
                         </li>
                         <li class="nav-item">
-                            {% block nav-exercises %}
+
                             <div class="nav-link" href="{% url 'exercises' %}" title="Exercises">
                                 <div class="iconWrapper">
                                     <i class="fa-solid fa-dumbbell sidebar-icon" aria-hidden="true"></i>
@@ -131,10 +141,10 @@
                                 <div class="textWrap">Exercises</div>
                             </div>
 
-                            {% endblock %}
+
                         </li>
                         <li class="nav-item">
-                            {% block nav-clients %}
+
                             <div class="nav-link" href="{% url 'clients' %}" title="Clients">
                                 <div class="iconWrapper">
                                     <i class="fa-solid fa-users sidebar-icon" aria-hidden="true"></i>
@@ -142,7 +152,7 @@
                                 <div class="textWrap">Clients</div>
                             </div>
 
-                            {% endblock %}
+
                         </li>
                     </ul>
                 </div>
