@@ -140,3 +140,27 @@ def addGroup(request):
         #         'error': 'Error adding group'  # response message
         #     }
         #     return JsonResponse(response)
+
+
+def toggleField(request):
+    if request.is_ajax():
+        id = request.POST.get('id', None)
+        setting = request.POST.get('setting', None)
+
+        user = User.objects.get(email=request.session['selected_client'])
+        field = TrackingTextField.objects.get(id=id)
+        if setting == 'on':
+            field.clientToggle.add(user)
+            response = {
+                'success': 'success'
+            }
+        elif setting == 'off':
+            field.clientToggle.remove(user)
+            response = {
+                'success': 'success'
+            }
+        else:
+            response = {
+                'error': 'Could not toggle field!'
+            }
+        return JsonResponse(response)

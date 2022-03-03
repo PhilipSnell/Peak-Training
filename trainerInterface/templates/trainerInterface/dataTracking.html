@@ -25,9 +25,9 @@
                         <td class="groupContentCell groupContentToggle">
 
                             {% if selected_client|is_in:field.clientToggle.all %}
-                            <i class="fas fa-toggle-on field-toggle" style="color: green"></i>
+                            <i class="fas fa-toggle-on field-toggle" style="color: green" id="{{ field.id }}"></i>
                             {% else %}
-                            <i class="fas fa-toggle-off field-toggle" style="color: darkred"></i>
+                            <i class="fas fa-toggle-off field-toggle" style="color: darkred" id="{{ field.id }}"></i>
                             {% endif%}
 
                         </td>
