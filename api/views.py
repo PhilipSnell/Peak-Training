@@ -191,6 +191,7 @@ class TrainingData(APIView):
                 activeWeek = phase.weeks.get(isActive=True)
                 trainingData = TrainingEntry.objects.filter(
                     user=user, phase=activeWeek.phase, week=activeWeek.week)
+                break
             except:
                 trainingData = None
                 print('active week not found')
