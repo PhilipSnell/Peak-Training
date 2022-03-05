@@ -229,16 +229,21 @@ def toggleActiveWeek(request):
 def addPhase(request):
     if request.is_ajax():
         try:
-            objects = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']))
+            user = User.objects.get(email=request.session['selected_client'])
+            objects = Phase.objects.filter(user=user)
             currPhase = 0
             for phase in objects:
                 if currPhase < phase.phase:
                     currPhase = phase.phase
 
             newPhase = Phase(phase=currPhase+1,
-                             user=User.objects.get(email=request.session['selected_client']))
+                             user=user)
             newPhase.save()
+            firstWeek = Week(week=1,
+                             phase=currPhase+1,
+                             user=user)
+            firstWeek.save()
+            newPhase.weeks.add(firstWeek)
             response = {
                 'success': 'Phase added succesfully!'
             }

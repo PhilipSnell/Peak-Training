@@ -189,10 +189,12 @@ $('.add-group-form').on('submit', function (e) {
         success: function (data) {
             if (data['error']) {
                 tempAlert(data['error'], 4000, 0);
+            } else {
+                $(data).insertBefore('.addgroupBox');
+                var x = document.getElementById("add-entry-modal");
+                x.style.display = "none";
+                monitorToggles()
             }
-            $(data).insertBefore('.addgroupBox');
-            var x = document.getElementById("add-entry-modal");
-            x.style.display = "none";
         },
         failure: function () {
         }
