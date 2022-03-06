@@ -1,3 +1,4 @@
+from datetime import datetime
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -12,6 +13,11 @@ from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
 
 User = get_user_model()
+
+
+def updateLastActive(user):
+    user.last_login = datetime.now()
+    user.save()
 
 
 class UserRecordView(APIView):
@@ -185,6 +191,7 @@ class TrainingData(APIView):
         # print(request.data["username"]+ "- blah blah")
         email_lookup = request.data["username"]
         user = User.objects.get(email=email_lookup)
+        updateLastActive(user)
         phases = Phase.objects.filter(user=user)
         for phase in phases:
             try:
@@ -219,6 +226,7 @@ class TrackingData(APIView):
     def post(self, request):
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
+        updateLastActive(user)
         groupData = TrackingGroup.objects.filter(clientToggle__in=user)
 
         serializer = GroupSerializer(groupData, many=True)
@@ -240,25 +248,27 @@ class TrackingValuesUpdate(APIView):
             if request.data:
                 textVals = request.data.get("textVals")
                 email = request.data.get("client")
+                user = User.objects.get(email=email)
+                updateLastActive(user)
             index = 1
             for item in textVals:
-                print(item.get('date')[0:10])
+
                 textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
                                                            date=parse_date(
                                                                item.get('date')[0:10]),
-                                                           client=User.objects.get(email=email))
+                                                           client=user)
                 textVal.update(value=item.get("value"))
                 textVal = TrackingTextValue.objects.filter(field_id=item.get("field_id"),
                                                            date=parse_date(
                                                                item.get('date')[0:10]),
-                                                           client=User.objects.get(email=email))
+                                                           client=user)
                 if textVal:
                     textVal.update(value=item.get("value"))
                     data['response'] = data['response'] + \
                         "entry "+str(index) + " already exists, "
 
                 else:
-                    item["client"] = User.objects.get(email=email).id
+                    item["client"] = user.id
                     serializer = TrackTextValueSerializer(data=item,)
                     if serializer.is_valid():
                         valueObject = serializer.save()
@@ -282,6 +292,7 @@ class TrackingValuesGet(APIView):
     def post(self, request):
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
+        updateLastActive(user)
         textValues = TrackingTextValue.objects.filter(client=user)
         print(textValues)
         serializer = TrackTextValueSerializer(textValues, many=True)

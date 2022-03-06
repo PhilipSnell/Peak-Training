@@ -78,6 +78,22 @@ def getActiveWeek(client):
     return
 
 
+def completed(week):
+
+    days = week.days.all()
+    completed_days = 0
+    for day in days:
+        exercises = day.entrys.all()
+        for exercise in exercises:
+            entrys = Set_Entry.objects.filter(t_id=exercise.id)
+            if len(entrys) > 0:
+                completed_days += 1
+                break
+
+    return completed_days
+
+
+register.filter(completed)
 register.filter(getActiveWeek)
 register.filter(get_feedback)
 register.filter(sliceVideo)
