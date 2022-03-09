@@ -14,12 +14,11 @@ if (week_start.getDay() === 0) {
 var week_end = new Date(today);
 week_end.setDate(week_start.getDate() + 6)
 
-if (navbar.find('.exercise-tools').length != 0) {
-    $('.exercise-tools').html('')
+if (navbar.find('.graph-tools').length != 0) {
+    $('.graph-tools').html('')
 } else {
-
     tools = $('<div></div>').attr({
-        'class': 'exercise-tools',
+        'class': 'graph-tools',
     });
     tools.appendTo(navbar);
     week_selector = $('<div></div>').attr({
@@ -35,8 +34,11 @@ if (navbar.find('.exercise-tools').length != 0) {
     right_arrow = $('<i class="fa-solid fa-chevron-right"></i>');
     right_arrow.hide();
     right_arrow.appendTo(week_selector);
-
+    $('.graph-tools').prepend('<div class="custom-select custom-select-data"><select></select></div>')
 }
+
+
+
 $('.fa-chevron-right').on('click', function () {
     if (week < 0) {
         week += 1;
@@ -54,22 +56,9 @@ $('.fa-chevron-left').on('click', function () {
     updateWeekText();
     getGraphData();
 });
-const months = {
-    0: 'Jan',
-    1: 'Feb',
-    2: 'Mar',
-    3: 'Apr',
-    4: 'May',
-    5: 'Jun',
-    6: 'Jul',
-    7: 'Aug',
-    8: 'Sept',
-    9: 'Oct',
-    10: 'Nov',
-    11: 'Dec'
-};
 
-const nth = function (d) {
+
+nth = function (d) {
     if (d > 3 && d < 21) return 'th';
     switch (d % 10) {
         case 1: return "st";
@@ -102,7 +91,7 @@ function updateWeekText() {
 if ($('.exercise-tools').find('.custom-select-data').length != 0) {
     $('.custom-select-data').html('')
 } else {
-    $('.exercise-tools').prepend('<div class="custom-select custom-select-data"><select></select></div>')
+
 }
 
 function getData() {

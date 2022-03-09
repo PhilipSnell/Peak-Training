@@ -91,7 +91,9 @@
 .ContentTitle {
     position: relative;
     display: flex;
-    margin: auto;
+    margin-left: 25%;
+    margin-right: auto;
+    
     justify-content: center;
     /* added for centered text */
     align-items: center;
@@ -510,4 +512,9 @@
 
 .trackingTool:hover {
     color: #585858;
+}
+.group-toggle-wrapper {
+    float: right;
+    /* padding-right: 2%; */
+    font-size: 24px;
 }

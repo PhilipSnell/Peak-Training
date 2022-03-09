@@ -14,6 +14,7 @@ $(document).ready(function () {
                 console.log(prev_nav_link.attr('title'));
                 $(".content-title").html(prev_nav_link.attr('title'));
                 $(".exercise-tools").remove();
+                $(".graph-tools").remove();
                 $(".custom-select").each(function () {
                     $(this).remove();
                     console.log('removed')
@@ -47,6 +48,7 @@ $(document).ready(function () {
             console.log(nav_link.attr('title'));
             $(".content-title").html(nav_link.attr('title'));
             $(".exercise-tools").remove();
+            $(".graph-tools").remove();
             $(".custom-select").each(function () {
                 $(this).remove();
 
@@ -81,3 +83,18 @@ function tempAlert(msg, duration, type) {
     }, duration);
     document.body.appendChild(el);
 }
+// for graph.js
+months = {
+    0: 'Jan',
+    1: 'Feb',
+    2: 'Mar',
+    3: 'Apr',
+    4: 'May',
+    5: 'Jun',
+    6: 'Jul',
+    7: 'Aug',
+    8: 'Sept',
+    9: 'Oct',
+    10: 'Nov',
+    11: 'Dec'
+};

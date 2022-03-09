@@ -226,7 +226,7 @@ class TrackingData(APIView):
     def post(self, request):
         email_lookup = request.data["username"]
         user = User.objects.filter(email=email_lookup)
-        updateLastActive(user)
+        updateLastActive(user[0])
         groupData = TrackingGroup.objects.filter(clientToggle__in=user)
 
         serializer = GroupSerializer(groupData, many=True)
@@ -291,7 +291,7 @@ class TrackingValuesGet(APIView):
 
     def post(self, request):
         email_lookup = request.data["username"]
-        user = User.objects.filter(email=email_lookup)
+        user = User.objects.get(email=email_lookup)
         updateLastActive(user)
         textValues = TrackingTextValue.objects.filter(client=user)
         print(textValues)

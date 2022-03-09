@@ -22,14 +22,21 @@ function monitorToggles() {
         var id;
         if (toggle.hasClass('fa-toggle-on')) {
             id = toggle.attr('id');
-            console.log(id);
-            toggle.parent().html("<i class='fas fa-toggle-off field-toggle' style='color: darkred'></i>");
+            wrapper = toggle.parent();
+            toggle = $("<i class='fas fa-toggle-off field-toggle' style='color: darkred'></i>");
             toggle.attr('id', id);
+            wrapper.html("");
+            wrapper.append(toggle);
             setting = "off";
         } else {
             id = toggle.attr('id');
-            toggle.parent().html("<i class='fas fa-toggle-on field-toggle' style='color: green'></i>");
+            wrapper = toggle.parent()
+
+            toggle = $("<i class='fas fa-toggle-on field-toggle' style='color: green'></i>");
             toggle.attr('id', id);
+            wrapper.html("");
+            wrapper.append(toggle);
+
             setting = "on";
         }
         $.ajax({
@@ -55,6 +62,55 @@ function monitorToggles() {
 
 }
 monitorToggles();
+
+function monitorGroupToggles() {
+    $('.group-toggle').on('click', function (e) {
+        e.stopPropagation();
+        toggle = $(this)
+        var setting;
+        var id;
+        if (toggle.hasClass('fa-toggle-on')) {
+            id = toggle.attr('id');
+            wrapper = toggle.parent();
+            toggle = $("<i class='fas fa-toggle-off group-toggle' style='color: darkred'></i>");
+            toggle.attr('id', id);
+            wrapper.html("");
+            wrapper.append(toggle);
+            setting = "off";
+        } else {
+            id = toggle.attr('id');
+            wrapper = toggle.parent()
+
+            toggle = $("<i class='fas fa-toggle-on group-toggle' style='color: green'></i>");
+            toggle.attr('id', id);
+            wrapper.html("");
+            wrapper.append(toggle);
+
+            setting = "on";
+        }
+        $.ajax({
+            type: "POST",
+            url: "dashboard/togglegroup/",
+            data: {
+                id: id,
+                setting: setting,
+                csrfmiddlewaretoken: csrf_token,
+                dataType: "json",
+            },
+            success: function (data) {
+                if (data['error']) {
+                    tempAlert(data['error'], 4000, 0);
+                }
+            },
+            failure: function () {
+                tempAlert('Could not toggle field!', 4000, 0);
+            }
+        });
+        monitorGroupToggles();
+    })
+
+}
+monitorGroupToggles();
 function toggleEditEntry(index) {
     activeindex = index
     console.log(activeindex);

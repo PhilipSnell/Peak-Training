@@ -13,7 +13,15 @@
                     <div class="ContentTitle">
                         {{ group.name }}
                     </div>
+                    <div class="group-toggle-wrapper">
+                        {% if selected_client|is_in:group.clientToggle.all %}
+                        <i class="fas fa-toggle-on group-toggle" style="color: green" id="{{ group.id }}"></i>
+                        {% else %}
+                        <i class="fas fa-toggle-off group-toggle" style="color: darkred" id="{{ group.id }}"></i>
+                        {% endif%}
+                    </div>
                 </div>
+
 
 
                 {% for field in group.textfields.all %}

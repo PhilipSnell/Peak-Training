@@ -58,5 +58,6 @@ urlpatterns = [
     path('dashboard/editexercise/',
          login_required(editExercise), name='edit_exercise'),
     path('dashboard/linkvalues/', login_required(linkValues), name='link'),
-    path('dashboard/togglefield/', login_required(toggleField), name='toggle_field')
+    path('dashboard/togglefield/', login_required(toggleField), name='toggle_field'),
+    path('dashboard/togglegroup/', login_required(toggleGroup), name='toggle_group'),
 ]
