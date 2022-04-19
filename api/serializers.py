@@ -88,8 +88,13 @@ class TrackTextValueSerializer(serializers.ModelSerializer):
             "field_id",
         )
 
+# class ToggledFieldsSerializer(serializers.ListSerializer):
+#     def to_representation(self, data):
+#         data=data.filter
+#         return super().to_representation(data)
 
 class TextfieldSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = TrackingTextField
         fields = (
@@ -100,15 +105,21 @@ class TextfieldSerializer(serializers.ModelSerializer):
 
 
 class GroupSerializer(serializers.ModelSerializer):
-    textfields = TextfieldSerializer(many=True)
 
+    textfields = serializers.SerializerMethodField('get_textfields')
     class Meta:
         model = TrackingGroup
         fields = (
             'name',
             'textfields',
         )
-
+    
+    def get_textfields(self, obj):
+        users = User.objects.filter(id=self.context.get('user_id'))
+        print(users)
+        print(TrackingTextField.objects.filter(textfield__id=obj.id))
+        return TextfieldSerializer(TrackingTextField.objects.filter(textfield__id=obj.id, clientToggle__in=users), many=True).data
+# .filter(clientToggle__in= User.objects.filter(id=self.context.get('user.id')))
 
 class UserSerializer(serializers.ModelSerializer):
 

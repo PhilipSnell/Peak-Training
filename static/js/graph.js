@@ -25,13 +25,13 @@ if (navbar.find('.graph-tools').length != 0) {
         'class': 'graph-week-selector',
     });
     week_selector.appendTo(tools);
-    left_arrow = $('<i class="fa-solid fa-chevron-left"></i>');
+    left_arrow = $('<i class="fa-solid fa-chevron-left left-week"></i>');
     left_arrow.appendTo(week_selector);
     week_display = $('<div>This Week</div>').attr({
         'class': 'week-display',
     });
     week_display.appendTo(week_selector);
-    right_arrow = $('<i class="fa-solid fa-chevron-right"></i>');
+    right_arrow = $('<i class="fa-solid fa-chevron-right right-week"></i>');
     right_arrow.hide();
     right_arrow.appendTo(week_selector);
     $('.graph-tools').prepend('<div class="custom-select custom-select-data"><select></select></div>')
@@ -39,7 +39,7 @@ if (navbar.find('.graph-tools').length != 0) {
 
 
 
-$('.fa-chevron-right').on('click', function () {
+$('.right-week').on('click', function () {
     if (week < 0) {
         week += 1;
         week_start.setDate(week_start.getDate() + 7);
@@ -47,15 +47,16 @@ $('.fa-chevron-right').on('click', function () {
         updateWeekText();
         getGraphData();
     }
-
 });
-$('.fa-chevron-left').on('click', function () {
+$('.left-week').on('click', function () {
     week -= 1;
     week_start.setDate(week_start.getDate() - 7);
     week_end.setDate(week_end.getDate() - 7);
     updateWeekText();
     getGraphData();
 });
+
+
 
 
 nth = function (d) {
@@ -93,7 +94,25 @@ if ($('.exercise-tools').find('.custom-select-data').length != 0) {
 } else {
 
 }
-
+function getFields(group) {
+    $.ajax({
+        type: "GET",
+        url: '/dashboard/getfields/',
+        data: {
+            group: group,
+        },
+        success: function (data) {
+            $('.field-options').html(data);
+            $('.field-checkbox').each(function(index){
+                $(this).css({'accent-color':`${colors[index]}`});
+            });
+            getGraphData();
+            $('.field-checkbox').on('click', function() {
+                handleGraph();
+            });
+        }
+    })
+}
 function getData() {
     date = week_start.getDate();
     month = week_start.getMonth() + 1;
@@ -108,13 +127,24 @@ function getData() {
         success: function (data) {
             $('.custom-select-data').html(data);
             handleDropdown('custom-select-data');
-
+            group = $('.custom-select-data').find(':selected').val();
+            getFields(group);
         }
-
 
     })
 }
 getData();
+
+$('.fields-tab').on('click', function () {
+    if (!$('.field-options').html()) {
+        $('.side-content').animate({ width: 'toggle' });
+
+    }
+    // group = $('.custom-select-data').find(':selected').val();
+    // getFields(group);
+    $('.side-content').animate({ width: 'toggle' });
+})
+
 function handleDropdown(target) {
     var dropdown, options, option, numberOfOptions, selectedOption, selectedElement, optionMenu, index
     dropdown = document.getElementsByClassName(target)[0];
@@ -157,7 +187,9 @@ function handleDropdown(target) {
                         y[k].removeAttribute("class");
                     }
                     this.setAttribute("class", "same-as-selected");
-                    getGraphData();
+                    group = $('.custom-select-data').find(':selected').val();
+                    getFields(group);
+
                 }
 
             }
@@ -166,71 +198,210 @@ function handleDropdown(target) {
         optionMenu.appendChild(option);
     }
     dropdown.appendChild(optionMenu);
-    getGraphData();
     selectedElement.addEventListener('click', function (e) {
         e.stopPropagation();
         closeAllSelect(this);
         this.nextSibling.classList.toggle("select-hide");
         this.classList.toggle("select-arrow-active");
     })
+};
+
+var data_vals;
+var y_axis;
+var x_axis = ['6.3%','20.5%','34.7%','48.9%','63.1%','77.3%','91.5%']
+var data_y_pos;
+var colors = ['#fcba03','#fc7f03', '#aed656', '#56d6b0', '#54a1d1', '#8454d1', '#bc54d1', '#cc769a']
+var selected_y_axis = 0;
+var empty_y_axis = ['', '', '', '', '', '', '', '', '', ''];
+function handleGraph() {
+    $('.data-point').each(function(){
+        $(this).parent().remove();
+    })
+    $('.field-checkbox').each(function (index) {
+        if ($(this).is(':checked')) {
+            if (index === selected_y_axis){
+                if (JSON.stringify(y_axis[selected_y_axis]) == JSON.stringify(empty_y_axis)){
+                    raise_Y_index();
+                }
+                else{
+
+                    set_y_axis(y_axis[index], index);
+                    
+                }
+                
+            }
+            set_data_points(data_vals[index],data_y_pos[index],index);
+        }
+        else{
+            if (index === selected_y_axis){
+                raise_Y_index();
+            }
+            set_data_points(['','','','','','',''], ["0","0","0","0","0","0","0"],index);
+        }
+    });
+};
+
+$('.right-y').on('click', function () {
+    find_higher();
+});
+$('.left-y').on('click', function () {
+    find_lower();
+});
+function find_higher(){
+    original_index = selected_y_axis;
+    while (true){
+        raise_Y_index();
+        if (selected_y_axis == original_index) break;
+        if (JSON.stringify(y_axis[selected_y_axis]) != JSON.stringify(empty_y_axis)) break;
+    }
+    handleGraph();
+};
+function find_lower(){
+    original_index = selected_y_axis;
+    while (true){
+        
+        lower_Y_index();
+        if (selected_y_axis == original_index) break;
+        if (JSON.stringify(y_axis[selected_y_axis]) != JSON.stringify(empty_y_axis)) break;
+    }
+    handleGraph();
+};
+function raise_Y_index(){
+    selected_y_axis +=1;
+    if (selected_y_axis === $('.field-checkbox').length) selected_y_axis=0;
+}
+function lower_Y_index(){
+    selected_y_axis -=1;
+    if (selected_y_axis < 0) selected_y_axis = $('.field-checkbox').length-1;
 }
 
+function set_y_axis(vals,i) {
+    $('.label-value').each(function (index) {
+        $(this).text(vals[index]);
+    })
+    $('.color-marker').css('background-color',`${colors[i]}`);
+};
+function remove_data_points(){
+    $('.data-point').each(function(){
+        $(this).parent().remove();
+    })
+}
+content = document.querySelector(".graphContent");
+new ResizeSensor(content, function(){ 
+    handleGraph();
+});
+// new ResizeObserver(handleGraph).observe($());
+function set_data_points(vals, y_pos, index) {
+    for(let i=0; i< vals.length; i++){
+        item = $("<li>");
+        div = $("<div>");
+        div.attr('class','data-point');
+        div.css({'left':`calc(${x_axis[i]} - 7px)`,'bottom':`0`});
+        label = $("<div>").text(vals[i]);
+        label.attr('class','data-label');
+        label.css({'left':`calc(${x_axis[i]} + 7px)`,'bottom':`0`,'display':'none'});
+        if (y_pos[i] !== "0"){
+            div.css({'bottom':`calc(${y_pos[i]} - 7px)`,'background-color':`${colors[index]}`});
+            label.css({'bottom':`calc(${y_pos[i]} + 7px)`,'background-color':`${colors[index]}`});
+        }
+        else{
+            div.css({'display':'none'});
+            label.css({'display':'none'});
+        }
+        
+        line = $("<div>");
+        line.attr('class','line-segment');
+        item.append(div);
+        item.append(label);
+        if (i+1 < vals.length){
+            var found_point =false
+            for(let j=i+1; j<vals.length; j++){
+                if(vals[j] != ''){
+                    var x = (j-i)*14.2;
+                    var y = parseInt(y_pos[j])-parseInt(y_pos[i]);
+                    found_point = true
+                    break;
+                }
+            }
+            if (found_point){
+                var graph_width = $('.graphContent').width();
+                var graph_height = $('.graphContent').height();
+                x = graph_width*(x/100);
+                y = graph_height*(y/100);
+                h = Math.sqrt(x*x+y*y)
+                
+                angle = -Math.asin(y/h)*(180/Math.PI);
+                h = (h/graph_width)*100;
+                line.css({'width':`${h}%`});
+                line.css({'left':`calc(${x_axis[i]})`,'bottom':`0`,'transform':`rotate(calc(${angle}deg))`,'transform-origin': 'left bottom','background-color':`${colors[index]}`});
+                if (y_pos[i] !== "0"){
+                    line.css({'bottom':`calc(${y_pos[i]})`});
+                }
+                else{
+                    line.css({'display':'none'});
+                }
+                item.append(line);
+            }
+        }
+        
+        // console.log(angle);
+        // }
+        
+        
+        
+        $(".line-chart").append(item);
+        showLabels();
+    }
+    // $('.label-value').each(function (index) {
+    //     $(this).text(vals[index]);
+    // })
+};
+
+function showLabels(){
+    $('.data-point').mouseenter( function(){
+        $(this).parent().find('.data-label').css('display','block');
+    }).mouseleave( function(){
+        $(this).parent().find('.data-label').css('display','none');
+    });
+}
 
 function getGraphData() {
-    console.log(week_start);
+
     date = week_start.getDate();
     month = week_start.getMonth() + 1;
     year = week_start.getFullYear();
     formatted = `${date}/${month}/${year}`;
-    console.log(formatted);
-    console.log($(".select-selected").text());
+
+
     $('.data-point').each(function (index) {
         $(this).css('visibility', 'hidden');
     })
+    fields = [];
+    $('.field-checkbox').each(function () {
+        fields.push($(this).attr('id'));
+    })
+    fields = JSON.stringify({ fields });
+    // console.log(fields);
+
     $.ajax({
         type: "POST",
         url: '/dashboard/getGraphData/',
         data: {
-            option: $(".select-selected").text(),
+            fields: fields,
             date: formatted,
             csrfmiddlewaretoken: csrf_token,
             dataType: "json",
         },
         success: function (data) {
+            
             if (data['error']) {
                 tempAlert(data['error'], 4000, 0);
             } else {
-                console.log('here');
-                if (data['positions'] && data['data']) {
-                    $('.data-point').each(function (index) {
-                        if (data['positions'][index] == '0') {
-                            $(this).css('visibility', 'hidden');
-                        } else {
-                            // $(this).css('--yPos', '0');
-                            // $(this).css('--xPos', `${(index * 10) + 40}%`);
-                            $(this).css('--xPos', data['positions'][index]);
-                            $(this).find('.data-label').text(data['data'][index]);
-                            $(this).css('visibility', 'visible');
-                        }
-                    })
-                    $('.label-value').each(function (index) {
-                        $(this).text(data['display'][index]);
-                    })
-                    $('.data-point').on('mouseover', function () {
-                        $(this).find('.data-label').show();
-                    })
-                    $('.data-point').on('mouseout', function () {
-                        $(this).find('.data-label').hide();
-                    })
-                } else {
-                    $('.data-point').each(function (index) {
-                        $(this).css('visibility', 'hidden');
+                data_vals = data['datavals'];
+                y_axis = data['y_axis'];
+                data_y_pos = data['data_y_pos'];
 
-                    });
-                    $('.label-value').each(function () {
-                        $(this).html("");
-                    })
-                }
+                handleGraph();
             }
         },
         failure: function () {
@@ -260,4 +431,11 @@ function closeAllSelect(elmnt) {
         }
     }
 }
+
 document.addEventListener("click", closeAllSelect);
+
+// side options //
+
+// $(".fields").on('click', function () {
+
+// })

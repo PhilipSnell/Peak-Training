@@ -1,0 +1,11 @@
+<div class="side-title">Fields</div>
+{% for field in fields %}
+<div class="side-divider"></div>
+<div class="group-field">
+    <div class="checkbox-wrapper">
+        <input class="field-checkbox" type="checkbox" value="None" id="{{field.id}}" name="check" checked>
+    </div>
+    <div class="field-name">{{ field.name }}</div>
+</div>
+
+{% endfor %}

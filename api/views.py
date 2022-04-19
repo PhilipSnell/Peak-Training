@@ -1,4 +1,5 @@
 from datetime import datetime
+from multiprocessing import context
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -229,7 +230,7 @@ class TrackingData(APIView):
         updateLastActive(user[0])
         groupData = TrackingGroup.objects.filter(clientToggle__in=user)
 
-        serializer = GroupSerializer(groupData, many=True)
+        serializer = GroupSerializer(groupData,context={'user_id':user[0].id}, many=True)
 
         return Response(serializer.data)
 
