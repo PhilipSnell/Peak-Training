@@ -106,8 +106,8 @@ def getGraphData(request):
                     minVal, display_max, 9, endpoint=False)
                 display_vals = np.round(display_vals, 1).tolist()
             else:
-                display_vals = [minVal-minVal/10, "", "", "",
-                                minVal, "", "", "", minVal+minVal/10]
+                display_vals = [np.round(minVal-minVal/10, 1), "", "", "",
+                                minVal, "", "", "", np.round(minVal+minVal/10, 1)]
             display_vals.reverse()
             if display_vals[0] != display_vals[0]:
                 display_vals = ["", "", "", "", "", "", "", "", "", ""]
