@@ -46,6 +46,7 @@ $('.right-week').on('click', function () {
         week_end.setDate(week_end.getDate() + 7);
         updateWeekText();
         getGraphData();
+        handleGraph();
     }
 });
 $('.left-week').on('click', function () {
@@ -54,6 +55,7 @@ $('.left-week').on('click', function () {
     week_end.setDate(week_end.getDate() - 7);
     updateWeekText();
     getGraphData();
+    handleGraph();
 });
 
 
@@ -194,6 +196,7 @@ function handleDropdown(target) {
 
             }
             h.click();
+            handleGraph();
         });
         optionMenu.appendChild(option);
     }
@@ -286,10 +289,7 @@ function remove_data_points(){
         $(this).parent().remove();
     })
 }
-content = document.querySelector(".graphContent");
-new ResizeSensor(content, function(){ 
-    handleGraph();
-});
+
 // new ResizeObserver(handleGraph).observe($());
 function set_data_points(vals, y_pos, index) {
     for(let i=0; i< vals.length; i++){
@@ -400,8 +400,11 @@ function getGraphData() {
                 data_vals = data['datavals'];
                 y_axis = data['y_axis'];
                 data_y_pos = data['data_y_pos'];
-
                 handleGraph();
+                content = document.querySelector(".graphContent");
+                ResizeSensor(content, function(){ 
+                    handleGraph();
+                });
             }
         },
         failure: function () {
