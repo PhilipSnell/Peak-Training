@@ -44,7 +44,7 @@ def getFields(request):
             print(selected_group)
             group = TrackingGroup.objects.get(name=selected_group)
 
-            fields = group.textfields.all()
+            fields = group.textfields.all().order_by('id')
         return HttpResponse(render(request, 'trainerInterface/segments/graphgroupfields.html', {'fields': fields}))
         # html_response = ''
         #     for field in group.textfields.all():
@@ -65,8 +65,8 @@ def getGraphData(request):
             days.append(date_time+timedelta(days=i))
 
         client = User.objects.get(email=request.session['selected_client'])
-        fields = TrackingTextField.objects.filter(id__in=field_ids)
-
+        fields = TrackingTextField.objects.filter(id__in=field_ids).order_by('id')
+        print(fields)
         # for group in groups:
         #     for field in group.textfields.filter(clientToggle=client):
         # if field.name == option:
