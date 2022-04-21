@@ -453,6 +453,8 @@ function getDayData() {
                 tempAlert(data['error'], 4000, 0);
             } else {
                 $('.tableWrapper').html(data);
+                startStyleHover();
+                monitorRowDrag();
             }
 
 
@@ -1096,6 +1098,7 @@ function cloneConfirmation(phase, week) {
     // $('#cloneToWeek').html('Week ' + selectedWeek[parseInt(selectedPhase) - 1]);
     // $('#cloneToPhase').html('Phase ' + selectedPhase);
 };
+
 
 
 
