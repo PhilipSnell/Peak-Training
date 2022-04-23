@@ -8,7 +8,7 @@ from trainerInterface.form import *
 from django.shortcuts import render, redirect
 from datetime import date, datetime, timedelta
 import numpy as np
-
+import myfitnesspal as mfp
 
 def graphTracking(request):
     request.session["href"] = '/dashboard/graph/'
@@ -63,17 +63,114 @@ def getGraphData(request):
         days = [date_time]
         for i in range(1, 7):
             days.append(date_time+timedelta(days=i))
-
+        response = {}
         client = User.objects.get(email=request.session['selected_client'])
         fields = TrackingTextField.objects.filter(id__in=field_ids).order_by('id')
-        print(fields)
+        print(datetime.now())
+        if fields[0] in MyFitnessPalFields.objects.get(id=1).fields.all():
+            try:
+                mfp_details = MyFitnessPal.objects.get(user=client)
+            except MyFitnessPal.DoesNotExist:
+                response['error'] = "My Fitness Pal log in for " +client.first_name + " " +client.last_name + " not found!"
+                JsonResponse(response)
+            try:
+                mfpclient = mfp.Client(mfp_details.username)
+            except:
+                response['error'] = "My Fitness Pal log in for " +client.first_name + " " +client.last_name + " incorrect!"
+                JsonResponse(response)
+            for day in days:
+                values = fields[0].values.filter(date=day)
+                if len(values)==0 and day < datetime.now().replace(hour=0, minute=0, second=0, microsecond=0):
+                    
+                    mfp_fields = MyFitnessPalFields.objects.get(id=1).fields.all().order_by('id')
+                    
+
+                    data=mfpclient.get_date(day.year,day.month,day.day)
+                    print(data)
+                    try:
+                        calories = TrackingTextValue(
+                            value=data.totals['calories'],
+                            client=client,
+                            field_id=mfp_fields[0].id,
+                            date=day
+                        )
+                        calories.save()
+                        fields[0].values.add(calories)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+                    try:
+                        protein = TrackingTextValue(
+                            value=data.totals['protein'],
+                            client=client,
+                            field_id=mfp_fields[1].id,
+                            date=day
+                        )
+                        protein.save()
+                        fields[1].values.add(protein)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+                    try:
+                        carbs = TrackingTextValue(
+                            value=data.totals['carbohydrates'],
+                            client=client,
+                            field_id=mfp_fields[2].id,
+                            date=day
+                        )
+                        carbs.save()
+                        fields[2].values.add(carbs)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+                    try:
+                        fat = TrackingTextValue(
+                            value=data.totals['fat'],
+                            client=client,
+                            field_id=mfp_fields[3].id,
+                            date=day
+                        )
+                        fat.save()
+                        fields[3].values.add(fat)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+                    try:
+                        sodium = TrackingTextValue(
+                            value=data.totals['sodium'],
+                            client=client,
+                            field_id=mfp_fields[4].id,
+                            date=day
+                        )
+                        sodium.save()
+                        fields[4].values.add(sodium)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+                    try:
+                        sugar = TrackingTextValue(
+                            value=data.totals['sugar'],
+                            client=client,
+                            field_id=mfp_fields[5].id,
+                            date=day
+                        )
+                        sugar.save()
+                        fields[5].values.add(sugar)
+                    except KeyError:
+                        print(KeyError)
+                        pass
+
+        # print(fields)
         # for group in groups:
         #     for field in group.textfields.filter(clientToggle=client):
         # if field.name == option:
+        
         data = []
         y_axis = []
         data_y_pos = []
         for field in fields:
+
+
             data_values = []
             for date in days:
                 try:
@@ -127,7 +224,7 @@ def getGraphData(request):
                     value_pos.append('0')
             data_y_pos.append(value_pos)
 
-        response = {}
+        
 
         response['datavals']= data
         response['y_axis'] = y_axis

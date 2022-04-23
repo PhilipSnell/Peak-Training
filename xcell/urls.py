@@ -14,7 +14,8 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('signup/', Signup),
     path('signup/<str:trainer>/', SignupClient, name='signup_client'),
-    path('clientsuccess/', Success, name='success_client')
+    path('clientsuccess/', Success, name='success_client'),
+    path('mfp/', Mfp, name='mfp_client')
 
 ]
 if settings.DEBUG:

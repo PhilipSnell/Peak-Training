@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 from django.contrib.postgres.fields import ArrayField
 
+import myfitnesspal
+
 
 class MyAccountManager(BaseUserManager):
     def create_user(self, email, username, first_name, last_name, password=None, confirm_password=None):
@@ -96,6 +98,9 @@ class Trainer(models.Model):
 
         return self.trainer.email
 
+class MyFitnessPal(models.Model):
+    username = models.CharField(max_length=30, unique=True)
+    user = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='myfitnesspal')
 
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
@@ -230,7 +235,9 @@ class TrackingGroup(models.Model):
     textfields = models.ManyToManyField(
         TrackingTextField, related_name='textfield', blank=True)
 
-
+class MyFitnessPalFields(models.Model):
+    fields = models.ManyToManyField(TrackingTextField, blank=True)
+    
 # class ClientConfig(models.Model):
 #     client = models.OneToOneField(Account, on_delete=models.CASCADE)
 #     groups = models.ManyToManyField(TrackingGroup, related_name='trackinggroup', blank=True)

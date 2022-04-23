@@ -381,8 +381,11 @@ function getGraphData() {
         fields.push($(this).attr('id'));
     })
     fields = JSON.stringify({ fields });
-    // console.log(fields);
-
+    
+    if ($('.select-selected').text()=="My Fitness Pal"){
+        waitAlert("fetching data from myfitnesspas, givuz a sec!", 6000);
+        $('.alertWait').slideDown(600);
+    }
     $.ajax({
         type: "POST",
         url: '/dashboard/getGraphData/',
@@ -395,11 +398,13 @@ function getGraphData() {
         success: function (data) {
             
             if (data['error']) {
+                $('.alertWait').slideUp(600);
                 tempAlert(data['error'], 4000, 0);
             } else {
                 data_vals = data['datavals'];
                 y_axis = data['y_axis'];
                 data_y_pos = data['data_y_pos'];
+                $('.alertWait').slideUp(600);
                 handleGraph();
                 content = document.querySelector(".graphContent");
                 ResizeSensor(content, function(){ 
@@ -436,6 +441,14 @@ function closeAllSelect(elmnt) {
 }
 
 document.addEventListener("click", closeAllSelect);
+
+// Alert popup
+function waitAlert(msg, duration) {
+    var el = document.createElement("div");
+    el.setAttribute("class", "alertWait");
+    el.innerHTML = msg;
+    document.body.appendChild(el);
+}
 
 // side options //
 

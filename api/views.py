@@ -12,6 +12,7 @@ from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
+import myfitnesspal as mfp
 
 User = get_user_model()
 
@@ -300,7 +301,35 @@ class TrackingValuesGet(APIView):
         return Response(serializer)
 
 
+class SyncMyFitnessPal(APIView):
+    authentication_classes = []  # disables authentication
+    permission_classes = []  # disables permission
+
+    def post(self, request):
+        email_lookup = request.data["username"]
+        user = User.objects.filter(email=email_lookup)
+        updateLastActive(user[0])
+        username = request.data["mfp-username"]
+        password = request.data["password"]
+        print(username)
+        print(password)
+        try:
+            myfitnesspal = MyFitnessPal.objects.get(user=user[0])
+            myfitnesspal.username=username
+            myfitnesspal.save()
+        except MyFitnessPal.DoesNotExist:
+            myfitnesspal = MyFitnessPal(user=user[0], username=username)
+            myfitnesspal.save()
+        
+        mfpclient = mfp.Client(myfitnesspal.username, password=password)
+        mfp.keyring_utils.store_password_in_keyring(username, password)
+        print(mfpclient.get_date(2022,4,19))
+
+        return Response()
+
+
 def imageDisplay(request, id):
     emp = get_object_or_404(ExerciseType, pk=id)
 
     return render(request, 'image_display.html', {'emp': emp})
+

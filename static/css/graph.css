@@ -283,3 +283,18 @@
     position: relative;
 }
 
+.alertWait{
+    display:none;
+    width: 20%;
+    margin-left: 47.5%;
+    /* height: 50px; */
+    position:absolute;
+    background-color:rgb(112, 112, 112);
+    color:#f1f1f1;
+    top: 50;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    line-height: 25px;
+  }
+

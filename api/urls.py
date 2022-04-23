@@ -20,4 +20,5 @@ urlpatterns = [
     path('groups/', TrackingData.as_view(), name='group_data'),
     path('trackingValsGet/', TrackingValuesGet.as_view(), name='tracking_vals_get'),
     path('trackingValsUpdate/', TrackingValuesUpdate.as_view(), name='tracking_vals_update'),
+    path('syncmfp/', SyncMyFitnessPal.as_view(), name='sync_mfp'),
 ]

@@ -31,4 +31,5 @@ admin.site.register(Account, AccountAdmin)
 admin.site.register(ExerciseType, ExerciseAdmin)
 admin.site.register(TrainingEntry)
 admin.site.register(Message)
+admin.site.register(MyFitnessPalFields)
 # Register your models here.
