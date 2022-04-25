@@ -11,4 +11,5 @@ django-bootstrap4
 django-bootstrap-modal-forms
 numpy
 keyring
+keyrings.alt
 myfitnesspal
