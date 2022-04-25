@@ -10,5 +10,5 @@ openpyxl
 django-bootstrap4
 django-bootstrap-modal-forms
 numpy
+keyring
 myfitnesspal
-keyring.alt
