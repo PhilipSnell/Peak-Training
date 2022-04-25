@@ -11,4 +11,4 @@ django-bootstrap4
 django-bootstrap-modal-forms
 numpy
 myfitnesspal
-secretstorage
+keyring.alt
