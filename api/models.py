@@ -173,6 +173,7 @@ class Week(models.Model):
     user = models.ForeignKey(
         Account, on_delete=models.CASCADE, related_name='WeekUser')
     isActive = models.BooleanField(default=False)
+    updated = models.BooleanField(default=False)
 
     def __str__(self):
         return "Phase " + str(self.phase) + " Week " + str(self.week)

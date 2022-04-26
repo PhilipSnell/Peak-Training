@@ -198,6 +198,8 @@ class TrainingData(APIView):
         for phase in phases:
             try:
                 activeWeek = phase.weeks.get(isActive=True)
+                activeWeek.updated = False
+                activeWeek.save()
                 trainingData = TrainingEntry.objects.filter(
                     user=user, phase=activeWeek.phase, week=activeWeek.week)
                 break
@@ -326,6 +328,33 @@ class SyncMyFitnessPal(APIView):
         print(mfpclient.get_date(2022,4,19))
 
         return Response()
+
+class CheckForUpdates(APIView):
+    def post(self, request):
+        email_lookup = request.data["username"]
+        try:
+            user = User.objects.get(email=email_lookup)
+        except User.DoesNotExist:
+            return Response()
+        
+        updateLastActive(user)
+        phases = Phase.objects.filter(user=user).order_by('-id')
+        for phase in phases:
+            try:
+                activeWeek = phase.weeks.get(isActive=True)
+                response = activeWeek.updated
+                response = {
+                    "update":response
+                }
+                break
+            except:
+                trainingData = None
+                print('active week not found')
+                return Response()
+
+        return Response(response)
+        
+
 
 
 def imageDisplay(request, id):

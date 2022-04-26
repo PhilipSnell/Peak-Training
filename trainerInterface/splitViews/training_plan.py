@@ -113,6 +113,9 @@ def addEntry(request):
             train_entry.save()
             day = Day.objects.get(phase=phase, week=week, day=day, user=user)
             day.entrys.add(train_entry)
+            week = Week.objects.get(week=train_entry.week,phase=train_entry.phase,user=train_entry.user)
+            week.updated = True
+            week.save()
             return render(request, 'trainerInterface/segments/addTrainingEntrySegment.html',
                           {'entry': train_entry})
 
@@ -131,6 +134,9 @@ def deleteEntry(request):
         try:
             train_entry = TrainingEntry.objects.get(id=id)
             train_entry.delete()
+            week = Week.objects.get(week=train_entry.week,phase=train_entry.phase,user=train_entry.user)
+            week.updated = True
+            week.save()
             response = {
                 'success': 'Entry deleted'  # response message
             }
@@ -153,6 +159,9 @@ def changeOrder(request):
                 exercise.order = order
                 exercise.save()
                 order += 1
+            week = Week.objects.get(week=exercise.week,phase=exercise.phase,user=exercise.user)
+            week.updated = True
+            week.save()
             response = {
                 'success': 'Exercise order updated!'  # response message
             }
@@ -182,6 +191,9 @@ def editEntry(request):
             train_entry.sets = sets
             train_entry.comment = comment
             train_entry.save()
+            week = Week.objects.get(week=train_entry.week,phase=train_entry.phase,user=train_entry.user)
+            week.updated = True
+            week.save()
             response = {
                 'success': 'Exercise updated!'
             }
@@ -213,6 +225,7 @@ def toggleActiveWeek(request):
                 email=request.session['selected_client']), phase=phaseNum)
             week = phase.weeks.get(week=weekNum)
             week.isActive = True
+            week.updated = True
             week.save()
             response = {
                 'success': 'This week is now active!'
@@ -308,6 +321,8 @@ def addDay(request):
                      user=user)
         newDay.save()
         week_selected.days.add(newDay)
+        week_selected.updated = True
+        week_selected.save()
         response = {
             'success': 'Day added succesfully!'
         }
@@ -415,6 +430,7 @@ def cloneWeek(request):
             copiedDay.save()
             copiedDays.append(copiedDay)
         weekTo.days.add(*copiedDays)
+        weekTo.updated = True
         weekTo.save()
         # except:
 
