@@ -1,16 +1,9 @@
 from datetime import datetime
-from multiprocessing import context
-
-from sqlalchemy import false, true
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAdminUser
-from rest_framework.permissions import AllowAny
-from rest_framework.decorators import api_view
 from .models import *
-from django.views.generic import DetailView
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth import get_user_model
 from django.utils.dateparse import parse_date
