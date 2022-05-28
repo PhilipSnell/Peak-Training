@@ -17,6 +17,12 @@ class ExerciseAdmin(admin.ModelAdmin):
     list_display = ("name", "description","image","video")
     search_fields = ("name","description")
 
+class TrainingEntryAdmin(admin.ModelAdmin):
+    list_display = ("exercise.name", "user", "id", "phase", "week", "day")
+    search_fields = ("exercise.name", "user", "id", "phase", "week", "day")
+
+class SetEntryAdmin(admin.ModelAdmin):
+    search_fields = ("t_id")
 
 admin.site.register(TrackingTextValue)
 admin.site.register(SetFeedback)

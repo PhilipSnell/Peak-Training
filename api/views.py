@@ -1,5 +1,7 @@
 from datetime import datetime
 from multiprocessing import context
+
+from sqlalchemy import false, true
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -307,27 +309,51 @@ class SyncMyFitnessPal(APIView):
     authentication_classes = []  # disables authentication
     permission_classes = []  # disables permission
 
+    def patch(self, request):
+        email_lookup = request.data["username"]
+        user = User.objects.get(email=email_lookup)
+        updateLastActive(user)
+        try:
+            myfitnesspal = MyFitnessPal.objects.get(user=user)
+            mfpclient = mfp.Client(myfitnesspal.username)
+            response = {
+                "sync_required":False
+            }
+        except:
+            response = {
+                "sync_required":True
+            }
+        return Response(response)
+
+
+
     def post(self, request):
         email_lookup = request.data["username"]
-        user = User.objects.filter(email=email_lookup)
-        updateLastActive(user[0])
+        user = User.objects.get(email=email_lookup)
         username = request.data["mfp-username"]
         password = request.data["password"]
         print(username)
         print(password)
         try:
-            myfitnesspal = MyFitnessPal.objects.get(user=user[0])
+            myfitnesspal = MyFitnessPal.objects.get(user=user)
             myfitnesspal.username=username
             myfitnesspal.save()
         except MyFitnessPal.DoesNotExist:
-            myfitnesspal = MyFitnessPal(user=user[0], username=username)
+            myfitnesspal = MyFitnessPal(user=user, username=username)
             myfitnesspal.save()
-        
-        mfpclient = mfp.Client(myfitnesspal.username, password=password)
-        mfp.keyring_utils.store_password_in_keyring(username, password)
-        print(mfpclient.get_date(2022,4,19))
+        try:
+            mfpclient = mfp.Client(username=username, password=password)
+            mfp.keyring_utils.store_password_in_keyring(username, password)
+            
+            response = {
+                "sync_complete":True
+            }
+        except:
+            response = {
+                "sync_complete":False
+            }
 
-        return Response()
+        return Response(response)
 
 class CheckForUpdates(APIView):
     def post(self, request):
