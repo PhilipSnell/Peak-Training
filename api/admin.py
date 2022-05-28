@@ -18,8 +18,7 @@ class ExerciseAdmin(admin.ModelAdmin):
     search_fields = ("name","description")
 
 class TrainingEntryAdmin(admin.ModelAdmin):
-    list_display = ("exercise.name", "user", "id", "phase", "week", "day")
-    search_fields = ("exercise.name", "user", "id", "phase", "week", "day")
+    search_fields = ("user", "id", "phase", "week", "day")
 
 class SetEntryAdmin(admin.ModelAdmin):
     search_fields = ("t_id")
