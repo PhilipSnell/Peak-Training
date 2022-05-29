@@ -111,7 +111,7 @@ class Set_Entry(models.Model):
 
     def __str__(self):
         exercise = ExerciseType.objects.get(id=self.e_id)
-        return exercise.name
+        return exercise.name + " " + str(self.t_id)
 
 
 class ExerciseType(models.Model):

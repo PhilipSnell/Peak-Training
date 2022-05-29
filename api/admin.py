@@ -21,7 +21,7 @@ class TrainingEntryAdmin(admin.ModelAdmin):
     search_fields = ("user", "id", "phase", "week", "day")
 
 class SetEntryAdmin(admin.ModelAdmin):
-    search_fields = ("t_id")
+    search_fields = ("t_id", "e_id")
 
 admin.site.register(TrackingTextValue)
 admin.site.register(SetFeedback)
