@@ -26,7 +26,7 @@ def getData(request):
             try: 
                 myfitnesspal = MyFitnessPal.objects.get(user=client)
                 if myfitnesspal.connected:
-                    admin = User.objects.get(email=admin@admin.com)
+                    admin = User.objects.get(email="admin@admin.com")
                     mfp_group = TrackingGroup.objects.filter(trainer=admin, name= "My Fitness Pal")
                     groups = groups + mfp_group
             except MyFitnessPal.DoesNotExist:
