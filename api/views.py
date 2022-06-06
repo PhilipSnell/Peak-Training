@@ -318,6 +318,22 @@ class SyncMyFitnessPal(APIView):
             }
         return Response(response)
 
+    def delete(self, request):
+        email_lookup = request.data["username"]
+        user = User.objects.get(email=email_lookup)
+        updateLastActive(user)
+        try:
+            myfitnesspal = MyFitnessPal.objects.get(user=user)
+            mfpclient = mfp.Client(myfitnesspal.username)
+            mfp.keyring_utils.delete_password_in_keyring(myfitnesspal.username)
+            response = {
+                "disconnected":True
+            }
+        except:
+            response = {
+                "disconnected":False
+            }
+        return Response(response)
 
 
     def post(self, request):
