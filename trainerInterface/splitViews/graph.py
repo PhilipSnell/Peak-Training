@@ -22,8 +22,17 @@ def getData(request):
 
         if "selected_client" in request.session:
             client = User.objects.get(email=request.session['selected_client'])
-            groups = TrackingGroup.objects.filter(
-                clientToggle=client)
+            groups = TrackingGroup.objects.filter(clientToggle=client)
+            try: 
+                myfitnesspal = MyFitnessPal.objects.get(user=client)
+                if myfitnesspal.connected:
+                    admin = User.objects.get(email=admin@admin.com)
+                    mfp_group = TrackingGroup.objects.filter(trainer=admin, name= "My Fitness Pal")
+                    groups = groups + mfp_group
+            except MyFitnessPal.DoesNotExist:
+                pass
+
+
             html_response = '<select>'
             for group in groups:
                 html_response = html_response+'<option value="' + \

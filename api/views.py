@@ -309,10 +309,14 @@ class SyncMyFitnessPal(APIView):
         try:
             myfitnesspal = MyFitnessPal.objects.get(user=user)
             mfpclient = mfp.Client(myfitnesspal.username)
+            myfitnesspal.connected = True
+            myfitnesspal.save()
             response = {
                 "sync_required":False
             }
         except:
+            myfitnesspal.connected = False
+            myfitnesspal.save()
             response = {
                 "sync_required":True
             }
@@ -326,6 +330,8 @@ class SyncMyFitnessPal(APIView):
             myfitnesspal = MyFitnessPal.objects.get(user=user)
             mfpclient = mfp.Client(myfitnesspal.username)
             mfp.keyring_utils.delete_password_in_keyring(myfitnesspal.username)
+            myfitnesspal.connected = False
+            myfitnesspal.save()
             response = {
                 "disconnected":True
             }
@@ -341,8 +347,6 @@ class SyncMyFitnessPal(APIView):
         user = User.objects.get(email=email_lookup)
         username = request.data["mfp-username"]
         password = request.data["password"]
-        print(username)
-        print(password)
         try:
             myfitnesspal = MyFitnessPal.objects.get(user=user)
             myfitnesspal.username=username
@@ -353,11 +357,14 @@ class SyncMyFitnessPal(APIView):
         try:
             mfpclient = mfp.Client(username=username, password=password)
             mfp.keyring_utils.store_password_in_keyring(username, password)
-            
+            myfitnesspal.connected = True      
+            myfitnesspal.save()            
             response = {
                 "sync_complete":True
             }
         except:
+            myfitnesspal.connected = False
+            myfitnesspal.save()
             response = {
                 "sync_complete":False
             }

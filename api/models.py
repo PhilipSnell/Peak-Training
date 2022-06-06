@@ -101,6 +101,7 @@ class Trainer(models.Model):
 class MyFitnessPal(models.Model):
     username = models.CharField(max_length=30, unique=True)
     user = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='myfitnesspal')
+    connected = models.BooleanField(default=False)
 
 class Set_Entry(models.Model):
     t_id = models.IntegerField(unique=True)
