@@ -83,8 +83,8 @@ def getGraphData(request):
                 JsonResponse(response)
             try:
                 mfpclient = mfp.Client(mfp_details.username)
-            except:
-                response['error'] = "My Fitness Pal log in for " +client.first_name + " " +client.last_name + " incorrect!"
+            except Exception as e:
+                response['error'] = str(e)
                 JsonResponse(response)
             for day in days:
                 values = fields[0].values.filter(date=day)
