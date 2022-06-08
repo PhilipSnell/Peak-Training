@@ -50,10 +50,9 @@ def getFields(request):
             client = User.objects.get(email=request.session['selected_client'])
 
             selected_group = request.GET.get('group', None)
-            print(selected_group)
             group = TrackingGroup.objects.get(name=selected_group)
 
-            fields = group.textfields.all().order_by('id')
+            fields = group.textfields.filter(clientToggle__in=[client]).order_by('id')
         return HttpResponse(render(request, 'trainerInterface/segments/graphgroupfields.html', {'fields': fields}))
         # html_response = ''
         #     for field in group.textfields.all():
