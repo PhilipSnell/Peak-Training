@@ -13,3 +13,4 @@ numpy
 keyring
 keyrings.alt
 myfitnesspal
+django-encrypted-model-fields

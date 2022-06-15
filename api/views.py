@@ -308,28 +308,31 @@ class SyncMyFitnessPal(APIView):
         updateLastActive(user)
         try:
             myfitnesspal = MyFitnessPal.objects.get(user=user)
-            mfpclient = mfp.Client(myfitnesspal.username)
+            mfpclient = mfp.Client(myfitnesspal.username, myfitnesspal.password)
             myfitnesspal.connected = True
             myfitnesspal.save()
             response = {
                 "sync_required":False
             }
         except:
-            myfitnesspal.connected = False
-            myfitnesspal.save()
+            try:
+                myfitnesspal.connected = False
+                myfitnesspal.save()
+            except:
+                pass
             response = {
                 "sync_required":True
             }
         return Response(response)
 
-    def delete(self, request):
+    def put(self, request):
+        print(request)
         email_lookup = request.data["username"]
         user = User.objects.get(email=email_lookup)
         updateLastActive(user)
         try:
             myfitnesspal = MyFitnessPal.objects.get(user=user)
-            mfpclient = mfp.Client(myfitnesspal.username)
-            mfp.keyring_utils.delete_password_in_keyring(myfitnesspal.username)
+            myfitnesspal.password = 1
             myfitnesspal.connected = False
             myfitnesspal.save()
             response = {
@@ -350,13 +353,13 @@ class SyncMyFitnessPal(APIView):
         try:
             myfitnesspal = MyFitnessPal.objects.get(user=user)
             myfitnesspal.username=username
+            myfitnesspal.password=password
             myfitnesspal.save()
         except MyFitnessPal.DoesNotExist:
-            myfitnesspal = MyFitnessPal(user=user, username=username)
+            myfitnesspal = MyFitnessPal(user=user, username=username, password=password)
             myfitnesspal.save()
         try:
             mfpclient = mfp.Client(username=username, password=password)
-            mfp.keyring_utils.store_password_in_keyring(username, password)
             myfitnesspal.connected = True      
             myfitnesspal.save()            
             response = {

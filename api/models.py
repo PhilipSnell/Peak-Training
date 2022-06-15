@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+from encrypted_model_fields.fields import EncryptedCharField
 
 from django.contrib.postgres.fields import ArrayField
 
@@ -100,6 +100,7 @@ class Trainer(models.Model):
 
 class MyFitnessPal(models.Model):
     username = models.CharField(max_length=30, unique=True)
+    password = EncryptedCharField(max_length=100)
     user = models.OneToOneField(Account, on_delete=models.CASCADE, related_name='myfitnesspal')
     connected = models.BooleanField(default=False)
 
