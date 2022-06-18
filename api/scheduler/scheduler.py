@@ -7,7 +7,7 @@ import sys
 # This is the function you want to schedule - add as many as you want and then register them in the start() function below
 def syncmfp():
     ...
-    print("syncing mfp accounts", file=sys.stdout)
+    print("syncing mfp accounts")
     ...
 
 
@@ -18,4 +18,4 @@ def start():
     scheduler.add_job(syncmfp, 'interval', minutes=1, name='clean_accounts', jobstore='default')
     register_events(scheduler)
     scheduler.start()
-    print("Scheduler started...", file=sys.stdout)
+    print("Scheduler started...")
