@@ -5,7 +5,7 @@ from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect
 import openpyxl
-
+from trainerInterface.views import is_ajax
 
 def exercises(request):
     request.session["href"] = '/dashboard/exercises/'
@@ -70,7 +70,7 @@ def exercises(request):
 
 
 def deleteExercise(request):
-    if request.is_ajax():
+    if is_ajax(request):
         try:
             id = request.POST.get('id', None)
             object = ExerciseType.objects.get(id=id)
@@ -88,7 +88,7 @@ def deleteExercise(request):
 
 def editExercise(request):
 
-    if request.is_ajax():
+    if is_ajax(request):
         id = request.POST.get('id', None)
         title = request.POST.get('title', None)
         url = request.POST.get('new_url', None)
@@ -125,7 +125,7 @@ def editExercise(request):
 
 def addExercise(request):
 
-    if request.is_ajax():
+    if is_ajax(request):
         title = request.POST.get('title', None)
         video = request.POST.get('video', None)
         description = request.POST.get('description', None)

@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from trainerInterface.views import processForm, processDate, getUserform
+from trainerInterface.views import processForm, processDate, getUserform, is_ajax
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect
@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 
 def trainprog(request):
     request.session["href"] = '/dashboard/trainprog/'
-    if request.is_ajax():
+    if is_ajax(request):
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
         if phase == None:
@@ -24,7 +24,7 @@ def trainprog(request):
 
 def getDayTableDataProg(request):
 
-    if request.is_ajax():
+    if is_ajax(request):
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
         client = request.POST.get('client', None)

@@ -14,3 +14,4 @@ keyring
 keyrings.alt
 myfitnesspal
 django-encrypted-model-fields
+django-q
