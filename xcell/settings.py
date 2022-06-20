@@ -27,7 +27,7 @@ SECRET_KEY = 'b57vq!@lb3)90c$&rn875b_%n8zoj#&w0a!l)k!8rsd=d0&t_1'
 FIELD_ENCRYPTION_KEY = os.environ.get('FIELD_ENCRYPTION_KEY', 'FTq7ht6cAT3s_-GlucPdBA9vZki-eOjjJMMbKoAp98w=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
