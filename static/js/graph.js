@@ -382,10 +382,6 @@ function getGraphData() {
     })
     fields = JSON.stringify({ fields });
     
-    if ($('.select-selected').text()=="My Fitness Pal"){
-        waitAlert("fetching data from myfitnesspal!", 6000);
-        $('.alertWait').slideDown(600);
-    }
     $.ajax({
         type: "POST",
         url: '/dashboard/getGraphData/',

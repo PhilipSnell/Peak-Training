@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'encrypted_model_fields',
-    'django_apscheduler',
+    'django_q',
 ]
 
 MIDDLEWARE = [
@@ -106,6 +106,10 @@ DATABASES = {
     }
 }
 
+Q_CLUSTER = {
+    "name": "scheduler",
+    "orm": "default",  # Use Django's ORM + database for broker
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

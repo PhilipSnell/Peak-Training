@@ -10,6 +10,8 @@ from django.utils.dateparse import parse_date
 
 User = get_user_model()
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def processDate(request):
     newdate = parse_date(json.loads(request.POST.get('date', None))["date"])
@@ -55,7 +57,7 @@ def dashboard(request):
         processForm(request)
 
     form = getUserform(request)
-    if request.is_ajax():
+    if is_ajax(request):
         return render(request, 'trainerInterface/dashboard-ajax.html', {'form': form})
     else:
         return render(request, 'trainerInterface/dashboard.html', {'form': form})

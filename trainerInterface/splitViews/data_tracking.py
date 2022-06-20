@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from api.models import *
 from trainerInterface.form import *
+from trainerInterface.views import is_ajax
 
 
 def dataTracking(request):
@@ -23,7 +24,7 @@ def dataTracking(request):
 
 def editGroup(request):
 
-    if request.is_ajax():
+    if is_ajax(request):
         groupId = request.POST.get('groupId', None)
         name = request.POST.get('name', None)
         fieldIds = json.loads(request.POST.get('fieldIds', None))['fieldIds']
@@ -85,7 +86,7 @@ def editGroup(request):
 
 def addGroup(request):
 
-    if request.is_ajax():
+    if is_ajax(request):
         name = request.POST.get('name', None)
         fieldnames = json.loads(request.POST.get(
             'fieldnames', None))["fieldnames"]
@@ -143,7 +144,7 @@ def addGroup(request):
 
 
 def toggleField(request):
-    if request.is_ajax():
+    if is_ajax(request):
         id = request.POST.get('id', None)
         setting = request.POST.get('setting', None)
 
@@ -167,7 +168,7 @@ def toggleField(request):
 
 
 def toggleGroup(request):
-    if request.is_ajax():
+    if is_ajax(request):
         id = request.POST.get('id', None)
         setting = request.POST.get('setting', None)
 

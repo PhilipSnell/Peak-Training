@@ -1,4 +1,4 @@
-from trainerInterface.views import processForm, processDate, getUserform
+from trainerInterface.views import processForm, processDate, getUserform, is_ajax
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect
@@ -6,7 +6,7 @@ from datetime import date
 
 
 def dailyTracking(request):
-    if request.is_ajax():
+    if is_ajax(request):
         newdate = date.today()
         return render(request, 'trainerInterface/dailyTracking.html', {'date': newdate})
 
@@ -16,7 +16,7 @@ def dailyTracking(request):
 # def dailyTracking(request):
 #     if request.method == "POST":
 #         processForm(request)
-#         if request.is_ajax():
+#         if is_ajax(request):
 #             processDate(request)
 
 #     if "selected_client" in request.session:
