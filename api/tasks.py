@@ -13,11 +13,9 @@ def sync_mfp():
         try:
             mfp_details = MyFitnessPal.objects.get(user=client)
             mfpclient = mfp.Client(mfp_details.username, mfp_details.password)
-
-            mfp_fields = MyFitnessPalFields.objects.get(id=1).fields.all().order_by('id')
             date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
             days = [date]
-            fields = MyFitnessPalFields.objects.get(id=1).fields.all()
+            fields = MyFitnessPalFields.objects.get(id=1).fields.all().order_by('id')
             for i in range(1, 7):
                 days.append(date-timedelta(days=i))
             for day in days:
@@ -25,14 +23,14 @@ def sync_mfp():
                 print(data)
                 try:
                     try:
-                        calories = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[0].id)
+                        calories = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[0].id)
                         calories.value = data.totals['calories']
                         calories.save()
                     except TrackingTextValue.DoesNotExist:
                         calories = TrackingTextValue(
                             value=data.totals['calories'],
                             client=client,
-                            field_id=mfp_fields[0].id,
+                            field_id=fields[0].id,
                             date=day
                         )
                         calories.save()
@@ -43,14 +41,14 @@ def sync_mfp():
                     pass
                 try:
                     try:
-                        protein = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[1].id)
+                        protein = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[1].id)
                         protein.value = data.totals['protein']
                         protein.save()
                     except TrackingTextValue.DoesNotExist:
                         protein = TrackingTextValue(
                             value=data.totals['protein'],
                             client=client,
-                            field_id=mfp_fields[1].id,
+                            field_id=fields[1].id,
                             date=day
                         )
                         protein.save()
@@ -61,14 +59,14 @@ def sync_mfp():
                     pass
                 try:
                     try:
-                        carbs = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[2].id)
-                        carbs.value = data.totals['carbs']
+                        carbs = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[2].id)
+                        carbs.value = data.totals['carbohydrates']
                         carbs.save()
                     except TrackingTextValue.DoesNotExist:
                         carbs = TrackingTextValue(
                             value=data.totals['carbohydrates'],
                             client=client,
-                            field_id=mfp_fields[2].id,
+                            field_id=fields[2].id,
                             date=day
                         )
                         carbs.save()
@@ -79,14 +77,14 @@ def sync_mfp():
                     pass
                 try:
                     try:
-                        fat = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[3].id)
+                        fat = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[3].id)
                         fat.value = data.totals['fat']
                         fat.save()
                     except TrackingTextValue.DoesNotExist:
                         fat = TrackingTextValue(
                             value=data.totals['fat'],
                             client=client,
-                            field_id=mfp_fields[3].id,
+                            field_id=fields[3].id,
                             date=day
                         )
                         fat.save()
@@ -97,14 +95,14 @@ def sync_mfp():
                     pass
                 try:
                     try:
-                        sodium = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[4].id)
+                        sodium = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[4].id)
                         sodium.value = data.totals['sodium']
                         sodium.save()
                     except TrackingTextValue.DoesNotExist:
                         sodium = TrackingTextValue(
                             value=data.totals['sodium'],
                             client=client,
-                            field_id=mfp_fields[4].id,
+                            field_id=fields[4].id,
                             date=day
                         )
                         sodium.save()
@@ -115,14 +113,14 @@ def sync_mfp():
                     pass
                 try:
                     try:
-                        sodium = TrackingTextValue.objects.get(client=client, date=day, field_id=mfp_fields[5].id)
-                        sodium.value = data.totals['sodium']
+                        sodium = TrackingTextValue.objects.get(client=client, date=day, field_id=fields[5].id)
+                        sodium.value = data.totals['sugar']
                         sodium.save()
                     except TrackingTextValue.DoesNotExist:
                         sugar = TrackingTextValue(
                             value=data.totals['sugar'],
                             client=client,
-                            field_id=mfp_fields[5].id,
+                            field_id=fields[5].id,
                             date=day
                         )
                         sugar.save()
