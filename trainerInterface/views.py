@@ -49,6 +49,11 @@ def home(request):
     form = getUserform(request)
     return render(request, 'trainerInterface/home.html', {'form': form})
 
+def privacy(request):
+    return render(request, 'registration/privacy.html')
+
+def appHelp(request):
+    return render(request, 'registration/help.html')
 
 def dashboard(request):
     if request.session["href"] is None:

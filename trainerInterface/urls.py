@@ -14,6 +14,8 @@ urlpatterns = [
 
 
     path('', login_required(home), name='home'),
+    path('privacy/', privacy, name='privacy'),
+    path('help/', appHelp, name='help'),
     path('dashboard/', login_required(dashboard), name='dashboard'),
     path('dashboard/exercises/', login_required(exercises), name='exercises'),
     path('dashboard/trainplan/', login_required(trainplan), name='trainplan'),
