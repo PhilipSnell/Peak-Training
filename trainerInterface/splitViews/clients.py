@@ -1,4 +1,3 @@
-from trainerInterface.views import processForm, processDate, getUserform
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect

@@ -297,6 +297,7 @@ $('.submit-edit-button').on('click', function (f) {
 
             name: $('.edit-group-name-' + activeindex).val(),
             groupId: $('.edit-group-name-' + activeindex).attr('id'),
+            sessionId: sessionStorage.getItem("session_id"),
             fieldIds: fieldIds,
             fieldnames: fieldnames,
             classifications: classifications,

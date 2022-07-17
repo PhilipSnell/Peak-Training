@@ -25,6 +25,7 @@ def dataTracking(request):
 def editGroup(request):
 
     if is_ajax(request):
+        sessionId = request.POST.get('sessionId', None)
         groupId = request.POST.get('groupId', None)
         name = request.POST.get('name', None)
         fieldIds = json.loads(request.POST.get('fieldIds', None))['fieldIds']
@@ -56,7 +57,7 @@ def editGroup(request):
                 if toggle == 'True':
                     new_field.save()
                     new_field.clientToggle.add(User.objects.get(
-                        email=request.session['selected_client']))
+                        email=request.session[sessionId + '_selected_client']))
 
                 new_field.save()
                 editGroup.textfields.add(new_field)
@@ -69,10 +70,10 @@ def editGroup(request):
                 editField.name = fieldname
                 if toggle == 'True':
                     editField.clientToggle.add(User.objects.get(
-                        email=request.session['selected_client']))
+                        email=request.session[sessionId + '_selected_client']))
                 else:
                     editField.clientToggle.remove(User.objects.get(
-                        email=request.session['selected_client']))
+                        email=request.session[sessionId + '_selected_client']))
                 if fieldselect == 'text':
                     editField.type = False
                 else:

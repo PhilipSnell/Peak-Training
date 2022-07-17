@@ -2,7 +2,7 @@ from cmath import inf
 import json
 from urllib import response
 from django.http import HttpResponse, JsonResponse
-from trainerInterface.views import processForm, processDate, getUserform, is_ajax
+from trainerInterface.views import is_ajax
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect

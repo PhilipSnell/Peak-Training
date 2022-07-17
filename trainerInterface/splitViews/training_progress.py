@@ -1,8 +1,8 @@
 from django.http import JsonResponse
-from trainerInterface.views import processForm, processDate, getUserform, is_ajax
+from trainerInterface.views import is_ajax
 from api.models import *
 from trainerInterface.form import *
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 
 
 def trainprog(request):
