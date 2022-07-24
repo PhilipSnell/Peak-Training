@@ -2,7 +2,9 @@ function getPhaseDropdown() {
     $.ajax({
         type: "GET",
         url: '/dashboard/phaseDropdown/',
-        data: {},
+        data: {
+            session_id: sessionStorage.getItem("session_id"),
+        },
         success: function (data) {
             $('.custom-select-phase').html(data);
             handleDropdown('custom-select-phase');
@@ -29,6 +31,7 @@ function getWeekDropdown() {
         type: "GET",
         url: '/dashboard/weekDropdown/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase
         },
         success: function (data) {
@@ -81,6 +84,7 @@ function handleDropdown(target) {
                             type: "POST",
                             url: "/dashboard/addPhase/",
                             data: {
+                                session_id: sessionStorage.getItem("session_id"),
                                 csrfmiddlewaretoken: csrf_token,
                                 dataType: "json",
                             },
@@ -103,6 +107,7 @@ function handleDropdown(target) {
                             type: "POST",
                             url: "/dashboard/addWeek/",
                             data: {
+                                session_id: sessionStorage.getItem("session_id"),
                                 phase: selectedPhase,
                                 csrfmiddlewaretoken: csrf_token,
                                 dataType: "json",

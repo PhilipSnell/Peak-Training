@@ -9,9 +9,10 @@ User = get_user_model()
 class UserForm(forms.Form):
     selected_client = forms.ModelChoiceField(queryset=None, label="", widget=forms.Select(
         attrs={'onchange': 'this.form.submit();', 'class': 'dropdown', 'name': "change_client"}))
-
+    
+    session_id = forms.CharField(max_length=6, label="", widget=forms.TextInput(attrs={'style': 'display:none'}))
     class Meta:
-        model = User# Please use CamelCase when defining model class name
+        model = User
         fields = ['email']
 
     def __init__(self, *args, **kwargs):
@@ -28,7 +29,7 @@ class AddExercise(forms.Form):
     video = forms.URLField()
 
     class Meta:
-        model = ExerciseType# Please use CamelCase when defining model class name
+        model = ExerciseType
         fields = ['name', 'description', 'image', 'video']
     def __init__(self, *args, **kwargs):
         super(AddExercise, self).__init__(*args, **kwargs)

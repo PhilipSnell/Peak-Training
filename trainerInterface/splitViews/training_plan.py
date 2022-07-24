@@ -1,5 +1,5 @@
 from urllib import response
-from trainerInterface.views import processForm, processDate, getUserform, is_ajax
+from trainerInterface.views import is_ajax
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect
@@ -9,9 +9,10 @@ import json
 
 def phaseDropdown(request):
     if is_ajax(request):
-        if "selected_client" in request.session:
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
             phases = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']))
+                email=request.session[session_id+'_selected_client']))
             html_response = '<select><option value="0" title="add phase">+</option>'
 
             for phase in phases.order_by('-phase'):
@@ -25,9 +26,10 @@ def phaseDropdown(request):
 def weekDropdown(request):
     if is_ajax(request):
         phase = request.GET.get('phase', None)
-        if "selected_client" in request.session:
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
             phase = Phase.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase)
+                email=request.session[session_id+'_selected_client']), phase=phase)
             weeks = phase.weeks.all()
 
             html_response = '<select><option value="0" title="add week">+</option>'
@@ -43,10 +45,11 @@ def getDays(request):
     if is_ajax(request):
         phase = request.GET.get('phase', None)
         week = request.GET.get('week', None)
-        if "selected_client" in request.session:
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
             try:
                 phase = Phase.objects.get(user=User.objects.get(
-                    email=request.session['selected_client']), phase=phase)
+                    email=request.session[session_id+'_selected_client']), phase=phase)
                 week = phase.weeks.get(week=week)
                 days = week.days.all().order_by('day')
             except:
@@ -67,12 +70,13 @@ def getDays(request):
 def trainplan(request):
 
     if is_ajax(request):
-        if "selected_client" in request.session:
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
             phases = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']))
+                email=request.session[session_id+'_selected_client']))
             phase = phases.order_by('-phase')[0]
             week = Week.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase.phase).order_by('-week')[0]
+                email=request.session[session_id+'_selected_client']), phase=phase.phase).order_by('-week')[0]
             days = week.days.all()
         else:
             phases = None
@@ -87,7 +91,8 @@ def trainplan(request):
 
 
 def addEntry(request):
-    user = User.objects.get(email=request.session['selected_client'])
+    session_id = request.GET.get('session_id', None)
+    user = User.objects.get(email=request.session[session_id+'_selected_client'])
     if is_ajax(request):
         phase = request.GET.get('phase', None)
         week = request.GET.get('week', None)
@@ -209,9 +214,10 @@ def toggleActiveWeek(request):
     if is_ajax(request):
         phaseNum = request.POST.get('phase', None)
         weekNum = request.POST.get('week', None)
+        session_id = request.POST.get('session_id', None)
         try:
             allPhases = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']))
+                email=request.session[session_id+'_selected_client']))
             for phase in allPhases:
                 try:
                     weeks = phase.weeks.all()
@@ -222,7 +228,7 @@ def toggleActiveWeek(request):
                     print("active week not found")
 
             phase = Phase.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phaseNum)
+                email=request.session[session_id+'_selected_client']), phase=phaseNum)
             week = phase.weeks.get(week=weekNum)
             week.isActive = True
             week.updated = True
@@ -242,7 +248,8 @@ def toggleActiveWeek(request):
 def addPhase(request):
     if is_ajax(request):
         try:
-            user = User.objects.get(email=request.session['selected_client'])
+            session_id = request.POST.get('session_id', None)
+            user = User.objects.get(email=request.session[session_id+'_selected_client'])
             objects = Phase.objects.filter(user=user)
             currPhase = 0
             for phase in objects:
@@ -274,7 +281,8 @@ def addWeek(request):
 
         try:
             phase = request.POST.get('phase', None)
-            user = User.objects.get(email=request.session['selected_client'])
+            session_id = request.POST.get('session_id', None)
+            user = User.objects.get(email=request.session[session_id+'_selected_client'])
             selected_phase = Phase.objects.get(phase=phase, user=user)
             objects = Week.objects.filter(phase=phase, user=user)
             currWeek = 0
@@ -306,7 +314,8 @@ def addDay(request):
         # try:
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
-        user = User.objects.get(email=request.session['selected_client'])
+        session_id = request.POST.get('session_id', None)
+        user = User.objects.get(email=request.session[session_id+'_selected_client'])
         week_selected = Week.objects.get(user=user, phase=phase, week=week)
         objects = Day.objects.filter(phase=phase, week=week, user=user)
 
@@ -340,11 +349,12 @@ def getDayTableData(request):
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
         client = request.POST.get('client', None)
-        if "selected_client" in request.session and client == None:
+        session_id = request.POST.get('session_id', None)
+        if session_id + "_selected_client" in request.session and (client == '' or client==None):
             week = Week.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase, week=week)
+                email=request.session[session_id+'_selected_client']), phase=phase, week=week)
             days = week.days.all().order_by('day')
-        elif client != None:
+        elif client != '' and client != None:
             client = client.split()
             week = Week.objects.get(user=User.objects.get(
                 first_name=client[0], last_name=client[1]), phase=phase, week=week)
@@ -378,7 +388,8 @@ def getClonePhases(request):
 
 
 def cloneWeek(request):
-    user = User.objects.get(email=request.session['selected_client'])
+    session_id = request.POST.get('session_id', None)
+    user = User.objects.get(email=request.session[session_id+'_selected_client'])
 
     if is_ajax(request):
         client_from = request.POST.get('selected_client', None).split()
@@ -442,11 +453,12 @@ def checkActiveWeek(request):
         'false': 'false'
     }
     if is_ajax(request):
+        session_id = request.POST.get('session_id', None)
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
 
         week = Week.objects.get(user=User.objects.get(
-            email=request.session['selected_client']), week=week, phase=phase)
+            email=request.session[session_id+'_selected_client']), week=week, phase=phase)
 
         if (week.isActive):
             response = {

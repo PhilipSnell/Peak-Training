@@ -45,6 +45,7 @@ function monitorToggles() {
             data: {
                 id: id,
                 setting: setting,
+                session_id: sessionStorage.getItem("session_id"),
                 csrfmiddlewaretoken: csrf_token,
                 dataType: "json",
             },
@@ -94,6 +95,7 @@ function monitorGroupToggles() {
             data: {
                 id: id,
                 setting: setting,
+                session_id: sessionStorage.getItem("session_id"),
                 csrfmiddlewaretoken: csrf_token,
                 dataType: "json",
             },
@@ -236,6 +238,7 @@ $('.add-group-form').on('submit', function (e) {
         data: {
 
             name: $('#groupname').val(),
+            session_id: sessionStorage.getItem("session_id"),
             fieldnames: fieldnames,
             classifications: classifications,
             toggles: toggles,
@@ -297,6 +300,7 @@ $('.submit-edit-button').on('click', function (f) {
 
             name: $('.edit-group-name-' + activeindex).val(),
             groupId: $('.edit-group-name-' + activeindex).attr('id'),
+            session_id: sessionStorage.getItem("session_id"),
             fieldIds: fieldIds,
             fieldnames: fieldnames,
             classifications: classifications,

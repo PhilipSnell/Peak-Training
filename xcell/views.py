@@ -70,7 +70,7 @@ def Success(request):
     return render(request, 'registration/success.html')
 
 def Mfp(request):
-    user=User.objects.get(email=request.session['selected_client'])
+    user=User.objects.get(email=request.session[session_id+'_selected_client'])
     mfp_details = MyFitnessPal.objects.get(user=user)
     client = mfp.Client(mfp_details.username)
     vals= client.get_date(2022,4,19)

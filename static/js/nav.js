@@ -1,6 +1,25 @@
 
 
 $(document).ready(function () {
+
+    var session_id = sessionStorage.getItem("session_id");
+    if ( session_id == null){
+        session_id = makeid(6);
+        sessionStorage.setItem("session_id", session_id);
+    }
+    $("#id_session_id").val(session_id);
+
+    function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * 
+     charactersLength));
+       }
+       return result;
+    }
+    
     function loadPreviousNav() {
         prev_nav_link = $(`.nav-link[href="${previousHref}"]`);
         if (typeof prev_nav_link.attr('href') !== 'undefined') {
@@ -24,7 +43,9 @@ $(document).ready(function () {
                 $.ajax({
                     type: "GET",
                     url: prev_nav_link.attr('href'),
-                    data: {},
+                    data: {
+                        session_id: sessionStorage.getItem("session_id"),
+                    },
                     success: function (data) {
                         $(".content-backing").html(data)
                     }
@@ -57,7 +78,9 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: nav_link.attr('href'),
-                data: {},
+                data: {
+                    session_id: sessionStorage.getItem("session_id"),
+                },
                 success: function (data) {
                     $(".content-backing").html(data)
                 }

@@ -2,7 +2,7 @@ from cmath import inf
 import json
 from urllib import response
 from django.http import HttpResponse, JsonResponse
-from trainerInterface.views import processForm, processDate, getUserform, is_ajax
+from trainerInterface.views import is_ajax
 from api.models import *
 from trainerInterface.form import *
 from django.shortcuts import render, redirect
@@ -22,9 +22,10 @@ def graphTracking(request):
 
 def getData(request):
     if is_ajax(request):
-
-        if "selected_client" in request.session:
-            client = User.objects.get(email=request.session['selected_client'])
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
+            
+            client = User.objects.get(email=request.session[session_id+'_selected_client'])
             groups = TrackingGroup.objects.filter(clientToggle=client)
             try: 
                 myfitnesspal = MyFitnessPal.objects.get(user=client)
@@ -48,26 +49,22 @@ def getData(request):
 def getFields(request):
     if is_ajax(request):
 
-        if "selected_client" in request.session:
-
-            client = User.objects.get(email=request.session['selected_client'])
+        session_id = request.GET.get('session_id', None)
+        if session_id + "_selected_client" in request.session:
+            client = User.objects.get(email=request.session[session_id+'_selected_client'])
 
             selected_group = request.GET.get('group', None)
             group = TrackingGroup.objects.get(name=selected_group)
 
             fields = group.textfields.filter(clientToggle__in=[client]).order_by('id')
         return HttpResponse(render(request, 'trainerInterface/segments/graphgroupfields.html', {'fields': fields}))
-        # html_response = ''
-        #     for field in group.textfields.all():
-        #         html_response = html_response+'<div class="group-field">'+field.name+'</div>'
-
-        # return HttpResponse(html_response)
 
 
 def getGraphData(request):
     if is_ajax(request):
         # try:
         field_ids = json.loads(request.POST.get('fields', None))["fields"]
+        session_id = request.POST.get('session_id', None)
         # print(field_ids)
         date = request.POST.get('date', None)
         date_time = datetime.strptime(date, '%d/%m/%Y')
@@ -75,7 +72,7 @@ def getGraphData(request):
         for i in range(1, 7):
             days.append(date_time+timedelta(days=i))
         response = {}
-        client = User.objects.get(email=request.session['selected_client'])
+        client = User.objects.get(email=request.session[session_id+'_selected_client'])
         fields = TrackingTextField.objects.filter(id__in=field_ids).order_by('id')
         # print(fields)
         data = []
