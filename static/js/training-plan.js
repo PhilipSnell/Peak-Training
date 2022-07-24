@@ -58,6 +58,7 @@ function tempAcceptAlert(msg) {
             type: "POST",
             url: "dashboard/toggleWeek/",
             data: {
+                session_id: sessionStorage.getItem("session_id"),
                 phase: selectedPhase,
                 week: selectedWeek,
                 csrfmiddlewaretoken: csrf_token,
@@ -160,6 +161,7 @@ $('#addEntryForm').on('submit', function (e) {
         type: "GET",
         url: "/dashboard/addentry/",
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: phase,
             week: week,
             day: day,
@@ -231,7 +233,9 @@ function getPhaseDropdown() {
     $.ajax({
         type: "GET",
         url: '/dashboard/phaseDropdown/',
-        data: {},
+        data: {
+            session_id: sessionStorage.getItem("session_id"),
+        },
         success: function (data) {
             $('.custom-select-phase').html(data);
             handleDropdown('custom-select-phase');
@@ -252,6 +256,7 @@ function updateTableTitle() {
         type: "POST",
         url: '/dashboard/checkActiveWeek/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase,
             week: selectedWeek,
             csrfmiddlewaretoken: csrf_token,
@@ -283,6 +288,7 @@ function getWeekDropdown() {
         type: "GET",
         url: '/dashboard/weekDropdown/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase
         },
         success: function (data) {
@@ -343,6 +349,7 @@ function handleDropdown(target) {
                             type: "POST",
                             url: "/dashboard/addPhase/",
                             data: {
+                                session_id: sessionStorage.getItem("session_id"),
                                 csrfmiddlewaretoken: csrf_token,
                                 dataType: "json",
                             },
@@ -365,6 +372,7 @@ function handleDropdown(target) {
                             type: "POST",
                             url: "/dashboard/addWeek/",
                             data: {
+                                session_id: sessionStorage.getItem("session_id"),
                                 phase: selectedPhase,
                                 csrfmiddlewaretoken: csrf_token,
                                 dataType: "json",
@@ -427,8 +435,9 @@ function getDays() {
         type: "GET",
         url: '/dashboard/getDays/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase,
-            week: selectedWeek
+            week: selectedWeek,
         },
         success: function (data) {
             $('.day-selector-wrapper').html(data);
@@ -443,6 +452,7 @@ function getDayData() {
         type: "POST",
         url: '/dashboard/getDayData/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase,
             week: selectedWeek,
             csrfmiddlewaretoken: csrf_token,
@@ -471,6 +481,7 @@ function monitorAddDay() {
             type: "POST",
             url: "/dashboard/addDay/",
             data: {
+                session_id: sessionStorage.getItem("session_id"),
                 phase: selectedPhase,
                 week: selectedWeek,
                 csrfmiddlewaretoken: csrf_token,
@@ -915,6 +926,7 @@ function monitorClientClick() {
                 type: "POST",
                 url: "/dashboard/getClonePhases/",
                 data: {
+                    session_id: sessionStorage.getItem("session_id"),
                     selected_client: selected_client,
                     csrfmiddlewaretoken: csrf_token,
                     dataType: "json",
@@ -988,6 +1000,7 @@ function getDayPreview(phase, week) {
         type: "POST",
         url: '/dashboard/getDayData/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: phase,
             week: week,
             client: selected_client,
@@ -1052,6 +1065,7 @@ function cloneConfirmation(phase, week) {
             type: "POST",
             url: "/dashboard/cloneWeek/",
             data: {
+                session_id: sessionStorage.getItem("session_id"),
                 phaseTo: selectedPhase,
                 weekTo: selectedWeek,
                 phaseFrom: phase,

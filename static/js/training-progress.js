@@ -34,6 +34,7 @@ function getDays() {
         type: "GET",
         url: '/dashboard/getDays/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase,
             week: selectedWeek,
             progress: 'true',
@@ -51,6 +52,7 @@ function getDayData() {
         type: "POST",
         url: '/dashboard/getDayDataProg/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             phase: selectedPhase,
             week: selectedWeek,
             csrfmiddlewaretoken: csrf_token,
@@ -77,6 +79,7 @@ function monitorAddDay() {
             type: "POST",
             url: "/dashboard/addDay/",
             data: {
+                session_id: sessionStorage.getItem("session_id"),
                 phase: selectedPhase,
                 week: selectedWeek,
                 csrfmiddlewaretoken: csrf_token,

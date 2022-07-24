@@ -9,8 +9,8 @@ from trainerInterface.views import is_ajax
 
 def dataTracking(request):
     request.session["href"] = '/dashboard/dataTracking/'
-
-    if "selected_client" in request.session:
+    session_id = request.GET.get('session_id', None)
+    if session_id + "_selected_client" in request.session:
         currUserID = request.user.id
         groups = TrackingGroup.objects.filter(trainer__id__in=[1, currUserID])
     else:
@@ -19,13 +19,13 @@ def dataTracking(request):
     addGroupForm = GroupAddForm()
     addFieldForm = GroupFieldForm()
     return render(request, 'trainerInterface/dataTracking.html', {'groups': groups, 'addGroupForm':
-                                                                  addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session['selected_client']})
+                                                                  addGroupForm, 'addFieldForm': addFieldForm, 'selected_client': request.session[session_id+'_selected_client']})
 
 
 def editGroup(request):
 
     if is_ajax(request):
-        sessionId = request.POST.get('sessionId', None)
+        session_id = request.POST.get('session_id', None)
         groupId = request.POST.get('groupId', None)
         name = request.POST.get('name', None)
         fieldIds = json.loads(request.POST.get('fieldIds', None))['fieldIds']
@@ -57,7 +57,7 @@ def editGroup(request):
                 if toggle == 'True':
                     new_field.save()
                     new_field.clientToggle.add(User.objects.get(
-                        email=request.session[sessionId + '_selected_client']))
+                        email=request.session[session_id + '_selected_client']))
 
                 new_field.save()
                 editGroup.textfields.add(new_field)
@@ -70,10 +70,10 @@ def editGroup(request):
                 editField.name = fieldname
                 if toggle == 'True':
                     editField.clientToggle.add(User.objects.get(
-                        email=request.session[sessionId + '_selected_client']))
+                        email=request.session[session_id + '_selected_client']))
                 else:
                     editField.clientToggle.remove(User.objects.get(
-                        email=request.session[sessionId + '_selected_client']))
+                        email=request.session[session_id + '_selected_client']))
                 if fieldselect == 'text':
                     editField.type = False
                 else:
@@ -89,6 +89,7 @@ def addGroup(request):
 
     if is_ajax(request):
         name = request.POST.get('name', None)
+        session_id = request.POST.get('session_id', None)
         fieldnames = json.loads(request.POST.get(
             'fieldnames', None))["fieldnames"]
         fieldSelects = json.loads(request.POST.get(
@@ -112,7 +113,7 @@ def addGroup(request):
                 if toggle == 'True':
                     new_field.save()
                     new_field.clientToggle.add(User.objects.get(
-                        email=request.session['selected_client']))
+                        email=request.session[session_id+'_selected_client']))
 
                 new_field.save()
             else:
@@ -125,7 +126,7 @@ def addGroup(request):
                 if toggle == 'True':
                     new_field.save()
                     new_field.clientToggle.add(User.objects.get(
-                        email=request.session['selected_client']))
+                        email=request.session[session_id+'_selected_client']))
                 new_field.save()
             new_group.textfields.add(new_field)
             new_group.save()
@@ -134,7 +135,7 @@ def addGroup(request):
                 trainer__id__in=[1, currUserID])
 
         print("saved")
-        return render(request, 'trainerInterface/segments/newGroup.html', {'group': new_group, 'selected_client': request.session['selected_client'], 'length': len(groups)-1})
+        return render(request, 'trainerInterface/segments/newGroup.html', {'group': new_group, 'selected_client': request.session[session_id+'_selected_client'], 'length': len(groups)-1})
 
         # except:
         #     print("not saved")
@@ -148,8 +149,8 @@ def toggleField(request):
     if is_ajax(request):
         id = request.POST.get('id', None)
         setting = request.POST.get('setting', None)
-
-        user = User.objects.get(email=request.session['selected_client'])
+        session_id = request.POST.get('session_id', None)
+        user = User.objects.get(email=request.session[session_id+'_selected_client'])
         field = TrackingTextField.objects.get(id=id)
         if setting == 'on':
             field.clientToggle.add(user)
@@ -172,8 +173,8 @@ def toggleGroup(request):
     if is_ajax(request):
         id = request.POST.get('id', None)
         setting = request.POST.get('setting', None)
-
-        user = User.objects.get(email=request.session['selected_client'])
+        session_id = request.POST.get('session_id', None)
+        user = User.objects.get(email=request.session[session_id+'_selected_client'])
         field = TrackingGroup.objects.get(id=id)
         if setting == 'on':
             field.clientToggle.add(user)

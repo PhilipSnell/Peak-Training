@@ -7,17 +7,19 @@ from django.shortcuts import render
 
 def trainprog(request):
     request.session["href"] = '/dashboard/trainprog/'
+    session_id = request.GET.get('session_id', None)
     if is_ajax(request):
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
+        
         if phase == None:
             phase = Phase.objects.filter(user=User.objects.get(
-                email=request.session['selected_client'])).order_by('-phase')[0]
+                email=request.session[session_id+'_selected_client'])).order_by('-phase')[0]
             week = Week.objects.filter(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase.phase).order_by('-week')[0]
+                email=request.session[session_id+'_selected_client']), phase=phase.phase).order_by('-week')[0]
         else:
             week = Week.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase, week=week)
+                email=request.session[session_id+'_selected_client']), phase=phase, week=week)
 
         return render(request, 'trainerInterface/trainProg.html', {'days': week.days.all().order_by('day')})
 
@@ -28,9 +30,10 @@ def getDayTableDataProg(request):
         phase = request.POST.get('phase', None)
         week = request.POST.get('week', None)
         client = request.POST.get('client', None)
-        if "selected_client" in request.session and client == None:
+        session_id = request.POST.get('session_id', None)
+        if session_id + "_selected_client" in request.session and client == None:
             week = Week.objects.get(user=User.objects.get(
-                email=request.session['selected_client']), phase=phase, week=week)
+                email=request.session[session_id+'_selected_client']), phase=phase, week=week)
             days = week.days.all()
         elif client != None:
             client = client.split()

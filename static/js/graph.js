@@ -101,12 +101,15 @@ function getFields(group) {
         type: "GET",
         url: '/dashboard/getfields/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             group: group,
         },
         success: function (data) {
             $('.field-options').html(data);
             $('.field-checkbox').each(function(index){
                 $(this).css({'accent-color':`${colors[index]}`});
+                $(this).css({'color':`${colors[index]}`});
+                $(this).css({'background-color':`${colors[index]}`});
             });
             getGraphData();
             $('.field-checkbox').on('click', function() {
@@ -124,6 +127,7 @@ function getData() {
         type: "GET",
         url: '/dashboard/getdata/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             date: formatted,
         },
         success: function (data) {
@@ -386,6 +390,7 @@ function getGraphData() {
         type: "POST",
         url: '/dashboard/getGraphData/',
         data: {
+            session_id: sessionStorage.getItem("session_id"),
             fields: fields,
             date: formatted,
             csrfmiddlewaretoken: csrf_token,

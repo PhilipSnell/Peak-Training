@@ -43,7 +43,9 @@ $(document).ready(function () {
                 $.ajax({
                     type: "GET",
                     url: prev_nav_link.attr('href'),
-                    data: {},
+                    data: {
+                        session_id: sessionStorage.getItem("session_id"),
+                    },
                     success: function (data) {
                         $(".content-backing").html(data)
                     }
@@ -76,7 +78,9 @@ $(document).ready(function () {
             $.ajax({
                 type: "GET",
                 url: nav_link.attr('href'),
-                data: {},
+                data: {
+                    session_id: sessionStorage.getItem("session_id"),
+                },
                 success: function (data) {
                     $(".content-backing").html(data)
                 }
