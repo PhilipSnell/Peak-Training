@@ -39,6 +39,7 @@ class TrainingSerializer(serializers.ModelSerializer):
                   'phase',
                   'week',
                   'day',
+                  'inPerson',
                   'reps',
                   'weight',
                   'sets',

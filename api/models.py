@@ -135,6 +135,7 @@ class TrainingEntry(models.Model):
     phase = models.IntegerField()
     week = models.IntegerField()
     day = models.IntegerField()
+    inPerson = models.BooleanField(default=False)
     reps = models.CharField(max_length=300)
     weight = models.CharField(max_length=300)
     sets = models.IntegerField()
