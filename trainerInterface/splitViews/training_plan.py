@@ -78,6 +78,16 @@ def trainplan(request):
             week = Week.objects.filter(user=User.objects.get(
                 email=request.session[session_id+'_selected_client']), phase=phase.phase).order_by('-week')[0]
             days = week.days.all()
+            for day in days:
+                entries = TrainingEntry.objects.filter(
+                    user=User.objects.get(email=request.session[session_id+'_selected_client']),
+                    phase = phase.phase,
+                    week=week.week,
+                    day=day.day
+                    )
+                for entry in entries:
+                    day.entrys.add(entry)
+                day.save()
         else:
             phases = None
             days = None
