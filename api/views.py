@@ -131,10 +131,9 @@ class SetEntry(APIView):
         if request.method == 'POST':
             data = {}
             data['response'] = ""
-            index = 1
+            data['errors'] = ""
             for item in request.data:
                 serializer = SetSerializer(data=item)
-                print(item.get("t_id"))
                 set_entry = Set_Entry.objects.filter(t_id=item.get("t_id"))
                 if set_entry:
                     set_entry = Set_Entry.objects.get(t_id=item.get("t_id"))
@@ -143,15 +142,15 @@ class SetEntry(APIView):
                     set_entry.weights = item.get("weights")
                     set_entry.save()
                     data['response'] = data['response'] + "entry " + \
-                        str(index) + " already exists, updated, "
+                        str(item.get("t_id")) + " has been updated, "
 
                 else:
                     if serializer.is_valid():
                         serializer.save()
-                        data['response'] = data['response'] + \
-                            "entry "+str(index) + " entered, "
+                        data['response'] = data['response'] + "entry " + \
+                            str(item.get("t_id")) + " has been entered"
                     else:
-                        data = serializer.errors
+                        data['errors'] += 'entry error - ' + str(item.get("t_id")) + str(serializer.errors)
 
                 serializer = SetFeedbackSerializer(data=item)
 
@@ -164,18 +163,24 @@ class SetEntry(APIView):
 
                         set_feedback.comment = item.get("comment")
                         set_feedback.save()
+                        data['response'] = data['response'] + "comment " + \
+                            str(item.get("t_id")) + " has been updated"
 
                     if item.get("difficulty") != "":
                         set_feedback.difficulty = item.get("difficulty")
                         set_feedback.save()
+                        data['response'] = data['response'] + "difficulty " + \
+                            str(item.get("t_id")) + " has been updated"
+                        
 
                 else:
                     if serializer.is_valid():
                         serializer.save()
+                        data['response'] = data['response'] + "feedback " + \
+                            str(item.get("t_id")) + " has been entered"
 
                     else:
-                        data = serializer.errors
-                index += 1
+                        data['errors'] += 'feedback error - ' + str(item.get("t_id")) + str(serializer.errors)
             print(data)
             return Response(data)
 
