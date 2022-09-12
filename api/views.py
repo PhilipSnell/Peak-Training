@@ -148,9 +148,9 @@ class SetEntry(APIView):
                     if serializer.is_valid():
                         serializer.save()
                         data['response'] = data['response'] + "entry " + \
-                            str(item.get("t_id")) + " has been entered"
+                            str(item.get("t_id")) + " has been entered, "
                     else:
-                        data['errors'] += 'entry error - ' + str(item.get("t_id")) + str(serializer.errors)
+                        data['errors'] += 'entry error - ' + str(item.get("t_id")) + str(serializer.errors)+ ', '
 
                 serializer = SetFeedbackSerializer(data=item)
 
@@ -164,23 +164,23 @@ class SetEntry(APIView):
                         set_feedback.comment = item.get("comment")
                         set_feedback.save()
                         data['response'] = data['response'] + "comment " + \
-                            str(item.get("t_id")) + " has been updated"
+                            str(item.get("t_id")) + " has been updated, "
 
                     if item.get("difficulty") != "":
                         set_feedback.difficulty = item.get("difficulty")
                         set_feedback.save()
                         data['response'] = data['response'] + "difficulty " + \
-                            str(item.get("t_id")) + " has been updated"
+                            str(item.get("t_id")) + " has been updated, "
                         
 
                 else:
                     if serializer.is_valid():
                         serializer.save()
                         data['response'] = data['response'] + "feedback " + \
-                            str(item.get("t_id")) + " has been entered"
+                            str(item.get("t_id")) + " has been entered, "
 
                     else:
-                        data['errors'] += 'feedback error - ' + str(item.get("t_id")) + str(serializer.errors)
+                        data['errors'] += 'feedback error - ' + str(item.get("t_id")) + str(serializer.errors)+ ', '
             print(data)
             return Response(data)
 
