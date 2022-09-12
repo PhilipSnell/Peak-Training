@@ -134,7 +134,7 @@ class SetEntry(APIView):
             index = 1
             for item in request.data:
                 serializer = SetSerializer(data=item)
-
+                print(item.get("t_id"))
                 set_entry = Set_Entry.objects.filter(t_id=item.get("t_id"))
                 if set_entry:
                     set_entry = Set_Entry.objects.get(t_id=item.get("t_id"))
@@ -176,7 +176,7 @@ class SetEntry(APIView):
                     else:
                         data = serializer.errors
                 index += 1
-
+            print(data)
             return Response(data)
 
 
